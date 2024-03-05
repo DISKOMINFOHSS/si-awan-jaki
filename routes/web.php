@@ -13,6 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::name('auth.')->group(function () {
+    Route::controller(App\Http\Controllers\Auth\AuthController::class)->group(function () {
+        Route::get('/login', 'login')->name('login');
+        Route::post('/login', 'authenticate')->name('authenticate');
+
+        Route::post('/logout', 'logout')->middleware('auth')->name('logout');
+    });
 });
+
+Route::redirect('/', '/admin/dashboard');
+
+Route::middleware(['auth'])->name('admin.')->prefix('admin')
+    ->group(function () {
+        Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
+    }
+);

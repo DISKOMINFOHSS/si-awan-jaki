@@ -17,15 +17,22 @@ class UserSeeder extends Seeder
     {
         Role::create(['name' => 'super admin']);
         $sa = User::create([
-            'name' => 'Super Admin',
+            'nama'     => 'Super Admin',
             'username' => 'sa',
             'password' => Hash::make('password'),
         ]);
         $sa->assignRole('super admin');
 
+        $pu = User::create([
+            'nama'     => 'Admin Pengawas',
+            'username' => 'admin_pu',
+            'password' => Hash::make('password'),
+        ]);
+        $pu->assignRole('super admin');
+
         Role::create(['name' => 'admin']);
         $admin = User::create([
-            'name' => 'Admin',
+            'nama'     => 'Admin',
             'username' => 'admin',
             'password' => Hash::make('password'),
         ]);

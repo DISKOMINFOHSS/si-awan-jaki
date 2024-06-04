@@ -33,7 +33,7 @@ export default ({ toggleSidebar }) => {
                                 <LiaUser size={16} />
                             </div>
                             <div className="text-left text-xs text-slate-700">
-                                <div className="capitalize">{auth.user.name}</div>
+                                <div className="capitalize">{auth.user.nama}</div>
                                 <div className="font-light text-[11px] text-slate-500 capitalize">{auth.user.role}</div>
                             </div>
                         </Dropdown.Toggle>

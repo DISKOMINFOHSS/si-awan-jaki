@@ -5,6 +5,13 @@ import classNames from "classnames";
 import {
     LiaCloudSolid,
     LiaHomeSolid,
+    LiaStoreAltSolid,
+    LiaToolsSolid,
+    LiaCitySolid,
+    LiaUserFriendsSolid,
+    LiaHardHatSolid,
+    LiaBuildingSolid,
+    LiaCalendar,
 } from "react-icons/lia";
 
 function Sidebar({ isOpened, children }) {
@@ -74,6 +81,47 @@ export default ({ isOpened }) => {
                     href="/admin/dashboard"
                     icon={<LiaHomeSolid size={20} />}
                     text="Dashboard"
+                />
+            </Sidebar.Menu>
+            <Sidebar.Menu title="Pendataan">
+                <Sidebar.Item
+                    href="/admin/pendataan/usaha"
+                    icon={<LiaStoreAltSolid size={20} />}
+                    text="Usaha Jasa Konstruksi"
+                />
+                <Sidebar.Item
+                    href="/admin/pendataan/proyek"
+                    icon={<LiaToolsSolid size={20} />}
+                    text="Proyek Konstruksi"
+                />
+                <Sidebar.Item
+                    href="/admin/pendataan/bangunan"
+                    icon={<LiaCitySolid size={20} />}
+                    text="Bangunan"
+                />
+            </Sidebar.Menu>
+            <Sidebar.Menu title="Pengawasan Jasa Konstruksi">
+                <Sidebar.Item
+                    href="/admin/pengawasan/usaha"
+                    icon={<LiaUserFriendsSolid size={20} />}
+                    text="Tertib Usaha"
+                />
+                <Sidebar.Item
+                    href="/admin/pengawasan/penyelenggaraan"
+                    icon={<LiaHardHatSolid size={20} />}
+                    text="Tertib Penyelenggaraan"
+                />
+                <Sidebar.Item
+                    href="/admin/pengawasan/pemanfaatan-produk"
+                    icon={<LiaBuildingSolid size={20} />}
+                    text="Tertib Pemanfaatan Produk"
+                />
+            </Sidebar.Menu>
+            <Sidebar.Menu title="Rekapitulasi">
+                <Sidebar.Item
+                    href="#"
+                    icon={<LiaCalendar size={20} />}
+                    text="Tahun 2024"
                 />
             </Sidebar.Menu>
         </Sidebar>

@@ -27,5 +27,17 @@ Route::redirect('/', '/admin/dashboard');
 Route::middleware(['auth'])->name('admin.')->prefix('admin')
     ->group(function () {
         Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
+
+        Route::name('pendataan.')->prefix('pendataan')->group(function () {
+
+            // Pendataan Bangunan
+            Route::name('bangunan.')->prefix('bangunan')
+                ->controller(App\Http\Controllers\Pendataan\Bangunan\BangunanController::class)
+                ->group(function () {
+                    Route::get('/', 'index');
+                    Route::get('/create', 'create');
+                    Route::post('/', 'store');
+                });
+        });
     }
 );

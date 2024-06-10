@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pendataan\Bangunan;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Pendataan\BangunanCollection;
 use App\Services\PemanfaatanProduk\PendataanBangunanService;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,13 @@ class BangunanController extends Controller
 
     public function index()
     {
-        return Inertia::render('Pendataan/Bangunan/Index');
+        $daftarBangunan = $this->bangunanService->getDaftarBangunan();
+
+        return Inertia::render('Pendataan/Bangunan/Index', [
+            'data' => [
+                'daftarBangunan' => new BangunanCollection($daftarBangunan),
+            ],
+        ]);
     }
 
     public function create()

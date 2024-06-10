@@ -4,6 +4,7 @@ namespace App\Services\PemanfaatanProduk;
 
 use App\Models\PemanfaatanProduk\Bangunan;
 use App\Models\PemanfaatanProduk\PemilikPengelolaBangunan;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class PendataanBangunanService
 {
@@ -46,5 +47,25 @@ class PendataanBangunanService
         ]);
 
         return $bangunan->id;
+    }
+
+    public function getDaftarBangunan(): EloquentCollection
+    {
+        return Bangunan::select(
+            'id',
+            'nama',
+            'nomor_kontrak_pembangunan',
+            'sumber_dana',
+            'mulai_pembangunan',
+            'selesai_pembangunan',
+            'tanggal_pemanfaatan',
+            'umur_konstruksi',
+            'pemilik_bangunan',
+            'pengelola_bangunan',
+            'lokasi',
+            'desa_kelurahan',
+            'kecamatan'
+        )->orderBy('nama')
+         ->get();
     }
 }

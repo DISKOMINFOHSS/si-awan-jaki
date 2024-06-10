@@ -3,7 +3,7 @@ import Card from "../Card";
 
 export default ({ role, data }) => {
     return (
-        <Card className="w-full">
+        <Card className="w-full h-fit">
             <Card.Body className="p-4 text-xs text-slate-800">
                 <div className="pb-3 border-b border-slate-200">
                     <div className="font-medium capitalize">Nama {role} Bangunan</div>

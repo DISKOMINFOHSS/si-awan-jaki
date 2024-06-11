@@ -3,7 +3,8 @@ import { Link } from "@inertiajs/react";
 
 import {
     LiaAngleLeftSolid,
-    LiaAngleRightSolid
+    LiaAngleRightSolid,
+    LiaSpinnerSolid,
 } from "react-icons/lia";
 
 function Tab({ children }) {
@@ -12,7 +13,7 @@ function Tab({ children }) {
     );
 }
 
-function FormTabs({ backLink, onSubmit, children }) {
+function FormTabs({ backLink, onSubmit, isProcessing, children }) {
     const [activeTab, setActiveTab] = React.useState(0);
     const handleClick = index => setActiveTab(index);
 
@@ -66,7 +67,9 @@ function FormTabs({ backLink, onSubmit, children }) {
                         <button
                             onClick={() => onSubmit()}
                             className="flex justify-center items-center gap-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2.5 px-5 hover:bg-blue-800"
+                            disabled={isProcessing}
                         >
+                            { isProcessing && <LiaSpinnerSolid className="animate-spin" />}
                             Simpan
                         </button>
                         :

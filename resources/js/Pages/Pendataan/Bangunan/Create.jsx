@@ -21,14 +21,23 @@ const PendataanBangunanCreate = () => {
     const handlePengelolaChange = values => setPengelola({ ...pengelola, ...values });
 
     const [isModalErrorOpened, setIsModalErrorOpened] = React.useState(false);
+    const [processing, setProcessing] = React.useState(false);
 
     function handleSubmit() {
+        setProcessing(true);
+
         router.post('/admin/pendataan/bangunan', {
             bangunan: informasi,
             pemilik: pemilik,
             pengelola: pengelola,
         }, {
             onError: () => setIsModalErrorOpened(true),
+            onSuccess: () => {
+                setInformasi({});
+                setPemilik({});
+                setPengelola({});
+                setProcessing(false);
+            },
         });
     }
 
@@ -41,6 +50,7 @@ const PendataanBangunanCreate = () => {
             <FormTabs
                 backLink="/admin/pendataan/bangunan"
                 onSubmit={handleSubmit}
+                isProcessing={processing}
             >
                 <FormTabs.Tab
                     heading="Informasi Bangunan"

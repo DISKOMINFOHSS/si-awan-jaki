@@ -11,7 +11,7 @@ export default ({ data, onChange }) => {
         tanggalSelesaiBangun: data.tanggalSelesaiBangun ? data.tanggalSelesaiBangun : '',
         tanggalPemanfaatan: data.tanggalPemanfaatan ? data.tanggalPemanfaatan : '',
         lokasi: data.lokasi ? data.lokasi : '',
-        desa: data.desa ? data.desa : '',
+        desaKelurahan: data.desaKelurahan ? data.desaKelurahan : '',
         kecamatan: data.kecamatan ? data.kecamatan : 'ANGKINANG',
     });
 
@@ -115,10 +115,10 @@ export default ({ data, onChange }) => {
                     </div>
 
                     <div className="col-span-3">
-                        <label htmlFor="desa" className="block mb-2 text-xs font-medium text-slate-800">Desa/Kelurahan</label>
+                        <label htmlFor="desaKelurahan" className="block mb-2 text-xs font-medium text-slate-800">Desa/Kelurahan</label>
                         <input
-                            type="text" name="desa" id="desa" placeholder="cth. KANDANGAN KOTA"
-                            value={values.desa} onChange={e => handleInputChange(e)}
+                            type="text" name="desaKelurahan" id="desaKelurahan" placeholder="cth. KANDANGAN KOTA"
+                            value={values.desaKelurahan} onChange={e => handleInputChange(e)}
                             className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                         />
                     </div>
@@ -142,18 +142,6 @@ export default ({ data, onChange }) => {
                             <option value="TELAGA LANGSAT">TELAGA LANGSAT</option>
                         </select>
                     </div>
-                    {/* <div className="col-span-12 flex justify-end items-center gap-x-2.5">
-                        <button
-                            className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2.5 px-4"
-                        >
-                            Kembali
-                        </button>
-                        <button
-                            className="flex justify-center items-center gap-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2.5 px-4"
-                        >
-                            Simpan
-                        </button>
-                    </div> */}
                 </form>
             </Card.Body>
         </Card>

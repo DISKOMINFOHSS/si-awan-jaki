@@ -66,7 +66,7 @@ const PendataanBangunanIndex = ({ data }) => {
                                         <tr key={id} className="border-b border-slate-100 hover:bg-slate-50">
                                             <td className="px-4 py-5">
                                                 <div>
-                                                    <Link href="#" className="line-clamp-1 font-medium uppercase hover:text-blue-600 hover:underline">{nama}</Link>
+                                                    <Link href={`/admin/pendataan/bangunan/${id}`} className="line-clamp-1 font-medium uppercase hover:text-blue-600 hover:underline">{nama}</Link>
                                                     {/* <div className="font-light text-slate-600">{bangunan.desa_kelurahan && `${bangunan.desa_kelurahan.toLowerCase()}, `} {bangunan.kecamatan.toLowerCase()}</div> */}
                                                     {/* <div className="font-light text-slate-600">{bangunan.lokasi}</div> */}
                                                 </div>
@@ -84,7 +84,7 @@ const PendataanBangunanIndex = ({ data }) => {
                                                 </div>
                                             </td>
                                             <td className="px-4 py-5 flex justify-end">
-                                                <Link href="#" className="w-fit p-2 flex items-center gap-x-1.5 text-slate-600 hover:text-blue-600">
+                                                <Link href={`/admin/pendataan/bangunan/${id}`} className="w-fit p-2 flex items-center gap-x-1.5 text-slate-600 hover:text-blue-600">
                                                     <LiaAngleRightSolid size={16} />
                                                 </Link>
                                             </td>

@@ -68,4 +68,9 @@ class PendataanBangunanService
         )->orderBy('nama')
          ->get();
     }
+
+    public function getBangunan(string $id): Bangunan
+    {
+        return Bangunan::findOrFail($id);
+    }
 }

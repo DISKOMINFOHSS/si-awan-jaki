@@ -37,6 +37,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/', 'index');
                     Route::get('/create', 'create');
                     Route::post('/', 'store');
+                    Route::get('/{id}', 'show');
                 });
         });
     }

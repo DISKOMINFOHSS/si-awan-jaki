@@ -37,7 +37,7 @@ export default ({ bangunan }) => {
                     <div className="font-medium">Lokasi Bangunan</div>
                     <div className="font-light text-slate-500 capitalize">
                         {bangunan.lokasi}
-                        {bangunan.desa && `, ${bangunan.desa.toLowerCase()}`}
+                        {bangunan.desaKelurahan && `, ${bangunan.desaKelurahan.toLowerCase()}`}
                         {bangunan.kecamatan && `, ${bangunan.kecamatan.toLowerCase()}`}
                     </div>
                 </div>

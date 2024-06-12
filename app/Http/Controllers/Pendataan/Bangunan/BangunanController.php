@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pendataan\Bangunan;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Pendataan\BangunanCollection;
+use App\Http\Resources\Pendataan\BangunanResource;
 use App\Services\PemanfaatanProduk\PendataanBangunanService;
 use Illuminate\Http\Request;
 
@@ -87,5 +88,16 @@ class BangunanController extends Controller
         ]);
 
         return redirect("/admin/pendataan/bangunan");
+    }
+
+    public function show(string $id)
+    {
+        $bangunan = $this->bangunanService->getBangunan($id);
+
+        return Inertia::render('Pendataan/Bangunan/Show', [
+            'data' => [
+                'bangunan' => new BangunanResource($bangunan),
+            ],
+        ]);
     }
 }

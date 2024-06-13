@@ -40,5 +40,13 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/{id}', 'show');
                 });
         });
+
+        Route::name('pengawasan.')->prefix('pengawasan')->group(function () {
+            Route::name('pemanfaatan_produk')->prefix('/pemanfaatan-produk')
+                ->controller(App\Http\Controllers\Pengawasan\PemanfaatanProduk\PemanfaatanProdukController::class)
+                ->group(function () {
+                    Route::get('/', 'index');
+                });
+        });
     }
 );

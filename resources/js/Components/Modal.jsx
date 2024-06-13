@@ -12,7 +12,6 @@ function Modal({ isVisible, className, children }) {
         <div className="absolute">
             <div className="fixed inset-0 z-10 bg-slate-500 bg-opacity-50 transition-opacity"></div>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                {/* <div className="flex justify-center mt-10"> */}
                 <div className="flex justify-center min-h-screen">
                     <div className={modalClass}>{children}</div>
                 </div>

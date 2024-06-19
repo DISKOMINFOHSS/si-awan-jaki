@@ -51,7 +51,11 @@ class PendataanBangunanService
 
     public function getDaftarBangunan(): EloquentCollection
     {
-        return Bangunan::select(
+        return Bangunan::with([
+            'pemilikBangunan',
+            'pengelolaBangunan',
+        ])
+        ->select(
             'id',
             'nama',
             'nomor_kontrak_pembangunan',
@@ -65,8 +69,9 @@ class PendataanBangunanService
             'lokasi',
             'desa_kelurahan',
             'kecamatan'
-        )->orderBy('nama')
-         ->get();
+        )
+        ->orderBy('nama')
+        ->get();
     }
 
     public function getBangunan(string $id): Bangunan

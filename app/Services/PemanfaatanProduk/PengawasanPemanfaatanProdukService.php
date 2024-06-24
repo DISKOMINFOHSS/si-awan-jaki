@@ -3,6 +3,7 @@
 namespace App\Services\PemanfaatanProduk;
 
 use App\Models\PemanfaatanProduk\PengawasanPemanfaatanProduk;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class PengawasanPemanfaatanProdukService
@@ -40,5 +41,19 @@ class PengawasanPemanfaatanProdukService
         )
         ->orderBy('created_at')
         ->get();
+    }
+
+    public function getPengawasanById(string $id): PengawasanPemanfaatanProduk
+    {
+        return PengawasanPemanfaatanProduk::with([
+            'bangunan' => function (Builder $query) {
+                $query
+                ->join('pemilik_pengelola_bangunan as pemilik', 'pemilik.id', 'bangunan.pemilik_bangunan')
+                ->join('pemilik_pengelola_bangunan as pengelola', 'pengelola.id', 'bangunan.pengelola_bangunan')
+                ->select('bangunan.*', 'pemilik.nama as pemilik_bangunan', 'pengelola.nama as pengelola_bangunan');
+            },
+        ])
+        ->where('id', $id)
+        ->firstOrFail();
     }
 }

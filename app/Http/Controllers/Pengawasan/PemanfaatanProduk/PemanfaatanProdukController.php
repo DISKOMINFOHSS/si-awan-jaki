@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Pendataan\BangunanCollection;
 use App\Http\Resources\Pengawasan\PengawasanPemanfaatanProdukCollection;
+use App\Http\Resources\Pengawasan\PengawasanPemanfaatanProdukResource;
 use App\Services\PemanfaatanProduk\PendataanBangunanService;
 use App\Services\PemanfaatanProduk\PengawasanPemanfaatanProdukService;
 use Illuminate\Http\Request;
@@ -55,5 +56,16 @@ class PemanfaatanProdukController extends Controller
         ]);
 
         return redirect("/admin/pengawasan/pemanfaatan-produk");
+    }
+
+    public function show(string $id)
+    {
+        $pengawasan = $this->pengawasanService->getPengawasanById($id);
+
+        return Inertia::render('Pengawasan/PemanfaatanProduk/Show', [
+            'data' => [
+                'pengawasan' => new PengawasanPemanfaatanProdukResource($pengawasan),
+            ],
+        ]);
     }
 }

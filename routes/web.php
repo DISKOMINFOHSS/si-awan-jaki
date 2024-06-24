@@ -47,6 +47,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->group(function () {
                     Route::get('/', 'index');
                     Route::post('/', 'store');
+                    Route::get('/{id}', 'show');
                 });
         });
     }

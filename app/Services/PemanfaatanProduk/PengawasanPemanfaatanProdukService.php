@@ -5,9 +5,18 @@ namespace App\Services\PemanfaatanProduk;
 use App\Models\PemanfaatanProduk\PengawasanPemanfaatanProduk;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection as DBCollection;
+use Illuminate\Support\Facades\DB;
 
 class PengawasanPemanfaatanProdukService
 {
+    public function getDaftarLingkupPengawasan(): DBCollection
+    {
+        return DB::table('master_pengawasan_pemanfaatan_produk as lingkup_pengawasan')
+            ->orderBy('lingkup_pengawasan.id')
+            ->get();
+    }
+
     public function addPengawasan(array $data): string
     {
         $pengawasan = PengawasanPemanfaatanProduk::create([

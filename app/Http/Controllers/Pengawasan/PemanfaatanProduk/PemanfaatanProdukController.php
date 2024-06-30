@@ -60,7 +60,11 @@ class PemanfaatanProdukController extends Controller
 
     public function show(string $id)
     {
+        $daftarLingkupPengawasan = $this->pengawasanService->getDaftarLingkupPengawasan();
         $pengawasan = $this->pengawasanService->getPengawasanById($id);
+
+        // $pengawasan['daftarLingkupPengawasan'] = $daftarLingkupPengawasan;
+        $pengawasan['daftarPemeriksaan'] = $daftarLingkupPengawasan;
 
         return Inertia::render('Pengawasan/PemanfaatanProduk/Show', [
             'data' => [

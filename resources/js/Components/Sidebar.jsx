@@ -16,7 +16,7 @@ import {
 
 function Sidebar({ isOpened, children }) {
     const asideClass = classNames(
-        "relative block min-w-72 h-screen overflow-y-auto bg-white border-r border-slate-200 p-4",
+        "relative block min-w-72 min-h-screen overflow-y-auto bg-white border-r border-slate-200 p-4",
         {
             "hidden": !isOpened,
         }

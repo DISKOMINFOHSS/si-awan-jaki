@@ -5,15 +5,22 @@ namespace App\Services\PemanfaatanProduk;
 use App\Models\PemanfaatanProduk\PengawasanPemanfaatanProduk;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection as DBCollection;
 use Illuminate\Support\Facades\DB;
 
 class PengawasanPemanfaatanProdukService
 {
-    public function getDaftarLingkupPengawasan(): DBCollection
+    public function getDaftarLingkupPengawasan(string $pengawasanId): DBCollection
     {
-        return DB::table('master_pengawasan_pemanfaatan_produk as lingkup_pengawasan')
-            ->orderBy('lingkup_pengawasan.id')
+        return DB::table('master_pengawasan_pemanfaatan_produk as pemeriksaan')
+            ->leftJoin('pemeriksaan_pengawasan_pemanfaatan_produk as hasil_pemeriksaan', function (JoinClause $join) use ($pengawasanId)
+            {
+                $join->on('pemeriksaan.id', '=', 'hasil_pemeriksaan.lingkup_id')
+                     ->where('hasil_pemeriksaan.pengawasan_id', $pengawasanId);
+            })
+            ->select('pemeriksaan.*', 'hasil_pemeriksaan.kesimpulan_pemeriksaan', 'hasil_pemeriksaan.catatan_pemeriksaan')
+            ->orderBy('pemeriksaan.id')
             ->get();
     }
 

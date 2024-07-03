@@ -13,6 +13,7 @@ import {
     LiaListAltSolid,
     LiaEllipsisHSolid
 } from "react-icons/lia";
+import FormPemeriksaan from "../../../Components/Bangunan/FormPemeriksaan";
 
 function Pemeriksaan({ pemeriksaan }) {
     return (
@@ -49,7 +50,7 @@ function Pemeriksaan({ pemeriksaan }) {
                                 <div>
                                     <div className="font-medium text-slate text-xs mb-1">Cara Pemeriksaan</div>
                                     <p className="font-light text-xs text-slate-500 text-justify">
-                                        {pemeriksaan.cara_pemeriksaan}
+                                        {pemeriksaan.caraPemeriksaan}
                                     </p>
                                 </div>
                             </div>
@@ -102,7 +103,11 @@ function Pemeriksaan({ pemeriksaan }) {
 function DaftarLingkupPengawasan({ daftarLingkupPengawasan }) {
     const daftar = daftarLingkupPengawasan.map((lingkupPengawasan, i) => {
         const daftarPemeriksaan = lingkupPengawasan.map((pemeriksaan) => (
-            <Pemeriksaan
+            // <Pemeriksaan
+            //     key={pemeriksaan.id}
+            //     pemeriksaan={pemeriksaan}
+            // />
+            <FormPemeriksaan
                 key={pemeriksaan.id}
                 pemeriksaan={pemeriksaan}
             />
@@ -114,7 +119,7 @@ function DaftarLingkupPengawasan({ daftarLingkupPengawasan }) {
                 className="border-b border-slate-200 py-5"
             >
                 <div className="font-medium text-slate-800 space-y-2">
-                    {`${i+1}. ${lingkupPengawasan[0].lingkup_pengawasan}`}
+                    {`${i+1}. ${lingkupPengawasan[0].lingkupPengawasan}`}
                 </div>
                 {daftarPemeriksaan}
             </div>

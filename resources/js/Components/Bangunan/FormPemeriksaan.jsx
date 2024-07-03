@@ -64,7 +64,7 @@ function InputPemeriksaan({ id, label, kesimpulan, catatan, onInputChange }) {
     );
 }
 
-export default ({ pemeriksaan }) => {
+export default ({ pengawasanId, pemeriksaan }) => {
     const [isModalKonfirmasiOpen, setIsModalKonfirmasiOpen] = React.useState(false);
     const [konfirmasiPemeriksaan, setKonfirmasiPemeriksaan] = React.useState({
         id: pemeriksaan.id,
@@ -91,76 +91,77 @@ export default ({ pemeriksaan }) => {
 
     return (
         <>
-        <div className="grid grid-cols-3 gap-5 my-4">
-            <div className="font-medium text-slate-800 space-y-2">
-                {
-                    pemeriksaan.detail && (
-                        <div>
-                            <h5 className="text-xs">Detail Lingkup Pengawasan</h5>
-                            <p className="font-light text-xs text-slate-500 text-justify">
-                                {pemeriksaan.detail}
+            <div className="grid grid-cols-3 gap-5 my-4">
+                <div className="font-medium text-slate-800 space-y-2">
+                    {
+                        pemeriksaan.detail && (
+                            <div>
+                                <h5 className="text-xs">Detail Lingkup Pengawasan</h5>
+                                <p className="font-light text-xs text-slate-500 text-justify">
+                                    {pemeriksaan.detail}
+                            </p>
+                            </div>
+                        )
+                    }
+                    <div>
+                        <h5 className="text-xs">Indikator</h5>
+                        <p className="font-light text-xs text-slate-500 text-justify">
+                            {pemeriksaan.indikator}
                         </p>
-                        </div>
-                    )
-                }
-                <div>
-                    <h5 className="text-xs">Indikator</h5>
-                    <p className="font-light text-xs text-slate-500 text-justify">
-                        {pemeriksaan.indikator}
-                    </p>
+                    </div>
+                </div>
+                <div className="col-span-2">
+                    <Card>
+                        <Card.Body className="p-4">
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-4">
+                                    <div>
+                                        <div className="font-medium text-xs text-slate-800 mb-1">Dokumen yang diperiksa</div>
+                                        <p className="font-light text-xs text-slate-500 text-justify">
+                                            {pemeriksaan.dokumen}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <div className="font-medium text-slate text-xs mb-1">Cara Pemeriksaan</div>
+                                        <p className="font-light text-xs text-slate-500 text-justify">
+                                            {pemeriksaan.caraPemeriksaan}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="space-y-4">
+                                    {
+                                        pemeriksaan.hasilPemeriksaan.map(({ label, kesimpulan, catatan }, i) => (
+                                            <InputPemeriksaan
+                                                key={`${pemeriksaan.id}-${i}`}
+                                                id={`${pemeriksaan.id}-${i}`}
+                                                label={label}
+                                                kesimpulan={kesimpulan}
+                                                catatan={catatan}
+                                                onInputChange={handleHasilPemeriksaanChange}
+                                            />
+                                        ))
+                                    }
+                                </div>
+                                <div className="col-span-2 flex justify-end items-center gap-x-2">
+                                    <button
+                                        type="button"
+                                        className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-3"
+                                        onClick={() => handleClick()}
+                                    >
+                                        Simpan
+                                    </button>
+                                </div>
+                            </div>
+                        </Card.Body>
+                    </Card>
                 </div>
             </div>
-            <div className="col-span-2">
-                <Card>
-                    <Card.Body className="p-4">
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-4">
-                                <div>
-                                    <div className="font-medium text-xs text-slate-800 mb-1">Dokumen yang diperiksa</div>
-                                    <p className="font-light text-xs text-slate-500 text-justify">
-                                        {pemeriksaan.dokumen}
-                                    </p>
-                                </div>
-                                <div>
-                                    <div className="font-medium text-slate text-xs mb-1">Cara Pemeriksaan</div>
-                                    <p className="font-light text-xs text-slate-500 text-justify">
-                                        {pemeriksaan.caraPemeriksaan}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="space-y-4">
-                                {
-                                    pemeriksaan.hasilPemeriksaan.map(({ label, kesimpulan, catatan }, i) => (
-                                        <InputPemeriksaan
-                                            key={`${pemeriksaan.id}-${i}`}
-                                            id={`${pemeriksaan.id}-${i}`}
-                                            label={label}
-                                            kesimpulan={kesimpulan}
-                                            catatan={catatan}
-                                            onInputChange={handleHasilPemeriksaanChange}
-                                        />
-                                    ))
-                                }
-                            </div>
-                            <div className="col-span-2 flex justify-end items-center gap-x-2">
-                                <button
-                                    type="button"
-                                    className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-3"
-                                    onClick={() => handleClick()}
-                                >
-                                    Simpan
-                                </button>
-                            </div>
-                        </div>
-                    </Card.Body>
-                </Card>
-            </div>
-        </div>
-        <ModalKonfirmasiPemeriksaan
-            isVisible={isModalKonfirmasiOpen}
-            onClose={() => setIsModalKonfirmasiOpen(false)}
-            pemeriksaan={konfirmasiPemeriksaan}
-        />
+            <ModalKonfirmasiPemeriksaan
+                isVisible={isModalKonfirmasiOpen}
+                onClose={() => setIsModalKonfirmasiOpen(false)}
+                pengawasanId={pengawasanId}
+                pemeriksaan={konfirmasiPemeriksaan}
+            />
         </>
     );
 }

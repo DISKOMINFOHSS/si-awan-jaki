@@ -71,4 +71,27 @@ class PemanfaatanProdukController extends Controller
             ],
         ]);
     }
+
+    public function storePemeriksaan(string $id, string $lingkup_id, Request $request)
+    {
+        if (!$this->pengawasanService->checkPengawasanExists($id) || !$this->pengawasanService->checkLingkupPengawasanExists($lingkup_id)) {
+            return back()->withErrors(['message' => 'Pengawasan/Lingkup Pemeriksaan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'kesimpulan' => 'required',
+            'catatan'    => 'required',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanService->addPemeriksaanPengawasan([
+            'pengawasan_id'          => $id,
+            'lingkup_id'             => $lingkup_id,
+            'kesimpulan_pemeriksaan' => json_encode($validatedData['kesimpulan']),
+            'catatan_pemeriksaan'    => json_encode($validatedData['catatan']),
+            'created_by'             => $userId,
+        ]);
+
+        return redirect("/admin/pengawasan/pemanfaatan-produk/$id");
+    }
 }

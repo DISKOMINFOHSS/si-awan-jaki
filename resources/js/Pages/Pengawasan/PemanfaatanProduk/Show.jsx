@@ -6,6 +6,7 @@ import Breadcrumb from "../../../Components/Breadcrumb";
 import Card from "../../../Components/Card";
 import Dropdown from "../../../Components/Dropdown";
 
+import FormPemeriksaan from "../../../Components/Bangunan/FormPemeriksaan";
 import useToggleWithClickOutside from "../../../Hooks/useToggleWithClickOutside";
 
 import {
@@ -13,102 +14,13 @@ import {
     LiaListAltSolid,
     LiaEllipsisHSolid
 } from "react-icons/lia";
-import FormPemeriksaan from "../../../Components/Bangunan/FormPemeriksaan";
 
-function Pemeriksaan({ pemeriksaan }) {
-    return (
-        <div className="grid grid-cols-3 gap-5 my-4">
-            <div className="font-medium text-slate-800 space-y-2">
-                {
-                    pemeriksaan.detail && (
-                        <div>
-                            <h5 className="text-xs">Detail Lingkup Pengawasan</h5>
-                            <p className="font-light text-xs text-slate-500 text-justify">
-                                {pemeriksaan.detail}
-                            </p>
-                        </div>
-                    )
-                }
-                <div>
-                    <h5 className="text-xs">Indikator</h5>
-                    <p className="font-light text-xs text-slate-500 text-justify">
-                        {pemeriksaan.indikator}
-                    </p>
-                </div>
-            </div>
-            <div className="col-span-2">
-                <Card>
-                    <Card.Body className="p-4">
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-4">
-                                <div>
-                                    <div className="font-medium text-xs text-slate-800 mb-1">Dokumen yang diperiksa</div>
-                                    <p className="font-light text-xs text-slate-500 text-justify">
-                                        {pemeriksaan.dokumen}
-                                    </p>
-                                </div>
-                                <div>
-                                    <div className="font-medium text-slate text-xs mb-1">Cara Pemeriksaan</div>
-                                    <p className="font-light text-xs text-slate-500 text-justify">
-                                        {pemeriksaan.caraPemeriksaan}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="space-y-4">
-                                <div className="space-y-2 text-xs">
-                                    <div>
-                                        <div className="font-medium text-slate-800">Kesimpulan Pemeriksaan</div>
-                                    </div>
-                                    <div className="space-y-2.5">
-                                        <div className="flex items-center gap-x-2">
-                                            <input
-                                                type="radio" value="true"
-                                                className="w-3.5 h-3.5 text-blue-600 border-slate-200 focus:ring-blue-500 focus:ring-2"
-                                            />
-                                            <label htmlFor="" className="text-slate-700">Sesuai</label>
-                                        </div>
-                                        <div className="flex items-center gap-x-2">
-                                            <input
-                                                type="radio" value="false"
-                                                className="w-3.5 h-3.5 text-blue-600 border-slate-200 focus:ring-blue-500 focus:ring-2"
-                                            />
-                                            <label htmlFor="" className="text-slate-700">Tidak Sesuai</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label htmlFor="catatan" className="block mb-2 text-xs font-medium text-slate-800">Catatan Pemeriksaan</label>
-                                    <textarea
-                                        name="catatan" id="catatan" rows="2"
-                                        className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-span-2 flex justify-end items-center gap-x-2">
-                                <button
-                                    type="button"
-                                    className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-3"
-                                >
-                                    Simpan
-                                </button>
-                            </div>
-                        </div>
-                    </Card.Body>
-                </Card>
-            </div>
-        </div>
-    )
-}
-
-function DaftarLingkupPengawasan({ daftarLingkupPengawasan }) {
+function DaftarLingkupPengawasan({ pengawasanId, daftarLingkupPengawasan }) {
     const daftar = daftarLingkupPengawasan.map((lingkupPengawasan, i) => {
         const daftarPemeriksaan = lingkupPengawasan.map((pemeriksaan) => (
-            // <Pemeriksaan
-            //     key={pemeriksaan.id}
-            //     pemeriksaan={pemeriksaan}
-            // />
             <FormPemeriksaan
                 key={pemeriksaan.id}
+                pengawasanId={pengawasanId}
                 pemeriksaan={pemeriksaan}
             />
         ));
@@ -237,6 +149,7 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
             </div>
 
             <DaftarLingkupPengawasan
+                pengawasanId={pengawasan.id}
                 daftarLingkupPengawasan={daftarLingkupPengawasan}
             />
         </>

@@ -2,6 +2,7 @@
 
 namespace App\Services\PemanfaatanProduk;
 
+use App\Models\PemanfaatanProduk\PemeriksaanPengawasanPemanfaatanProduk;
 use App\Models\PemanfaatanProduk\PengawasanPemanfaatanProduk;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -11,6 +12,11 @@ use Illuminate\Support\Facades\DB;
 
 class PengawasanPemanfaatanProdukService
 {
+    public function checkLingkupPengawasanExists(string $id): bool
+    {
+        return DB::table('master_pengawasan_pemanfaatan_produk')->where('id', $id)->exists();
+    }
+
     public function getDaftarLingkupPengawasan(string $pengawasanId): DBCollection
     {
         return DB::table('master_pengawasan_pemanfaatan_produk as pemeriksaan')
@@ -34,6 +40,11 @@ class PengawasanPemanfaatanProdukService
         ]);
 
         return $pengawasan->id;
+    }
+
+    public function checkPengawasanExists(string $id): bool
+    {
+        return PengawasanPemanfaatanProduk::where('id', $id)->exists();
     }
 
     public function getDaftarPengawasan(): EloquentCollection
@@ -71,5 +82,21 @@ class PengawasanPemanfaatanProdukService
         ])
         ->where('id', $id)
         ->firstOrFail();
+    }
+
+    public function addPemeriksaanPengawasan(array $data): string
+    {
+        $pemeriksaan = PemeriksaanPengawasanPemanfaatanProduk::firstOrNew([
+            'pengawasan_id' => $data['pengawasan_id'],
+            'lingkup_id'    => $data['lingkup_id'],
+        ]);
+
+        $pemeriksaan->kesimpulan_pemeriksaan = $data['kesimpulan_pemeriksaan'];
+        $pemeriksaan->catatan_pemeriksaan = $data['catatan_pemeriksaan'];
+        $pemeriksaan->created_by = $data['created_by'];
+
+        $pemeriksaan->save();
+
+        return $pemeriksaan->id;
     }
 }

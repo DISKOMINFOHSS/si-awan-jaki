@@ -94,4 +94,15 @@ class PemanfaatanProdukController extends Controller
 
         return redirect("/admin/pengawasan/pemanfaatan-produk/$id");
     }
+
+    public function createRekomendasi(string $id)
+    {
+        $pengawasan = $this->pengawasanService->getPengawasanById($id);
+
+        return Inertia::render('Pengawasan/PemanfaatanProduk/Rekomendasi/Create', [
+            'data' => [
+                'pengawasan' => new PengawasanPemanfaatanProdukResource($pengawasan),
+            ],
+        ]);
+    }
 }

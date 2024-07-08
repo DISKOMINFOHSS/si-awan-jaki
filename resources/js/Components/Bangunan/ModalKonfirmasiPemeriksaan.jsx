@@ -22,8 +22,6 @@ export default ({ isVisible, onClose, pengawasanId, pemeriksaan }) => {
             catatanPemeriksaan[label] = catatan;
         });
 
-        console.log(kesimpulanPemeriksaan, catatanPemeriksaan);
-
         router.post(
             `/admin/pengawasan/pemanfaatan-produk/${pengawasanId}/${pemeriksaan.id}`,
             {
@@ -44,6 +42,7 @@ export default ({ isVisible, onClose, pengawasanId, pemeriksaan }) => {
             }
         )
     }
+
     return (
         <>
             <Modal isVisible={isVisible} className="w-full h-fit mt-10 max-w-md">

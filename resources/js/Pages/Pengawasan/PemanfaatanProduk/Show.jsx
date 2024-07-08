@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
 import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
@@ -7,6 +7,7 @@ import Card from "../../../Components/Card";
 import Dropdown from "../../../Components/Dropdown";
 
 import FormPemeriksaan from "../../../Components/Bangunan/FormPemeriksaan";
+import ModalError from "../../../Components/ModalError";
 import useToggleWithClickOutside from "../../../Hooks/useToggleWithClickOutside";
 
 import {
@@ -58,6 +59,20 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
         daftarLingkupPengawasan[i] = [...daftarLingkupPengawasan[i], pemeriksaan];
     });
 
+    const [isModalErrorOpened, setIsModalErrorOpened] = React.useState(false);
+
+    function handleRekomendasiClick() {
+        const test = daftarPemeriksaan.find(({ hasilPemeriksaan }) => {
+            return hasilPemeriksaan.find(({ kesimpulan }) => kesimpulan === null);
+        });
+
+        if (test) {
+            setIsModalErrorOpened(true);
+        } else {
+            router.get(`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/rekomendasi/create`);
+        }
+    }
+
     return (
         <>
             <Breadcrumb>
@@ -71,13 +86,13 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                     <h1 className="font-medium text-xl text-slate-800 uppercase">{bangunan.nama}</h1>
                 </div>
                 <div className="flex items-center gap-x-2">
-                    <Link
-                        href={`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/rekomendasi`}
+                    <button
                         className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                        onClick={() => handleRekomendasiClick()}
                     >
                         <LiaListAltSolid size={18} />
                         <span>Buat Rekomendasi</span>
-                    </Link>
+                    </button>
                     <Dropdown ref={moreDropdownRef}>
                         <Dropdown.Toggle
                             onClick={toggleMoreDropdown}
@@ -152,6 +167,15 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                 pengawasanId={pengawasan.id}
                 daftarLingkupPengawasan={daftarLingkupPengawasan}
             />
+            <ModalError
+                isVisible={isModalErrorOpened}
+                onClose={() => setIsModalErrorOpened(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Terdapat pemeriksaan yang masih belum diisi. Silakan periksa kembali.
+                </div>
+            </ModalError>
         </>
     );
 }

@@ -6,7 +6,7 @@ import ModalKonfirmasiPemeriksaan from "./ModalKonfirmasiPemeriksaan";
 function InputPemeriksaan({ id, label, kesimpulan, catatan, onInputChange }) {
     const [value, setValue] = React.useState({
         label: label,
-        kesimpulan: kesimpulan ? kesimpulan : '',
+        kesimpulan: kesimpulan === true || kesimpulan === false ? kesimpulan : '',
         catatan: catatan ? catatan : '',
     });
 

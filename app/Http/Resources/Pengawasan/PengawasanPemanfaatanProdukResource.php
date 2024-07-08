@@ -29,7 +29,7 @@ class PengawasanPemanfaatanProdukResource extends JsonResource
                 'desaKelurahan'         => $bangunan->desa_kelurahan,
                 'kecamatan'             => $bangunan->kecamatan,
             ],
-            'daftarPemeriksaan' => $this->whenHas('daftarPemeriksaan')
+            'daftarPemeriksaan' => $this->daftarPemeriksaan ? $this->daftarPemeriksaan
                 ->transform(function ($pemeriksaan)
                 {
                     $kesimpulan = (array)json_decode($pemeriksaan->kesimpulan_pemeriksaan);
@@ -51,7 +51,7 @@ class PengawasanPemanfaatanProdukResource extends JsonResource
                             ];
                         }, json_decode($pemeriksaan->kesimpulan)),
                     ];
-                }),
+                }) : null,
             'createdBy'         => $this->createdBy->nama,
             'verifiedAt'        => $this->verified_at && Carbon::parse($this->verified_at)->locale('id')->isoFormat('D MMMM Y'),
             'verifiedBy'        => $this->verifiedBy->nama,

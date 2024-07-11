@@ -21,7 +21,7 @@ class PengawasanPemanfaatanProdukCollection extends ResourceCollection
             return [
                 'id'                          => $pengawasan->id,
                 'jenisPengawasan'             => $pengawasan->jenis_pengawasan,
-                'tanggalPengawasan'           => Carbon::parse($pengawasan->tanggal)->locale('id')->isoFormat('D MMMM Y'),
+                'tanggalPengawasan'           => Carbon::parse($pengawasan->tanggal_pengawasan)->locale('id')->isoFormat('D MMMM Y'),
                 'tertibKesesuaianFungsi'      => $pengawasan->tertib_kesesuaian_fungsi === null ?
                     $pengawasan->tertib_kesesuaian_fungsi : (bool)$pengawasan->tertib_kesesuaian_fungsi,
                 'tertibKesesuaianLokasi'      => $pengawasan->tertib_kesesuaian_lokasi === null ?

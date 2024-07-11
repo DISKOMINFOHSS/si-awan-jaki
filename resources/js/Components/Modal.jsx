@@ -21,6 +21,10 @@ function Modal({ isVisible, className, children }) {
 }
 
 function Header({ children, onClose }) {
+    if (!onClose) {
+        return <>{children}</>;
+    }
+
     return (
         <div className="relative mt-2">
             <div className="absolute -top-4 -right-2">

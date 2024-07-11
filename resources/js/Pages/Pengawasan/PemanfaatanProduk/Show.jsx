@@ -8,6 +8,8 @@ import Dropdown from "../../../Components/Dropdown";
 
 import FormPemeriksaan from "../../../Components/Bangunan/FormPemeriksaan";
 import ModalError from "../../../Components/ModalError";
+import FormVerifikasiPengawasan from "../../../Components/Bangunan/FormVerifikasiPengawasan";
+
 import useToggleWithClickOutside from "../../../Hooks/useToggleWithClickOutside";
 
 import {
@@ -45,7 +47,17 @@ function DaftarLingkupPengawasan({ pengawasanId, daftarLingkupPengawasan }) {
 const PengawasanPemanfaatanProdukShow = ({ data }) => {
     console.log(data);
     const { pengawasan } = data;
-    const { bangunan, daftarPemeriksaan } = pengawasan;
+    const {
+        bangunan,
+        daftarPemeriksaan,
+        tertibKesesuaianFungsi,
+        tertibKesesuaianLokasi,
+        tertibRencanaUmurKonstruksi,
+        tertibKapasitasBeban,
+        tertibPemeliharaanBangunan,
+        tertibProgramPemeliharaan,
+        tertibPengawasan,
+    } = pengawasan;
 
     const [
         moreDropdownRef,
@@ -60,17 +72,29 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
     });
 
     const [isModalErrorOpened, setIsModalErrorOpened] = React.useState(false);
+    const [isModalVerificationOpened, setIsModalVerificationOpened] = React.useState(false);
 
     function handleRekomendasiClick() {
-        const test = daftarPemeriksaan.find(({ hasilPemeriksaan }) => {
+        const flag = daftarPemeriksaan.find(({ hasilPemeriksaan }) => {
             return hasilPemeriksaan.find(({ kesimpulan }) => kesimpulan === null);
         });
 
-        if (test) {
-            setIsModalErrorOpened(true);
-        } else {
-            router.get(`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/rekomendasi/create`);
+        if (flag) {
+            return setIsModalErrorOpened(true);
         }
+
+        if (
+            tertibKesesuaianFungsi &&
+            tertibKesesuaianLokasi &&
+            tertibRencanaUmurKonstruksi &&
+            tertibKapasitasBeban &&
+            tertibPemeliharaanBangunan &&
+            tertibProgramPemeliharaan
+        ) {
+            return router.get(`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/rekomendasi/create`);
+        }
+
+        return setIsModalVerificationOpened(true);
     }
 
     return (
@@ -104,13 +128,13 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                             isVisible={isMoreDropdownOpened}
                             className="min-w-36 flex flex-col right-0 py-2 space-y-0.5 text-xs text-slate-700"
                         >
-                            <a href="#" className="px-4 py-2 hover:bg-slate-100 hover:text-blue-600">Pengaturan</a>
+                            <a href="#" className="px-4 py-2 hover:bg-slate-100 hover:text-blue-600">Verifikasi Pengawasan</a>
                             <a href="#" className="px-4 py-2 hover:bg-slate-100 hover:text-blue-600">Pengaturan</a>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-5 w-full mt-5">
+            <div className="grid grid-cols-2 gap-4 w-full mt-4">
                 <Card className="w-full h-fit">
                     <Card.Body className="p-4 text-xs">
                         <div className="pb-3 border-b border-slate-200">
@@ -162,10 +186,14 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                     </Card.Body>
                 </Card>
             </div>
-
             <DaftarLingkupPengawasan
                 pengawasanId={pengawasan.id}
                 daftarLingkupPengawasan={daftarLingkupPengawasan}
+            />
+            <FormVerifikasiPengawasan
+                isVisible={isModalVerificationOpened}
+                onClose={() => setIsModalVerificationOpened(false)}
+                pengawasan={pengawasan}
             />
             <ModalError
                 isVisible={isModalErrorOpened}

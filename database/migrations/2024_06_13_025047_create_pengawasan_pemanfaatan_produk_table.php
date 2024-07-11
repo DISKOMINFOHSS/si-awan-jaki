@@ -24,7 +24,7 @@ return new class extends Migration
             $table->boolean('tertib_pemeliharaan_bangunan')->nullable();
             $table->boolean('tertib_program_pemeliharaan')->nullable();
 
-            $table->boolean('is_tertib')->nullable();
+            $table->boolean('tertib_pengawasan')->nullable();
             $table->text('catatan')->nullable();
 
             $table->timestamp('verified_at')->nullable();

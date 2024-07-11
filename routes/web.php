@@ -49,6 +49,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::post('/', 'store');
                     Route::get('/{id}', 'show');
 
+                    Route::post('/{id}/verification', 'storeVerification');
+
                     Route::post('/{id}/{lingkup_id}', 'storePemeriksaan');
 
                     Route::get('/{id}/rekomendasi/create', 'createRekomendasi');

@@ -95,6 +95,41 @@ class PemanfaatanProdukController extends Controller
         return redirect("/admin/pengawasan/pemanfaatan-produk/$id");
     }
 
+    public function storeVerification(string $id, Request $request)
+    {
+        if (!$this->pengawasanService->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'kesesuaianFungsi'      => 'required|boolean',
+            'kesesuaianLokasi'      => 'required|boolean',
+            'rencanaUmurKonstruksi' => 'required|boolean',
+            'kapasitasBeban'        => 'required|boolean',
+            'pemeliharaanBangunan'  => 'required|boolean',
+            'programPemeliharaan'   => 'required|boolean',
+            'tertibPengawasan'      => 'required|boolean',
+            'catatan'               => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanService->verifyPengawasan(
+            $id,
+        [
+            'tertib_kesesuaian_fungsi'       => $validatedData['kesesuaianFungsi'],
+            'tertib_kesesuaian_lokasi'       => $validatedData['kesesuaianLokasi'],
+            'tertib_rencana_umur_konstruksi' => $validatedData['rencanaUmurKonstruksi'],
+            'tertib_kapasitas_beban'         => $validatedData['kapasitasBeban'],
+            'tertib_pemeliharaan_bangunan'   => $validatedData['pemeliharaanBangunan'],
+            'tertib_program_pemeliharaan'    => $validatedData['programPemeliharaan'],
+            'tertib_pengawasan'              => $validatedData['tertibPengawasan'],
+            'catatan'                        => $validatedData['catatan'],
+            'verified_by'                    => $userId,
+        ]);
+
+        return redirect("/admin/pengawasan/pemanfaatan-produk/$id/rekomendasi/create");
+    }
+
     public function createRekomendasi(string $id)
     {
         $pengawasan = $this->pengawasanService->getPengawasanById($id);

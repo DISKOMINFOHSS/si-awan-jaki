@@ -84,6 +84,26 @@ class PengawasanPemanfaatanProdukService
         ->firstOrFail();
     }
 
+    public function verifyPengawasan(string $id, array $data)
+    {
+        $pengawasan = PengawasanPemanfaatanProduk::find($id);
+
+        $pengawasan->tertib_kesesuaian_fungsi = $data['tertib_kesesuaian_fungsi'];
+        $pengawasan->tertib_kesesuaian_lokasi = $data['tertib_kesesuaian_lokasi'];
+        $pengawasan->tertib_rencana_umur_konstruksi = $data['tertib_rencana_umur_konstruksi'];
+        $pengawasan->tertib_kapasitas_beban = $data['tertib_kapasitas_beban'];
+        $pengawasan->tertib_pemeliharaan_bangunan = $data['tertib_pemeliharaan_bangunan'];
+        $pengawasan->tertib_program_pemeliharaan = $data['tertib_program_pemeliharaan'];
+        $pengawasan->tertib_pengawasan = $data['tertib_pengawasan'];
+
+        $pengawasan->catatan = $data['catatan'];
+
+        $pengawasan->verified_by = $data['verified_by'];
+        $pengawasan->verified_at = now();
+
+        $pengawasan->save();
+    }
+
     public function addPemeriksaanPengawasan(array $data): string
     {
         $pemeriksaan = PemeriksaanPengawasanPemanfaatanProduk::firstOrNew([

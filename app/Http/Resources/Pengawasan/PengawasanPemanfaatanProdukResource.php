@@ -18,10 +18,24 @@ class PengawasanPemanfaatanProdukResource extends JsonResource
         $bangunan = $this->bangunan;
 
         return [
-            'id'                => $this->id,
-            'jenisPengawasan'   => $this->jenis_pengawasan,
-            'tanggalPengawasan' => Carbon::parse($this->tanggal_pengawasan)->locale('id')->isoFormat('D MMMM Y'),
-            'bangunan'          => [
+            'id'                          => $this->id,
+            'jenisPengawasan'             => $this->jenis_pengawasan,
+            'tanggalPengawasan'           => Carbon::parse($this->tanggal_pengawasan)->locale('id')->isoFormat('D MMMM Y'),
+            'tertibKesesuaianFungsi'      => $this->tertib_kesesuaian_fungsi === null ?
+                $this->tertib_kesesuaian_fungsi : (bool)$this->tertib_kesesuaian_fungsi,
+            'tertibKesesuaianLokasi'      => $this->tertib_kesesuaian_lokasi === null ?
+                $this->tertib_kesesuaian_lokasi : (bool)$this->tertib_kesesuaian_lokasi,
+            'tertibRencanaUmurKonstruksi' => $this->tertib_rencana_umur_konstruksi === null ?
+                $this->tertib_rencana_umur_konstruksi : (bool)$this->tertib_rencana_umur_konstruksi,
+            'tertibKapasitasBeban'        => $this->tertib_kapasitas_beban === null ?
+                $this->tertib_kapasitas_beban : (bool)$this->tertib_kapasitas_beban,
+            'tertibPemeliharaanBangunan'  => $this->tertib_pemeliharaan_bangunan === null ?
+                $this->tertib_pemeliharaan_bangunan : (bool)$this->tertib_pemeliharaan_bangunan,
+            'tertibProgramPemeliharaan'   => $this->tertib_program_pemeliharaan === null ?
+                $this->tertib_program_pemeliharaan : (bool)$this->tertib_program_pemeliharaan,
+            'tertibPengawasan'            => $this->is_tertib === null ?
+                $this->is_tertib : (bool)$this->is_tertib,
+            'bangunan'                    => [
                 'nama'                  => $bangunan->nama,
                 'pemilikBangunan'       => $bangunan->pemilik_bangunan,
                 'pengelolaBangunan'     => $bangunan->pengelola_bangunan,
@@ -29,7 +43,7 @@ class PengawasanPemanfaatanProdukResource extends JsonResource
                 'desaKelurahan'         => $bangunan->desa_kelurahan,
                 'kecamatan'             => $bangunan->kecamatan,
             ],
-            'daftarPemeriksaan' => $this->daftarPemeriksaan ? $this->daftarPemeriksaan
+            'daftarPemeriksaan'           => $this->daftarPemeriksaan ? $this->daftarPemeriksaan
                 ->transform(function ($pemeriksaan)
                 {
                     $kesimpulan = (array)json_decode($pemeriksaan->kesimpulan_pemeriksaan);
@@ -52,9 +66,9 @@ class PengawasanPemanfaatanProdukResource extends JsonResource
                         }, json_decode($pemeriksaan->kesimpulan)),
                     ];
                 }) : null,
-            'createdBy'         => $this->createdBy->nama,
-            'verifiedAt'        => $this->verified_at && Carbon::parse($this->verified_at)->locale('id')->isoFormat('D MMMM Y'),
-            'verifiedBy'        => $this->verifiedBy->nama,
+            'createdBy'                   => $this->createdBy->nama,
+            'verifiedAt'                  => $this->verified_at ? Carbon::parse($this->verified_at)->locale('id')->isoFormat('D MMMM Y') : null,
+            'verifiedBy'                  => $this->verifiedBy->nama,
         ];
     }
 }

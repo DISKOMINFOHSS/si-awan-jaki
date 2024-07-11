@@ -24,7 +24,7 @@ class PengawasanPemanfaatanProduk extends Model
         'tertib_kapasitas_beban',
         'tertib_pemeliharaan_bangunan',
         'tertib_program_pemeliharaan',
-        'is_tertib',
+        'tertib_pengawasan',
         'catatan',
         'verified_by',
         'verified_at',

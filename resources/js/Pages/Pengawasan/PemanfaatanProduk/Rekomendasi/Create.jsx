@@ -4,7 +4,7 @@ import Layout from "../../../../Components/Layout";
 import Breadcrumb from "../../../../Components/Breadcrumb";
 import FormRekomendasi from "../../../../Components/Pengawasan/FormRekomendasi";
 
-import { LiaHomeSolid } from "react-icons/lia";
+import { LiaHomeSolid, LiaFileAltSolid } from "react-icons/lia";
 
 import {
     InformasiBangunan,
@@ -29,6 +29,15 @@ const RekomendasiPengawasanPemanfaatanProdukCreate = ({ data }) => {
                 <div>
                     <h3 className="font-light text-xs text-slate-500">Pengawasan Tertib Pemanfaatan Produk Jasa Konstruksi</h3>
                     <h1 className="font-medium text-xl text-slate-800 uppercase">{bangunan.nama}</h1>
+                </div>
+                <div className="flex items-center gap-x-2">
+                    <button
+                        className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                        disabled={rekomendasiPengawasan.length === 0}
+                    >
+                        <LiaFileAltSolid size={18} />
+                        <span>Lihat Laporan</span>
+                    </button>
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-4 w-full mt-4">

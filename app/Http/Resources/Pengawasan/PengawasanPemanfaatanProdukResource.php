@@ -33,8 +33,8 @@ class PengawasanPemanfaatanProdukResource extends JsonResource
                 $this->tertib_pemeliharaan_bangunan : (bool)$this->tertib_pemeliharaan_bangunan,
             'tertibProgramPemeliharaan'   => $this->tertib_program_pemeliharaan === null ?
                 $this->tertib_program_pemeliharaan : (bool)$this->tertib_program_pemeliharaan,
-            'tertibPengawasan'            => $this->is_tertib === null ?
-                $this->is_tertib : (bool)$this->is_tertib,
+            'tertibPengawasan'            => $this->tertib_pengawasan === null ?
+                $this->tertib_pengawasan : (bool)$this->tertib_pengawasan,
             'bangunan'                    => [
                 'nama'                  => $bangunan->nama,
                 'pemilikBangunan'       => $bangunan->pemilik_bangunan,

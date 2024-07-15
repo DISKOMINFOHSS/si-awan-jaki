@@ -44,7 +44,8 @@ export default ({ pengawasan, isVisible, onClose }) => {
         tertibKapasitasBeban,
         tertibPemeliharaanBangunan,
         tertibProgramPemeliharaan,
-        tertibPengawasan
+        tertibPengawasan,
+        catatan,
     } = pengawasan;
 
     const [values, setValues] = React.useState({
@@ -55,7 +56,7 @@ export default ({ pengawasan, isVisible, onClose }) => {
         pemeliharaanBangunan: tertibPemeliharaanBangunan,
         programPemeliharaan: tertibProgramPemeliharaan,
         tertibPengawasan: tertibPengawasan,
-        catatan: '',
+        catatan: catatan,
     });
 
     const [isModalErrorOpened, setIsModalErrorOpened] = React.useState(false);

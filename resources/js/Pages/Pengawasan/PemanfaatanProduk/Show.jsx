@@ -3,19 +3,25 @@ import { Link, router } from "@inertiajs/react";
 
 import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
-import Card from "../../../Components/Card";
 import Dropdown from "../../../Components/Dropdown";
 
 import FormPemeriksaan from "../../../Components/Bangunan/FormPemeriksaan";
 import ModalError from "../../../Components/ModalError";
 import FormVerifikasiPengawasan from "../../../Components/Bangunan/FormVerifikasiPengawasan";
+import {
+    InformasiBangunan,
+    InformasiUmumPengawasan,
+    InformasiTertibPengawasan
+} from "../../../Components/Bangunan/InformasiPengawasan";
 
 import useToggleWithClickOutside from "../../../Hooks/useToggleWithClickOutside";
 
 import {
     LiaHomeSolid,
     LiaListAltSolid,
-    LiaEllipsisHSolid
+    LiaEllipsisHSolid,
+    LiaPrintSolid,
+    LiaFileAltSolid
 } from "react-icons/lia";
 
 function DaftarLingkupPengawasan({ pengawasanId, daftarLingkupPengawasan }) {
@@ -57,6 +63,7 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
         tertibPemeliharaanBangunan,
         tertibProgramPemeliharaan,
         tertibPengawasan,
+        rekomendasiPengawasan,
     } = pengawasan;
 
     const [
@@ -89,7 +96,8 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
             tertibRencanaUmurKonstruksi &&
             tertibKapasitasBeban &&
             tertibPemeliharaanBangunan &&
-            tertibProgramPemeliharaan
+            tertibProgramPemeliharaan &&
+            tertibPengawasan
         ) {
             return router.get(`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/rekomendasi/create`);
         }
@@ -110,13 +118,22 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                     <h1 className="font-medium text-xl text-slate-800 uppercase">{bangunan.nama}</h1>
                 </div>
                 <div className="flex items-center gap-x-2">
-                    <button
-                        className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
-                        onClick={() => handleRekomendasiClick()}
-                    >
-                        <LiaListAltSolid size={18} />
-                        <span>Buat Rekomendasi</span>
-                    </button>
+                    {
+                        rekomendasiPengawasan.length === 0 ?
+                        <button
+                            className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                            onClick={() => handleRekomendasiClick()}
+                        >
+                            <LiaListAltSolid size={18} />
+                            <span>Buat Rekomendasi</span>
+                        </button> :
+                        <button
+                            className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                        >
+                            <LiaFileAltSolid size={18} />
+                            <span>Lihat Laporan</span>
+                        </button>
+                    }
                     <Dropdown ref={moreDropdownRef}>
                         <Dropdown.Toggle
                             onClick={toggleMoreDropdown}
@@ -126,65 +143,44 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu
                             isVisible={isMoreDropdownOpened}
-                            className="min-w-36 flex flex-col right-0 py-2 space-y-0.5 text-xs text-slate-700"
+                            className="min-w-full flex flex-col right-0 py-2 space-y-0.5 text-xs text-slate-700"
                         >
-                            <a href="#" className="px-4 py-2 hover:bg-slate-100 hover:text-blue-600">Verifikasi Pengawasan</a>
-                            <a href="#" className="px-4 py-2 hover:bg-slate-100 hover:text-blue-600">Pengaturan</a>
+                            <button
+                                type="button"
+                                className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpened(true)}}
+                            >
+                                Verifikasi Pengawasan
+                            </button>
+                            <button
+                                type="button"
+                                className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => handleRekomendasiClick()}
+                            >
+                                {rekomendasiPengawasan.length === 0 ? 'Buat' : 'Lihat'} Rekomendasi
+                            </button>
+                            <button
+                                type="button"
+                                className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+
+                            >
+                                Cetak Laporan
+                            </button>
+                            {/* <a href="#" className="px-4 py-2 hover:bg-slate-100 hover:text-blue-600">Pengaturan</a> */}
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-4 w-full mt-4">
-                <Card className="w-full h-fit">
-                    <Card.Body className="p-4 text-xs">
-                        <div className="pb-3 border-b border-slate-200">
-                            <div className="font-medium">Nama Bangunan Konstruksi</div>
-                            <div className="font-light text-slate-500 uppercase">{bangunan.nama}</div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-x-4 border-b border-slate-200 py-3">
-                            <div>
-                                <div className="font-medium">Nama Pemilik Bangunan</div>
-                                <div className="font-light text-slate-500 uppercase">{bangunan.pemilikBangunan}</div>
-                            </div>
-                            <div>
-                                <div className="font-medium">Nama Pengelola Bangunan</div>
-                                <div className="font-light text-slate-500 uppercase">{bangunan.pengelolaBangunan}</div>
-                            </div>
-                        </div>
-                        <div className="pt-3">
-                            <div className="font-medium">Lokasi Bangunan</div>
-                            <div className="font-light text-slate-500 capitalize">
-                                {bangunan.lokasi}
-                                {bangunan.desaKelurahan && `, ${bangunan.desaKelurahan.toLowerCase()}`}
-                                {bangunan.kecamatan && `, ${bangunan.kecamatan.toLowerCase()}`}
-                            </div>
-                        </div>
-                    </Card.Body>
-                </Card>
-                <Card className="h-fit w-full">
-                    <Card.Body className="p-4 text-xs">
-                        <div className="grid grid-cols-2 gap-x-4 pb-3 border-b border-slate-200">
-                            <div>
-                                <div className="font-medium">Jenis Pengawasan</div>
-                                <div className="font-light text-slate-500">Pengawasan {pengawasan.jenisPengawasan}</div>
-                            </div>
-                            <div>
-                                <div className="font-medium">Tanggal Pengawasan</div>
-                                <div className="font-light text-slate-500">{pengawasan.tanggalPengawasan}</div>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-x-4 pt-3">
-                            <div>
-                                <div className="font-medium">Tanggal Verifikasi</div>
-                                <div className="font-light text-slate-500">{pengawasan.verifiedAt ? pengawasan.verifiedAt : '-'}</div>
-                            </div>
-                            <div>
-                                <div className="font-medium">Verifikasi oleh</div>
-                                <div className="font-light text-slate-500">{pengawasan.verifiedBy ? pengawasan.verifiedBy : '-'}</div>
-                            </div>
-                        </div>
-                    </Card.Body>
-                </Card>
+                {/* <InformasiBangunan bangunan={bangunan} />
+                <InformasiUmumPengawasan pengawasan={pengawasan} /> */}
+                <div className="space-y-4">
+                    <InformasiBangunan bangunan={bangunan} />
+                    <InformasiUmumPengawasan pengawasan={pengawasan} />
+                </div>
+                <div className="space-y-4">
+                    <InformasiTertibPengawasan pengawasan={pengawasan} />
+                </div>
             </div>
             <DaftarLingkupPengawasan
                 pengawasanId={pengawasan.id}

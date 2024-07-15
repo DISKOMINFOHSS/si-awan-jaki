@@ -66,8 +66,13 @@ export default ({ rekomendasiPengawasan, pengawasan, link }) => {
                                 </div>
                             </div>
                             <div className="col-span-3 flex justify-end items-center gap-x-2.5">
-                                <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-2.5">Kembali</button>
-                                {/* <Link href={action}></Link> */}
+                                {/* <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-2.5">Kembali</button> */}
+                                <Link
+                                    href={`/admin/pengawasan/${link}`}
+                                    className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-2.5"
+                                >
+                                    Kembali
+                                </Link>
                                 <button type="submit" disabled={processing} className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-2.5">
                                     { processing && <LiaSpinnerSolid className="animate-spin" /> }
                                     Simpan

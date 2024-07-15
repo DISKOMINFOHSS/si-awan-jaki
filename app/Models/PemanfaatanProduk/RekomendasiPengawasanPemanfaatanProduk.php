@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PemeriksaanPengawasanPemanfaatanProduk extends Model
+class RekomendasiPengawasanPemanfaatanProduk extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'pemeriksaan_pengawasan_pemanfaatan_produk';
+    protected $table = 'rekomendasi_pengawasan_pemanfaatan_produk';
 
     protected $fillable = [
         'pengawasan_id',
-        'lingkup_id',
-        'kesimpulan_pemeriksaan',
-        'catatan_pemeriksaan',
+        'rekomendasi',
+        'keterangan',
+        'tanggal_temuan',
         'created_by',
     ];
 

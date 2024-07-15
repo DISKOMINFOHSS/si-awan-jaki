@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PengawasanPemanfaatanProduk extends Model
 {
@@ -34,6 +35,11 @@ class PengawasanPemanfaatanProduk extends Model
     public function bangunan(): BelongsTo
     {
         return $this->belongsTo(Bangunan::class, 'bangunan_id');
+    }
+
+    public function rekomendasi(): HasMany
+    {
+        return $this->hasMany(RekomendasiPengawasanPemanfaatanProduk::class, 'pengawasan_id');
     }
 
     public function createdBy(): BelongsTo

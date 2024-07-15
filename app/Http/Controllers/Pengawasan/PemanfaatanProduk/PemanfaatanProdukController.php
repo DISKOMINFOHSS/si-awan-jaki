@@ -140,4 +140,28 @@ class PemanfaatanProdukController extends Controller
             ],
         ]);
     }
+
+    public function storeRekomendasi(string $id, Request $request)
+    {
+        if (!$this->pengawasanService->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'rekomendasi'   => 'required',
+            'keterangan'    => 'nullable',
+            'tanggalTemuan' => 'nullable|date'
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanService->addRekomendasiPengawasan([
+            'pengawasan_id'  => $id,
+            'rekomendasi'    => $validatedData['rekomendasi'],
+            'keterangan'     => $validatedData['keterangan'],
+            'tanggal_temuan' => $validatedData['tanggalTemuan'],
+            'created_by'     => $userId,
+        ]);
+
+        return redirect("/admin/pengawasan/pemanfaatan-produk/$id");
+    }
 }

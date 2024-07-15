@@ -4,6 +4,7 @@ namespace App\Services\PemanfaatanProduk;
 
 use App\Models\PemanfaatanProduk\PemeriksaanPengawasanPemanfaatanProduk;
 use App\Models\PemanfaatanProduk\PengawasanPemanfaatanProduk;
+use App\Models\PemanfaatanProduk\RekomendasiPengawasanPemanfaatanProduk;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Query\JoinClause;
@@ -73,11 +74,15 @@ class PengawasanPemanfaatanProdukService
     public function getPengawasanById(string $id): PengawasanPemanfaatanProduk
     {
         return PengawasanPemanfaatanProduk::with([
-            'bangunan' => function (Builder $query) {
+            'bangunan'    => function (Builder $query) {
                 $query
                 ->join('pemilik_pengelola_bangunan as pemilik', 'pemilik.id', 'bangunan.pemilik_bangunan')
                 ->join('pemilik_pengelola_bangunan as pengelola', 'pengelola.id', 'bangunan.pengelola_bangunan')
                 ->select('bangunan.*', 'pemilik.nama as pemilik_bangunan', 'pengelola.nama as pengelola_bangunan');
+            },
+            'rekomendasi' => function (Builder $query) {
+                $query
+                ->select('pengawasan_id', 'rekomendasi', 'keterangan', 'tanggal_temuan as tanggalTemuan');
             },
         ])
         ->where('id', $id)
@@ -118,5 +123,28 @@ class PengawasanPemanfaatanProdukService
         $pemeriksaan->save();
 
         return $pemeriksaan->id;
+    }
+
+    public function addRekomendasiPengawasan(array $data): string
+    {
+        // $rekomendasi = DB::table('rekomendasi_pengawasan_pemanfaatan_produk')->insert([
+        //     'rekomendasi'   => $data['rekomendasi'],
+        //     'keterangan'    => $data['keterangan'],
+        //     'tanggalTemuan' => $data['tanggalTemuan'],
+        //     'created_by'    => $data['created_by'],
+        // ]);
+
+        $rekomendasi = RekomendasiPengawasanPemanfaatanProduk::firstOrNew([
+            'pengawasan_id' => $data['pengawasan_id'],
+        ]);
+
+        $rekomendasi->rekomendasi = $data['rekomendasi'];
+        $rekomendasi->keterangan = $data['keterangan'];
+        $rekomendasi->tanggal_temuan = $data['tanggal_temuan'];
+        $rekomendasi->created_by = $data['created_by'];
+
+        $rekomendasi->save();
+
+        return $rekomendasi->id;
     }
 }

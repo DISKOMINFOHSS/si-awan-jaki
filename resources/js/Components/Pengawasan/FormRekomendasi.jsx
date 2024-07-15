@@ -5,11 +5,13 @@ import Card from "../Card";
 import ModalError from "../ModalError";
 import { LiaSpinnerSolid } from "react-icons/lia";
 
-export default ({ pengawasan, link }) => {
+export default ({ rekomendasiPengawasan, pengawasan, link }) => {
+    const { rekomendasi, keterangan, tanggalTemuan } = rekomendasiPengawasan;
+
     const { data, setData, post, processing, reset } = useForm({
-        rekomendasi: '',
-        keterangan: '',
-        tanggalTemuan: '',
+        rekomendasi: rekomendasi ? rekomendasi : '',
+        keterangan: keterangan ? keterangan : '',
+        tanggalTemuan: tanggalTemuan ? tanggalTemuan : '',
     });
 
     const [isModalErrorOpened, setIsModalErrorOpened] = React.useState(false);
@@ -20,8 +22,9 @@ export default ({ pengawasan, link }) => {
             onSuccess: () => {
                 reset();
             },
-            onError: () => {
+            onError: (errors) => {
                 setIsModalErrorOpened(true);
+                console.log(errors);
             }
         });
     }
@@ -80,7 +83,7 @@ export default ({ pengawasan, link }) => {
             >
                 <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
                 <div className="font-light text-xs text-slate-500 mb-2">
-                    Gagal menyimpan rekomendasi pengawasan. Silakan periksa kembali informasi yang diisi.
+                    Gagal menyimpan rekomendasi. Silakan periksa kembali informasi yang diisi.
                 </div>
             </ModalError>
         </>

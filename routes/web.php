@@ -51,9 +51,11 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                     Route::post('/{id}/verification', 'storeVerification');
 
+                    Route::post('/{id}/rekomendasi', 'storeRekomendasi');
+                    Route::get('/{id}/rekomendasi/create', 'createRekomendasi');
+
                     Route::post('/{id}/{lingkup_id}', 'storePemeriksaan');
 
-                    Route::get('/{id}/rekomendasi/create', 'createRekomendasi');
                 });
         });
     }

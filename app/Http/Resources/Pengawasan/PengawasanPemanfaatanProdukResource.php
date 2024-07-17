@@ -37,6 +37,12 @@ class PengawasanPemanfaatanProdukResource extends JsonResource
                 $this->tertib_pengawasan : (bool)$this->tertib_pengawasan,
             'bangunan'                    => [
                 'nama'                  => $bangunan->nama,
+                'nomorKontrak'          => $bangunan->nomor_kontrak_pembangunan,
+                'sumberDana'            => $bangunan->sumber_dana,
+                'tanggalMulaiBangun'    => Carbon::parse($bangunan->mulai_pembangunan)->locale('id')->isoFormat('D MMMM Y'),
+                'tanggalSelesaiBangun'  => Carbon::parse($bangunan->selesai_pembangunan)->locale('id')->isoFormat('D MMMM Y'),
+                'tanggalPemanfaatan'    => Carbon::parse($bangunan->tanggal_pemanfaatan)->locale('id')->isoFormat('D MMMM Y'),
+                'umurKonstruksi'        => $bangunan->umur_konstruksi,
                 'pemilikBangunan'       => $bangunan->pemilik_bangunan,
                 'pengelolaBangunan'     => $bangunan->pengelola_bangunan,
                 'lokasi'                => $bangunan->lokasi,

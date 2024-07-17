@@ -164,4 +164,18 @@ class PemanfaatanProdukController extends Controller
 
         return redirect("/admin/pengawasan/pemanfaatan-produk/$id");
     }
+
+    public function showLaporan(string $id)
+    {
+        $daftarLingkupPengawasan = $this->pengawasanService->getDaftarLingkupPengawasan($id);
+        $pengawasan = $this->pengawasanService->getPengawasanById($id);
+
+        $pengawasan['daftarPemeriksaan'] = $daftarLingkupPengawasan;
+
+        return Inertia::render('Pengawasan/PemanfaatanProduk/Laporan', [
+            'data' => [
+                'pengawasan' => new PengawasanPemanfaatanProdukResource($pengawasan),
+            ],
+        ]);
+    }
 }

@@ -100,4 +100,15 @@ class BangunanController extends Controller
             ],
         ]);
     }
+
+    public function edit(string $id)
+    {
+        $bangunan = $this->bangunanService->getBangunan($id);
+
+        return Inertia::render('Pendataan/Bangunan/Edit', [
+            'data' => [
+                'bangunan' => new BangunanResource($bangunan),
+            ],
+        ]);
+    }
 }

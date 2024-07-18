@@ -3,6 +3,7 @@ import { Font, Document, PDFViewer, Page, View, Text, Svg } from "@react-pdf/ren
 import { createTw } from "react-pdf-tailwind";
 
 import { inter } from "../../../Utils/fonts";
+import { getStatusBadgePDF, getTertibStatusBadgePDF } from "../../../Utils/getStatusBadge";
 
 Font.registerHyphenationCallback(word => [word]);
 Font.register({ family: 'Inter', fonts: inter });
@@ -14,22 +15,6 @@ const tw = createTw({
         },
     },
 });
-
-function getTertibStatusBadge(isTertib, label = "Tertib") {
-    switch(isTertib) {
-        case true:
-            return (
-                <Text style={tw("py-1 w-16 rounded-full bg-green-100 text-green-500 text-center text-[9px]")}>{label}</Text>
-            );
-        case false:
-            const badge = label === '"Tertib' ?
-                <Text style={tw("py-1 w-24 rounded-full bg-red-100 text-red-500 text-center text-[9px]")}>Belum {label}</Text> :
-                <Text style={tw("py-1 w-24 rounded-full bg-red-100 text-red-500 text-center text-[9px]")}>Tidak {label}</Text>;
-
-            return badge;
-    }
-}
-
 
 export default ({ data }) => {
     const { pengawasan } = data;
@@ -112,7 +97,7 @@ export default ({ data }) => {
                                 <Text style={tw("font-light text-[9px]")}>Pengawasan Fungsi Peruntukan</Text>
                             </View>
                             <View style={tw("basis-1/3 mt-1")}>
-                                {getTertibStatusBadge(tertibKesesuaianFungsi)}
+                                {getTertibStatusBadgePDF(tertibKesesuaianFungsi)}
                             </View>
                         </View>
                         <View style={tw("basis-1/2 flex flex-row gap-4")}>
@@ -121,7 +106,7 @@ export default ({ data }) => {
                                 <Text style={tw("font-light text-[9px]")}>Pengawasan Fungsi Peruntukan</Text>
                             </View>
                             <View style={tw("basis-1/3 mt-1")}>
-                                {getTertibStatusBadge(tertibKesesuaianLokasi)}
+                                {getTertibStatusBadgePDF(tertibKesesuaianLokasi)}
                             </View>
                         </View>
                     </View>
@@ -131,7 +116,7 @@ export default ({ data }) => {
                                 <Text style={tw("font-medium text-[10px]")}>Rencana Umur Konstruksi</Text>
                             </View>
                             <View style={tw("basis-1/3 mt-1")}>
-                                {getTertibStatusBadge(tertibRencanaUmurKonstruksi)}
+                                {getTertibStatusBadgePDF(tertibRencanaUmurKonstruksi)}
                             </View>
                         </View>
                         <View style={tw("basis-1/2 flex flex-row items-center gap-4")}>
@@ -139,7 +124,7 @@ export default ({ data }) => {
                                 <Text style={tw("font-medium text-[10px]")}>Kapasitas dan Beban</Text>
                             </View>
                             <View style={tw("basis-1/3 mt-1")}>
-                                {getTertibStatusBadge(tertibKapasitasBeban)}
+                                {getTertibStatusBadgePDF(tertibKapasitasBeban)}
                             </View>
                         </View>
                     </View>
@@ -150,7 +135,7 @@ export default ({ data }) => {
                                 <Text style={tw("font-light text-[9px]")}>Pemeliharaan Produk Konstruksi</Text>
                             </View>
                             <View style={tw("basis-1/3 mt-1")}>
-                                {getTertibStatusBadge(tertibPemeliharaanBangunan)}
+                                {getTertibStatusBadgePDF(tertibPemeliharaanBangunan)}
                             </View>
                         </View>
                         <View style={tw("basis-1/2 flex flex-row gap-4")}>
@@ -159,7 +144,7 @@ export default ({ data }) => {
                                 <Text style={tw("font-light text-[9px]")}>Pemeliharaan Produk Konstruksi</Text>
                             </View>
                             <View style={tw("basis-1/3 mt-1")}>
-                                {getTertibStatusBadge(tertibProgramPemeliharaan)}
+                                {getTertibStatusBadgePDF(tertibProgramPemeliharaan)}
                             </View>
                         </View>
                     </View>
@@ -169,21 +154,19 @@ export default ({ data }) => {
                     </View>
                     <Text style={tw("border border-slate-200 rounded-lg p-4 min-h-24 font-light text-[10px] text-justify mb-4")}>{rekomendasi}</Text>
                     <View style={tw("flex flex-row gap-4")}>
-                        {
-                            keterangan &&
-                            <View style={tw("basis-4/5 text-[10px]")}>
-                                <Text style={tw("font-medium mb-1")}>Keterangan</Text>
-                                <Text style={tw("border border-slate-200 rounded-lg p-4 min-h-20 font-light text-justify")}>{keterangan}</Text>
-                            </View>
-                        }
-                        {
-                            tanggalTemuan &&
-                            <View style={tw("basis-1/5 text-[10px]")}>
-                                <Text style={tw("font-medium mb-1")}>Tanggal Temuan</Text>
-                                <Text style={tw("border border-slate-200 rounded-lg p-4 font-light")}>{tanggalTemuan}</Text>
-                            </View>
-                        }
+                        <View style={tw("basis-4/5 text-[10px]")}>
+                            <Text style={tw("font-medium mb-1")}>Keterangan</Text>
+                            <Text style={tw("border border-slate-200 rounded-lg p-4 min-h-20 font-light text-justify")}>{keterangan ? keterangan : '-'}</Text>
+                        </View>
+                        <View style={tw("basis-1/5 text-[10px]")}>
+                            <Text style={tw("font-medium mb-1")}>Tanggal Temuan</Text>
+                            <Text style={tw("border border-slate-200 rounded-md p-4 font-light")}>{tanggalTemuan ? tanggalTemuan : '-'}</Text>
+                        </View>
                     </View>
+                    <Text
+                        render={({ pageNumber }) => (`- ${pageNumber} -`)} fixed
+                        style={tw("absolute bottom-8 right-0 left-0 text-[9px] text-center")}
+                    />
                 </Page>
                 <Page wrap size="A4" orientation="landscape" style={tw("p-12 font-sans relative")}>
                     <View style={tw("font-medium text-center text-[12px]")}>
@@ -261,7 +244,7 @@ export default ({ data }) => {
                                                             <>
                                                                 <View style={tw("flex flex-row items-center gap-2")}>
                                                                     <Text style={tw("font-light leading-tight")}>Kesimpulan</Text>
-                                                                    {getTertibStatusBadge(kesimpulan, label)}
+                                                                    {getStatusBadgePDF(kesimpulan, label)}
                                                                 </View>
                                                                 <View style={tw("mt-1")}>
                                                                     <Text style={tw("font-light leading-tight")}>Catatan Pemeriksaan</Text>
@@ -285,17 +268,17 @@ export default ({ data }) => {
 
                                     if (j === lingkupPengawasan.length - 1) {
                                         return (
-                                            <View style={tw(`flex flex-row w-full`)}>{item}</View>
+                                            <View key={j} style={tw(`flex flex-row w-full`)}>{item}</View>
                                         );
                                     }
 
                                     return (
-                                        <View style={tw(`flex flex-row w-full border-b border-slate-800`)}>{item}</View>
+                                        <View key={j} style={tw(`flex flex-row w-full border-b border-slate-800`)}>{item}</View>
                                     );
                                 });
 
                                 return (
-                                    <View wrap={false} style={tw("flex flex-row w-full text-[10px]")}>
+                                    <View wrap={false} key={i} style={tw("flex flex-row w-full text-[10px]")}>
                                         <View style={tw("w-[5%] border-y border-l border-slate-800 p-2")}>
                                             <Text style={tw("text-center")}>{i + 1}.</Text>
                                         </View>
@@ -317,6 +300,10 @@ export default ({ data }) => {
                             })
                         }
                     </View>
+                    <Text
+                        render={({ pageNumber }) => (`- ${pageNumber} -`)} fixed
+                        style={tw("absolute bottom-8 right-0 left-0 text-[9px] text-center")}
+                    />
                 </Page>
             </Document>
         </PDFViewer>

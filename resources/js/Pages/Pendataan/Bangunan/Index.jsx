@@ -16,6 +16,13 @@ const PendataanBangunanIndex = ({ data }) => {
     const { daftarBangunan } = data;
     console.log(data);
 
+    const [keyword, setKeyword] = React.useState('');
+    const handleKeywordChange = (event) => setKeyword(event.target.value);
+
+    const filteredDaftarBangunan = keyword ? daftarBangunan.filter(({ nama }) => {
+        return nama.toLowerCase().includes(keyword.toLowerCase());
+    }) : daftarBangunan;
+
     return (
         <>
             <div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-200">
@@ -33,7 +40,7 @@ const PendataanBangunanIndex = ({ data }) => {
                         <LiaSearchSolid size={18} className="text-slate-500 -scale-x-100" />
                     </div>
                     <input
-                        type="search" name="search" placeholder="Cari..."
+                        type="search" value={keyword} onChange={handleKeywordChange} name="search" placeholder="Cari..."
                         className="border border-slate-200 rounded-md py-2.5 pl-9 block w-full text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs"
                     />
                 </div>
@@ -62,13 +69,11 @@ const PendataanBangunanIndex = ({ data }) => {
                         <table className="w-full text-xs text-slate-800">
                             <tbody>
                                 {
-                                    daftarBangunan.map(({id, nama, desaKelurahan, kecamatan}) => (
+                                    filteredDaftarBangunan.map(({id, nama, desaKelurahan, kecamatan}) => (
                                         <tr key={id} className="border-b border-slate-100 hover:bg-slate-50">
                                             <td className="px-4 py-5">
                                                 <div>
                                                     <Link href={`/admin/pendataan/bangunan/${id}`} className="line-clamp-1 font-medium uppercase hover:text-blue-600 hover:underline">{nama}</Link>
-                                                    {/* <div className="font-light text-slate-600">{bangunan.desa_kelurahan && `${bangunan.desa_kelurahan.toLowerCase()}, `} {bangunan.kecamatan.toLowerCase()}</div> */}
-                                                    {/* <div className="font-light text-slate-600">{bangunan.lokasi}</div> */}
                                                 </div>
                                             </td>
                                             <td className="px-4 py-5">

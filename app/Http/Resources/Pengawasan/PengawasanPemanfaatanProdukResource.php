@@ -36,6 +36,7 @@ class PengawasanPemanfaatanProdukResource extends JsonResource
             'tertibPengawasan'            => $this->tertib_pengawasan === null ?
                 $this->tertib_pengawasan : (bool)$this->tertib_pengawasan,
             'bangunan'                    => [
+                'id'                    => $bangunan->id,
                 'nama'                  => $bangunan->nama,
                 'nomorKontrak'          => $bangunan->nomor_kontrak_pembangunan,
                 'sumberDana'            => $bangunan->sumber_dana,

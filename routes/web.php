@@ -38,6 +38,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/create', 'create');
                     Route::post('/', 'store');
                     Route::get('/{id}', 'show');
+                    Route::get('/{id}/edit', 'edit');
+                    Route::put('/{id}', 'update');
                 });
         });
 

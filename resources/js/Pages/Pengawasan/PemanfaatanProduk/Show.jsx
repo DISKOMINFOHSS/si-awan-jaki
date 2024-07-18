@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, router } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 
 import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
@@ -20,7 +20,6 @@ import {
     LiaHomeSolid,
     LiaListAltSolid,
     LiaEllipsisHSolid,
-    LiaPrintSolid,
     LiaFileAltSolid
 } from "react-icons/lia";
 
@@ -148,6 +147,13 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                             isVisible={isMoreDropdownOpened}
                             className="min-w-full flex flex-col right-0 py-2 space-y-0.5 text-xs text-slate-700"
                         >
+                            <a
+                                href={`/admin/pendataan/bangunan/${bangunan.id}`}
+                                target="_blank"
+                                className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                            >
+                                Informasi Bangunan
+                            </a>
                             <button
                                 type="button"
                                 className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
@@ -162,14 +168,13 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                             >
                                 {rekomendasiPengawasan.length === 0 ? 'Buat' : 'Lihat'} Rekomendasi
                             </button>
-                            <button
+                            {/* <button
                                 type="button"
                                 className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
 
                             >
                                 Cetak Laporan
-                            </button>
-                            {/* <a href="#" className="px-4 py-2 hover:bg-slate-100 hover:text-blue-600">Pengaturan</a> */}
+                            </button> */}
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>

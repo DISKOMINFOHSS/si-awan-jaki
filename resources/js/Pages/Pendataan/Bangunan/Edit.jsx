@@ -1,0 +1,117 @@
+import React from "react";
+
+import Layout from "../../../Components/Layout";
+import FormTabs from "../../../Components/FormTabs";
+import ModalError from "../../../Components/ModalError";
+
+import FormPemilikPengelola from "../../../Components/Bangunan/FormPemilikPengelola";
+import FormInformasi from "../../../Components/Bangunan/FormInformasi";
+import Informasi from "../../../Components/Bangunan/Informasi";
+import PemilikPengelola from "../../../Components/Bangunan/PemilikPengelola";
+
+const PendataanBangunanEdit = ({ data }) => {
+    console.log(data);
+    const { bangunan } = data;
+    const { pemilikBangunan, pengelolaBangunan, ...informasiBangunan } = bangunan;
+    // console.log(informasiBangunan);
+
+    const [informasi, setInformasi] = React.useState(informasiBangunan);
+    const handleInformasiChange = values => setInformasi({ ...informasi, ...values });
+
+    const [pemilik, setPemilik] = React.useState(pemilikBangunan);
+    const handlePemilikChange = values => setPemilik({ ...pemilik, ...values });
+
+    const [pengelola, setPengelola] = React.useState(pengelolaBangunan);
+    const handlePengelolaChange = values => setPengelola({ ...pengelola, ...values });
+
+    const [isModalErrorOpened, setIsModalErrorOpened] = React.useState(false);
+    const [processing, setProcessing] = React.useState(false);
+
+    function handleSubmit() {
+        // setProcessing(true);
+
+        // router.put(`/admin/pendataan/bangunan/${bangunan.id}`, {
+        //     bangunan: informasi,
+        //     pemilik: pemilik,
+        //     pengelola: pengelola,
+        // }, {
+        //     onError: () => setIsModalErrorOpened(true),
+        //     onSuccess: () => {
+        //         setInformasi(informasiBangunan);
+        //         setPemilik(pemilikBangunan);
+        //         setPengelola(pengelolaBangunan);
+        //         setProcessing(false);
+        //     },
+        // });
+
+        console.log(informasi, pemilik, pengelola);
+    }
+
+    return (
+        <>
+            <div className="w-full text-center mb-5">
+                <h1 className="font-medium text-xl text-slate-800">Edit Bangunan Konstruksi</h1>
+                <h2 className="font-light text-xs text-slate-500">Pendataan Pemanfaatan Produk Jasa Konstruksi di Kab. Hulu Sungai Selatan</h2>
+            </div>
+            <FormTabs
+                backLink={`/admin/pendataan/bangunan/${bangunan.id}`}
+                onSubmit={handleSubmit}
+                isProcessing={processing}
+            >
+                <FormTabs.Tab
+                    heading="Informasi Bangunan"
+                    subheading="Silakan lengkapi informasi bangunan konstruksi"
+                >
+                    <FormInformasi
+                        data={informasi}
+                        onChange={handleInformasiChange}
+                    />
+                </FormTabs.Tab>
+                <FormTabs.Tab
+                    heading="Pemilik dan Pengelola Bangunan"
+                    subheading="Silakan lengkapi informasi pemilik dan pengelola bangunan"
+                >
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+                        <FormPemilikPengelola
+                            role="pemilik"
+                            data={pemilik}
+                            onChange={handlePemilikChange}
+                        />
+                        <FormPemilikPengelola
+                            role="pengelola"
+                            data={pengelola}
+                            onChange={handlePengelolaChange}
+                        />
+                    </div>
+                </FormTabs.Tab>
+                <FormTabs.Tab
+                    heading="Rangkuman"
+                    subheading="Silakan periksa kembali informasi yang sudah diisi"
+                >
+                    <div className="grid md:grid-cols-2 gap-4 my-4">
+                        <div className="md:col-span-2">
+                            <Informasi bangunan={informasi} />
+                        </div>
+                        <PemilikPengelola role="pemilik" data={pemilik} />
+                        <PemilikPengelola role="pengelola" data={pengelola} />
+                    </div>
+                </FormTabs.Tab>
+            </FormTabs>
+
+
+            <ModalError
+                isVisible={isModalErrorOpened}
+                onClose={() => setIsModalErrorOpened(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Gagal mengedit informasi bangunan. Silakan periksa kembali informasi yang diisi.
+                </div>
+            </ModalError>
+        </>
+    )
+}
+
+PendataanBangunanEdit.layout = page => <Layout children={page} />;
+
+export default PendataanBangunanEdit;

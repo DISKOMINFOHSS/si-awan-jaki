@@ -31,13 +31,15 @@ const RekomendasiPengawasanPemanfaatanProdukCreate = ({ data }) => {
                     <h1 className="font-medium text-xl text-slate-800 uppercase">{bangunan.nama}</h1>
                 </div>
                 <div className="flex items-center gap-x-2">
-                    <button
+                    <a
+                        href={`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/laporan`}
+                        target="_blank"
                         className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
                         disabled={rekomendasiPengawasan.length === 0}
                     >
                         <LiaFileAltSolid size={18} />
                         <span>Lihat Laporan</span>
-                    </button>
+                    </a>
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-4 w-full mt-4">

@@ -1,6 +1,8 @@
 import React from "react";
 import Card from "../Card";
 
+import formatDateToIndonesia from "../../Utils/formatDateToIndonesia";
+
 export default ({ bangunan }) => {
     return (
         <Card className="w-full">
@@ -26,11 +28,11 @@ export default ({ bangunan }) => {
                 <div className="grid grid-cols-2 gap-x-4 border-b border-slate-200 py-3">
                 <div>
                     <div className="font-medium">Tanggal dan Tahun Pembangunan</div>
-                    <div className="font-light text-slate-500">{bangunan.tanggalMulaiBangun} s.d {bangunan.tanggalSelesaiBangun}</div>
+                    <div className="font-light text-slate-500">{formatDateToIndonesia(new Date(bangunan.tanggalMulaiBangun))} s.d {formatDateToIndonesia(new Date(bangunan.tanggalSelesaiBangun))}</div>
                 </div>
                 <div>
                     <div className="font-medium">Tanggal dan Tahun Pemanfaatan</div>
-                    <div className="font-light text-slate-500">{bangunan.tanggalPemanfaatan}</div>
+                    <div className="font-light text-slate-500">{formatDateToIndonesia(new Date(bangunan.tanggalPemanfaatan))}</div>
                 </div>
                 </div>
                 <div className="pt-3">

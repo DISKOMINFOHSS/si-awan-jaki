@@ -36,7 +36,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/', 'category');
                     // Route::post('/', 'store')->name('store');
 
-                    // Route::get('/{jenis_usaha}', 'index')->name('index');
+                    Route::get('/{jenis_usaha}', 'index')->name('index');
                 });
             });
 

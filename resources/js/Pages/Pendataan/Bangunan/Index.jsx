@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@inertiajs/react";
 
 import Layout from "../../../Components/Layout";
+import Card from "../../../Components/Card";
 
 import {
     LiaPlusSolid,
@@ -10,7 +11,6 @@ import {
     LiaAngleDownSolid,
     LiaAngleRightSolid
 } from "react-icons/lia";
-import Card from "../../../Components/Card";
 
 const PendataanBangunanIndex = ({ data }) => {
     const { daftarBangunan } = data;

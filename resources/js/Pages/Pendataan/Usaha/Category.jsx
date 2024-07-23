@@ -10,11 +10,7 @@ const PendataanUsahaCategory = ({ data }) => {
     console.log(data);
     const { daftarJenisUsaha } = data;
 
-    const logo = [
-        <LiaBoxesSolid size={24} />,
-        <LiaStoreSolid size={24} />,
-        <LiaUserAltSolid size={24} />,
-    ];
+    const logo = [ <LiaBoxesSolid size={24} />, <LiaStoreSolid size={24} />, <LiaUserAltSolid size={24} /> ];
 
     return (
         <>
@@ -32,7 +28,7 @@ const PendataanUsahaCategory = ({ data }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 my-3">
                     {
                         daftarJenisUsaha.map(({ id, jenisUsaha, slug }, i) => (
-                            <Link key={id} href={`/admin/pendaatan/usaha/${slug}`}>
+                            <Link key={id} href={`/admin/pendataan/usaha/${slug}`}>
                                 <Card>
                                     <Card.Body className="flex flex-col justify-center items-center px-2.5 py-5 text-center group hover:bg-blue-100">
                                         <div className="rounded bg-blue-100 text-blue-500 mb-2.5 p-2.5 w-fit group-hover:bg-blue-200">

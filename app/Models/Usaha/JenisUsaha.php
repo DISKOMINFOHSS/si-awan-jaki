@@ -10,8 +10,8 @@ class JenisUsaha extends Model
     protected $table = 'master_jenis_usaha';
     public $timestamps = false;
 
-    // public function usaha(): HasMany
-    // {
-    //     return $this->hasMany(Usaha::class);
-    // }
+    public function usaha(): HasMany
+    {
+        return $this->hasMany(Usaha::class);
+    }
 }

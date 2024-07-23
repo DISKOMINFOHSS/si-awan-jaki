@@ -29,6 +29,16 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
         Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
 
         Route::name('pendataan.')->prefix('pendataan')->group(function () {
+            // Pendataan Usaha
+            Route::name('usaha.')->prefix('usaha')->group(function () {
+                Route::controller(App\Http\Controllers\Pendataan\Usaha\UsahaController::class)
+                ->group(function () {
+                    Route::get('/', 'category');
+                    // Route::post('/', 'store')->name('store');
+
+                    // Route::get('/{jenis_usaha}', 'index')->name('index');
+                });
+            });
 
             // Pendataan Bangunan
             Route::name('bangunan.')->prefix('bangunan')

@@ -40,6 +40,9 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/{id}', 'show');
                     Route::get('/{id}/edit', 'edit');
                     Route::put('/{id}', 'update');
+
+                    Route::put('/{id}/pemilik', 'updatePemilik');
+                    Route::put('/{id}/pengelola', 'updatePengelola');
                 });
         });
 

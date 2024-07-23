@@ -82,7 +82,7 @@ class BangunanController extends Controller
             'pengelola_bangunan'        => $pengelolaId,
             'sk_pengelola'              => $request->input('pengelola.sk'),
             'lokasi'                    => $validatedData['bangunan']['lokasi'],
-            'desa_kelurahan'            => $request->input('bangunan.desa'),
+            'desa_kelurahan'            => strtoupper($request->input('bangunan.desaKelurahan')),
             'kecamatan'                 => $validatedData['bangunan']['kecamatan'],
             'created_by'                => $userId,
         ]);
@@ -110,5 +110,92 @@ class BangunanController extends Controller
                 'bangunan' => new BangunanResource($bangunan),
             ],
         ]);
+    }
+
+    public function update(string $id, Request $request)
+    {
+        if (!$this->bangunanService->checkBangunanExists($id)) {
+            return back()->withErrors(['message' => 'Bangunan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'bangunan.nama'                 => 'required',
+            'bangunan.nomorKontrak'         => 'required',
+            'bangunan.sumberDana'           => 'required',
+            'bangunan.umurKonstruksi'       => 'required',
+            'bangunan.tanggalMulaiBangun'   => 'required|date',
+            'bangunan.tanggalSelesaiBangun' => 'required|date|after:bangunan.tanggalMulaiBangun',
+            'bangunan.tanggalPemanfaatan'   => 'required|date',
+            'bangunan.lokasi'               => 'required',
+            'bangunan.kecamatan'            => 'required',
+        ]);
+
+        $bangunanId = $this->bangunanService->updateBangunan([
+            'id'                        => $id,
+            'nama'                      => $validatedData['bangunan']['nama'],
+            'nomor_kontrak_pembangunan' => $validatedData['bangunan']['nomorKontrak'],
+            'sumber_dana'               => $validatedData['bangunan']['sumberDana'],
+            'mulai_pembangunan'         => $validatedData['bangunan']['tanggalMulaiBangun'],
+            'selesai_pembangunan'       => $validatedData['bangunan']['tanggalSelesaiBangun'],
+            'tanggal_pemanfaatan'       => $validatedData['bangunan']['tanggalPemanfaatan'],
+            'umur_konstruksi'           => $validatedData['bangunan']['umurKonstruksi'],
+            'lokasi'                    => $validatedData['bangunan']['lokasi'],
+            'desa_kelurahan'            => strtoupper($request->input('bangunan.desaKelurahan')),
+            'kecamatan'                 => $validatedData['bangunan']['kecamatan'],
+        ]);
+    }
+
+    public function updatePemilik(string $id, Request $request)
+    {
+        if (!$this->bangunanService->checkBangunanExists($id)) {
+            return back()->withErrors(['message' => 'Bangunan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate(['pemilik.nama' => 'required']);
+        $userId = auth()->user()->id;
+        $pemilikId = $this->bangunanService->getPemilikIdByBangunanId($id);
+
+        $pemilik = $this->bangunanService->updatePemilikPengelolaBangunan([
+            'id'         => $pemilikId,
+            'nama'       => $validatedData['pemilik']['nama'],
+            'nip'        => $request->input('pemilik.nip'),
+            'jabatan'    => $request->input('pemilik.jabatan'),
+            'instansi'   => $request->input('pemilik.instansi'),
+            'alamat'     => $request->input('pemilik.alamat'),
+            'created_by' => $userId,
+        ]);
+
+        $this->bangunanService->updateSKPengelolaBangunan($id, $request->input('pemilik.sk'));
+
+        if ($pemilikId != $pemilik) {
+            $this->bangunanService->updatePemilikBangunan($id, $pemilik);
+        }
+    }
+
+    public function updatePengelola(string $id, Request $request)
+    {
+        if (!$this->bangunanService->checkBangunanExists($id)) {
+            return back()->withErrors(['message' => 'Bangunan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate(['pengelola.nama' => 'required']);
+        $userId = auth()->user()->id;
+        $pengelolaId = $this->bangunanService->getPengelolaIdByBangunanId($id);
+
+        $pengelola = $this->bangunanService->updatePemilikPengelolaBangunan([
+            'id'         => $pengelolaId,
+            'nama'       => $validatedData['pengelola']['nama'],
+            'nip'        => $request->input('pengelola.nip'),
+            'jabatan'    => $request->input('pengelola.jabatan'),
+            'instansi'   => $request->input('pengelola.instansi'),
+            'alamat'     => $request->input('pengelola.alamat'),
+            'created_by' => $userId,
+        ]);
+
+        $this->bangunanService->updateSKPengelolaBangunan($id, $request->input('pengelola.sk'));
+
+        if ($pengelolaId != $pengelola) {
+            $this->bangunanService->updatePengelolaBangunan($id, $pengelola);
+        }
     }
 }

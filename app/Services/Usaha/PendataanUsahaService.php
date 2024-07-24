@@ -4,6 +4,7 @@ namespace App\Services\Usaha;
 
 use App\Models\Usaha\JenisUsaha;
 use App\Models\Usaha\Usaha;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection as DBCollection;
 use Illuminate\Support\Facades\DB;
@@ -20,8 +21,12 @@ class PendataanUsahaService
 
     public function getJenisUsahaWithDaftarUsahaBySlug(string $slug): JenisUsaha
     {
-        return JenisUsaha::with(['usaha'])->where('slug', $slug)
-            ->first();
+        return JenisUsaha::with(['usaha'  => function (Builder $query) {
+            $query->leftJoin('usaha_rantai_pasok', 'usaha.id', 'usaha_rantai_pasok.usaha_id')
+                  ->leftJoin('master_jenis_usaha_rantai_pasok as rantai_pasok', 'usaha_rantai_pasok.rantai_pasok_id', 'rantai_pasok.id')
+                  ->select('usaha.*', 'kategori_sumber_daya as kategoriSumberDaya', 'pelaku_usaha as pelakuUsaha');
+        }])->where('slug', $slug)
+           ->first();
     }
 
     public function getJenisUsahaById(string $id): JenisUsaha

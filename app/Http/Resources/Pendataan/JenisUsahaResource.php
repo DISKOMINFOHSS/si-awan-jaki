@@ -20,11 +20,15 @@ class JenisUsahaResource extends JsonResource
             'slug'                  => $this->slug,
             'daftarUsaha'           => $this->whenLoaded('usaha')->transform(function ($usaha) {
                 return [
-                    'id'     => $usaha->id,
-                    'nama'   => $usaha->nama,
-                    'nib'    => $usaha->nib,
-                    'pjbu'   => $usaha->pjbu,
-                    'alamat' => $usaha->alamat,
+                    'id'                => $usaha->id,
+                    'nama'              => $usaha->nama,
+                    'nib'               => $usaha->nib,
+                    'pjbu'              => $usaha->pjbu,
+                    'alamat'            => $usaha->alamat,
+                    'jenisRantaiPasok'  => $this->when($this->jenis_usaha === 'Usaha Rantai Pasok', [
+                        'kategoriSumberDaya' => $usaha->kategoriSumberDaya,
+                        'pelakuUsaha'        => $usaha->pelakuUsaha,
+                    ]),
                 ];
             }),
             'daftarJenisRantaiPasok' => $this->whenHas('daftar_jenis_rantai_pasok'),

@@ -31,7 +31,10 @@ export default ({ isVisible, onClose, jenisUsaha }) => {
                 onClose();
                 reset();
             },
-            onError: () => setIsModalErrorOpened(true),
+            onError: () => {
+                onClose();
+                setIsModalErrorOpened(true)
+            },
         });
     }
 

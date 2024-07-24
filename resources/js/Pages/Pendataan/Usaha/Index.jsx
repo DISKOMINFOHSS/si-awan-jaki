@@ -1,7 +1,9 @@
 import React from "react";
+import { Link } from "@inertiajs/react";
 
 import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
+import Card from "../../../Components/Card";
 
 import FormUsaha from "../../../Components/Usaha/FormUsaha";
 
@@ -11,6 +13,8 @@ import {
     LiaPlusSolid,
     LiaFilterSolid,
     LiaAngleDownSolid,
+    LiaAngleRightSolid,
+    LiaCircleSolid
 } from "react-icons/lia";
 
 const PendataanUsahaIndex = ({ data }) => {
@@ -65,6 +69,48 @@ const PendataanUsahaIndex = ({ data }) => {
                     </button>
                 </div>
             </div>
+            <Card className="w-full">
+                <Card.Body>
+                    <div className="relative overflow-x-auto">
+                        <table className="w-full text-xs">
+                            <tbody>
+                            {
+                                daftarUsaha.map((usaha) => (
+                                    <tr key={usaha.id} className="border-b border-slate-100 hover:bg-slate-50">
+                                        <td className="px-4 py-5">
+                                            <div>
+                                                <Link href={`/admin/pendataan/usaha/${jenisUsaha.slug}/${usaha.id}`} className="uppercase hover:text-blue-600 hover:underline">{usaha.nama}</Link>
+                                                <div className="font-light text-slate-500 flex gap-x-2 items-center">
+                                                    <span>NIB: {usaha.nib ? usaha.nib : "-"}</span>
+                                                    <LiaCircleSolid size={4} className="stroke-2 text-slate-800"/>
+                                                    <span>{usaha.pjbu}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        {
+                                            jenisUsaha.jenisUsaha === 'Usaha Rantai Pasok' && (
+                                                <td className="px-4 py-5 hidden md:table-cell">
+                                                    <div>
+                                                        <div>{usaha.jenisRantaiPasok.pelakuUsaha} Rantai Pasok</div>
+                                                        <div className="font-light text-slate-500 flex gap-x-2 items-center">{usaha.jenisRantaiPasok.kategoriSumberDaya} Konstruksi</div>
+                                                    </div>
+                                                </td>
+                                            )
+                                        }
+                                        <td className="px-4 py-5 flex justify-end">
+                                            <Link href={`/admin/pendataan/usaha/${jenisUsaha.slug}/${usaha.id}`} className="w-fit p-2 flex items-center gap-x-1.5 text-slate-600 hover:text-blue-600">
+                                                <LiaAngleRightSolid size={16} />
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </Card.Body>
+
+            </Card>
             <FormUsaha
                 isVisible={isModalUsahaOpen}
                 onClose={() => setIsModalUsahaOpen(false)}

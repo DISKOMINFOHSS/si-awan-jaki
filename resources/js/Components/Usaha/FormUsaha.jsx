@@ -22,9 +22,17 @@ export default ({ isVisible, onClose, jenisUsaha }) => {
         alamat: '',
     });
 
+    const [isModalErrorOpened, setIsModalErrorOpened] = React.useState(false);
+
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(data);
+        post(`/admin/pendataan/usaha`, {
+            onSuccess: () => {
+                onClose();
+                reset();
+            },
+            onError: () => setIsModalErrorOpened(true),
+        });
     }
 
     return (
@@ -198,6 +206,15 @@ export default ({ isVisible, onClose, jenisUsaha }) => {
                     </form>
                 </Modal.Body>
             </Modal>
+            <ModalError
+                isVisible={isModalErrorOpened}
+                onClose={() => setIsModalErrorOpened(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Gagal menambahkan usaha baru. Silakan periksa kembali informasi yang diisi.
+                </div>
+            </ModalError>
         </>
     )
 }

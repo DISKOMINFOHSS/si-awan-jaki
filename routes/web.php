@@ -34,9 +34,27 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 Route::controller(App\Http\Controllers\Pendataan\Usaha\UsahaController::class)
                 ->group(function () {
                     Route::get('/', 'category');
-                    // Route::post('/', 'store')->name('store');
+                    Route::post('/', 'store')->name('store');
 
                     Route::get('/{jenis_usaha}', 'index')->name('index');
+                });
+
+                Route::name('rantai_pasok.')->prefix('rantai-pasok')
+                ->controller(App\Http\Controllers\Pendataan\Usaha\RantaiPasokController::class)
+                ->group(function () {
+                    Route::get('/{id}', 'show')->name('show');
+                });
+
+                Route::name('bujk.')->prefix('bujk')
+                ->controller(App\Http\Controllers\Pendataan\Usaha\BUJKController::class)
+                ->group(function () {
+                    Route::get('/{id}', 'show')->name('show');
+                });
+
+                Route::name('usaha_perseorangan.')->prefix('usaha-perseorangan')
+                ->controller(App\Http\Controllers\Pendataan\Usaha\UsahaPerseoranganController::class)
+                ->group(function () {
+                    Route::get('/{id}', 'show')->name('show');
                 });
             });
 

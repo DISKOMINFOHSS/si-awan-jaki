@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Usaha extends Model
 {
+    use HasUuids, SoftDeletes;
+
     protected $table = 'usaha';
 
     protected $fillable = [

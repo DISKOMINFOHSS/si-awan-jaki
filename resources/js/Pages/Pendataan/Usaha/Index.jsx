@@ -1,6 +1,9 @@
 import React from "react";
+
 import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
+
+import FormUsaha from "../../../Components/Usaha/FormUsaha";
 
 import {
     LiaHomeSolid,
@@ -13,6 +16,8 @@ import {
 const PendataanUsahaIndex = ({ data }) => {
     console.log(data);
     const { jenisUsaha } = data;
+    const [isModalUsahaOpen, setIsModalUsahaOpen] = React.useState(false);
+
     const { daftarUsaha } = jenisUsaha;
 
     return (
@@ -44,6 +49,7 @@ const PendataanUsahaIndex = ({ data }) => {
                 <div className="flex items-center gap-x-3">
                     <button
                         className="w-full flex justify-center items-center space-x-1 text-white bg-blue-600 hover:bg-blue-800 rounded text-xs tracking-wide p-2.5 shadow-sm"
+                        onClick={() => setIsModalUsahaOpen(true)}
                     >
                         <LiaPlusSolid className="stroke-2" />
                         <span>Tambah</span>
@@ -59,6 +65,15 @@ const PendataanUsahaIndex = ({ data }) => {
                     </button>
                 </div>
             </div>
+            <FormUsaha
+                isVisible={isModalUsahaOpen}
+                onClose={() => setIsModalUsahaOpen(false)}
+                jenisUsaha={{
+                    id: jenisUsaha.id,
+                    jenisUsaha: jenisUsaha.jenisUsaha,
+                    daftarJenisRantaiPasok: jenisUsaha.daftarJenisRantaiPasok,
+                }}
+            />
         </>
     );
 }

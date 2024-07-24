@@ -15,10 +15,10 @@ class JenisUsahaResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'          => $this->id,
-            'jenisUsaha'  => $this->jenis_usaha,
-            'slug'        => $this->slug,
-            'daftarUsaha' => $this->whenLoaded('usaha')->transform(function ($usaha) {
+            'id'                    => $this->id,
+            'jenisUsaha'            => $this->jenis_usaha,
+            'slug'                  => $this->slug,
+            'daftarUsaha'           => $this->whenLoaded('usaha')->transform(function ($usaha) {
                 return [
                     'id'     => $usaha->id,
                     'nama'   => $usaha->nama,
@@ -27,6 +27,7 @@ class JenisUsahaResource extends JsonResource
                     'alamat' => $usaha->alamat,
                 ];
             }),
+            'daftarJenisRantaiPasok' => $this->whenHas('daftar_jenis_rantai_pasok'),
         ];
     }
 }

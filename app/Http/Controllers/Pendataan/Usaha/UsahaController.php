@@ -32,6 +32,10 @@ class UsahaController extends Controller
     {
         $jenisUsaha = $this->usahaService->getJenisUsahaWithDaftarUsahaBySlug($jenis_usaha);
 
+        if ($jenisUsaha->jenis_usaha == "Usaha Rantai Pasok") {
+            $jenisUsaha['daftar_jenis_rantai_pasok'] = $this->usahaService->getDaftarJenisRantaiPasok();
+        }
+
         return Inertia::render('Pendataan/Usaha/Index', [
             'data' => [
                 'jenisUsaha' => new JenisUsahaResource($jenisUsaha),

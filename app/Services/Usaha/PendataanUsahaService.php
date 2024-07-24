@@ -4,6 +4,8 @@ namespace App\Services\Usaha;
 
 use App\Models\Usaha\JenisUsaha;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection as DBCollection;
+use Illuminate\Support\Facades\DB;
 
 class PendataanUsahaService
 {
@@ -16,5 +18,12 @@ class PendataanUsahaService
     public function getJenisUsahaWithDaftarUsahaBySlug(string $slug): JenisUsaha
     {
         return JenisUsaha::with(['usaha'])->where('slug', $slug)->first();
+    }
+
+    public function getDaftarJenisRantaiPasok(): DBCollection
+    {
+        return DB::table('master_jenis_usaha_rantai_pasok')
+            ->select('id', 'kategori_sumber_daya as kategoriSumberDaya', 'pelaku_usaha as pelakuUsaha', 'slug')
+            ->get();
     }
 }

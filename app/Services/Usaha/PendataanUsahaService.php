@@ -58,6 +58,11 @@ class PendataanUsahaService
         return $usaha->id;
     }
 
+    public function checkUsahaExists(string $id): bool
+    {
+        return Usaha::where('id', $id)->exists();
+    }
+
     public function getUsahaById(string $id): Usaha
     {
         return Usaha::with(['jenisUsaha' => function (Builder $query) use ($id) {

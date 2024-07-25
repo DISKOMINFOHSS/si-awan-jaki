@@ -26,16 +26,16 @@ export default ({ isVisible, onClose, usaha }) => {
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data, typeof(data.dokumenSBU));
-        // post(`/admin/pendataan/usaha/bujk/${usaha.id}/sbu`, {
-        //     onSuccess: () => {
-        //         onClose();
-        //         reset();
-        //     },
-        //     onError: () => {
-        //         onClose();
-        //         setIsModalErrorOpen(true);
-        //     },
-        // });
+        post(`/admin/pendataan/usaha/bujk/${usaha.id}/sbu`, {
+            onSuccess: () => {
+                onClose();
+                reset();
+            },
+            onError: () => {
+                onClose();
+                setIsModalErrorOpen(true);
+            },
+        });
     }
 
     return (
@@ -117,6 +117,17 @@ export default ({ isVisible, onClose, usaha }) => {
                                         </div>
                                     ))
                                 }
+                        </div>
+                        <div className="col-span-2">
+                            {
+                                progress && (
+                                // <progress value={progress.percentage} max="100">
+                                //     {progress.percentage}%
+                                // </progress>
+                                <div className="w-full bg-slate-200 rounded h-2.5">
+                                    <div className={`animate-pulse bg-blue-600 h-2.5 rounded-full w-[${progress.percentage}%]`}></div>
+                                </div>
+                            )}
                         </div>
                         <div className="col-span-2 flex justify-end items-center gap-x-2">
                             <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-3" onClick={onClose}>Batal</button>

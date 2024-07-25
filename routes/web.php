@@ -49,6 +49,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->controller(App\Http\Controllers\Pendataan\Usaha\BUJKController::class)
                 ->group(function () {
                     Route::get('/{id}', 'show')->name('show');
+
+                    Route::post('/{id}/sbu', 'storeSertifikat');
                 });
 
                 Route::name('usaha_perseorangan.')->prefix('usaha-perseorangan')

@@ -4,6 +4,7 @@ namespace App\Http\Resources\Pendataan;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class BUJKResource extends JsonResource
 {
@@ -14,6 +15,29 @@ class BUJKResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id'                => $this->id,
+            'nama'              => $this->nama,
+            'nib'               => $this->nib,
+            'dokumenNIB'        => $this->when($this->dokumen_nib, [
+                'fileName' => $this->name,
+                'filePath' => Storage::url($this->path),
+            ]),
+            'pjbu'              => $this->pjbu,
+            'alamat'            => $this->alamat,
+            'jenisUsaha'        => $this->whenLoaded('jenisUsaha'),
+            'sertifikatStandar' => $this->sertifikat_standar->transform(
+                function ($sertifikat)
+                {
+                    return [
+                        'id'       => $sertifikat->id,
+                        'fileId'   => $sertifikat->sertifikat_id,
+                        'fileName' => $sertifikat->name,
+                        'filePath' => Storage::url($sertifikat->path),
+                        'status'   => $sertifikat->status,
+                    ];
+                }
+            ),
+        ];
     }
 }

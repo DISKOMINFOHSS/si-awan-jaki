@@ -58,6 +58,25 @@ class PendataanUsahaService
         return $usaha->id;
     }
 
+    public function getUsahaById(string $id): Usaha
+    {
+        return Usaha::with(['jenisUsaha' => function (Builder $query) use ($id) {
+            $query->join('usaha', 'usaha.jenis_usaha_id', 'master_jenis_usaha.id')
+                  ->leftJoin('usaha_rantai_pasok', 'usaha.id', 'usaha_rantai_pasok.usaha_id')
+                  ->leftJoin('master_jenis_usaha_rantai_pasok as rantai_pasok', 'usaha_rantai_pasok.rantai_pasok_id', 'rantai_pasok.id')
+                  ->select(
+                        'master_jenis_usaha.id',
+                        'master_jenis_usaha.jenis_usaha as jenisUsaha',
+                        'master_jenis_usaha.slug',
+                        'kategori_sumber_daya as kategoriSumberDaya',
+                        'pelaku_usaha as pelakuUsaha'
+                    )
+                  ->where('usaha.id', $id);
+        }])->leftJoin('files', 'files.id', 'usaha.dokumen_nib')
+           ->select('usaha.*', 'files.path', 'files.name')
+           ->find($id);
+    }
+
     // Usaha Rantai Pasok
     public function addUsahaRantaiPasok(string $usahaId, int $rantaiPasokId)
     {

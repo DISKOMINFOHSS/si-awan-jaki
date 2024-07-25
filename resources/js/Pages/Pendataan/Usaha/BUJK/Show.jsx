@@ -3,31 +3,28 @@ import React from "react";
 import Layout from "../../../../Components/Layout";
 import Breadcrumb from "../../../../Components/Breadcrumb";
 import Card from "../../../../Components/Card";
+import DaftarSertifikatStandar from "../../../../Components/Usaha/DaftarSertifikatStandar";
 
 import {
     LiaHomeSolid,
     LiaFileAlt,
     LiaCloudUploadAltSolid,
-    LiaPlusSolid,
-    LiaFileMedicalSolid,
-    LiaEditSolid,
+    LiaPlusCircleSolid,
+    LiaEllipsisVSolid,
 } from "react-icons/lia";
-import Modal from "../../../../Components/Modal";
-import FormSBU from "../../../../Components/Usaha/FormSBU";
+
 
 const PendataanBUJKShow = ({ data }) => {
     console.log(data);
     const { usaha } = data;
     const { dokumenNIB, jenisUsaha } = usaha;
 
-    const [isModalSBUOpen, setIsModalSBUOpen] = React.useState(false);
-
     return (
         <>
             <Breadcrumb>
                 <Breadcrumb.Item href="/admin/dashboard"><LiaHomeSolid size={14} /></Breadcrumb.Item>
                 <Breadcrumb.Item href="">...</Breadcrumb.Item>
-                <Breadcrumb.Item href={`/admin/pendataan/usaha/${jenisUsaha.slug}`}>{jenisUsaha.jenisUsaha}</Breadcrumb.Item>
+                <Breadcrumb.Item href={`/admin/pendataan/usaha/${jenisUsaha.slug}`}>Daftar {jenisUsaha.jenisUsaha}</Breadcrumb.Item>
                 <Breadcrumb.Item active>{usaha.nama}</Breadcrumb.Item>
             </Breadcrumb>
             <div className="flex justify-between items-center my-2">
@@ -86,41 +83,7 @@ const PendataanBUJKShow = ({ data }) => {
                         </div>
                     </Card.Body>
                 </Card>
-                <Card className="w-full h-fit">
-                    <Card.Header className="flex justify-between items-center">
-                        <div>
-                            <h3 className="font-medium text-slate-700 leading-tight">Sertifikat Badan Usaha (SBU)</h3>
-                            <h4 className="font-light text-slate-500 text-xs">Lorem ipsum dolor sit amet</h4>
-                        </div>
-                        <div>
-                            <button
-                                className="w-full flex justify-center items-center space-x-1 text-blue-500 border border-blue-500 hover:bg-slate-100 rounded text-xs tracking-wide px-2.5 py-2 shadow-sm"
-                            >
-                                <LiaEditSolid size={16} />
-                                <span>Edit</span>
-                            </button>
-                        </div>
-                    </Card.Header>
-                    <Card.Body className="p-4 space-y-5">
-                        <div className="space-y-2 text-xs">
-                            <button
-                                type="button"
-                                className="group w-full py-5 rounded border border-dashed border-blue-200 bg-blue-50 hover:bg-blue-100"
-                                onClick={() => setIsModalSBUOpen(true)}
-                            >
-                                <div className="rounded bg-blue-100 group-hover:bg-blue-200 text-blue-600 w-fit mx-auto p-2">
-                                    <LiaCloudUploadAltSolid size={24} />
-                                </div>
-                                <div className="mt-2 text-slate-700">
-                                    <div className="">
-                                        <span className="font-medium text-blue-600 group-hover:underline">Klik di sini</span> untuk mengunggah SBU
-                                    </div>
-                                    <div className="font-light text-slate-500">(Maks. 2 MB)</div>
-                                </div>
-                            </button>
-                        </div>
-                    </Card.Body>
-                </Card>
+                <DaftarSertifikatStandar usaha={usaha} />
                 <Card className="w-full h-fit">
                     <Card.Header className="flex justify-between items-center">
                         <h3 className="font-medium text-slate-700">Laporan</h3>
@@ -145,75 +108,6 @@ const PendataanBUJKShow = ({ data }) => {
                     </Card.Body>
                 </Card>
             </div>
-            {/* <Modal
-                isVisible={isModalSBUOpen}
-                className="w-full max-w-lg h-fit mt-10"
-            >
-                <Modal.Header onClose={() => setIsModalSBUOpen(false)}>
-                    <div className="text-center mb-7">
-                        <h1 className="font-medium text-slate-800">Tambah Sertifikat Badan Usaha (SBU)</h1>
-                        <h2 className="text-xs text-slate-500 font-light">Pendataan Badan Usaha Jasa Konstruksi</h2>
-                    </div>
-                </Modal.Header>
-               <Modal.Body>
-                    <form method="post" className="grid grid-cols-2 gap-5 mb-2">
-                        <div className="col-span-2">
-                            <label htmlFor="nama" className="block mb-2 text-xs font-medium text-slate-800">Nama Badan Usaha Jasa Konstruksi</label>
-                            <input
-                                type="text" name="nama" id="nama" value={usaha.nama} disabled
-                                className="px-3 py-2 block w-full rounded-md bg-slate-50 border-slate-200 text-slate-500 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="nib" className="block mb-2 text-xs font-medium text-slate-800">NIB</label>
-                            <input
-                                type="text" name="nib" id="nib" value={usaha.nib} disabled
-                                className="px-3 py-2 block w-full rounded-md bg-slate-50 border-slate-200 text-slate-500 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="pjbu" className="block mb-2 text-xs font-medium text-slate-800">PJBU</label>
-                            <input
-                                type="text" name="pjbu" id="pjbu" value={usaha.pjbu} disabled
-                                className="px-3 py-2 block w-full rounded-md bg-slate-50 border-slate-200 text-slate-500 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-                            />
-                        </div>
-                        <div className="col-span-2">
-                            <div className="block mb-2 text-xs font-medium text-slate-800">Upload Dokumen SBU</div>
-                            <label htmlFor="dokumen">
-                                <div className="group w-full px-2.5 py-5 rounded border border-dashed border-blue-200 bg-blue-50 hover:bg-blue-100">
-                                    <div className="rounded bg-blue-100 group-hover:bg-blue-200 text-blue-600 w-fit mx-auto p-2">
-                                        <LiaCloudUploadAltSolid size={24} />
-                                    </div>
-                                    <div className="mt-2 text-xs text-center text-slate-700">
-                                        <div className="">
-                                            <span className="font-medium text-blue-600 group-hover:underline">Klik di sini</span> untuk mengunggah dokumen
-                                        </div>
-                                        <div className="font-light text-slate-500">(Maks. 2 MB)</div>
-                                    </div>
-                                </div>
-                                <input type="file" id="dokumen" className="hidden" />
-                            </label>
-                        </div>
-                        <div className="col-span-2 flex justify-end items-center gap-x-2">
-                            <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-3">Batal</button>
-                            <button type="submit" className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-2.5">
-                                Tambah
-                            </button>
-                        </div>
-                    </form>
-               </Modal.Body>
-            </Modal> */}
-            <FormSBU
-                isVisible={isModalSBUOpen}
-                onClose={() => setIsModalSBUOpen(false)}
-                usaha={{
-                    id: usaha.id,
-                    nama: usaha.nama,
-                    nib: usaha.nib,
-                    pjbu: usaha.pjbu
-                }}
-            />
         </>
     );
 }

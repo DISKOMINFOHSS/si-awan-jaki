@@ -29,7 +29,7 @@ const PendataanUsahaIndex = ({ data }) => {
             <Breadcrumb>
                 <Breadcrumb.Item href="/admin/dashboard"><LiaHomeSolid size={14} /></Breadcrumb.Item>
                 <Breadcrumb.Item href="/admin/pendataan/usaha">Pilih Usaha</Breadcrumb.Item>
-                <Breadcrumb.Item active>{jenisUsaha.jenisUsaha}</Breadcrumb.Item>
+                <Breadcrumb.Item active>Daftar {jenisUsaha.jenisUsaha}</Breadcrumb.Item>
             </Breadcrumb>
             <div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-200">
                 <div>

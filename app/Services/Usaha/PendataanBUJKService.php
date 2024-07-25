@@ -32,6 +32,7 @@ class PendataanBUJKService
         return DB::table('sertifikat_standar_bujk as sbu')->join('files', 'files.id', 'sbu.id')
             ->where('sbu.usaha_id', $usahaId)
             ->select('sbu.id', 'sbu.sertifikat_id', 'sbu.status', 'files.path', 'files.name')
+            ->orderBy('sbu.created_at', 'desc')
             ->get();
     }
 }

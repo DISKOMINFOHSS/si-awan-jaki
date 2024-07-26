@@ -71,7 +71,7 @@ export default ({ usaha }) => {
                 <Card.Header className="flex justify-between items-center">
                     <div>
                         <h3 className="font-medium text-slate-700 leading-tight">Sertifikat Badan Usaha (SBU)</h3>
-                        <h4 className="font-light text-slate-500 text-xs">Daftar Sertifikat Standar Badan Usaha Jasa Konstruksi</h4>
+                        <h4 className="font-light text-slate-500 text-[11px]">Daftar Sertifikat Standar Badan Usaha Jasa Konstruksi</h4>
                     </div>
                     <div>
                         <button

@@ -25,7 +25,6 @@ export default ({ isVisible, onClose, usaha }) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(data, typeof(data.dokumenSBU));
         post(`/admin/pendataan/usaha/bujk/${usaha.id}/sbu`, {
             onSuccess: () => {
                 onClose();

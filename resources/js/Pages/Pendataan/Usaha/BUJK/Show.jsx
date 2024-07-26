@@ -162,6 +162,7 @@ const PendataanBUJKShow = ({ data }) => {
             <FormPaketPekerjaan
                 isVisible={isModalPaketPekerjaanOpen}
                 onClose={() => setIsModalPaketPekerjaan(false)}
+                usahaId={usaha.id}
             />
         </>
     );

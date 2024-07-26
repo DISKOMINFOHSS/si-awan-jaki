@@ -47,7 +47,7 @@ class BUJKController extends Controller
             return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
         }
 
-        $validatedDate = $request->validate(['dokumenSBU.*' => 'required|file|max:2048']);
+        $validatedData = $request->validate(['dokumenSBU.*' => 'required|file|max:2048']);
         $userId = auth()->user()->id;
 
         foreach($request->file('dokumenSBU') as $dokumen) {
@@ -64,7 +64,40 @@ class BUJKController extends Controller
             ]);
         }
 
-        // dd($request->file('dokumenSBU'));
+        return redirect("/admin/pendataan/usaha/bujk/$id");
+    }
+
+    public function storePaketPekerjaan(string $id, Request $request)
+    {
+        if (!$this->usahaService->checkUsahaExists($id)) {
+            return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'namaPaket'      => 'required',
+            'tahun'          => 'required|digits:4',
+            'jenis'          => 'required',
+            'sifat'          => 'required',
+            'subklasifikasi' => 'required',
+            'layanan'        => 'required',
+            'bentuk'         => 'required',
+            'kualifikasi'    => 'required',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->bujkService->addPaketPekerjaan([
+            'nama_paket'           => $validatedData['namaPaket'],
+            'tahun_anggaran'       => $validatedData['tahun'],
+            'jenis_usaha'          => $validatedData['jenis'],
+            'sifat_usaha'          => $validatedData['sifat'],
+            'subklasifikasi_usaha' => $validatedData['subklasifikasi'],
+            'layanan_usaha'        => $validatedData['layanan'],
+            'bentuk_usaha'         => $validatedData['bentuk'],
+            'kualifikasi_usaha'    => $validatedData['kualifikasi'],
+            'usaha_id'             => $id,
+            'created_by'           => $userId,
+        ]);
+
         return redirect("/admin/pendataan/usaha/bujk/$id");
     }
 }

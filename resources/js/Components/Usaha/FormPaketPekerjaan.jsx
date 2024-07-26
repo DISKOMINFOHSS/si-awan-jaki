@@ -21,16 +21,16 @@ export default ({ isVisible, onClose, usahaId }) => {
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
-        // post(`/admin/pendataan/usaha/bujk/${usahaId}/paket-pekerjaan`, {
-        //     onSuccess: () => {
-        //         reset();
-        //         onClose();
-        //     },
-        //     onError: () => {
-        //         onClose();
-        //         setIsModalErrorOpen(true);
-        //     },
-        // });
+        post(`/admin/pendataan/usaha/bujk/${usahaId}/paket-pekerjaan`, {
+            onSuccess: () => {
+                reset();
+                onClose();
+            },
+            onError: () => {
+                onClose();
+                setIsModalErrorOpen(true);
+            },
+        });
     }
 
     return (
@@ -131,7 +131,7 @@ export default ({ isVisible, onClose, usahaId }) => {
             >
                 <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
                 <div className="font-light text-xs text-slate-500 mb-2">
-                    Gagal menambahkan sertifikat. Silakan periksa kembali informasi yang diisi.
+                    Gagal menambahkan paket pekerjaan. Silakan periksa kembali informasi yang diisi.
                 </div>
             </ModalError>
         </>

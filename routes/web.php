@@ -50,6 +50,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->group(function () {
                     Route::get('/{id}', 'show')->name('show');
 
+                    Route::post('/{id}/paket-pekerjaan', 'storePaketPekerjaan');
                     Route::post('/{id}/sbu', 'storeSertifikat');
                 });
 

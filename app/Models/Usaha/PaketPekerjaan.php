@@ -15,7 +15,7 @@ class PaketPekerjaan extends Model
     protected $table = 'paket_pekerjaan';
 
     protected $fillable = [
-        'nama',
+        'nama_paket',
         'tahun_anggaran',
         'jenis_usaha',
         'sifat_usaha',

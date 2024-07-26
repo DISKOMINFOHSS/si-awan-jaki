@@ -2,17 +2,13 @@
 
 namespace App\Services\Usaha;
 
+use App\Models\Usaha\PaketPekerjaan;
 use App\Models\Usaha\Usaha;
 use Illuminate\Support\Collection as DBCollection;
 use Illuminate\Support\Facades\DB;
 
 class PendataanBUJKService
 {
-    // public function getBUJKById(string $id): Usaha
-    // {
-    //     return Usaha::
-    // }
-
     public function addSertifikatStandarBUJK(array $data): int
     {
         $sertifikatId = DB::table('sertifikat_standar_bujk')->insertGetId([
@@ -34,5 +30,23 @@ class PendataanBUJKService
             ->select('sbu.id', 'sbu.sertifikat_id', 'sbu.status', 'files.path', 'files.name')
             ->orderBy('sbu.created_at', 'desc')
             ->get();
+    }
+
+    public function addPaketPekerjaan(array $data): int
+    {
+        $paketPekerjaan = PaketPekerjaan::create([
+            'nama_paket'           => $data['nama_paket'],
+            'tahun_anggaran'       => $data['tahun_anggaran'],
+            'jenis_usaha'          => $data['jenis_usaha'],
+            'sifat_usaha'          => $data['sifat_usaha'],
+            'subklasifikasi_usaha' => $data['subklasifikasi_usaha'],
+            'layanan_usaha'        => $data['layanan_usaha'],
+            'bentuk_usaha'         => $data['bentuk_usaha'],
+            'kualifikasi_usaha'    => $data['kualifikasi_usaha'],
+            'usaha_id'             => $data['usaha_id'],
+            'created_by'           => $data['created_by'],
+        ]);
+
+        return $paketPekerjaan->id;
     }
 }

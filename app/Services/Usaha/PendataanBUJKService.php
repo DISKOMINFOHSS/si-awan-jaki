@@ -55,6 +55,7 @@ class PendataanBUJKService
     {
         return PaketPekerjaan::where('usaha_id', $usahaId)
             ->select(
+                'id',
                 'nama_paket as namaPaket',
                 'tahun_anggaran as tahunAnggaran',
                 'jenis_usaha as jenisUsaha',
@@ -66,5 +67,23 @@ class PendataanBUJKService
             )
             ->orderBy('created_at', 'desc')
             ->get();
+    }
+
+    public function updatePaketPekerjaan(array $data): int
+    {
+        $paketPekerjaan = PaketPekerjaan::find($data['id']);
+
+        $paketPekerjaan->nama_paket = $data['nama_paket'];
+        $paketPekerjaan->tahun_anggaran = $data['tahun_anggaran'];
+        $paketPekerjaan->jenis_usaha = $data['jenis_usaha'];
+        $paketPekerjaan->sifat_usaha = $data['sifat_usaha'];
+        $paketPekerjaan->subklasifikasi_usaha = $data['subklasifikasi_usaha'];
+        $paketPekerjaan->layanan_usaha = $data['layanan_usaha'];
+        $paketPekerjaan->bentuk_usaha = $data['bentuk_usaha'];
+        $paketPekerjaan->kualifikasi_usaha = $data['kualifikasi_usaha'];
+
+        $paketPekerjaan->save();
+
+        return $paketPekerjaan->id;
     }
 }

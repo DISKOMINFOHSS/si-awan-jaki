@@ -11,7 +11,13 @@ import {
 } from "react-icons/lia";
 
 export default ({ daftarPaketPekerjaan, usahaId }) => {
+    const [paketPekerjaan, setPaketPekerjaan] = React.useState({});
     const [isModalPaketPekerjaanOpen, setIsModalPaketPekerjaan] = React.useState(false);
+
+    function handleEditButtonClick(paketId) {
+        setPaketPekerjaan(daftarPaketPekerjaan.find(({ id }) => paketId === id));
+        setIsModalPaketPekerjaan(true);
+    }
 
     return (
         <>
@@ -30,7 +36,7 @@ export default ({ daftarPaketPekerjaan, usahaId }) => {
                                 className="border border-slate-200 rounded py-2 pl-8 block w-56 text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs" />
                             </div>
                             <button
-                                onClick={() => setIsModalPaketPekerjaan(true)}
+                                onClick={() => {setPaketPekerjaan({}), setIsModalPaketPekerjaan(true)}}
                                 className="w-full flex justify-center items-center space-x-1 text-white bg-blue-600 hover:bg-blue-800 rounded text-[11px] tracking-wide px-2.5 py-2 shadow-sm"
                             >
                                 <LiaPlusCircleSolid size={16}/>
@@ -58,6 +64,7 @@ export default ({ daftarPaketPekerjaan, usahaId }) => {
                             <tbody className="text-slate-600">
                                 {
                                     daftarPaketPekerjaan.map(({
+                                        id,
                                         namaPaket,
                                         tahunAnggaran,
                                         jenisUsaha,
@@ -83,9 +90,10 @@ export default ({ daftarPaketPekerjaan, usahaId }) => {
                                         <td className="px-4 py-5 text-center">{kualifikasiUsaha}</td>
                                         <td className="px-4 py-5 text-center">
                                             <div className="flex gap-x-2">
-
                                                 <button
+                                                    type="button"
                                                     className="rounded border border-slate-200 text-slate-500 p-2 hover:bg-slate-200"
+                                                    onClick={() => handleEditButtonClick(id)}
                                                 >
                                                     <LiaEditSolid size={18} />
                                                 </button>
@@ -106,6 +114,7 @@ export default ({ daftarPaketPekerjaan, usahaId }) => {
             <FormPaketPekerjaan
                 isVisible={isModalPaketPekerjaanOpen}
                 onClose={() => setIsModalPaketPekerjaan(false)}
+                paketPekerjaan={paketPekerjaan}
                 usahaId={usahaId}
             />
         </>

@@ -86,7 +86,7 @@ class BUJKController extends Controller
         ]);
         $userId = auth()->user()->id;
 
-        $this->bujkService->addPaketPekerjaan([
+        $data = [
             'nama_paket'           => $validatedData['namaPaket'],
             'tahun_anggaran'       => $validatedData['tahun'],
             'jenis_usaha'          => $validatedData['jenis'],
@@ -95,9 +95,16 @@ class BUJKController extends Controller
             'layanan_usaha'        => $validatedData['layanan'],
             'bentuk_usaha'         => $validatedData['bentuk'],
             'kualifikasi_usaha'    => $validatedData['kualifikasi'],
-            'usaha_id'             => $id,
-            'created_by'           => $userId,
-        ]);
+        ];
+
+        if ($request->has('id')){
+            $data['id'] = $request->input('id');
+            $this->bujkService->updatePaketPekerjaan($data);
+        } else {
+            $data['usaha_id'] = $id;
+            $data['created_by'] = $userId;
+            $this->bujkService->addPaketPekerjaan($data);
+        }
 
         return redirect("/admin/pendataan/usaha/bujk/$id");
     }

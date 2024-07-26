@@ -1,10 +1,23 @@
 import React from "react";
+import { useForm } from "@inertiajs/react";
 
 import Modal from "../Modal";
 import ModalError from "../ModalError";
-import { useForm } from "@inertiajs/react";
+import { LiaSpinnerSolid } from "react-icons/lia";
 
-export default ({ isVisible, onClose, usahaId }) => {
+export default ({ isVisible, onClose, paketPekerjaan, usahaId }) => {
+    const {
+        id,
+        namaPaket,
+        tahunAnggaran,
+        jenisUsaha,
+        sifatUsaha,
+        subklasifikasiUsaha,
+        layananUsaha,
+        bentukUsaha,
+        kualifikasiUsaha,
+    } = paketPekerjaan;
+
     const { data, setData, post, processing, reset } = useForm({
         namaPaket: '',
         tahun: '2024',
@@ -16,16 +29,33 @@ export default ({ isVisible, onClose, usahaId }) => {
         kualifikasi: '',
     });
 
+    React.useEffect(() => {
+        setData({
+            ...data,
+            id: id,
+            namaPaket: namaPaket ? namaPaket : '',
+            tahun: tahunAnggaran ? tahunAnggaran : '2024',
+            jenis: jenisUsaha ? jenisUsaha : 'Jasa Konsultansi Konstruksi',
+            sifat: sifatUsaha ? sifatUsaha : 'Umum',
+            subklasifikasi: subklasifikasiUsaha ? subklasifikasiUsaha : '',
+            layanan: layananUsaha ? layananUsaha : '',
+            bentuk: bentukUsaha ? bentukUsaha : '',
+            kualifikasi: kualifikasiUsaha ? kualifikasiUsaha : '',
+        });
+    }, [paketPekerjaan]);
+
     const [isModalErrorOpen, setIsModalErrorOpen] = React.useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
+        console.log(data);
         post(`/admin/pendataan/usaha/bujk/${usahaId}/paket-pekerjaan`, {
             onSuccess: () => {
                 reset();
                 onClose();
             },
-            onError: () => {
+            onError: (errors) => {
+                console.log(errors);
                 onClose();
                 setIsModalErrorOpen(true);
             },
@@ -117,7 +147,8 @@ export default ({ isVisible, onClose, usahaId }) => {
                         </div>
                         <div className="col-span-6 flex justify-end items-center gap-x-2">
                             <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-2.5" onClick={onClose}>Batal</button>
-                            <button type="submit" className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-2.5">
+                            <button type="submit" disabled={processing} className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-2.5">
+                                { processing && <LiaSpinnerSolid className="animate-spin" /> }
                                 Tambah
                             </button>
                         </div>

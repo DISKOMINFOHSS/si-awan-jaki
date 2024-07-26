@@ -16,17 +16,17 @@ class BUJKResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'                => $this->id,
-            'nama'              => $this->nama,
-            'nib'               => $this->nib,
-            'dokumenNIB'        => $this->when($this->dokumen_nib, [
+            'id'                  => $this->id,
+            'nama'                => $this->nama,
+            'nib'                 => $this->nib,
+            'dokumenNIB'          => $this->when($this->dokumen_nib, [
                 'fileName' => $this->name,
                 'filePath' => Storage::url($this->path),
             ]),
-            'pjbu'              => $this->pjbu,
-            'alamat'            => $this->alamat,
-            'jenisUsaha'        => $this->whenLoaded('jenisUsaha'),
-            'sertifikatStandar' => $this->sertifikat_standar->transform(
+            'pjbu'                => $this->pjbu,
+            'alamat'              => $this->alamat,
+            'jenisUsaha'          => $this->whenLoaded('jenisUsaha'),
+            'sertifikatStandar'   => $this->sertifikat_standar->transform(
                 function ($sertifikat)
                 {
                     return [
@@ -38,6 +38,7 @@ class BUJKResource extends JsonResource
                     ];
                 }
             ),
+            'daftarPaketPekerjaan' => $this->daftar_paket_pekerjaan,
         ];
     }
 }

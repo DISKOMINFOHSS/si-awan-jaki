@@ -33,6 +33,7 @@ class BUJKController extends Controller
         $usaha = $this->usahaService->getUsahaById($id);
 
         $usaha['sertifikat_standar'] = $this->bujkService->getDaftarSertifikatStandarBUJK($id);
+        $usaha['daftar_paket_pekerjaan'] = $this->bujkService->getDaftarPaketPekerjaanByUsahaId($id);
 
         return Inertia::render('Pendataan/Usaha/BUJK/Show', [
             'data' => [

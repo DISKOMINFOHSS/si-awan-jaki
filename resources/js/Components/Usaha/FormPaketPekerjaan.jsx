@@ -20,7 +20,6 @@ export default ({ isVisible, onClose, usahaId }) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(data);
         post(`/admin/pendataan/usaha/bujk/${usahaId}/paket-pekerjaan`, {
             onSuccess: () => {
                 reset();

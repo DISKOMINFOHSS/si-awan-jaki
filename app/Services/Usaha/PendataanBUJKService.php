@@ -5,6 +5,7 @@ namespace App\Services\Usaha;
 use App\Models\Usaha\PaketPekerjaan;
 use App\Models\Usaha\Usaha;
 use Illuminate\Support\Collection as DBCollection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Facades\DB;
 
 class PendataanBUJKService
@@ -48,5 +49,22 @@ class PendataanBUJKService
         ]);
 
         return $paketPekerjaan->id;
+    }
+
+    public function getDaftarPaketPekerjaanByUsahaId(string $usahaId): EloquentCollection
+    {
+        return PaketPekerjaan::where('usaha_id', $usahaId)
+            ->select(
+                'nama_paket as namaPaket',
+                'tahun_anggaran as tahunAnggaran',
+                'jenis_usaha as jenisUsaha',
+                'sifat_usaha as sifatUsaha',
+                'subklasifikasi_usaha as subklasifikasiUsaha',
+                'layanan_usaha as layananUsaha',
+                'bentuk_usaha as bentukUsaha',
+                'kualifikasi_usaha as kualifikasiUsaha',
+            )
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 }

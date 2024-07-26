@@ -95,6 +95,12 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::post('/{id}/{lingkup_id}', 'storePemeriksaan');
 
                 });
+
+            Route::name('usaha')->prefix('/usaha')
+                ->controller(App\Http\Controllers\Pengawasan\Usaha\UsahaController::class)
+                ->group(function () {
+                    Route::get('/', 'scope');
+                });
         });
     }
 );

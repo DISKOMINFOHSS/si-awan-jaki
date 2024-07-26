@@ -96,11 +96,19 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                 });
 
-            Route::name('usaha')->prefix('/usaha')
-                ->controller(App\Http\Controllers\Pengawasan\Usaha\UsahaController::class)
+            Route::name('usaha.')->prefix('/usaha')->group(function() {
+                Route::name('1.')->prefix('/1')
+                ->controller(App\Http\Controllers\Pengawasan\Usaha\UsahaRantaiPasokController::class)
+                ->group(function () {
+                    Route::get('/', 'category');
+                });
+
+                Route::controller(App\Http\Controllers\Pengawasan\Usaha\UsahaController::class)
                 ->group(function () {
                     Route::get('/', 'scope');
+                    Route::get('/{lingkup_id}', 'category');
                 });
+            });
         });
     }
 );

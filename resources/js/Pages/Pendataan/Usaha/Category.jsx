@@ -4,13 +4,11 @@ import { Link } from "@inertiajs/react";
 import Layout from "../../../Components/Layout";
 import Card from "../../../Components/Card";
 
-import { LiaBoxesSolid, LiaStoreSolid, LiaUserAltSolid } from "react-icons/lia";
+import { iconsJenisUsaha } from "../../../Utils/iconsUsaha";
 
 const PendataanUsahaCategory = ({ data }) => {
     console.log(data);
     const { daftarJenisUsaha } = data;
-
-    const logo = [ <LiaBoxesSolid size={24} />, <LiaStoreSolid size={24} />, <LiaUserAltSolid size={24} /> ];
 
     return (
         <>
@@ -27,12 +25,12 @@ const PendataanUsahaCategory = ({ data }) => {
                 <h3 className="text-slate-800">Pilih Usaha</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 my-3">
                     {
-                        daftarJenisUsaha.map(({ id, jenisUsaha, slug, jumlahUsaha }, i) => (
+                        daftarJenisUsaha.map(({ id, jenisUsaha, slug, jumlahUsaha }) => (
                             <Link key={id} href={`/admin/pendataan/usaha/${slug}`}>
                                 <Card>
                                     <Card.Body className="flex flex-col justify-center items-center px-2.5 py-5 text-center group hover:bg-blue-100">
                                         <div className="rounded bg-blue-100 text-blue-500 mb-2.5 p-2.5 w-fit group-hover:bg-blue-200">
-                                            {logo[i]}
+                                            {iconsJenisUsaha[slug.replace('-', '_')]}
                                         </div>
                                         <div className="text-sm text-slate-600 capitalize group-hover:text-blue-600 group-hover:underline">{jenisUsaha}</div>
                                         <div className="font-light text-xs text-slate-500">{jumlahUsaha} Usaha</div>

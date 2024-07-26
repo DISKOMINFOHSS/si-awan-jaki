@@ -14,10 +14,17 @@ export default ({ daftarPaketPekerjaan, usahaId }) => {
     const [paketPekerjaan, setPaketPekerjaan] = React.useState({});
     const [isModalPaketPekerjaanOpen, setIsModalPaketPekerjaan] = React.useState(false);
 
+    const [keyword, setKeyword] = React.useState('');
+    const handleKeywordChange = (event) => setKeyword(event.target.value);
+
     function handleEditButtonClick(paketId) {
         setPaketPekerjaan(daftarPaketPekerjaan.find(({ id }) => paketId === id));
         setIsModalPaketPekerjaan(true);
     }
+
+    const filteredDaftarPaketPekerjaan = keyword ? daftarPaketPekerjaan.filter(({ namaPaket }) => {
+        return namaPaket.toLowerCase().includes(keyword.toLowerCase());
+    }) : daftarPaketPekerjaan;
 
     return (
         <>
@@ -32,7 +39,7 @@ export default ({ daftarPaketPekerjaan, usahaId }) => {
                                 <div className="pointer-events-none absolute inset-y-0 left-2 flex items-center">
                                     <LiaSearchSolid size={18} className="text-slate-500 -scale-x-100" />
                                 </div>
-                                <input type="search" name="search" placeholder="Cari..."
+                                <input type="search" value={keyword} onChange={handleKeywordChange} name="search" placeholder="Cari..."
                                 className="border border-slate-200 rounded py-2 pl-8 block w-56 text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs" />
                             </div>
                             <button
@@ -63,7 +70,7 @@ export default ({ daftarPaketPekerjaan, usahaId }) => {
                             </thead>
                             <tbody className="text-slate-600">
                                 {
-                                    daftarPaketPekerjaan.map(({
+                                    filteredDaftarPaketPekerjaan.map(({
                                         id,
                                         namaPaket,
                                         tahunAnggaran,

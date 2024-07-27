@@ -4,6 +4,7 @@ namespace App\Http\Resources\Pengawasan;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class PengawasanBUJKLingkup2Resource extends JsonResource
 {
@@ -14,11 +15,31 @@ class PengawasanBUJKLingkup2Resource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $usaha = $this->whenLoaded('usaha');
+
         return [
             'id'                     => $this->id,
             'jenisPengawasan'        => $this->jenis_pengawasan,
             'tanggalPengawasan'      => $this->tanggal_pengawasan,
-            'usaha'                  => $this->whenLoaded('usaha'),
+            'usaha'                  => [
+                'id'                => $usaha->id,
+                'nama'              => $usaha->nama,
+                'nib'               => $usaha->nib,
+                'pjbu'              => $usaha->pjbu,
+                'alamat'            => $usaha->alamat,
+                'sertifikatStandar' => $usaha->sertifikat_standar->transform(
+                    function ($sertifikat)
+                    {
+                        return [
+                            'id'       => $sertifikat->id,
+                            'fileId'   => $sertifikat->sertifikat_id,
+                            'fileName' => $sertifikat->name,
+                            'filePath' => Storage::url($sertifikat->path),
+                            'status'   => $sertifikat->status,
+                        ];
+                    }
+                ),
+            ],
             'statusIzinUsaha'        => $this->status_izin_usaha,
             'statusVerifikasiNIB'    => $this->status_verifikasi_nib,
             'tertibJenisUsaha'       => $this->tertib_jenis_usaha === null ?
@@ -32,9 +53,9 @@ class PengawasanBUJKLingkup2Resource extends JsonResource
             'tertibPengawasan'       => $this->tertib_pengawasan === null ?
                 $this->tertib_pengawasan : (bool)$this->tertib_pengawasan,
             'catatan'                => $this->catatan,
-            'createdBy'                   => $this->createdBy->nama,
-            'verifiedAt'                  => $this->verified_at ? $this->verified_at : null,
-            'verifiedBy'                  => $this->verifiedBy->nama,
+            'createdBy'              => $this->createdBy->nama,
+            'verifiedAt'             => $this->verified_at ? $this->verified_at : null,
+            'verifiedBy'             => $this->verifiedBy->nama,
         ];
     }
 }

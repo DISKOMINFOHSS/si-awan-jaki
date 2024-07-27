@@ -41,6 +41,16 @@ class PendataanBUJKService
             ->get();
     }
 
+    public function getDaftarSertifikatStandarBUJKAktif(string $usahaId): DBCollection
+    {
+        return DB::table('sertifikat_standar_bujk as sbu')->join('files', 'files.id', 'sbu.id')
+            ->where('sbu.usaha_id', $usahaId)
+            ->where('sbu.status', 1)
+            ->select('sbu.id', 'sbu.sertifikat_id', 'sbu.status', 'files.path', 'files.name')
+            ->orderBy('sbu.created_at', 'desc')
+            ->get();
+    }
+
     public function addPaketPekerjaan(array $data): int
     {
         $paketPekerjaan = PaketPekerjaan::create([

@@ -70,7 +70,9 @@ class Lingkup2Controller extends Controller
     public function show(string $id)
     {
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(2);
+
         $pengawasan = $this->pengawasanLingkup2Service->getPengawasanBUJKById($id);
+        $pengawasan['usaha']['sertifikat_standar'] = $this->bujkService->getDaftarSertifikatStandarBUJKAktif($pengawasan->usaha->id);
 
         return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup2/Show', [
             'data' => [

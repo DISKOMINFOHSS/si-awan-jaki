@@ -58,15 +58,39 @@ const PendataanBUJKShow = ({ data }) => {
                             </div>
                             <div className="col-span-2">
                                 <div className="font-medium">Dokumen NIB</div>
-                                <div className="flex gap-x-2 items-start mt-1 group">
-                                    <div className="bg-blue-100 text-blue-600 rounded p-2">
-                                        <LiaFileAlt size={18} />
-                                    </div>
-                                    <a href={dokumenNIB.filePath} target="_blank" className="group-hover:text-blue-600 group-hover:underline">
-                                        <div className="font-normal uppercase">{usaha.nama}</div>
-                                        <div className="font-light text-slate-500 line-clamp-1">{dokumenNIB.fileName}</div>
-                                    </a>
-                                </div>
+                                {
+                                    dokumenNIB ? (
+                                        <div className="flex gap-x-2 items-start mt-1 group">
+                                            <div className="bg-blue-100 text-blue-600 rounded p-2">
+                                                <LiaFileAlt size={18} />
+                                            </div>
+                                            <a href={dokumenNIB.filePath} target="_blank" className="group-hover:text-blue-600 group-hover:underline">
+                                                <div className="font-normal uppercase">{usaha.nama}</div>
+                                                <div className="font-light text-slate-500 line-clamp-1">{dokumenNIB.fileName}</div>
+                                            </a>
+                                        </div>
+                                    ) : (
+                                        <label htmlFor="dokumenNIB">
+                                            <div className="group mt-1 w-fit flex items-center justify-between gap-x-10 p-2 rounded border border-dashed border-slate-200 hover:bg-slate-100">
+                                                <div className="flex items-start gap-x-2">
+                                                    <div className="rounded bg-slate-100 group-hover:bg-slate-200 text-slate-500 w-fit p-2">
+                                                        <LiaCloudUploadAltSolid size={18} />
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-normal text-xs ">Upload Dokumen NIB</div>
+                                                        <div className="font-light text-slate-500 text-[11px]">Maks. 2 MB</div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <button className="text-[11px] text-slate-700 border border-slate-200 bg-white px-2 py-1 rounded">
+                                                        Browse
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <input type="file" id="dokumenNIB" className="hidden" />
+                                        </label>
+                                    )
+                                }
                             </div>
                         </div>
                         <div className="pt-3 grid grid-cols-3 gap-x-4">

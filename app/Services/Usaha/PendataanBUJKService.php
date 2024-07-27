@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\DB;
 
 class PendataanBUJKService
 {
+    public function getDaftarBUJK(): EloquentCollection
+    {
+        return Usaha::join('master_jenis_usaha as jenis_usaha', 'jenis_usaha.id', 'usaha.jenis_usaha_id')
+            ->where('jenis_usaha', 'Badan Usaha Jasa Konstruksi')
+            ->select('usaha.id', 'usaha.nama', 'usaha.nib', 'usaha.pjbu')
+            ->orderBy('usaha.nama')
+            ->get();
+    }
     public function addSertifikatStandarBUJK(array $data): int
     {
         $sertifikatId = DB::table('sertifikat_standar_bujk')->insertGetId([

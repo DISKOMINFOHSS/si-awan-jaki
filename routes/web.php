@@ -103,6 +103,12 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/', 'category');
                 });
 
+                Route::name('2.')->prefix('/2')
+                ->controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup2Controller::class)
+                ->group(function () {
+                    Route::get('/', 'index');
+                });
+
                 Route::controller(App\Http\Controllers\Pengawasan\Usaha\UsahaController::class)
                 ->group(function () {
                     Route::get('/', 'scope');

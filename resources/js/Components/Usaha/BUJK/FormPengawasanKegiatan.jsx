@@ -2,10 +2,10 @@ import React from "react";
 import { useForm } from "@inertiajs/react";
 
 import Modal from "../../Modal";
+import ModalError from "../../ModalError";
 import SelectUsaha from "../SelectUsaha";
 
 import { LiaAngleDownSolid, LiaSpinnerSolid } from "react-icons/lia";
-import ModalError from "../../ModalError";
 
 export default ({
     isVisible,
@@ -42,6 +42,13 @@ export default ({
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
+        post(`/admin/pengawasan/usaha/${lingkupPengawasan.id}`, {
+            onSuccess: () => {
+                onClose();
+                reset();
+            },
+            onError: () => setIsModalErrorOpened(true),
+        });
     }
 
     return (

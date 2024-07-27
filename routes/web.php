@@ -107,6 +107,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup2Controller::class)
                 ->group(function () {
                     Route::get('/', 'index');
+                    Route::post('/', 'store');
+                    Route::get('/{id}', 'show');
                 });
 
                 Route::controller(App\Http\Controllers\Pengawasan\Usaha\UsahaController::class)

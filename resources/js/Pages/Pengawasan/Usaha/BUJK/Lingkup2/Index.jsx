@@ -4,13 +4,14 @@ import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
 import Tabs from "../../../../../Components/Tabs";
 
-import { LiaHomeSolid, LiaPlusSolid, LiaAngleDownSolid } from "react-icons/lia";
-import Modal from "../../../../../Components/Modal";
 import FormPengawasanKegiatan from "../../../../../Components/Usaha/BUJK/FormPengawasanKegiatan";
+import DaftarPengawasanKegiatan from "../../../../../Components/Usaha/BUJK/DaftarPengawasanKegiatan";
+
+import { LiaHomeSolid, LiaPlusSolid, LiaAngleDownSolid, LiaSearchSolid } from "react-icons/lia";
 
 const PengawasanBUJKLingkup2Index = ({ data }) => {
     console.log(data);
-    const { lingkupPengawasan, daftarUsaha } = data;
+    const { lingkupPengawasan, daftarPengawasan, daftarUsaha } = data;
     const [isModalPengawasanOpen, setIsModalPengawasanOpen] = React.useState(false);
 
     const tabList = [
@@ -42,10 +43,14 @@ const PengawasanBUJKLingkup2Index = ({ data }) => {
             </div>
             <Tabs tabList={tabList}>
                 <Tabs.Tab>
-                    <div>Pengawasan Rutin</div>
+                    <DaftarPengawasanKegiatan
+                        daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Rutin')}
+                    />
                 </Tabs.Tab>
                 <Tabs.Tab>
-                    <div>Pengawasan Insidental</div>
+                    <DaftarPengawasanKegiatan
+                        daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Insidental')}
+                    />
                 </Tabs.Tab>
             </Tabs>
             <FormPengawasanKegiatan

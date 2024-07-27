@@ -4,6 +4,7 @@ namespace App\Services\Usaha;
 
 use App\Models\Usaha\PengawasanBUJKLingkup2;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class PengawasanLingkup2Service
 {
@@ -21,13 +22,24 @@ class PengawasanLingkup2Service
         return $pengawasan->id;
     }
 
+    public function getDaftarPengawasanBUJK(): EloquentCollection
+    {
+        return PengawasanBUJKLingkup2::with([
+            'usaha' => function (Builder $query)
+            {
+                $query->select('id', 'nama', 'nib');
+            }
+        ])->orderBy('created_by', 'desc')
+          ->get();
+    }
+
     public function getPengawasanBUJKById(string $id): PengawasanBUJKLingkup2
     {
         return PengawasanBUJKLingkup2::with([
             'usaha' => function (Builder $query)
-                {
-                    $query->select('id', 'nama', 'nib', 'pjbu', 'alamat');
-                }
+            {
+                $query->select('id', 'nama', 'nib', 'pjbu', 'alamat');
+            }
             ])->where('id', $id)->firstOrFail();
     }
 }

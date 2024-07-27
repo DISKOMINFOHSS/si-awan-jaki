@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pengawasan\Usaha;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup2Collection;
 use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup2Resource;
 use App\Services\Usaha\PendataanBUJKService;
 use App\Services\Usaha\PengawasanUsahaService;
@@ -32,9 +33,12 @@ class Lingkup2Controller extends Controller
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(2);
         $daftarUsaha = $this->bujkService->getDaftarBUJK();
 
+        $daftarPengawasan = $this->pengawasanLingkup2Service->getDaftarPengawasanBUJK();
+
         return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup2/Index', [
             'data' => [
                 'lingkupPengawasan' => $lingkupPengawasan,
+                'daftarPengawasan'  => new PengawasanBUJKLingkup2Collection($daftarPengawasan),
                 'daftarUsaha'       => $daftarUsaha,
             ],
         ]);

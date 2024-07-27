@@ -26,7 +26,7 @@ class PengawasanLingkup2Service
         return PengawasanBUJKLingkup2::with([
             'usaha' => function (Builder $query)
                 {
-                    $query->select('id', 'nib', 'pjbu', 'alamat');
+                    $query->select('id', 'nama', 'nib', 'pjbu', 'alamat');
                 }
             ])->where('id', $id)->firstOrFail();
     }

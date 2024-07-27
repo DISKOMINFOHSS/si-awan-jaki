@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pengawasan\Usaha;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup2Resource;
 use App\Services\Usaha\PendataanBUJKService;
 use App\Services\Usaha\PengawasanUsahaService;
 use App\Services\Usaha\PengawasanLingkup2Service;
@@ -70,7 +71,7 @@ class Lingkup2Controller extends Controller
         return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup2/Show', [
             'data' => [
                 'lingkupPengawasan' => $lingkupPengawasan,
-                'pengawasan'        => $pengawasan
+                'pengawasan'        => new PengawasanBUJKLingkup2Resource($pengawasan),
             ],
         ]);
     }

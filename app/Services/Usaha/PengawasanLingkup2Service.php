@@ -3,6 +3,7 @@
 namespace App\Services\Usaha;
 
 use App\Models\Usaha\PengawasanBUJKLingkup2;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class PengawasanLingkup2Service
 {
@@ -18,5 +19,15 @@ class PengawasanLingkup2Service
         ]);
 
         return $pengawasan->id;
+    }
+
+    public function getPengawasanBUJKById(string $id): PengawasanBUJKLingkup2
+    {
+        return PengawasanBUJKLingkup2::with([
+            'usaha' => function (Builder $query)
+                {
+                    $query->select('id', 'nib', 'pjbu', 'alamat');
+                }
+            ])->where('id', $id)->firstOrFail();
     }
 }

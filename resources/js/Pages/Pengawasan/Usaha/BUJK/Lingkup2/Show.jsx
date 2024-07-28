@@ -3,13 +3,15 @@ import React from "react";
 import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
 import Card from "../../../../../Components/Card";
+import Dropdown from "../../../../../Components/Dropdown";
 import {
     InformasiTambahanPengawasan,
     InformasiTertibPengawasanLingkup2,
     InformasiUmumPengawasan,
     InformasiUsaha
 } from "../../../../../Components/Usaha/BUJK/InformasiPengawasanKegiatan";
-import Dropdown from "../../../../../Components/Dropdown";
+import DaftarKesesuaianKegiatanLingkup2 from "../../../../../Components/Usaha/BUJK/DaftarKesesuaianKegiatanLingkup2";
+
 import useToggleWithClickOutside from "../../../../../Hooks/useToggleWithClickOutside";
 
 import {
@@ -124,6 +126,11 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                     <InformasiUmumPengawasan pengawasan={pengawasan} />
                     <InformasiTertibPengawasanLingkup2 pengawasan={pengawasan} />
                 </div>
+            </div>
+            <div className="my-4">
+                <DaftarKesesuaianKegiatanLingkup2
+                    lingkupPengawasan={lingkupPengawasan}
+                />
             </div>
         </>
     );

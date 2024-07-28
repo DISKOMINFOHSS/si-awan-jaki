@@ -130,6 +130,8 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
             <div className="my-4">
                 <DaftarKesesuaianKegiatanLingkup2
                     lingkupPengawasan={lingkupPengawasan}
+                    pengawasanId={pengawasan}
+                    daftarPaketPekerjaan={usaha.daftarPaketPekerjaan}
                 />
             </div>
         </>

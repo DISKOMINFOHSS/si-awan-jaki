@@ -8,8 +8,9 @@ import {
     LiaPlusCircleSolid,
 } from "react-icons/lia";
 
-export default ({ lingkupPengawasan }) => {
+export default ({ lingkupPengawasan, pengawasanId, daftarPaketPekerjaan }) => {
     const [isModalKesesuaianKegiatanOpen, setIsModalKesesuaianKegiatanOpen] = React.useState(false);
+    const [selectedPaketPekerjaan, setSelectedPaketPekerjaan] = React.useState({});
 
     return (
         <>
@@ -69,6 +70,9 @@ export default ({ lingkupPengawasan }) => {
             <FormKesesuaianKegiatanLingkup2
                 isVisible={isModalKesesuaianKegiatanOpen}
                 onClose={() => setIsModalKesesuaianKegiatanOpen(false)}
+                pengawasanId={pengawasanId}
+                daftarPaketPekerjaan={daftarPaketPekerjaan}
+                selectedPaketPekerjaan={selectedPaketPekerjaan}
             />
         </>
     )

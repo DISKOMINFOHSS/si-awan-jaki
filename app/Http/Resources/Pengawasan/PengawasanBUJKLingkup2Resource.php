@@ -22,12 +22,12 @@ class PengawasanBUJKLingkup2Resource extends JsonResource
             'jenisPengawasan'        => $this->jenis_pengawasan,
             'tanggalPengawasan'      => $this->tanggal_pengawasan,
             'usaha'                  => [
-                'id'                => $usaha->id,
-                'nama'              => $usaha->nama,
-                'nib'               => $usaha->nib,
-                'pjbu'              => $usaha->pjbu,
-                'alamat'            => $usaha->alamat,
-                'sertifikatStandar' => $usaha->sertifikat_standar->transform(
+                'id'                  => $usaha->id,
+                'nama'                => $usaha->nama,
+                'nib'                 => $usaha->nib,
+                'pjbu'                => $usaha->pjbu,
+                'alamat'              => $usaha->alamat,
+                'sertifikatStandar'   => $usaha->sertifikat_standar->transform(
                     function ($sertifikat)
                     {
                         return [
@@ -39,6 +39,7 @@ class PengawasanBUJKLingkup2Resource extends JsonResource
                         ];
                     }
                 ),
+                'daftarPaketPekerjaan' => $usaha->daftar_paket_pekerjaan,
             ],
             'statusIzinUsaha'        => $this->status_izin_usaha,
             'statusVerifikasiNIB'    => $this->status_verifikasi_nib,

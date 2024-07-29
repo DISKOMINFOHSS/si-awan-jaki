@@ -83,6 +83,11 @@ class PengawasanLingkup2Service
         return $kesesuaianKegiatan->id;
     }
 
+    public function checkKesesuaianKegiatanExistsById(string $id): bool
+    {
+        return KesesuaianKegiatanLingkup2::where('id', $id)->whereNull('deleted_at')->exists();
+    }
+
     public function checkKesesuaianKegiatanExists(string $pengawasanId, string $paketId): bool
     {
         return KesesuaianKegiatanLingkup2::where([
@@ -104,5 +109,11 @@ class PengawasanLingkup2Service
         $kesesuaianKegiatan->save();
 
         return $kesesuaianKegiatan->id;
+    }
+
+    public function deleteKesesuaianKegiatan(string $id)
+    {
+        $kesesuaianKegiatan = KesesuaianKegiatanLingkup2::find($id);
+        $kesesuaianKegiatan->delete();
     }
 }

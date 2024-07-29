@@ -10,6 +10,7 @@ import {
     LiaEditSolid,
     LiaTrashAltSolid,
 } from "react-icons/lia";
+import ModalDelete from "../../ModalDelete";
 
 export default ({
     lingkupPengawasan,
@@ -20,12 +21,20 @@ export default ({
     const [isModalKesesuaianKegiatanOpen, setIsModalKesesuaianKegiatanOpen] = React.useState(false);
     const [selectedPaketPekerjaan, setSelectedPaketPekerjaan] = React.useState({});
 
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = React.useState(false);
+    const [selectedIdKesesuaian, setSelectedIdKesesuaian] = React.useState('');
+
     const [keyword, setKeyword] = React.useState('');
     const handleKeywordChange = (event) => setKeyword(event.target.value);
 
     function handleEditButtonClick(paketPekerjaan) {
         setSelectedPaketPekerjaan(paketPekerjaan);
         setIsModalKesesuaianKegiatanOpen(true);
+    }
+
+    function handleDeleteButtonClick(id) {
+        setSelectedIdKesesuaian(id);
+        setIsModalDeleteOpen(true);
     }
 
     const filteredDaftarKesesuaianKegiatan = keyword ? daftarKesesuaianKegiatan.filter(({ namaPaket }) => {
@@ -112,7 +121,9 @@ export default ({
                                                         <LiaEditSolid size={18} />
                                                     </button>
                                                     <button
+                                                        type="button"
                                                         className="rounded border border-slate-200 text-red-500 p-2 hover:bg-slate-200"
+                                                        onClick={() => handleDeleteButtonClick(paketPekerjaan.id)}
                                                     >
                                                         <LiaTrashAltSolid size={18} />
                                                     </button>
@@ -133,6 +144,17 @@ export default ({
                 daftarPaketPekerjaan={daftarPaketPekerjaan}
                 selectedPaketPekerjaan={selectedPaketPekerjaan}
             />
+            <ModalDelete
+                isVisible={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+                url={`/admin/pengawasan/usaha/2/${pengawasanId}/paket-pekerjaan`}
+                id={selectedIdKesesuaian}
+            >
+                <div className="font-medium text-slate-700 mb-1">Apakah Anda yakin ingin menghapus kesesuaian paket pekerjaan ini?</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Data yang telah dihapus tidak dapat dikembalikan.
+                </div>
+            </ModalDelete>
         </>
     )
 }

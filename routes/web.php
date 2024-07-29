@@ -111,6 +111,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/{id}', 'show');
 
                     Route::post('/{id}/paket-pekerjaan', 'storeKesesuaianKegiatan');
+                    Route::delete('/{id}/paket-pekerjaan/{kesesuaian_id}', 'destroyKesesuaianKegiatan');
                 });
 
                 Route::controller(App\Http\Controllers\Pengawasan\Usaha\UsahaController::class)

@@ -121,4 +121,19 @@ class Lingkup2Controller extends Controller
 
         return redirect("/admin/pengawasan/usaha/2/$id");
     }
+
+    public function destroyKesesuaianKegiatan(string $id, string $kesesuaian_id)
+    {
+        if (!$this->pengawasanLingkup2Service->checkPengawasanBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        if (!$this->pengawasanLingkup2Service->checkKesesuaianKegiatanExistsById($kesesuaian_id)) {
+            return back()->withErrors(['message' => 'Kesesuaian kegiatan tidak ditemukan.']);
+        }
+
+        $this->pengawasanLingkup2Service->deleteKesesuaianKegiatan($kesesuaian_id);
+
+        return redirect("/admin/pengawasan/usaha/2/$id");
+    }
 }

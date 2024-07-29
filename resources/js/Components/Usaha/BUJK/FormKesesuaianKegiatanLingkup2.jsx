@@ -86,7 +86,6 @@ export default ({
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(data);
         post(`/admin/pengawasan/usaha/2/${pengawasanId}/paket-pekerjaan`, {
             preserveScroll: true,
             onSuccess: () => {

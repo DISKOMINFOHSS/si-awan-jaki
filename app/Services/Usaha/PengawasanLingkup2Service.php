@@ -70,7 +70,7 @@ class PengawasanLingkup2Service
 
     public function addKesesuaianKegiatan(array $data): int
     {
-        $kesesuaian = KesesuaianKegiatanLingkup2::create([
+        $kesesuaianKegiatan = KesesuaianKegiatanLingkup2::create([
             'pengawasan_id'             => $data['pengawasan_id'],
             'paket_id'                  => $data['paket_id'],
             'kesesuaian_jenis'          => $data['kesesuaian_jenis'],
@@ -80,6 +80,29 @@ class PengawasanLingkup2Service
             'created_by'                => $data['created_by'],
         ]);
 
-        return $kesesuaian->id;
+        return $kesesuaianKegiatan->id;
+    }
+
+    public function checkKesesuaianKegiatanExists(string $pengawasanId, string $paketId): bool
+    {
+        return KesesuaianKegiatanLingkup2::where([
+            ['pengawasan_id', '=', $pengawasanId],
+            ['paket_id', '=', $paketId],
+        ])->whereNull('deleted_at')
+          ->exists();
+    }
+
+    public function updateKesesuaianKegiatan(array $data): int
+    {
+        $kesesuaianKegiatan = KesesuaianKegiatanLingkup2::find($data['id']);
+
+        $kesesuaianKegiatan->kesesuaian_jenis = $data['kesesuaian_jenis'];
+        $kesesuaianKegiatan->kesesuaian_sifat = $data['kesesuaian_sifat'];
+        $kesesuaianKegiatan->kesesuaian_subklasifikasi = $data['kesesuaian_subklasifikasi'];
+        $kesesuaianKegiatan->kesesuaian_layanan = $data['kesesuaian_layanan'];
+
+        $kesesuaianKegiatan->save();
+
+        return $kesesuaianKegiatan->id;
     }
 }

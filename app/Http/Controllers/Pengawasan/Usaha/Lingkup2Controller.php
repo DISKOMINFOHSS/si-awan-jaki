@@ -98,15 +98,26 @@ class Lingkup2Controller extends Controller
         ]);
         $userId = auth()->user()->id;
 
-        $this->pengawasanLingkup2Service->addKesesuaianKegiatan([
+        $data = [
             'pengawasan_id'             => $id,
             'paket_id'                  => $validatedData['paketId'],
             'kesesuaian_jenis'          => $validatedData['kesesuaianJenis'],
             'kesesuaian_sifat'          => $validatedData['kesesuaianSifat'],
             'kesesuaian_subklasifikasi' => $validatedData['kesesuaianSubklasifikasi'],
             'kesesuaian_layanan'        => $validatedData['kesesuaianLayanan'],
-            'created_by'                => $userId,
-        ]);
+        ];
+
+        if ($request->filled('id')) {
+            $data['id'] = $request->input('id');
+            $this->pengawasanLingkup2Service->updateKesesuaianKegiatan($data);
+        } else {
+            if ($this->pengawasanLingkup2Service->checkKesesuaianKegiatanExists($id, $validatedData['paketId'])) {
+                return back()->withErrors(['message' => 'Kesesuaian kegiatan sudah ada']);
+            }
+
+            $data['created_by'] = $userId;
+            $this->pengawasanLingkup2Service->addKesesuaianKegiatan($data);
+        }
 
         return redirect("/admin/pengawasan/usaha/2/$id");
     }

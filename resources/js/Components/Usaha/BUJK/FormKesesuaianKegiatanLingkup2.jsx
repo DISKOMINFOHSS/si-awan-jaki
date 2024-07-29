@@ -52,13 +52,13 @@ export default ({
             paketPekerjaan: namaPaket ? namaPaket : 'Pilih Paket Pekerjaan',
             paketId: paketId ? paketId : '',
             jenis: jenisUsaha ? jenisUsaha : '',
-            kesesuaianJenis: kesesuaianJenis ? kesesuaianJenis : '',
+            kesesuaianJenis: typeof(kesesuaianJenis) === 'boolean' ? kesesuaianJenis : '',
             sifat: sifatUsaha ? sifatUsaha : '',
-            kesesuaianSifat: kesesuaianSifat ? kesesuaianSifat : '',
+            kesesuaianSifat: typeof(kesesuaianSifat) === 'boolean' ? kesesuaianSifat : '',
             subklasifikasi: subklasifikasiUsaha ? subklasifikasiUsaha : '',
-            kesesuaianSubklasifikasi: kesesuaianSubklasifikasi ? kesesuaianSubklasifikasi : '',
+            kesesuaianSubklasifikasi: typeof(kesesuaianSubklasifikasi) === 'boolean' ? kesesuaianSubklasifikasi : '',
             layanan: layananUsaha ? layananUsaha : '',
-            kesesuaianLayanan: kesesuaianLayanan ? kesesuaianLayanan : '',
+            kesesuaianLayanan: typeof(kesesuaianLayanan) === 'boolean' ? kesesuaianLayanan : '',
         });
     }, [selectedPaketPekerjaan]);
 
@@ -86,7 +86,9 @@ export default ({
 
     function handleSubmit(e) {
         e.preventDefault();
+        console.log(data);
         post(`/admin/pengawasan/usaha/2/${pengawasanId}/paket-pekerjaan`, {
+            preserveScroll: true,
             onSuccess: () => {
                 reset();
                 onClose();
@@ -111,14 +113,16 @@ export default ({
                 <Modal.Body>
                     <form method="post" onSubmit={handleSubmit} className="grid grid-cols-2 gap-5 mb-2">
                         <div className="relative col-span-2">
-                            <label htmlFor="usaha" className="block mb-2 text-xs font-medium text-slate-800">Nama Paket Pekerjaan</label>
-                            <div
+                            <label htmlFor="paketPekerjaan" className="block mb-2 text-xs font-medium text-slate-800">Nama Paket Pekerjaan</label>
+                            <button
+                                type="button"
+                                disabled={data.id !== ''}
                                 className="flex justify-between items-center px-3 py-2 w-full rounded-md border border-slate-200 text-slate-600 focus:ring-blue-400 focus:border-blue-400 text-xs cursor-pointer"
                                 onClick={() => setIsSelectPaketPekerjaanVisible(!isSelectPaketPekerjaanVisible)}
                             >
                                 <span className="text-slate-500">{data.paketPekerjaan}</span>
                                 <LiaAngleDownSolid size={12} />
-                            </div>
+                            </button>
                             <SelectPaketPekerjaan
                                 isVisible={isSelectPaketPekerjaanVisible}
                                 onSelect={handlePaketPekerjaanSelect}
@@ -241,7 +245,7 @@ export default ({
                                 </div>
                                 <div className="flex items-center gap-x-2">
                                     <input
-                                        type="radio" id="false-kesesuaianLayanan" name="kesesuaianLayanan" checked={data.kesesuaianLayanan === false}
+                                        type="radio" id="false-kesesuaianLayanan" name="kesesuaianLayanan" checked={data.kesesuaianLayanan !== '' && !data.kesesuaianLayanan}
                                         value={false} onChange={e => setData('kesesuaianLayanan', e.target.value === "true")}
                                         className="w-3.5 h-3.5 text-blue-600 border-slate-200 focus:ring-blue-500 focus:ring-2"
                                     />

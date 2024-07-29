@@ -23,6 +23,11 @@ export default ({
     const [keyword, setKeyword] = React.useState('');
     const handleKeywordChange = (event) => setKeyword(event.target.value);
 
+    function handleEditButtonClick(paketPekerjaan) {
+        setSelectedPaketPekerjaan(paketPekerjaan);
+        setIsModalKesesuaianKegiatanOpen(true);
+    }
+
     const filteredDaftarKesesuaianKegiatan = keyword ? daftarKesesuaianKegiatan.filter(({ namaPaket }) => {
         return namaPaket.toLowerCase().includes(keyword.toLowerCase());
     }) : daftarKesesuaianKegiatan;
@@ -46,7 +51,7 @@ export default ({
                             </div>
                             <button
                                 className="w-full flex justify-center items-center space-x-1 text-white bg-blue-600 hover:bg-blue-800 rounded text-[11px] tracking-wide px-2.5 py-2 shadow-sm"
-                                onClick={() => setIsModalKesesuaianKegiatanOpen(true)}
+                                onClick={() => {setSelectedPaketPekerjaan({}), setIsModalKesesuaianKegiatanOpen(true)}}
                             >
                                 <LiaPlusCircleSolid size={16}/>
                                 <span>Tambah</span>
@@ -102,7 +107,7 @@ export default ({
                                                     <button
                                                         type="button"
                                                         className="rounded border border-slate-200 text-slate-500 p-2 hover:bg-slate-200"
-                                                        onClick={() => handleEditButtonClick(id)}
+                                                        onClick={() => handleEditButtonClick(paketPekerjaan)}
                                                     >
                                                         <LiaEditSolid size={18} />
                                                     </button>

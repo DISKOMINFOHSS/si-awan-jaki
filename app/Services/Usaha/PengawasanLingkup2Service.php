@@ -2,6 +2,7 @@
 
 namespace App\Services\Usaha;
 
+use App\Models\Usaha\KesesuaianKegiatanLingkup2;
 use App\Models\Usaha\PengawasanBUJKLingkup2;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -22,6 +23,11 @@ class PengawasanLingkup2Service
         return $pengawasan->id;
     }
 
+    public function checkPengawasanBUJKExists(string $id): bool
+    {
+        return PengawasanBUJKLingkup2::where('id', $id)->exists();
+    }
+
     public function getDaftarPengawasanBUJK(): EloquentCollection
     {
         return PengawasanBUJKLingkup2::with([
@@ -39,7 +45,41 @@ class PengawasanLingkup2Service
             'usaha' => function (Builder $query)
             {
                 $query->select('id', 'nama', 'nib', 'pjbu', 'alamat');
+            },
+            'kesesuaianKegiatan' => function (Builder $query)
+            {
+                $query->join('paket_pekerjaan', 'kesesuaian_paket_pekerjaan_lingkup_2.paket_id', 'paket_pekerjaan.id')
+                      ->select(
+                            'kesesuaian_paket_pekerjaan_lingkup_2.id',
+                            'paket_pekerjaan.id as paketId',
+                            'kesesuaian_paket_pekerjaan_lingkup_2.pengawasan_id',
+                            'paket_pekerjaan.nama_paket as namaPaket',
+                            'paket_pekerjaan.tahun_anggaran as tahunAnggaran',
+                            'paket_pekerjaan.jenis_usaha as jenisUsaha',
+                            'kesesuaian_paket_pekerjaan_lingkup_2.kesesuaian_jenis as kesesuaianJenis',
+                            'paket_pekerjaan.sifat_usaha as sifatUsaha',
+                            'kesesuaian_paket_pekerjaan_lingkup_2.kesesuaian_sifat as kesesuaianSifat',
+                            'paket_pekerjaan.subklasifikasi_usaha as subklasifikasiUsaha',
+                            'kesesuaian_paket_pekerjaan_lingkup_2.kesesuaian_subklasifikasi as kesesuaianSubklasifikasi',
+                            'paket_pekerjaan.layanan_usaha as layananUsaha',
+                            'kesesuaian_paket_pekerjaan_lingkup_2.kesesuaian_layanan as kesesuaianLayanan',
+                      );
             }
-            ])->where('id', $id)->firstOrFail();
+        ])->where('id', $id)->firstOrFail();
+    }
+
+    public function addKesesuaianKegiatan(array $data): int
+    {
+        $kesesuaian = KesesuaianKegiatanLingkup2::create([
+            'pengawasan_id'             => $data['pengawasan_id'],
+            'paket_id'                  => $data['paket_id'],
+            'kesesuaian_jenis'          => $data['kesesuaian_jenis'],
+            'kesesuaian_sifat'          => $data['kesesuaian_sifat'],
+            'kesesuaian_subklasifikasi' => $data['kesesuaian_subklasifikasi'],
+            'kesesuaian_layanan'        => $data['kesesuaian_layanan'],
+            'created_by'                => $data['created_by'],
+        ]);
+
+        return $kesesuaian->id;
     }
 }

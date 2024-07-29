@@ -1,9 +1,11 @@
 import React from "react";
+import { useForm } from "@inertiajs/react";
+
 import Modal from "../../Modal";
+import ModalError from "../../ModalError";
+import SelectPaketPekerjaan from "./SelectPaketPekerjaan";
 
 import { LiaAngleDownSolid, LiaSpinnerSolid } from "react-icons/lia";
-import { useForm } from "@inertiajs/react";
-import SelectPaketPekerjaan from "./SelectPaketPekerjaan";
 
 export default ({
     isVisible,
@@ -15,8 +17,11 @@ export default ({
     const [isSelectPaketPekerjaanVisible, setIsSelectPaketPekerjaanVisible] = React.useState(false);
     const [isModalErrorOpen, setIsModalErrorOpen] = React.useState(false);
 
+    console.log(pengawasanId);
+
     const {
         id,
+        paketId,
         namaPaket,
         jenisUsaha,
         kesesuaianJenis,
@@ -29,6 +34,7 @@ export default ({
     } = selectedPaketPekerjaan;
 
     const { data, setData, processing, post, reset } = useForm({
+        id: '',
         paketPekerjaan: 'Pilih Paket Pekerjaan',
         paketId: '',
         jenis: '',
@@ -44,8 +50,9 @@ export default ({
     React.useEffect(() => {
         setData({
             ...data,
+            id: id ? id : '',
             paketPekerjaan: namaPaket ? namaPaket : 'Pilih Paket Pekerjaan',
-            paketId: id ? id : '',
+            paketId: paketId ? paketId : '',
             jenis: jenisUsaha ? jenisUsaha : '',
             kesesuaianJenis: kesesuaianJenis ? kesesuaianJenis : '',
             sifat: sifatUsaha ? sifatUsaha : '',
@@ -81,7 +88,17 @@ export default ({
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(data);
+        post(`/admin/pengawasan/usaha/2/${pengawasanId}/paket-pekerjaan`, {
+            onSuccess: () => {
+                reset();
+                onClose();
+            },
+            onError: (errors) => {
+                console.log(errors);
+                onClose();
+                setIsModalErrorOpen(true);
+            },
+        });
     }
 
     return (
@@ -98,7 +115,7 @@ export default ({
                         <div className="relative col-span-2">
                             <label htmlFor="usaha" className="block mb-2 text-xs font-medium text-slate-800">Nama Paket Pekerjaan</label>
                             <div
-                                className="flex justify-between items-center px-3 py-2 w-full rounded-md border border-slate-200 text-slate-600 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                                className="flex justify-between items-center px-3 py-2 w-full rounded-md border border-slate-200 text-slate-600 focus:ring-blue-400 focus:border-blue-400 text-xs cursor-pointer"
                                 onClick={() => setIsSelectPaketPekerjaanVisible(!isSelectPaketPekerjaanVisible)}
                             >
                                 <span className="text-slate-500">{data.paketPekerjaan}</span>
@@ -244,6 +261,15 @@ export default ({
                     </form>
                 </Modal.Body>
             </Modal>
+            <ModalError
+                isVisible={isModalErrorOpen}
+                onClose={() => setIsModalErrorOpen(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Gagal menambahkan pemeriksaan kesesuaian kegiatan. Silakan periksa kembali.
+                </div>
+            </ModalError>
         </>
     )
 }

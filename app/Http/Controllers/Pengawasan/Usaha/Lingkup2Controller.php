@@ -82,4 +82,32 @@ class Lingkup2Controller extends Controller
             ],
         ]);
     }
+
+    public function storeKesesuaianKegiatan(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup2Service->checkPengawasanBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'paketId'                  => 'required|exists:paket_pekerjaan,id',
+            'kesesuaianJenis'          => 'required|boolean',
+            'kesesuaianSifat'          => 'required|boolean',
+            'kesesuaianSubklasifikasi' => 'required|boolean',
+            'kesesuaianLayanan'        => 'required|boolean',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup2Service->addKesesuaianKegiatan([
+            'pengawasan_id'             => $id,
+            'paket_id'                  => $validatedData['paketId'],
+            'kesesuaian_jenis'          => $validatedData['kesesuaianJenis'],
+            'kesesuaian_sifat'          => $validatedData['kesesuaianSifat'],
+            'kesesuaian_subklasifikasi' => $validatedData['kesesuaianSubklasifikasi'],
+            'kesesuaian_layanan'        => $validatedData['kesesuaianLayanan'],
+            'created_by'                => $userId,
+        ]);
+
+        return redirect("/admin/pengawasan/usaha/2/$id");
+    }
 }

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PengawasanBUJKLingkup2 extends Model
@@ -44,5 +45,10 @@ class PengawasanBUJKLingkup2 extends Model
     public function verifiedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'verified_by')->withDefault();
+    }
+
+    public function kesesuaianKegiatan(): HasMany
+    {
+        return $this->hasMany(KesesuaianKegiatanLingkup2::class, 'pengawasan_id');
     }
 }

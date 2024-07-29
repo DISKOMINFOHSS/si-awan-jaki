@@ -37,4 +37,8 @@ class PaketPekerjaan extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function kesesuaianKegiatan(): HasMany
+    {
+        return $this->hasMany(KesesuaianKegiatanLingkup2::class, 'paket_id');
+    }
 }

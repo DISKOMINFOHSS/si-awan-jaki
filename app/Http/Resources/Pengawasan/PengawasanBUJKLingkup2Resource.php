@@ -54,7 +54,6 @@ class PengawasanBUJKLingkup2Resource extends JsonResource
             'tertibPengawasan'         => $this->tertib_pengawasan === null ?
                 $this->tertib_pengawasan : (bool)$this->tertib_pengawasan,
             'daftarKesesuaianKegiatan' => $this->whenLoaded('kesesuaianKegiatan'),
-            // 'daftarKesesuaianKegiatan' => $this->kesesuaianKegiatan,
             'catatan'                  => $this->catatan,
             'createdBy'                => $this->createdBy->nama,
             'verifiedAt'               => $this->verified_at ? $this->verified_at : null,

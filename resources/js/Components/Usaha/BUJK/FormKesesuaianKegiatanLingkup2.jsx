@@ -17,8 +17,6 @@ export default ({
     const [isSelectPaketPekerjaanVisible, setIsSelectPaketPekerjaanVisible] = React.useState(false);
     const [isModalErrorOpen, setIsModalErrorOpen] = React.useState(false);
 
-    console.log(pengawasanId);
-
     const {
         id,
         paketId,

@@ -28,6 +28,15 @@ function getTertibStatusBadge (isTertib) {
     }
 }
 
+function getSesuaiStatusBadge (isSesuai) {
+    switch(isSesuai) {
+        case true:
+            return <Badge bg="green">Sesuai</Badge>
+        case false:
+            return <Badge bg="red">Tidak Sesuai</Badge>
+    }
+}
+
 function getTertibStatusBadgePDF (isTertib) {
     switch(isTertib) {
         case true:
@@ -47,6 +56,7 @@ function getStatusBadgePDF (isTrue, label) {
 }
 
 export {
+    getSesuaiStatusBadge,
     getTertibStatusBadge,
     getTertibStatusBadgePDF,
     getStatusBadgePDF,

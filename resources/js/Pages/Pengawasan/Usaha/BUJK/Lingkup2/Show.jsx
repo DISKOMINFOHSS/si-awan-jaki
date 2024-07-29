@@ -132,6 +132,7 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                     lingkupPengawasan={lingkupPengawasan}
                     pengawasanId={pengawasan.id}
                     daftarPaketPekerjaan={usaha.daftarPaketPekerjaan}
+                    daftarKesesuaianKegiatan={pengawasan.daftarKesesuaianKegiatan}
                 />
             </div>
         </>

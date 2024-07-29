@@ -2,6 +2,7 @@
 
 namespace App\Models\Usaha;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,6 +21,13 @@ class KesesuaianKegiatanLingkup2 extends Model
         'kesesuaian_subklasifikasi',
         'kesesuaian_layanan',
         'created_by',
+    ];
+
+    protected $casts = [
+        'kesesuaianJenis'          => 'boolean',
+        'kesesuaianSifat'          => 'boolean',
+        'kesesuaianSubklasifikasi' => 'boolean',
+        'kesesuaianLayanan'        => 'boolean',
     ];
 
     public function pengawasan(): BelongsTo

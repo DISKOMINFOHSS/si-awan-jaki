@@ -62,7 +62,7 @@ export default ({ daftarPengawasan }) => {
                                 <td className="px-4 py-5 text-center">{i + 1}</td>
                                 <td className="px-4 py-5">
                                     <div>
-                                        <Link href={`/admin/pengawasan/usaha/2/${pengawasan.id}`} className="uppercase hover:text-blue-600 hover:underline">
+                                        <Link href={`/admin/pengawasan/usaha/3/${pengawasan.id}`} className="uppercase hover:text-blue-600 hover:underline">
                                             {pengawasan.usaha.nama}
                                         </Link>
                                         <div className="font-light text-slate-500">NIB: {pengawasan.usaha.nib ? pengawasan.usaha.nib : "-"}</div>

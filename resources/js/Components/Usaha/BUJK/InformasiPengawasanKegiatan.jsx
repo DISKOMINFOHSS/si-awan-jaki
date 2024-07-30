@@ -151,9 +151,33 @@ const InformasiTertibPengawasanLingkup2 = ({ pengawasan }) => {
     );
 }
 
+const InformasiTertibPengawasanLingkup3 = ({ pengawasan }) => {
+    return (
+        <Card className="h-fit w-full">
+            <Card.Body className="p-4 text-xs">
+                <div className="grid grid-cols-2 gap-x-4">
+                    <div className="space-y-2">
+                        <div>
+                            <div className="font-medium">Bentuk Usaha</div>
+                        </div>
+                        <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibJenisUsaha)}</div>
+                    </div>
+                    <div className="space-y-2">
+                        <div>
+                            <div className="font-medium">Kualifikasi Usaha</div>
+                        </div>
+                        <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibSifatUsaha)}</div>
+                    </div>
+                </div>
+            </Card.Body>
+        </Card>
+    )
+}
+
 export {
     InformasiUsaha,
     InformasiTambahanPengawasan,
     InformasiUmumPengawasan,
     InformasiTertibPengawasanLingkup2,
+    InformasiTertibPengawasanLingkup3,
 }

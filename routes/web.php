@@ -120,7 +120,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->group(function () {
                     Route::get('/', 'index');
                     Route::post('/', 'store');
-                    // Route::get('/{id}', 'show');
+                    Route::get('/{id}', 'show');
                     // Route::post('/{id}/verification', 'verify');
 
                     // Route::post('/{id}/paket-pekerjaan', 'storeKesesuaianKegiatan');

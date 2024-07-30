@@ -10,10 +10,11 @@ import {
     LiaHomeSolid,
     LiaPlusSolid,
 } from "react-icons/lia";
+import DaftarPengawasanKegiatanLingkup3 from "../../../../../Components/Usaha/BUJK/DaftarPengawasanKegiatanLingkup3";
 
 const PengawasanBUJKLingkup3Index = ({ data }) => {
     console.log(data);
-    const { lingkupPengawasan, daftarUsaha } = data;
+    const { lingkupPengawasan, daftarUsaha, daftarPengawasan } = data;
     const [isModalPengawasanOpen, setIsModalPengawasanOpen] = React.useState(false);
 
     const tabList = [
@@ -45,7 +46,9 @@ const PengawasanBUJKLingkup3Index = ({ data }) => {
             </div>
             <Tabs tabList={tabList}>
                 <Tabs.Tab>
-                    Pengawasan Rutin
+                    <DaftarPengawasanKegiatanLingkup3
+                        daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Rutin')}
+                    />
                 </Tabs.Tab>
                 <Tabs.Tab>
                     Pengawasan Insidental

@@ -105,8 +105,8 @@ export default ({
             <Modal isVisible={isVisible} className="w-full max-w-xl h-fit mt-10">
                 <Modal.Header onClose={onClose}>
                     <div className="text-center mb-7">
-                        <h1 className="font-medium text-slate-800">Tambah Paket Pekerjaan</h1>
-                        <h2 className="text-xs text-slate-500 font-light">Pendataan Badan Usaha Jasa Konstruksi</h2>
+                        <h1 className="font-medium text-slate-800">Tambah Pemeriksaan Kesesuaian Kegiatan</h1>
+                        <h2 className="text-xs text-slate-500 font-light">Pengawasan Tertib Usaha Jasa Konstruksi</h2>
                     </div>
                 </Modal.Header>
                 <Modal.Body>
@@ -253,12 +253,12 @@ export default ({
                             </div>
                         </div>
                         <div className="col-span-2 flex justify-end items-center gap-x-2">
-                                <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-2.5" onClick={onClose}>Batal</button>
-                                <button type="submit" className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-2.5">
-                                    { processing && <LiaSpinnerSolid className="animate-spin" /> }
-                                    Tambah
-                                </button>
-                            </div>
+                            <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-2.5" onClick={onClose}>Batal</button>
+                            <button type="submit" className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-2.5">
+                                { processing && <LiaSpinnerSolid className="animate-spin" /> }
+                                Tambah
+                            </button>
+                        </div>
                     </form>
                 </Modal.Body>
             </Modal>

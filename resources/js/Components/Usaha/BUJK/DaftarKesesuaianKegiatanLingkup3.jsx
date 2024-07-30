@@ -5,12 +5,16 @@ import {
     LiaSearchSolid,
     LiaPlusCircleSolid,
 } from "react-icons/lia";
+import FormKesesuaianKegiatanLingkup3 from "./FormKesesuaianKegiatanLingkup3";
 
 export default ({
     lingkupPengawasan,
     pengawasanId,
     daftarPaketPekerjaan,
 }) => {
+    const [isModalKesesuaianKegiatanOpen, setIsModalKesesuaianKegiatanOpen] = React.useState(false);
+    const [selectedPaketPekerjaan, setSelectedPaketPekerjaan] = React.useState({});
+
     const [keyword, setKeyword] = React.useState('');
     const handleKeywordChange = (event) => setKeyword(event.target.value);
 
@@ -33,7 +37,7 @@ export default ({
                             </div>
                             <button
                                 className="w-full flex justify-center items-center space-x-1 text-white bg-blue-600 hover:bg-blue-800 rounded text-[11px] tracking-wide px-2.5 py-2 shadow-sm"
-                                // onClick={() => {setSelectedPaketPekerjaan({}), setIsModalKesesuaianKegiatanOpen(true)}}
+                                onClick={() => {setSelectedPaketPekerjaan({}), setIsModalKesesuaianKegiatanOpen(true)}}
                             >
                                 <LiaPlusCircleSolid size={16}/>
                                 <span>Tambah</span>
@@ -63,6 +67,13 @@ export default ({
                     </div>
                 </Card.Body>
             </Card>
+            <FormKesesuaianKegiatanLingkup3
+                isVisible={isModalKesesuaianKegiatanOpen}
+                onClose={() => setIsModalKesesuaianKegiatanOpen(false)}
+                pengawasanId={pengawasanId}
+                daftarPaketPekerjaan={daftarPaketPekerjaan}
+                selectedPaketPekerjaan={selectedPaketPekerjaan}
+            />
         </>
     )
 }

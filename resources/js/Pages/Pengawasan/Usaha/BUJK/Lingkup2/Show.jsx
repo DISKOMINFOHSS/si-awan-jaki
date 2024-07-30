@@ -19,7 +19,9 @@ import {
     LiaFileAlt,
     LiaListAltSolid,
     LiaEllipsisHSolid,
+    LiaInfoCircleSolid,
 } from "react-icons/lia";
+import FormVerifikasiPengawasanLingkup2 from "../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup2";
 
 const PengawasanBUJKLingkup2Show = ({ data }) => {
     console.log(data);
@@ -31,6 +33,8 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
         isMoreDropdownOpened,
         toggleMoreDropdown
     ] = useToggleWithClickOutside(false);
+
+    const [isModalVerificationOpened, setIsModalVerificationOpened] = React.useState(false);
 
     return (
         <>
@@ -48,10 +52,12 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                 </div>
                 <div className="flex items-center gap-x-2">
                     <button
+                        type="button"
                         className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                        onClick={() => setIsModalVerificationOpened(true)}
                     >
                         <LiaListAltSolid size={18} />
-                        <span>Buat Rekomendasi</span>
+                        <span>Verifikasi Pengawasan</span>
                     </button>
                     <Dropdown ref={moreDropdownRef}>
                     <Dropdown.Toggle
@@ -67,22 +73,25 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                             <a
                                 href={`/admin/pendataan/usaha/${usaha.id}`}
                                 target="_blank"
-                                className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
                             >
-                                Informasi Usaha
+                                <LiaInfoCircleSolid size={16} />
+                                <span>Informasi Usaha</span>
                             </a>
                             <button
                                 type="button"
-                                className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpened(true)}}
                             >
-                                Verifikasi Pengawasan
+                                <LiaListAltSolid size={16} />
+                                <span>Verifikasi Pengawasan</span>
                             </button>
-                            <button
+                            {/* <button
                                 type="button"
                                 className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
                             >
                                 Buat Rekomendasi
-                            </button>
+                            </button> */}
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
@@ -135,6 +144,12 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                     daftarKesesuaianKegiatan={pengawasan.daftarKesesuaianKegiatan}
                 />
             </div>
+            <FormVerifikasiPengawasanLingkup2
+                isVisible={isModalVerificationOpened}
+                onClose={() => setIsModalVerificationOpened(false)}
+                lingkupPengawasan={lingkupPengawasan}
+                pengawasan={pengawasan}
+            />
         </>
     );
 }

@@ -32,6 +32,15 @@ class PengawasanBUJKLingkup2 extends Model
         'created_by',
     ];
 
+    protected $casts = [
+        'status_verifikasi_nib'    => 'boolean',
+        'tertib_jenis_usaha'       => 'boolean',
+        'tertib_sifat_usaha'       => 'boolean',
+        'tertib_klasifikasi_usaha' => 'boolean',
+        'tertib_layanan_usaha'     => 'boolean',
+        'tertib_pengawasan'        => 'boolean',
+    ];
+
     public function usaha(): BelongsTo
     {
         return $this->belongsTo(Usaha::class, 'usaha_id');

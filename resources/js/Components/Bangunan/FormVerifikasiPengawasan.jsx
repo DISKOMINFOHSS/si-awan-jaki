@@ -56,7 +56,7 @@ export default ({ pengawasan, isVisible, onClose }) => {
         pemeliharaanBangunan: tertibPemeliharaanBangunan,
         programPemeliharaan: tertibProgramPemeliharaan,
         tertibPengawasan: tertibPengawasan,
-        catatan: catatan,
+        catatan: catatan ? catatan : '',
     });
 
     const [isModalErrorOpened, setIsModalErrorOpened] = React.useState(false);

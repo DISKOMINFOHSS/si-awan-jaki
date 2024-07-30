@@ -68,6 +68,23 @@ class PengawasanLingkup2Service
         ])->where('id', $id)->firstOrFail();
     }
 
+    public function verifyPengawasanBUJK(string $id, array $data)
+    {
+        $pengawasan = PengawasanBUJKLingkup2::find($id);
+
+        $pengawasan->tertib_jenis_usaha = $data['tertib_jenis_usaha'];
+        $pengawasan->tertib_sifat_usaha = $data['tertib_sifat_usaha'];
+        $pengawasan->tertib_klasifikasi_usaha = $data['tertib_klasifikasi_usaha'];
+        $pengawasan->tertib_layanan_usaha = $data['tertib_layanan_usaha'];
+        $pengawasan->tertib_pengawasan = $data['tertib_pengawasan'];
+        $pengawasan->catatan = $data['catatan'];
+
+        $pengawasan->verified_by = $data['verified_by'];
+        $pengawasan->verified_at = now();
+
+        $pengawasan->save();
+    }
+
     public function addKesesuaianKegiatan(array $data): int
     {
         $kesesuaianKegiatan = KesesuaianKegiatanLingkup2::create([

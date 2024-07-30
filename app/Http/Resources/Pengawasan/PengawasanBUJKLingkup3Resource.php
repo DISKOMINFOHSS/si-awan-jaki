@@ -47,7 +47,7 @@ class PengawasanBUJKLingkup3Resource extends JsonResource
             'tertibKualifikasiUsaha'   => $this->tertib_kualifikasi_usaha,
             'tertibPengawasan'         => $this->tertib_pengawasan,
             'catatan'                  => $this->catatan,
-            // 'daftarKesesuaianKegiatan' => $this->whenLoaded('kesesuaianKegiatan'),
+            'daftarKesesuaianKegiatan' => $this->whenLoaded('kesesuaianKegiatan'),
             'createdBy'                => $this->createdBy->nama,
             'verifiedAt'               => $this->verified_at ? $this->verified_at : null,
             'verifiedBy'               => $this->verifiedBy->nama,

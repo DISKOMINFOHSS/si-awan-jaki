@@ -4,19 +4,41 @@ import Card from "../../Card";
 import {
     LiaSearchSolid,
     LiaPlusCircleSolid,
+    LiaEditSolid,
+    LiaTrashAltSolid,
 } from "react-icons/lia";
 import FormKesesuaianKegiatanLingkup3 from "./FormKesesuaianKegiatanLingkup3";
+import { getSesuaiStatusBadge } from "../../../Utils/getStatusBadge";
+import ModalDelete from "../../ModalDelete";
 
 export default ({
     lingkupPengawasan,
     pengawasanId,
     daftarPaketPekerjaan,
+    daftarKesesuaianKegiatan,
 }) => {
     const [isModalKesesuaianKegiatanOpen, setIsModalKesesuaianKegiatanOpen] = React.useState(false);
     const [selectedPaketPekerjaan, setSelectedPaketPekerjaan] = React.useState({});
 
     const [keyword, setKeyword] = React.useState('');
     const handleKeywordChange = (event) => setKeyword(event.target.value);
+
+    const filteredDaftarKesesuaianKegiatan = keyword ? daftarKesesuaianKegiatan.filter(({ namaPaket }) => {
+        return namaPaket.toLowerCase().includes(keyword.toLowerCase());
+    }) : daftarKesesuaianKegiatan;
+
+    function handleEditButtonClick(paketPekerjaan) {
+        setSelectedPaketPekerjaan(paketPekerjaan);
+        setIsModalKesesuaianKegiatanOpen(true);
+    }
+
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = React.useState(false);
+    const [selectedIdKesesuaian, setSelectedIdKesesuaian] = React.useState('');
+
+    function handleDeleteButtonClick(id) {
+        setSelectedIdKesesuaian(id);
+        setIsModalDeleteOpen(true);
+    }
 
     return (
         <>
@@ -63,6 +85,43 @@ export default ({
                                     <th scope="col" className="px-4 pt-2 pb-4 font-medium min-w-32 border-r border-slate-200">Kesesuaian dengan SBU</th>
                                 </tr>
                             </thead>
+                            <tbody className="text-slate-600">
+                                {
+                                    filteredDaftarKesesuaianKegiatan.map((paketPekerjaan, i) => (
+                                        <tr key={i + 1} className="border-b border-slate-100 hover:bg-slate-50">
+                                            <td className="px-4 py-5 text-center">{i + 1}</td>
+                                            <td className="px-4 py-5">
+                                                <div>
+                                                    <div className="hover:text-blue-600 hover:underline">{paketPekerjaan.namaPaket}</div>
+                                                    <div className="font-light text-slate-500">Tahun Anggaran {paketPekerjaan.tahunAnggaran}</div>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-5 text-center">{paketPekerjaan.bentukUsaha}</td>
+                                            <td className="px-4 py-5 text-center">{getSesuaiStatusBadge(paketPekerjaan.kesesuaianBentuk)}</td>
+                                            <td className="px-4 py-5 text-center">{paketPekerjaan.kualifikasiUsaha}</td>
+                                            <td className="px-4 py-5 text-center">{getSesuaiStatusBadge(paketPekerjaan.kesesuaianKualifikasi)}</td>
+                                            <td className="px-4 py-5 text-center">
+                                                <div className="flex gap-x-2">
+                                                    <button
+                                                        type="button"
+                                                        className="rounded border border-slate-200 text-slate-500 p-2 hover:bg-slate-200"
+                                                        onClick={() => handleEditButtonClick(paketPekerjaan)}
+                                                    >
+                                                        <LiaEditSolid size={18} />
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="rounded border border-slate-200 text-red-500 p-2 hover:bg-slate-200"
+                                                        onClick={() => handleDeleteButtonClick(paketPekerjaan.id)}
+                                                    >
+                                                        <LiaTrashAltSolid size={18} />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
                         </table>
                     </div>
                 </Card.Body>
@@ -74,6 +133,17 @@ export default ({
                 daftarPaketPekerjaan={daftarPaketPekerjaan}
                 selectedPaketPekerjaan={selectedPaketPekerjaan}
             />
+            <ModalDelete
+                isVisible={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+                url={`/admin/pengawasan/usaha/3/${pengawasanId}/paket-pekerjaan`}
+                id={selectedIdKesesuaian}
+            >
+                <div className="font-medium text-slate-700 mb-1">Apakah Anda yakin ingin menghapus kesesuaian paket pekerjaan ini?</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Data yang telah dihapus tidak dapat dikembalikan.
+                </div>
+            </ModalDelete>
         </>
     )
 }

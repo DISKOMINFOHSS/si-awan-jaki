@@ -25,7 +25,7 @@ import DaftarKesesuaianKegiatanLingkup3 from "../../../../../Components/Usaha/BU
 const PengawasanBUJKLingkup3Show = ({ data }) => {
     console.log(data);
     const { lingkupPengawasan, pengawasan } = data;
-    const { usaha } = pengawasan;
+    const { usaha, daftarKesesuaianKegiatan } = pengawasan;
 
     const [
         moreDropdownRef,
@@ -138,6 +138,7 @@ const PengawasanBUJKLingkup3Show = ({ data }) => {
                     lingkupPengawasan={lingkupPengawasan}
                     pengawasanId={pengawasan.id}
                     daftarPaketPekerjaan={usaha.daftarPaketPekerjaan}
+                    daftarKesesuaianKegiatan={daftarKesesuaianKegiatan}
                 />
             </div>
         </>

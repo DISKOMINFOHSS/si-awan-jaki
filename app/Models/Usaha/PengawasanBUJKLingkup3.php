@@ -51,4 +51,9 @@ class PengawasanBUJKLingkup3 extends Model
     {
         return $this->belongsTo(User::class, 'verified_by')->withDefault();
     }
+
+    public function kesesuaianKegiatan(): HasMany
+    {
+        return $this->hasMany(KesesuaianKegiatanLingkup3::class, 'pengawasan_id');
+    }
 }

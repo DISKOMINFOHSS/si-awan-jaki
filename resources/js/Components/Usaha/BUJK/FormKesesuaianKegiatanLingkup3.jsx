@@ -49,7 +49,7 @@ export default ({
             bentuk: bentukUsaha ? bentukUsaha : '',
             kesesuaianBentuk: typeof(kesesuaianBentuk) === 'boolean' ? kesesuaianBentuk : '',
             kualifikasi: kualifikasiUsaha ? kualifikasiUsaha : '',
-            kesesuaianSifat: typeof(kesesuaianKualifikasi) === 'boolean' ? kesesuaianKualifikasi : '',
+            kesesuaianKualifikasi: typeof(kesesuaianKualifikasi) === 'boolean' ? kesesuaianKualifikasi : '',
         });
     }, [selectedPaketPekerjaan]);
 
@@ -74,18 +74,18 @@ export default ({
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
-        // post(`/admin/pengawasan/usaha/3/${pengawasanId}/paket-pekerjaan`, {
-        //     preserveScroll: true,
-        //     onSuccess: () => {
-        //         reset();
-        //         onClose();
-        //     },
-        //     onError: (errors) => {
-        //         console.log(errors);
-        //         onClose();
-        //         setIsModalErrorOpen(true);
-        //     },
-        // });
+        post(`/admin/pengawasan/usaha/3/${pengawasanId}/paket-pekerjaan`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+                onClose();
+            },
+            onError: (errors) => {
+                console.log(errors);
+                onClose();
+                setIsModalErrorOpen(true);
+            },
+        });
     }
 
     return (

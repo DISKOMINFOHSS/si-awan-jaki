@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pengawasan\Usaha;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup5Collection;
+use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup5Resource;
 use App\Services\Usaha\PendataanBUJKService;
 use App\Services\Usaha\PengawasanUsahaService;
 use App\Services\Usaha\PengawasanLingkup5Service;
@@ -59,5 +60,19 @@ class Lingkup5Controller extends Controller
         ]);
 
         return redirect("/admin/pengawasan/usaha/5");
+    }
+
+    public function show(string $id)
+    {
+        $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(5);
+
+        $pengawasan = $this->pengawasanLingkup5Service->getPengawasanBUJKById($id);
+
+        return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup5/Show', [
+            'data' => [
+                'lingkupPengawasan' => $lingkupPengawasan,
+                'pengawasan'        => new PengawasanBUJKLingkup5Resource($pengawasan),
+            ],
+        ]);
     }
 }

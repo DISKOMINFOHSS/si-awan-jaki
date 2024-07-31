@@ -9,7 +9,7 @@ import {
     InformasiTertibPengawasanLingkup2,
     InformasiUmumPengawasan,
     InformasiUsaha
-} from "../../../../../Components/Usaha/BUJK/InformasiPengawasanKegiatan";
+} from "../../../../../Components/Usaha/BUJK/InformasiPengawasan";
 import DaftarKesesuaianKegiatanLingkup2 from "../../../../../Components/Usaha/BUJK/DaftarKesesuaianKegiatanLingkup2";
 
 import useToggleWithClickOutside from "../../../../../Hooks/useToggleWithClickOutside";

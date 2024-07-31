@@ -30,4 +30,14 @@ class PengawasanLingkup5Service
         ])->orderBy('created_by', 'desc')
           ->get();
     }
+
+    public function getPengawasanBUJKById(string $id): PengawasanBUJKLingkup5
+    {
+        return PengawasanBUJKLingkup5::with([
+            'usaha' => function (Builder $query)
+            {
+                $query->select('id', 'nama', 'nib', 'pjbu', 'alamat');
+            },
+        ])->where('id', $id)->firstOrFail();
+    }
 }

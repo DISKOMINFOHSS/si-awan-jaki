@@ -2,24 +2,33 @@
 
 namespace App\Services\Usaha;
 
+use App\Models\Usaha\PemeriksaanPengembanganUsahaLingkup5;
 use App\Models\Usaha\PengawasanBUJKLingkup5;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection as DBCollection;
 use Illuminate\Support\Facades\DB;
 
 class PengawasanLingkup5Service
 {
-    public function getDaftarPemeriksaan(): DBCollection
+    public function checkPemeriksaanPengembanganUsahaExists(string $id): bool
+    {
+        return DB::table('master_pemeriksaan_pengembangan_usaha as pemeriksaan')->where('id', $id)->exists();
+    }
+
+    public function getDaftarPemeriksaanPengembanganUsaha(string $pengawasanId): DBCollection
     {
         return DB::table('master_pemeriksaan_pengembangan_usaha as pemeriksaan')
+            ->leftJoin('pemeriksaan_pengembangan_usaha_lingkup_5 as hasil_pemeriksaan', function (JoinClause $join) use ($pengawasanId)
+            {
+                $join->on('pemeriksaan.id', '=', 'hasil_pemeriksaan.pemeriksaan_id')
+                     ->where('hasil_pemeriksaan.pengawasan_id', $pengawasanId);
+            })
             ->select(
-                'pemeriksaan.id',
-                'pemeriksaan.nama_pemeriksaan as namaPemeriksaan',
-                'pemeriksaan.indikator',
-                'pemeriksaan.subindikator',
-                'pemeriksaan.cara_pemeriksaan as caraPemeriksaan',
-                'pemeriksaan.dokumen'
+                'pemeriksaan.*',
+                'hasil_pemeriksaan.hasil_pemeriksaan',
+                'hasil_pemeriksaan.catatan_pemeriksaan',
             )
             ->orderBy('pemeriksaan.id')->get();
     }
@@ -34,6 +43,11 @@ class PengawasanLingkup5Service
         ]);
 
         return $pengawasan->id;
+    }
+
+    public function checkPengawasanBUJKExists(string $id): bool
+    {
+        return PengawasanBUJKLingkup5::where('id', $id)->exists();
     }
 
     public function getDaftarPengawasanBUJK(): EloquentCollection
@@ -55,5 +69,21 @@ class PengawasanLingkup5Service
                 $query->select('id', 'nama', 'nib', 'pjbu', 'alamat');
             },
         ])->where('id', $id)->firstOrFail();
+    }
+
+    public function addPemeriksaanPengembanganUsaha(array $data): string
+    {
+        $pemeriksaan = PemeriksaanPengembanganUsahaLingkup5::firstOrNew([
+            'pengawasan_id'  => $data['pengawasan_id'],
+            'pemeriksaan_id' => $data['pemeriksaan_id'],
+        ]);
+
+        $pemeriksaan->hasil_pemeriksaan = $data['hasil_pemeriksaan'];
+        $pemeriksaan->catatan_pemeriksaan = $data['catatan_pemeriksaan'];
+        $pemeriksaan->created_by = $data['created_by'];
+
+        $pemeriksaan->save();
+
+        return $pemeriksaan->id;
     }
 }

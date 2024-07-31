@@ -20,25 +20,24 @@ export default ({
     function handleSimpanButtonClick(e) {
         e.preventDefault();
         setProcessing(true);
-        console.log(hasilPemeriksaan);
 
-        // router.post(
-        //     `/admin/pengawasan/usaha/5/${pengawasanId}/${pemeriksaan.id}`,
-        //     hasilPemeriksaan,
-        //     {
-        //         preserveScroll: true,
-        //         onSuccess: () => {
-        //             onClose();
-        //             setProcessing(false);
-        //         },
-        //         onError: (errors) => {
-        //             console.log(errors);
-        //             onClose();
-        //             setProcessing(false);
-        //             setIsModalErrorOpened(true);
-        //         },
-        //     }
-        // );
+        router.post(
+            `/admin/pengawasan/usaha/5/${pengawasanId}/${pemeriksaan.id}`,
+            hasilPemeriksaan,
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    onClose();
+                    setProcessing(false);
+                },
+                onError: (errors) => {
+                    console.log(errors);
+                    onClose();
+                    setProcessing(false);
+                    setIsModalErrorOpened(true);
+                },
+            }
+        );
     }
 
     return (

@@ -67,7 +67,7 @@ class Lingkup5Controller extends Controller
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(5);
 
         $pengawasan = $this->pengawasanLingkup5Service->getPengawasanBUJKById($id);
-        $pengawasan['daftar_pemeriksaan'] = $this->pengawasanLingkup5Service->getDaftarPemeriksaan();
+        $pengawasan['daftar_pemeriksaan'] = $this->pengawasanLingkup5Service->getDaftarPemeriksaanPengembanganUsaha($id);
 
         return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup5/Show', [
             'data' => [
@@ -77,8 +77,30 @@ class Lingkup5Controller extends Controller
         ]);
     }
 
-    // public function storePemeriksaan(string $id, string $pemeriksaan_id, Request $request)
-    // {
+    public function storePemeriksaan(string $id, string $pemeriksaan_id, Request $request)
+    {
+        if (!$this->pengawasanLingkup5Service->checkPengawasanBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan']);
+        }
 
-    // }
+        if (!$this->pengawasanLingkup5Service->checkPemeriksaanPengembanganUsahaExists($pemeriksaan_id)) {
+            return back()->withErrors(['message' => 'Pemeriksaan Pengembangan Usaha tidak ditemukan']);
+        }
+
+        $validatedData = $request->validate([
+            'hasil'   => 'required',
+            'catatan' => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup5Service->addPemeriksaanPengembanganUsaha([
+            'pengawasan_id'       => $id,
+            'pemeriksaan_id'      => $pemeriksaan_id,
+            'hasil_pemeriksaan'   => $validatedData['hasil'],
+            'catatan_pemeriksaan' => $validatedData['catatan'],
+            'created_by'          => $userId,
+        ]);
+
+        return redirect("/admin/pengawasan/usaha/5/$id");
+    }
 }

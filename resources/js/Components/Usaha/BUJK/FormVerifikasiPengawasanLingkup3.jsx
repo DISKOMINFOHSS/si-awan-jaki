@@ -7,21 +7,22 @@ import InputRadio from "../../InputRadio";
 
 import { LiaSpinnerSolid } from "react-icons/lia";
 
-export default ({ isVisible, onClose, lingkupPengawasan, pengawasan }) => {
+export default ({
+    isVisible,
+    onClose,
+    lingkupPengawasan,
+    pengawasan
+}) => {
     const {
-        tertibJenisUsaha,
-        tertibSifatUsaha,
-        tertibKlasifikasiUsaha,
-        tertibLayananUsaha,
+        tertibBentukUsaha,
+        tertibKualifikasiUsaha,
         tertibPengawasan,
         catatan
     } = pengawasan;
 
     const [values, setValues] = React.useState({
-        jenisUsaha: tertibJenisUsaha,
-        sifatUsaha: tertibSifatUsaha,
-        klasifikasiUsaha: tertibKlasifikasiUsaha,
-        layananUsaha: tertibLayananUsaha,
+        bentukUsaha: tertibBentukUsaha,
+        kualifikasiUsaha: tertibKualifikasiUsaha,
         tertibPengawasan: tertibPengawasan,
         catatan: catatan ? catatan : '',
     });
@@ -71,50 +72,24 @@ export default ({ isVisible, onClose, lingkupPengawasan, pengawasan }) => {
                         <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 border-b border-slate-100 pb-4">
                             <div className="space-y-2 text-xs">
                                 <div>
-                                    <div className="text-slate-800">Jenis Usaha <span className="text-red-400">*</span></div>
+                                    <div className="text-slate-800">Bentuk Usaha <span className="text-red-400">*</span></div>
                                     <div className="font-light text-[11px] text-slate-500">Kesesuaian Kegiatan Konstruksi</div>
                                 </div>
                                 <InputRadio
-                                    id="jenisUsaha"
-                                    isTrue={values.jenisUsaha}
+                                    id="bentukUsaha"
+                                    isTrue={values.bentukUsaha}
                                     onInputChange={handleInputChange}
                                     label="Tertib"
                                 />
                             </div>
                             <div className="space-y-2 text-xs">
                                 <div>
-                                    <div className="text-slate-800">Sifat Usaha <span className="text-red-400">*</span></div>
+                                    <div className="text-slate-800">Kualifikasi Usaha <span className="text-red-400">*</span></div>
                                     <div className="font-light text-[11px] text-slate-500">Kesesuaian Kegiatan Konstruksi</div>
                                 </div>
                                 <InputRadio
-                                    id="sifatUsaha"
-                                    isTrue={values.sifatUsaha}
-                                    onInputChange={handleInputChange}
-                                    label="Tertib"
-                                />
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 border-b border-slate-100 pb-4">
-                            <div className="space-y-2 text-xs">
-                                <div>
-                                    <div className="text-slate-800">Klasifikasi Usaha <span className="text-red-400">*</span></div>
-                                    <div className="font-light text-[11px] text-slate-500">Kesesuaian Kegiatan Konstruksi</div>
-                                </div>
-                                <InputRadio
-                                    id="klasifikasiUsaha"
-                                    isTrue={values.klasifikasiUsaha}
-                                    onInputChange={handleInputChange}
-                                    label="Tertib"
-                                />
-                            </div>
-                            <div className="space-y-2 text-xs">
-                                <div>
-                                    <div className="text-slate-800">Layanan Usaha <span className="text-red-400">*</span></div>
-                                    <div className="font-light text-[11px] text-slate-500">Kesesuaian Kegiatan Konstruksi</div>
-                                </div>
-                                <InputRadio
-                                    id="layananUsaha"
-                                    isTrue={values.layananUsaha}
+                                    id="kualifikasiUsaha"
+                                    isTrue={values.kualifikasiUsaha}
                                     onInputChange={handleInputChange}
                                     label="Tertib"
                                 />

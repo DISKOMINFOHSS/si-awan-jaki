@@ -21,6 +21,7 @@ import {
     LiaFileAlt,
 } from "react-icons/lia";
 import DaftarKesesuaianKegiatanLingkup3 from "../../../../../Components/Usaha/BUJK/DaftarKesesuaianKegiatanLingkup3";
+import FormVerifikasiPengawasanLingkup3 from "../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup3";
 
 const PengawasanBUJKLingkup3Show = ({ data }) => {
     console.log(data);
@@ -32,6 +33,8 @@ const PengawasanBUJKLingkup3Show = ({ data }) => {
         isMoreDropdownOpened,
         toggleMoreDropdown
     ] = useToggleWithClickOutside(false);
+
+    const [isModalVerificationOpened, setIsModalVerificationOpened] = React.useState(false);
 
     return (
         <>
@@ -51,7 +54,7 @@ const PengawasanBUJKLingkup3Show = ({ data }) => {
                     <button
                         type="button"
                         className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
-                        // onClick={() => setIsModalVerificationOpened(true)}
+                        onClick={() => setIsModalVerificationOpened(true)}
                     >
                         <LiaListAltSolid size={18} />
                         <span>Verifikasi Pengawasan</span>
@@ -78,7 +81,7 @@ const PengawasanBUJKLingkup3Show = ({ data }) => {
                             <button
                                 type="button"
                                 className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
-                                // onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpened(true)}}
+                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpened(true)}}
                             >
                                 <LiaListAltSolid size={16} />
                                 <span>Verifikasi Pengawasan</span>
@@ -141,6 +144,12 @@ const PengawasanBUJKLingkup3Show = ({ data }) => {
                     daftarKesesuaianKegiatan={daftarKesesuaianKegiatan}
                 />
             </div>
+            <FormVerifikasiPengawasanLingkup3
+                isVisible={isModalVerificationOpened}
+                onClose={() => setIsModalVerificationOpened(false)}
+                lingkupPengawasan={lingkupPengawasan}
+                pengawasan={pengawasan}
+            />
         </>
     );
 }

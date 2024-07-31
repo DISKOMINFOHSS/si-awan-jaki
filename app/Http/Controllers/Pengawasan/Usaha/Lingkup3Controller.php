@@ -81,6 +81,33 @@ class Lingkup3Controller extends Controller
         ]);
     }
 
+    public function verify(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup3Service->checkPengawasanBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'bentukUsaha'      => 'required|boolean',
+            'kualifikasiUsaha' => 'required|boolean',
+            'tertibPengawasan' => 'required|boolean',
+            'catatan'          => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup3Service->verifyPengawasanBUJK(
+            $id,
+        [
+            'tertib_bentuk_usaha'      => $validatedData['bentukUsaha'],
+            'tertib_kualifikasi_usaha' => $validatedData['kualifikasiUsaha'],
+            'tertib_pengawasan'        => $validatedData['tertibPengawasan'],
+            'catatan'                  => $validatedData['catatan'],
+            'verified_by'              => $userId,
+        ]);
+
+        return redirect("/admin/pengawasan/usaha/3/$id");
+    }
+
     public function storeKesesuaianKegiatan(string $id, Request $request)
     {
         if (!$this->pengawasanLingkup3Service->checkPengawasanBUJKExists($id)) {
@@ -112,6 +139,21 @@ class Lingkup3Controller extends Controller
             $data['created_by'] = $userId;
             $this->pengawasanLingkup3Service->addKesesuaianKegiatan($data);
         }
+
+        return redirect("/admin/pengawasan/usaha/3/$id");
+    }
+
+    public function destroyKesesuaianKegiatan(string $id, string $kesesuaian_id)
+    {
+        if (!$this->pengawasanLingkup3Service->checkPengawasanBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        if (!$this->pengawasanLingkup3Service->checkKesesuaianKegiatanExistsById($kesesuaian_id)) {
+            return back()->withErrors(['message' => 'Kesesuaian kegiatan tidak ditemukan.']);
+        }
+
+        $this->pengawasanLingkup3Service->deleteKesesuaianKegiatan($kesesuaian_id);
 
         return redirect("/admin/pengawasan/usaha/3/$id");
     }

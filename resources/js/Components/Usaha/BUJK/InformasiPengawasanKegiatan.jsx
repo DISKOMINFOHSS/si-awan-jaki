@@ -160,13 +160,13 @@ const InformasiTertibPengawasanLingkup3 = ({ pengawasan }) => {
                         <div>
                             <div className="font-medium">Bentuk Usaha</div>
                         </div>
-                        <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibJenisUsaha)}</div>
+                        <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibBentukUsaha)}</div>
                     </div>
                     <div className="space-y-2">
                         <div>
                             <div className="font-medium">Kualifikasi Usaha</div>
                         </div>
-                        <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibSifatUsaha)}</div>
+                        <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibKualifikasiUsaha)}</div>
                     </div>
                 </div>
             </Card.Body>

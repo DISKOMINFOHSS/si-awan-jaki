@@ -64,6 +64,21 @@ class PengawasanLingkup3Service
         ])->where('id', $id)->firstOrFail();
     }
 
+    public function verifyPengawasanBUJK(string $id, array $data)
+    {
+        $pengawasan = PengawasanBUJKLingkup3::find($id);
+
+        $pengawasan->tertib_bentuk_usaha = $data['tertib_bentuk_usaha'];
+        $pengawasan->tertib_kualifikasi_usaha = $data['tertib_kualifikasi_usaha'];
+        $pengawasan->tertib_pengawasan = $data['tertib_pengawasan'];
+        $pengawasan->catatan = $data['catatan'];
+
+        $pengawasan->verified_by = $data['verified_by'];
+        $pengawasan->verified_at = now();
+
+        $pengawasan->save();
+    }
+
     public function addKesesuaianKegiatan(array $data): int
     {
         $kesesuaianKegiatan = KesesuaianKegiatanLingkup3::create([
@@ -75,6 +90,11 @@ class PengawasanLingkup3Service
         ]);
 
         return $kesesuaianKegiatan->id;
+    }
+
+    public function checkKesesuaianKegiatanExistsById(string $id): bool
+    {
+        return KesesuaianKegiatanLingkup3::where('id', $id)->whereNull('deleted_at')->exists();
     }
 
     public function checkKesesuaianKegiatanExists(string $pengawasanId, string $paketId): bool
@@ -96,5 +116,11 @@ class PengawasanLingkup3Service
         $kesesuaianKegiatan->save();
 
         return $kesesuaianKegiatan->id;
+    }
+
+    public function deleteKesesuaianKegiatan(string $id)
+    {
+        $kesesuaianKegiatan = KesesuaianKegiatanLingkup3::find($id);
+        $kesesuaianKegiatan->delete();
     }
 }

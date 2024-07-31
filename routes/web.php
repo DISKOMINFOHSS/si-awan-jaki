@@ -121,10 +121,10 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/', 'index');
                     Route::post('/', 'store');
                     Route::get('/{id}', 'show');
-                    // Route::post('/{id}/verification', 'verify');
+                    Route::post('/{id}/verification', 'verify');
 
                     Route::post('/{id}/paket-pekerjaan', 'storeKesesuaianKegiatan');
-                    // Route::delete('/{id}/paket-pekerjaan/{kesesuaian_id}', 'destroyKesesuaianKegiatan');
+                    Route::delete('/{id}/paket-pekerjaan/{kesesuaian_id}', 'destroyKesesuaianKegiatan');
                 });
 
                 Route::controller(App\Http\Controllers\Pengawasan\Usaha\UsahaController::class)

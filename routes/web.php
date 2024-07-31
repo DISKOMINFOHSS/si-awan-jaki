@@ -127,6 +127,15 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::delete('/{id}/paket-pekerjaan/{kesesuaian_id}', 'destroyKesesuaianKegiatan');
                 });
 
+                Route::name('5.')->prefix('/5')
+                ->controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup5Controller::class)
+                ->group(function () {
+                    Route::get('/', 'index');
+                    // Route::post('/', 'store');
+                    // Route::get('/{id}', 'show');
+                    // Route::post('/{id}/verification', 'verify');
+                });
+
                 Route::controller(App\Http\Controllers\Pengawasan\Usaha\UsahaController::class)
                 ->group(function () {
                     Route::get('/', 'scope');

@@ -131,7 +131,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup5Controller::class)
                 ->group(function () {
                     Route::get('/', 'index');
-                    // Route::post('/', 'store');
+                    Route::post('/', 'store');
                     // Route::get('/{id}', 'show');
                     // Route::post('/{id}/verification', 'verify');
                 });

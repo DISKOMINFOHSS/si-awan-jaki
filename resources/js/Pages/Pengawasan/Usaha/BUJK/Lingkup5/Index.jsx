@@ -9,10 +9,11 @@ import {
     LiaPlusSolid
 } from "react-icons/lia";
 import FormPengawasanPengembanganUsaha from "../../../../../Components/Usaha/BUJK/FormPengawasanPengembanganUsaha";
+import DaftarPengawasanLingkup5 from "../../../../../Components/Usaha/BUJK/DaftarPengawasanLingkup5";
 
 const PengawasanBUJKLingkup5Index = ({ data }) => {
     console.log(data);
-    const { lingkupPengawasan, daftarUsaha } = data;
+    const { lingkupPengawasan, daftarUsaha, daftarPengawasan } = data;
     const [isModalPengawasanOpen, setIsModalPengawasanOpen] = React.useState(false);
 
     const tabList = [
@@ -44,10 +45,14 @@ const PengawasanBUJKLingkup5Index = ({ data }) => {
             </div>
             <Tabs tabList={tabList}>
                 <Tabs.Tab>
-                    Pengawasan Rutin
+                    <DaftarPengawasanLingkup5
+                        daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Rutin')}
+                    />
                 </Tabs.Tab>
                 <Tabs.Tab>
-                    Pengawasan Insidental
+                    <DaftarPengawasanLingkup5
+                        daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Insidental')}
+                    />
                 </Tabs.Tab>
             </Tabs>
             <FormPengawasanPengembanganUsaha

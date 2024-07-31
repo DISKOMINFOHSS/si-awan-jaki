@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Pengawasan\Usaha;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup5Collection;
 use App\Services\Usaha\PendataanBUJKService;
 use App\Services\Usaha\PengawasanUsahaService;
+use App\Services\Usaha\PengawasanLingkup5Service;
 use Illuminate\Http\Request;
 
 class Lingkup5Controller extends Controller
@@ -16,12 +18,12 @@ class Lingkup5Controller extends Controller
     public function __construct(
         PendataanBUJKService $bujkService,
         PengawasanUsahaService $pengawasanService,
-        // PengawasanLingkup2Service $pengawasanLingkup2Service,
+        PengawasanLingkup5Service $pengawasanLingkup5Service,
     )
     {
         $this->bujkService = $bujkService;
         $this->pengawasanService = $pengawasanService;
-        // $this->pengawasanLingkup2Service = $pengawasanLingkup2Service;
+        $this->pengawasanLingkup5Service = $pengawasanLingkup5Service;
     }
 
     public function index()
@@ -29,11 +31,33 @@ class Lingkup5Controller extends Controller
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(5);
         $daftarUsaha = $this->bujkService->getDaftarBUJK();
 
+        $daftarPengawasan = $this->pengawasanLingkup5Service->getDaftarPengawasanBUJK();
+
         return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup5/Index', [
             'data' => [
                 'lingkupPengawasan' => $lingkupPengawasan,
+                'daftarPengawasan'  => new PengawasanBUJKLingkup5Collection($daftarPengawasan),
                 'daftarUsaha'       => $daftarUsaha,
             ],
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'usahaId'         => 'required',
+            'tanggal'         => 'required|date',
+            'jenis'           => 'required',
+        ]);
+        $userId = auth()->user()->id;
+
+        $pengawasanId = $this->pengawasanLingkup5Service->addPengawasanBUJK([
+            'jenis_pengawasan'      => $validatedData['jenis'],
+            'tanggal_pengawasan'    => $validatedData['tanggal'],
+            'usaha_id'              => $validatedData['usahaId'],
+            'created_by'            => $userId,
+        ]);
+
+        return redirect("/admin/pengawasan/usaha/5");
     }
 }

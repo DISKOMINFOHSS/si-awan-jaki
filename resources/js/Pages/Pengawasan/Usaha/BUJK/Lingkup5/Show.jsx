@@ -3,6 +3,7 @@ import React from "react";
 import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
 import Dropdown from "../../../../../Components/Dropdown";
+import { InformasiUmumPengawasan, InformasiUsaha } from "../../../../../Components/Usaha/BUJK/InformasiPengawasan";
 
 import useToggleWithClickOutside from "../../../../../Hooks/useToggleWithClickOutside";
 
@@ -13,12 +14,44 @@ import {
     LiaEllipsisHSolid,
     LiaInfoCircleSolid,
 } from "react-icons/lia";
-import { InformasiUmumPengawasan, InformasiUsaha } from "../../../../../Components/Usaha/BUJK/InformasiPengawasan";
+import FormPemeriksaanPengembanganUsaha from "../../../../../Components/Usaha/BUJK/FormPemeriksaanPengembanganUsaha";
+
+function DaftarPengembanganUsaha({ pengawasanId, daftarPengembanganUsaha }) {
+    const daftar = daftarPengembanganUsaha.map((pengembanganUsaha, i) => {
+        const daftarPemeriksaan = pengembanganUsaha.map((pemeriksaan) => (
+            <FormPemeriksaanPengembanganUsaha
+                key={pemeriksaan.id}
+                pengawasanId={pengawasanId}
+                pemeriksaan={pemeriksaan}
+            />
+        ));
+
+        return (
+            <div
+                key={i}
+                className="border-b border-slate-200 py-5"
+            >
+                <div className="font-medium text-slate-800 space-y-2">
+                    {`${i+1}. ${pengembanganUsaha[0].namaPemeriksaan}`}
+                </div>
+                {daftarPemeriksaan}
+            </div>
+        )
+    });
+
+    return <>{daftar}</>;
+}
 
 const PengawasanUBUJKLingkup5Show = ({ data }) => {
     console.log(data);
     const { lingkupPengawasan, pengawasan } = data;
-    const { usaha } = pengawasan;
+    const { usaha, daftarPemeriksaan } = pengawasan;
+
+    const daftarPengembanganUsaha = Array(5).fill([]);
+    daftarPemeriksaan.map((pemeriksaan) => {
+        const i = Number(pemeriksaan.id[0]) - 1;
+        daftarPengembanganUsaha[i] = [...daftarPengembanganUsaha[i], pemeriksaan];
+    });
 
     const [
         moreDropdownRef,
@@ -94,6 +127,10 @@ const PengawasanUBUJKLingkup5Show = ({ data }) => {
                     <InformasiUmumPengawasan pengawasan={pengawasan} />
                 </div>
             </div>
+            <DaftarPengembanganUsaha
+                pengawasanId={pengawasan.id}
+                daftarPengembanganUsaha={daftarPengembanganUsaha}
+            />
         </>
     );
 }

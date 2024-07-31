@@ -67,6 +67,7 @@ class Lingkup5Controller extends Controller
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(5);
 
         $pengawasan = $this->pengawasanLingkup5Service->getPengawasanBUJKById($id);
+        $pengawasan['daftar_pemeriksaan'] = $this->pengawasanLingkup5Service->getDaftarPemeriksaan();
 
         return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup5/Show', [
             'data' => [
@@ -75,4 +76,9 @@ class Lingkup5Controller extends Controller
             ],
         ]);
     }
+
+    // public function storePemeriksaan(string $id, string $pemeriksaan_id, Request $request)
+    // {
+
+    // }
 }

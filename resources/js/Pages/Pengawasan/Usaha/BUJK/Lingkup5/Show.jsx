@@ -3,7 +3,7 @@ import React from "react";
 import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
 import Dropdown from "../../../../../Components/Dropdown";
-import { InformasiUmumPengawasan, InformasiUsaha } from "../../../../../Components/Usaha/BUJK/InformasiPengawasan";
+import { InformasiTertibPengawasanLingkup5, InformasiUmumPengawasan, InformasiUsaha } from "../../../../../Components/Usaha/BUJK/InformasiPengawasan";
 
 import useToggleWithClickOutside from "../../../../../Hooks/useToggleWithClickOutside";
 
@@ -13,8 +13,10 @@ import {
     LiaListAltSolid,
     LiaEllipsisHSolid,
     LiaInfoCircleSolid,
+    LiaLinkSolid,
 } from "react-icons/lia";
 import FormPemeriksaanPengembanganUsaha from "../../../../../Components/Usaha/BUJK/FormPemeriksaanPengembanganUsaha";
+import Card from "../../../../../Components/Card";
 
 function DaftarPengembanganUsaha({ pengawasanId, daftarPengembanganUsaha }) {
     const daftar = daftarPengembanganUsaha.map((pengembanganUsaha, i) => {
@@ -122,9 +124,37 @@ const PengawasanUBUJKLingkup5Show = ({ data }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-4">
                 <div className="space-y-4">
                     <InformasiUsaha usaha={usaha} />
+                    <Card className="w-full h-fit">
+                        <Card.Header className="flex justify-between items-center">
+                            <div>
+                                <h3 className="font-medium text-slate-700 leading-tight">Laporan Badan Usaha</h3>
+                                {/* <h4 className="font-light text-slate-500 text-[11px]">Daftar Laporan Badan Usaha Jasa Konstruksi</h4> */}
+                            </div>
+                        </Card.Header>
+                        <Card.Body className="p-4">
+                            <div className="space-y-4 text-xs">
+                                {
+                                    usaha.daftarLaporan.map(({ id, tahun, label, url }) => (
+                                        <div key={id} className="flex items-start justify-between gap-x-1 text-xs">
+                                            <div className="flex gap-x-2 items-start group">
+                                                <div className="bg-blue-100 text-blue-600 rounded p-2">
+                                                    <LiaLinkSolid size={18} />
+                                                </div>
+                                                <a href={url} target="_blank" className="group-hover:text-blue-600 group-hover:underline">
+                                                    <div className="font-medium">Tahun {tahun} - {label}</div>
+                                                    <div className="font-light text-slate-500">{url}</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </Card.Body>
+                    </Card>
                 </div>
                 <div className="space-y-4">
                     <InformasiUmumPengawasan pengawasan={pengawasan} />
+                    <InformasiTertibPengawasanLingkup5 pengawasan={pengawasan} />
                 </div>
             </div>
             <DaftarPengembanganUsaha

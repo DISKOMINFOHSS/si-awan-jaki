@@ -174,10 +174,27 @@ const InformasiTertibPengawasanLingkup3 = ({ pengawasan }) => {
     )
 }
 
+const InformasiTertibPengawasanLingkup5 = ({ pengawasan }) => (
+    <Card className="h-fit w-full">
+        <Card.Body className="p-4 text-xs">
+            <div className="grid grid-cols-1 gap-x-4">
+                <div className="space-y-2">
+                    <div>
+                        <div className="font-medium">Pengembangan Usaha</div>
+                        <div className="font-light text-slate-500">Pelaksanaan Pengembangan Usaha Berkelanjutan</div>
+                    </div>
+                    <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibPengembanganUsaha)}</div>
+                </div>
+            </div>
+        </Card.Body>
+    </Card>
+)
+
 export {
     InformasiUsaha,
     InformasiTambahanPengawasan,
     InformasiUmumPengawasan,
     InformasiTertibPengawasanLingkup2,
     InformasiTertibPengawasanLingkup3,
+    InformasiTertibPengawasanLingkup5,
 }

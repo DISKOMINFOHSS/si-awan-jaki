@@ -66,6 +66,15 @@ class PendataanBUJKService
         return $laporanId;
     }
 
+    public function getDaftarLaporanBUJKByTahun(string $usahaId, int $tahun): DBCollection
+    {
+        // dd($usahaId, $tahun);
+        return DB::table('laporan_bujk as laporan')->where('laporan.usaha_id', $usahaId)
+            ->where('laporan.tahun', $tahun)
+            ->select('id', 'tahun', 'label', 'url')
+            ->get();
+    }
+
     public function getDaftarLaporanBUJK(string $usahaId): DBCollection
     {
         return DB::table('laporan_bujk as laporan')->where('laporan.usaha_id', $usahaId)

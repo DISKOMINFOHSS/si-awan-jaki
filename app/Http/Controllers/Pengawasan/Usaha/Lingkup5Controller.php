@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pengawasan\Usaha;
 
+use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup5Collection;
@@ -68,6 +69,9 @@ class Lingkup5Controller extends Controller
 
         $pengawasan = $this->pengawasanLingkup5Service->getPengawasanBUJKById($id);
         $pengawasan['daftar_pemeriksaan'] = $this->pengawasanLingkup5Service->getDaftarPemeriksaanPengembanganUsaha($id);
+
+        $pengawasan['usaha']['daftarLaporan'] = $this->bujkService
+            ->getDaftarLaporanBUJKByTahun($pengawasan->usaha->id, Carbon::createFromFormat('Y-m-d', $pengawasan->tanggal_pengawasan)->year);
 
         return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup5/Show', [
             'data' => [

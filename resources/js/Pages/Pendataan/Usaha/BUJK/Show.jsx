@@ -15,6 +15,7 @@ import {
     LiaEllipsisVSolid,
     LiaSearchSolid
 } from "react-icons/lia";
+import DaftarLaporan from "../../../../Components/Usaha/BUJK/DaftarLaporan";
 
 const PendataanBUJKShow = ({ data }) => {
     console.log(data);
@@ -110,7 +111,7 @@ const PendataanBUJKShow = ({ data }) => {
                     </Card.Body>
                 </Card>
                 <DaftarSertifikatStandar usaha={usaha} />
-                <Card className="w-full h-fit">
+                {/* <Card className="w-full h-fit">
                     <Card.Header className="flex justify-between items-center">
                         <h3 className="font-medium text-slate-700">Laporan</h3>
                     </Card.Header>
@@ -132,7 +133,8 @@ const PendataanBUJKShow = ({ data }) => {
                             </button>
                         </div>
                     </Card.Body>
-                </Card>
+                </Card> */}
+                <DaftarLaporan usaha={usaha} />
                 <div className="col-span-2">
                     <DaftarPaketPekerjaan
                         daftarPaketPekerjaan={daftarPaketPekerjaan}

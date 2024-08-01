@@ -38,6 +38,7 @@ class BUJKResource extends JsonResource
                     ];
                 }
             ),
+            'daftarLaporan'        => $this->laporan,
             'daftarPaketPekerjaan' => $this->daftar_paket_pekerjaan,
         ];
     }

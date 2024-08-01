@@ -5,8 +5,8 @@ import ModalKonfirmasiPemeriksaanLingkup5 from "./ModalKonfirmasiPemeriksaanLing
 
 export default ({ pengawasanId, pemeriksaan }) => {
     const [hasilPemeriksaan, setHasilPemeriksaan] = React.useState({
-        hasil: '',
-        catatan: '',
+        hasil: pemeriksaan.hasilPemeriksaan.hasil ? pemeriksaan.hasilPemeriksaan.hasil : '',
+        catatan: pemeriksaan.hasilPemeriksaan.catatan ? pemeriksaan.hasilPemeriksaan.catatan : '',
     });
 
     function handleInputChange(e) {

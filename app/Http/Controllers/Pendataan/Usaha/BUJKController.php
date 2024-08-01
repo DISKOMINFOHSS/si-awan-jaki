@@ -33,6 +33,7 @@ class BUJKController extends Controller
         $usaha = $this->usahaService->getUsahaById($id);
 
         $usaha['sertifikat_standar'] = $this->bujkService->getDaftarSertifikatStandarBUJK($id);
+        $usaha['laporan'] = $this->bujkService->getDaftarLaporanBUJK($id);
         $usaha['daftar_paket_pekerjaan'] = $this->bujkService->getDaftarPaketPekerjaanByUsahaId($id);
 
         return Inertia::render('Pendataan/Usaha/BUJK/Show', [
@@ -63,6 +64,38 @@ class BUJKController extends Controller
                 'usaha_id'      => $id,
                 'created_by'    => $userId,
             ]);
+        }
+
+        return redirect("/admin/pendataan/usaha/bujk/$id");
+    }
+
+    public function storeLaporan(string $id, Request $request)
+    {
+        if (!$this->usahaService->checkUsahaExists($id)) {
+            return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'tahun' => 'required|digits:4',
+            'label' => 'required',
+            'url'   => 'required|url:http,https',
+        ]);
+        $userId = auth()->user()->id;
+
+        $data = [
+            'tahun' => $validatedData['tahun'],
+            'label' => $validatedData['label'],
+            'url'   => $validatedData['url'],
+        ];
+
+        if ($request->has('id')){
+            $data['id'] = $request->input('id');
+            $this->bujkService->updateLaporanBUJK($data);
+        } else {
+            $data['usaha_id'] = $id;
+            $data['created_by'] = $userId;
+
+            $this->bujkService->addLaporanBUJK($data);
         }
 
         return redirect("/admin/pendataan/usaha/bujk/$id");

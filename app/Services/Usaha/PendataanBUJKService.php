@@ -51,6 +51,39 @@ class PendataanBUJKService
             ->get();
     }
 
+    public function addLaporanBUJK(array $data): int
+    {
+        $laporanId = DB::table('laporan_bujk')->insertGetId([
+            'tahun'      => $data['tahun'],
+            'label'      => $data['label'],
+            'url'        => $data['url'],
+            'usaha_id'   => $data['usaha_id'],
+            'created_by' => $data['created_by'],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return $laporanId;
+    }
+
+    public function getDaftarLaporanBUJK(string $usahaId): DBCollection
+    {
+        return DB::table('laporan_bujk as laporan')->where('laporan.usaha_id', $usahaId)
+            ->select('id', 'tahun', 'label', 'url')
+            ->orderBy('laporan.tahun', 'desc')->get();
+    }
+
+    public function updateLaporanBUJK(array $data): int
+    {
+        return DB::table('laporan_bujk as laporan')->where('id', $data['id'])
+            ->update([
+                'tahun'      => $data['tahun'],
+                'label'      => $data['label'],
+                'url'        => $data['url'],
+                'updated_at' => now(),
+            ]);
+    }
+
     public function addPaketPekerjaan(array $data): int
     {
         $paketPekerjaan = PaketPekerjaan::create([

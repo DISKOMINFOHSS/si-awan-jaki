@@ -4,6 +4,8 @@ import Modal from "../../Modal";
 import InputRadio from "../../InputRadio";
 
 import { LiaSpinnerSolid } from "react-icons/lia";
+import { router } from "@inertiajs/react";
+import ModalError from "../../ModalError";
 
 export default ({
     isVisible,
@@ -24,14 +26,28 @@ export default ({
     });
     const handleInputChange = (value) => setValues({ ...values, ...value });
 
+    const [isModalErrorOpened, setIsModalErrorOpened] = React.useState(false);
     const [processing, setProcessing] = React.useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
         setProcessing(true);
-        console.log(values);
-        onClose();
-        setProcessing(false);
+        router.post(
+            `/admin/pengawasan/usaha/${lingkupPengawasan.id}/${pengawasan.id}/verification`,
+            values,
+            {
+                onSuccess: () => {
+                    onClose();
+                    setProcessing(false);
+                },
+                onError: (errors) => {
+                    console.log(errors);
+                    onClose();
+                    setProcessing(false);
+                    setIsModalErrorOpened(true);
+                }
+            }
+        )
     }
 
     return (
@@ -89,6 +105,15 @@ export default ({
                     </form>
                 </Modal.Body>
             </Modal>
+            <ModalError
+                isVisible={isModalErrorOpened}
+                onClose={() => setIsModalErrorOpened(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Gagal melakukan verifikasi pengawasan. Silakan periksa kembali informasi yang diisi.
+                </div>
+            </ModalError>
         </>
     );
 }

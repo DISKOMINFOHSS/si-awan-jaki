@@ -71,6 +71,20 @@ class PengawasanLingkup5Service
         ])->where('id', $id)->firstOrFail();
     }
 
+    public function verifyPengawasanBUJK(string $id, array $data)
+    {
+        $pengawasan = PengawasanBUJKLingkup5::find($id);
+
+        $pengawasan->tertib_pengembangan_usaha = $data['tertib_pengembangan_usaha'];
+        $pengawasan->tertib_pengawasan = $data['tertib_pengawasan'];
+        $pengawasan->catatan = $data['catatan'];
+
+        $pengawasan->verified_by = $data['verified_by'];
+        $pengawasan->verified_at = now();
+
+        $pengawasan->save();
+    }
+
     public function addPemeriksaanPengembanganUsaha(array $data): string
     {
         $pemeriksaan = PemeriksaanPengembanganUsahaLingkup5::firstOrNew([

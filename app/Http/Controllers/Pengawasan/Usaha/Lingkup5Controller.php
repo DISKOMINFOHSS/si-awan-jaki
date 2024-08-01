@@ -81,6 +81,31 @@ class Lingkup5Controller extends Controller
         ]);
     }
 
+    public function verify(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup5Service->checkPengawasanBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan']);
+        }
+
+        $validatedData = $request->validate([
+            'pengembanganUsaha' => 'required|boolean',
+            'tertibPengawasan'  => 'required|boolean',
+            'catatan'           => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup5Service->verifyPengawasanBUJK(
+            $id,
+        [
+            'tertib_pengembangan_usaha' => $validatedData['pengembanganUsaha'],
+            'tertib_pengawasan'         => $validatedData['tertibPengawasan'],
+            'catatan'                   => $validatedData['catatan'],
+            'verified_by'               => $userId,
+        ]);
+
+        return redirect("/admin/pengawasan/usaha/5/$id");
+    }
+
     public function storePemeriksaan(string $id, string $pemeriksaan_id, Request $request)
     {
         if (!$this->pengawasanLingkup5Service->checkPengawasanBUJKExists($id)) {

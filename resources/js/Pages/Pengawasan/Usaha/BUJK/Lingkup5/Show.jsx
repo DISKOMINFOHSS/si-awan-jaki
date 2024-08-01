@@ -2,22 +2,21 @@ import React from "react";
 
 import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
+import Card from "../../../../../Components/Card";
 import Dropdown from "../../../../../Components/Dropdown";
+import FormPemeriksaanPengembanganUsaha from "../../../../../Components/Usaha/BUJK/FormPemeriksaanPengembanganUsaha";
+import FormVerifikasiPengawasanLingkup5 from "../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup5";
 import { InformasiTertibPengawasanLingkup5, InformasiUmumPengawasan, InformasiUsaha } from "../../../../../Components/Usaha/BUJK/InformasiPengawasan";
 
 import useToggleWithClickOutside from "../../../../../Hooks/useToggleWithClickOutside";
 
 import {
     LiaHomeSolid,
-    LiaFileAlt,
     LiaListAltSolid,
     LiaEllipsisHSolid,
     LiaInfoCircleSolid,
     LiaLinkSolid,
 } from "react-icons/lia";
-import FormPemeriksaanPengembanganUsaha from "../../../../../Components/Usaha/BUJK/FormPemeriksaanPengembanganUsaha";
-import Card from "../../../../../Components/Card";
-import FormVerifikasiPengawasanLingkup5 from "../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup5";
 
 function DaftarPengembanganUsaha({ pengawasanId, daftarPengembanganUsaha }) {
     const daftar = daftarPengembanganUsaha.map((pengembanganUsaha, i) => {

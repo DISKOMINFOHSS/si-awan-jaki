@@ -17,12 +17,12 @@ const PengawasanUsahaCategory = ({ data }) => {
             <Breadcrumb>
                 <Breadcrumb.Item href="/admin/dashboard"><LiaHomeSolid size={14} /></Breadcrumb.Item>
                 <Breadcrumb.Item href="/admin/pengawasan/usaha">Pilih Lingkup Pengawasan</Breadcrumb.Item>
-                <Breadcrumb.Item active>Daftar Objek Pengawasan</Breadcrumb.Item>
+                <Breadcrumb.Item active>{`${lingkupPengawasan.id}. ${lingkupPengawasan.label}`}</Breadcrumb.Item>
             </Breadcrumb>
             <div className="flex justify-between items-center mb-4">
                 <div>
                     <h1 className="font-medium text-xl text-slate-800">Tertib Usaha Jasa Konstruksi</h1>
-                    <h2 className="font-light text-xs text-slate-500">Pengawasan Tertib Usaha Jasa Konstruksi berdasarkan PERMEN PUPR Nomor 1 Tahun 2023</h2>
+                    <h2 className="font-light text-xs text-slate-500">{lingkupPengawasan.lingkupPengawasan}</h2>
                 </div>
             </div>
             <div>

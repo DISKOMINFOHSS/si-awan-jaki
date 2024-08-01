@@ -128,6 +128,19 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::delete('/{id}/paket-pekerjaan/{kesesuaian_id}', 'destroyKesesuaianKegiatan');
                 });
 
+                Route::name('4.')->prefix('/4')
+                ->controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup4Controller::class)
+                ->group(function () {
+
+                    // Route::get('/{jenis_usaha}', 'index')->name('index');
+
+                    Route::name('bujk.')->prefix('/bujk')
+                    ->group(function () {
+                        Route::get('/', 'indexBUJK');
+                    });
+
+                });
+
                 Route::name('5.')->prefix('/5')
                 ->controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup5Controller::class)
                 ->group(function () {

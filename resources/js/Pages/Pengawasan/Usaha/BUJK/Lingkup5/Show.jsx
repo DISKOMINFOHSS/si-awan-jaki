@@ -17,6 +17,7 @@ import {
 } from "react-icons/lia";
 import FormPemeriksaanPengembanganUsaha from "../../../../../Components/Usaha/BUJK/FormPemeriksaanPengembanganUsaha";
 import Card from "../../../../../Components/Card";
+import FormVerifikasiPengawasanLingkup5 from "../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup5";
 
 function DaftarPengembanganUsaha({ pengawasanId, daftarPengembanganUsaha }) {
     const daftar = daftarPengembanganUsaha.map((pengembanganUsaha, i) => {
@@ -60,6 +61,8 @@ const PengawasanUBUJKLingkup5Show = ({ data }) => {
         isMoreDropdownOpened,
         toggleMoreDropdown
     ] = useToggleWithClickOutside(false);
+
+    const [isModalVerificationOpened, setIsModalVerificationOpened] = React.useState(false);
 
     return (
         <>
@@ -160,6 +163,12 @@ const PengawasanUBUJKLingkup5Show = ({ data }) => {
             <DaftarPengembanganUsaha
                 pengawasanId={pengawasan.id}
                 daftarPengembanganUsaha={daftarPengembanganUsaha}
+            />
+            <FormVerifikasiPengawasanLingkup5
+                isVisible={isModalVerificationOpened}
+                onClose={() => setIsModalVerificationOpened(false)}
+                lingkupPengawasan={lingkupPengawasan}
+                pengawasan={pengawasan}
             />
         </>
     );

@@ -24,7 +24,8 @@ class PendataanUsahaService
         return JenisUsaha::with(['usaha'  => function (Builder $query) {
             $query->leftJoin('usaha_rantai_pasok', 'usaha.id', 'usaha_rantai_pasok.usaha_id')
                   ->leftJoin('master_jenis_usaha_rantai_pasok as rantai_pasok', 'usaha_rantai_pasok.rantai_pasok_id', 'rantai_pasok.id')
-                  ->select('usaha.*', 'kategori_sumber_daya as kategoriSumberDaya', 'pelaku_usaha as pelakuUsaha');
+                  ->select('usaha.*', 'kategori_sumber_daya as kategoriSumberDaya', 'pelaku_usaha as pelakuUsaha')
+                  ->orderBy('usaha.nama');
         }])->where('slug', $slug)
            ->first();
     }

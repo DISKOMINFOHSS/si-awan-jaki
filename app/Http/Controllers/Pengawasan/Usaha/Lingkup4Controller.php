@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pengawasan\Usaha;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup4Collection;
+use App\Http\Resources\Pengawasan\PengawasanRutinBUJKLingkup4Resource;
 use App\Services\Usaha\PendataanBUJKService;
 use App\Services\Usaha\PendataanUsahaService;
 use App\Services\Usaha\PengawasanUsahaService;
@@ -54,12 +55,6 @@ class Lingkup4Controller extends Controller
         {
             $pengawasanId = $this->pengawasanLingkup4Service->addPengawasanBUJK($data);
         }
-        // elseif ($jenisUsaha->jenisUsaha === "Usaha Orang Perseorangan")
-        // {
-
-        // }
-        // dd($usaha->jenisUsaha->jenisUsaha);
-
 
         return redirect("/admin/pengawasan/usaha/4/$jenisUsaha->slug");
     }
@@ -76,6 +71,20 @@ class Lingkup4Controller extends Controller
                 'lingkupPengawasan' => $lingkupPengawasan,
                 'daftarPengawasan'  => new PengawasanBUJKLingkup4Collection($daftarPengawasan),
                 'daftarUsaha'       => $daftarUsaha,
+            ],
+        ]);
+    }
+
+    public function showPengawasanRutinBUJK(string $id)
+    {
+        $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(4);
+
+        $pengawasan = $this->pengawasanLingkup4Service->getPengawasanBUJKById($id);
+
+        return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup4/Rutin/Show', [
+            'data' => [
+                'lingkupPengawasan' => $lingkupPengawasan,
+                'pengawasan'        => new PengawasanRutinBUJKLingkup4Resource($pengawasan),
             ],
         ]);
     }

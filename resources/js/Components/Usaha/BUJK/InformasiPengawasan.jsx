@@ -174,6 +174,29 @@ const InformasiTertibPengawasanLingkup3 = ({ pengawasan }) => {
     )
 }
 
+const InformasiTertibPengawasanLingkup4 = ({ pengawasan }) => (
+    <Card className="h-fit w-full">
+        <Card.Body className="p-4 text-xs">
+            <div className="grid grid-cols-2 gap-x-4">
+                <div className="space-y-2">
+                    <div>
+                        <div className="font-medium">Sertifikat Badan Usaha (SBU)</div>
+                        <div className="font-light text-[11px] text-slate-500">Pemenuhan Persyaratan Usaha</div>
+                    </div>
+                    <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibPersyaratanSBU)}</div>
+                </div>
+                <div className="space-y-2">
+                    <div>
+                        <div className="font-medium">Nomor Induk Berusaha (NIB)</div>
+                        <div className="font-light text-[11px] text-slate-500">Pemenuhan Persyaratan Usaha</div>
+                    </div>
+                    <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibPersyaratanNIB)}</div>
+                </div>
+            </div>
+        </Card.Body>
+    </Card>
+)
+
 const InformasiTertibPengawasanLingkup5 = ({ pengawasan }) => (
     <Card className="h-fit w-full">
         <Card.Body className="p-4 text-xs">
@@ -183,7 +206,7 @@ const InformasiTertibPengawasanLingkup5 = ({ pengawasan }) => (
                         <div className="font-medium">Pengembangan Usaha</div>
                         <div className="font-light text-slate-500">Pelaksanaan Pengembangan Usaha Berkelanjutan</div>
                     </div>
-                    <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibPengembanganUsaha)}</div>
+                    <div className="font-light text-[11px] text-slate-500">{getTertibStatusBadge(pengawasan.tertibPengembanganUsaha)}</div>
                 </div>
             </div>
         </Card.Body>
@@ -196,5 +219,6 @@ export {
     InformasiUmumPengawasan,
     InformasiTertibPengawasanLingkup2,
     InformasiTertibPengawasanLingkup3,
+    InformasiTertibPengawasanLingkup4,
     InformasiTertibPengawasanLingkup5,
 }

@@ -138,6 +138,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::name('bujk.')->prefix('/bujk')
                     ->group(function () {
                         Route::get('/', 'indexBUJK');
+                        Route::get('/{id}/rutin', 'showPengawasanRutinBUJK');
                     });
 
                 });

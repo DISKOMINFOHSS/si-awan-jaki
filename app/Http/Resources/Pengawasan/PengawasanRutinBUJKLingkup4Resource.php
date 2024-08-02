@@ -4,6 +4,7 @@ namespace App\Http\Resources\Pengawasan;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class PengawasanRutinBUJKLingkup4Resource extends JsonResource
 {
@@ -21,11 +22,20 @@ class PengawasanRutinBUJKLingkup4Resource extends JsonResource
             'jenisPengawasan'      => $this->jenis_pengawasan,
             'tanggalPengawasan'    => $this->tanggal_pengawasan,
             'usaha'                => [
-                'id'                  => $usaha->id,
-                'nama'                => $usaha->nama,
-                'nib'                 => $usaha->nib,
-                'pjbu'                => $usaha->pjbu,
-                'alamat'              => $usaha->alamat,
+                'id'           => $usaha->id,
+                'nama'         => $usaha->nama,
+                'nib'          => $usaha->nib,
+                // 'dokumenNIB'   => [
+                //     'fileName' => $usaha->name,
+                //     'filePath' => Storage::url($usaha->path),
+                // ],
+                'dokumenNIB'   => $this->when($usaha->dokumen_nib, [
+                    'fileName' => $usaha->name,
+                    'filePath' => Storage::url($usaha->path),
+                ]),
+                'pjbu'         => $usaha->pjbu,
+                'alamat'       => $usaha->alamat,
+
             ],
             'tertibpersyaratanSBU' => $this->tertib_persyaratan_sbu,
             'tertibpersyaratanNIB' => $this->tertib_persyaratan_nib,

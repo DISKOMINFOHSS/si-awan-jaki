@@ -36,7 +36,11 @@ class PengawasanLingkup4Service
         return PengawasanBUJKLingkup4::with([
             'usaha' => function (Builder $query)
             {
-                $query->select('id', 'nama', 'nib', 'pjbu', 'alamat');
+                $query->leftJoin('files', 'files.id', 'usaha.dokumen_nib')
+                      ->select(
+                        'usaha.id', 'usaha.nama', 'usaha.nib', 'usaha.pjbu', 'usaha.alamat',
+                        'usaha.dokumen_nib', 'files.path', 'files.name',
+                      );
             }
         ])->where('id', $id)->firstOrFail();
     }

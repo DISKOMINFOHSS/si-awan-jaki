@@ -85,4 +85,24 @@ class UsahaController extends Controller
 
         return redirect("/admin/pendataan/usaha/$jenisUsaha->slug/$usahaId");
     }
+
+    public function storeDokumenNIB(string $id, Request $request)
+    {
+        if (!$this->usahaService->checkUsahaExists($id)) {
+            return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate(['dokumenNIB' => 'required|file|max:2048']);
+        $userId = auth()->user()->id;
+
+        $dokumenNIB = $this->fileService->addFile([
+            'file'       => $validatedData['dokumenNIB'],
+            'path'       => 'public/files/usaha/nib',
+            'created_by' => $userId,
+        ]);
+
+        $this->usahaService->addDokumenNIB($id, $dokumenNIB);
+
+        return back();
+    }
 }

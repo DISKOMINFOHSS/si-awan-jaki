@@ -59,6 +59,16 @@ class PendataanUsahaService
         return $usaha->id;
     }
 
+    public function addDokumenNIB(string $id, int $dokumenNIB)
+    {
+        $usaha = Usaha::find($id);
+
+        $usaha->dokumen_nib = $dokumenNIB;
+        $usaha->save();
+
+        return $usaha->id;
+    }
+
     public function checkUsahaExists(string $id): bool
     {
         return Usaha::where('id', $id)->exists();

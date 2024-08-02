@@ -20,17 +20,16 @@ export default ({ isVisible, onClose, usaha }) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(data);
-        // post(`/admin/pendataan/usaha/bujk/${usaha.id}/nib`, {
-        //     onSuccess: () => {
-        //         onClose();
-        //     },
-        //     onError: (errors) => {
-        //         console.log(errors);
-        //         onClose();
-        //         setIsModalErrorOpen(true);
-        //     },
-        // });
+        post(`/admin/pendataan/usaha/${usaha.id}/nib`, {
+            onSuccess: () => {
+                onClose();
+            },
+            onError: (errors) => {
+                console.log(errors);
+                onClose();
+                setIsModalErrorOpen(true);
+            },
+        });
     }
 
     return (

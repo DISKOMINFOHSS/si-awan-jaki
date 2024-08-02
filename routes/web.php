@@ -36,6 +36,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/', 'category');
                     Route::post('/', 'store')->name('store');
 
+                    Route::post('/{id}/nib', 'storeDokumenNIB');
+
                     Route::get('/{jenis_usaha}', 'index')->name('index');
                 });
 

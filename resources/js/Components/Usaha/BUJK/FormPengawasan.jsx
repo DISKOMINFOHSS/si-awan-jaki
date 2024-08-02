@@ -2,10 +2,10 @@ import React from "react";
 import { useForm } from "@inertiajs/react";
 
 import Modal from "../../Modal";
+import ModalError from "../../ModalError";
 import SelectUsaha from "../SelectUsaha";
 
 import { LiaAngleDownSolid, LiaSpinnerSolid } from "react-icons/lia";
-import ModalError from "../../ModalError";
 
 export default ({
     isVisible,
@@ -51,7 +51,7 @@ export default ({
 
     return (
         <>
-            <Modal isVisible={isVisible} className="w-full max-w-xl h-fit mt-10">
+            <Modal isVisible={isVisible} className="w-full max-w-lg h-fit mt-10">
                 <Modal.Header onClose={onClose}>
                     <div className="text-center mb-7">
                         <h1 className="font-medium text-slate-800">Tambah Pengawasan Tertib Usaha</h1>

@@ -47,9 +47,9 @@ class Lingkup5Controller extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'usahaId'         => 'required',
-            'tanggal'         => 'required|date',
-            'jenis'           => 'required',
+            'usahaId' => 'required|exists:usaha,id',
+            'tanggal' => 'required|date',
+            'jenis'   => 'required',
         ]);
         $userId = auth()->user()->id;
 
@@ -60,7 +60,7 @@ class Lingkup5Controller extends Controller
             'created_by'            => $userId,
         ]);
 
-        return redirect("/admin/pengawasan/usaha/5");
+        return redirect("/admin/pengawasan/usaha/5/$pengawasanId");
     }
 
     public function show(string $id)

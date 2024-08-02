@@ -8,7 +8,7 @@ import {
     LiaHomeSolid,
     LiaPlusSolid
 } from "react-icons/lia";
-import FormPengawasanPengembanganUsaha from "../../../../../Components/Usaha/BUJK/FormPengawasanPengembanganUsaha";
+import FormPengawasan from "../../../../../Components/Usaha/BUJK/FormPengawasan";
 import DaftarPengawasanLingkup5 from "../../../../../Components/Usaha/BUJK/DaftarPengawasanLingkup5";
 
 const PengawasanBUJKLingkup5Index = ({ data }) => {
@@ -55,7 +55,7 @@ const PengawasanBUJKLingkup5Index = ({ data }) => {
                     />
                 </Tabs.Tab>
             </Tabs>
-            <FormPengawasanPengembanganUsaha
+            <FormPengawasan
                 isVisible={isModalPengawasanOpen}
                 onClose={() => setIsModalPengawasanOpen(false)}
                 lingkupPengawasan={lingkupPengawasan}

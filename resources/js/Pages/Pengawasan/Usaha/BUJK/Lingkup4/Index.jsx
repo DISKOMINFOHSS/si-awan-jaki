@@ -9,10 +9,12 @@ import {
     LiaPlusSolid,
 } from "react-icons/lia";
 import DaftarPengawasanRutinLingkup4 from "../../../../../Components/Usaha/BUJK/DaftarPengawasanRutinLingkup4";
+import FormPengawasan from "../../../../../Components/Usaha/BUJK/FormPengawasan";
 
 const PengawasanBUJKLingkup4Index = ({ data }) => {
     console.log(data);
-    const { lingkupPengawasan } = data;
+    const { lingkupPengawasan, daftarUsaha, daftarPengawasan } = data;
+    const [isModalPengawasanOpen, setIsModalPengawasanOpen] = React.useState(false);
 
     const tabList = [
         { label: 'Pengawasan Rutin' },
@@ -35,7 +37,7 @@ const PengawasanBUJKLingkup4Index = ({ data }) => {
                 <div>
                     <button
                         className="w-full flex justify-center items-center space-x-1 text-white bg-blue-600 hover:bg-blue-800 rounded text-xs tracking-wide p-2.5 shadow-sm"
-                        // onClick={() => setIsModalPengawasanOpen(true)}
+                        onClick={() => setIsModalPengawasanOpen(true)}
                     >
                         <LiaPlusSolid className="stroke-2" />
                         <span>Tambah</span>
@@ -44,12 +46,18 @@ const PengawasanBUJKLingkup4Index = ({ data }) => {
             </div>
             <Tabs tabList={tabList}>
                 <Tabs.Tab>
-                    <DaftarPengawasanRutinLingkup4 daftarPengawasan={[]} />
+                    <DaftarPengawasanRutinLingkup4 daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Rutin')} />
                 </Tabs.Tab>
                 <Tabs.Tab>
                     Pengawasan Insidental
                 </Tabs.Tab>
             </Tabs>
+            <FormPengawasan
+                isVisible={isModalPengawasanOpen}
+                onClose={() => setIsModalPengawasanOpen(false)}
+                lingkupPengawasan={lingkupPengawasan}
+                daftarUsaha={daftarUsaha}
+            />
         </>
     )
 }

@@ -4,25 +4,64 @@ namespace App\Http\Controllers\Pengawasan\Usaha;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup4Collection;
 use App\Services\Usaha\PendataanBUJKService;
+use App\Services\Usaha\PendataanUsahaService;
 use App\Services\Usaha\PengawasanUsahaService;
+use App\Services\Usaha\PengawasanLingkup4Service;
 use Illuminate\Http\Request;
 
 class Lingkup4Controller extends Controller
 {
+    protected $usahaService;
     protected $bujkService;
     protected $pengawasanService;
-    // protected $pengawasanLingkup2Service;
+    protected $pengawasanLingkup4Service;
 
     public function __construct(
+        PendataanUsahaService $usahaService,
         PendataanBUJKService $bujkService,
         PengawasanUsahaService $pengawasanService,
-        // PengawasanLingkup2Service $pengawasanLingkup2Service,
+        PengawasanLingkup4Service $pengawasanLingkup4Service,
     )
     {
+        $this->usahaService = $usahaService;
         $this->bujkService = $bujkService;
         $this->pengawasanService = $pengawasanService;
-        // $this->pengawasanLingkup2Service = $pengawasanLingkup2Service;
+        $this->pengawasanLingkup4Service = $pengawasanLingkup4Service;
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'usahaId' => 'required|exists:usaha,id',
+            'tanggal' => 'required|date',
+            'jenis'   => 'required',
+        ]);
+        $userId = auth()->user()->id;
+
+        $usaha = $this->usahaService->getUsahaById($validatedData['usahaId']);
+        $jenisUsaha = $usaha->jenisUsaha;
+
+        $data = [
+            'jenis_pengawasan'    => $validatedData['jenis'],
+            'tanggal_pengawasan'  => $validatedData['tanggal'],
+            'usaha_id'            => $validatedData['usahaId'],
+            'created_by'          => $userId,
+        ];
+
+        if ($jenisUsaha->jenisUsaha === "Badan Usaha Jasa Konstruksi")
+        {
+            $pengawasanId = $this->pengawasanLingkup4Service->addPengawasanBUJK($data);
+        }
+        // elseif ($jenisUsaha->jenisUsaha === "Usaha Orang Perseorangan")
+        // {
+
+        // }
+        // dd($usaha->jenisUsaha->jenisUsaha);
+
+
+        return redirect("/admin/pengawasan/usaha/4/$jenisUsaha->slug");
     }
 
     public function indexBUJK()
@@ -30,9 +69,12 @@ class Lingkup4Controller extends Controller
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(4);
         $daftarUsaha = $this->bujkService->getDaftarBUJK();
 
+        $daftarPengawasan = $this->pengawasanLingkup4Service->getDaftarPengawasanBUJK();
+
         return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup4/Index', [
             'data' => [
                 'lingkupPengawasan' => $lingkupPengawasan,
+                'daftarPengawasan'  => new PengawasanBUJKLingkup4Collection($daftarPengawasan),
                 'daftarUsaha'       => $daftarUsaha,
             ],
         ]);

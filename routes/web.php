@@ -133,6 +133,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->group(function () {
 
                     // Route::get('/{jenis_usaha}', 'index')->name('index');
+                    Route::post('/', 'store');
 
                     Route::name('bujk.')->prefix('/bujk')
                     ->group(function () {

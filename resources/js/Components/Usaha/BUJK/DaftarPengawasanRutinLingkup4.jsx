@@ -3,6 +3,9 @@ import { Link } from "@inertiajs/react";
 
 import Card from "../../Card";
 
+import formatDateToIndonesia from "../../../Utils/formatDateToIndonesia";
+import { getTertibStatusBadge } from "../../../Utils/getStatusBadge";
+
 import { LiaSearchSolid } from "react-icons/lia";
 
 export default ({ daftarPengawasan }) => {
@@ -39,7 +42,7 @@ export default ({ daftarPengawasan }) => {
             <Card.Body>
                 <div className="relative overflow-x-auto">
                     <table className="w-full text-xs">
-                        <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 uppercase">
+                        <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase">
                             <tr className="border-b border-slate-200">
                                 <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">#</th>
                                 <th scope="col" rowSpan="2" className="p-4 font-medium min-w-60 border-r border-slate-200">Nama Badan Usaha</th>
@@ -51,6 +54,26 @@ export default ({ daftarPengawasan }) => {
                                 <th scope="col" className="px-4 pt-2 pb-4 font-medium min-w-24 border-r border-slate-200">NIB</th>
                             </tr>
                         </thead>
+                        <tbody className="text-slate-700">
+                        {
+                            daftarPengawasan.map((pengawasan, i) => (
+                            <tr key={pengawasan.id} className="border-b border-slate-100 hover:bg-slate-50">
+                                <td className="px-4 py-5 text-center">{i + 1}</td>
+                                <td className="px-4 py-5">
+                                    <div>
+                                        <Link href={`/admin/pengawasan/usaha/4/bujk/${pengawasan.id}/rutin`} className="uppercase hover:text-blue-600 hover:underline">
+                                            {pengawasan.usaha.nama}
+                                        </Link>
+                                        <div className="font-light text-slate-500">NIB: {pengawasan.usaha.nib ? pengawasan.usaha.nib : "-"}</div>
+                                    </div>
+                                </td>
+                                <td className="px-4 py-5 text-center">{formatDateToIndonesia(new Date(pengawasan.tanggalPengawasan))}</td>
+                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPersyaratanSBU)}</td>
+                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPersyaratanNIB)}</td>
+                            </tr>
+                            ))
+                        }
+                        </tbody>
                     </table>
                 </div>
             </Card.Body>

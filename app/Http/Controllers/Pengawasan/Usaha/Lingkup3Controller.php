@@ -47,7 +47,7 @@ class Lingkup3Controller extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'usahaId'         => 'required',
+            'usahaId'         => 'required|exists:usaha,id',
             'tanggal'         => 'required|date',
             'jenis'           => 'required',
             'statusIzinUsaha' => 'required',

@@ -20,6 +20,7 @@ class BUJKResource extends JsonResource
             'nama'                => $this->nama,
             'nib'                 => $this->nib,
             'dokumenNIB'          => $this->when($this->dokumen_nib, [
+                'fileId'   => $this->dokumen_nib,
                 'fileName' => $this->name,
                 'filePath' => Storage::url($this->path),
             ]),

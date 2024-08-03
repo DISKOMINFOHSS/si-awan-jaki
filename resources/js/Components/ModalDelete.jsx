@@ -1,8 +1,10 @@
 import React from "react";
-import Modal from "./Modal";
-import { LiaSpinnerSolid, LiaTrashAltSolid } from "react-icons/lia";
 import { router } from "@inertiajs/react";
+
+import Modal from "./Modal";
 import ModalError from "./ModalError";
+
+import { LiaSpinnerSolid, LiaTrashAltSolid } from "react-icons/lia";
 
 export default ({
     children,
@@ -16,7 +18,7 @@ export default ({
 
     function handleDeleteButtonClick(e) {
         e.preventDefault();
-        console.log(`${url}/${id}`);
+        // console.log(`${url}/${id}`);
         router.delete(`${url}/${id}`, {
             preserveScroll: true,
             onSuccess: () => {

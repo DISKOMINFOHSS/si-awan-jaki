@@ -59,16 +59,6 @@ class PendataanUsahaService
         return $usaha->id;
     }
 
-    public function addDokumenNIB(string $id, int $dokumenNIB)
-    {
-        $usaha = Usaha::find($id);
-
-        $usaha->dokumen_nib = $dokumenNIB;
-        $usaha->save();
-
-        return $usaha->id;
-    }
-
     public function checkUsahaExists(string $id): bool
     {
         return Usaha::where('id', $id)->exists();
@@ -91,6 +81,27 @@ class PendataanUsahaService
         }])->leftJoin('files', 'files.id', 'usaha.dokumen_nib')
            ->select('usaha.*', 'files.path', 'files.name')
            ->find($id);
+    }
+
+    public function addDokumenNIB(string $id, int $dokumenNIB)
+    {
+        $usaha = Usaha::find($id);
+
+        $usaha->dokumen_nib = $dokumenNIB;
+        $usaha->save();
+
+        return $usaha->id;
+    }
+
+    public function deleteDokumenNIB(string $usahaId): int
+    {
+        $usaha = Usaha::find($usahaId);
+
+        $dokumenNIB = $usaha->dokumen_nib;
+        $usaha->dokumen_nib = null;
+        $usaha->save();
+
+        return $dokumenNIB;
     }
 
     // Usaha Rantai Pasok

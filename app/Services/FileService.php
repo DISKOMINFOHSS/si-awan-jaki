@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\File;
+use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
@@ -18,9 +19,15 @@ class FileService
         return $file->id;
     }
 
+    public function checkFileExists(string $id): bool
+    {
+        return File::where('id', $id)->exists();
+    }
+
     public function deleteFile(string $id)
     {
         $file = File::findOrFail($id);
-        $file->delete();
+        Storage::delete($file->path);
+        $file->forceDelete();
     }
 }

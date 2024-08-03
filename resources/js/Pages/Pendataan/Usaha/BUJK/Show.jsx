@@ -11,16 +11,29 @@ import {
     LiaHomeSolid,
     LiaFileAlt,
     LiaCloudUploadAltSolid,
+    LiaTrashAltSolid,
     LiaPlusCircleSolid,
     LiaEllipsisVSolid,
+    LiaFileDownloadSolid,
     LiaSearchSolid
 } from "react-icons/lia";
 import DaftarLaporan from "../../../../Components/Usaha/BUJK/DaftarLaporan";
+import Dropdown from "../../../../Components/Dropdown";
+import useToggleWithClickOutside from "../../../../Hooks/useToggleWithClickOutside";
+import ModalDelete from "../../../../Components/ModalDelete";
 
 const PendataanBUJKShow = ({ data }) => {
     console.log(data);
     const { usaha } = data;
     const { dokumenNIB, jenisUsaha, daftarPaketPekerjaan } = usaha;
+
+    const [
+        dokumenNIBDropdownRef,
+        isDokumenNIBDropdownOpen,
+        toggleDokumenNIBDropdown,
+    ] = useToggleWithClickOutside(false);
+
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = React.useState(false);
 
     return (
         <>
@@ -61,14 +74,45 @@ const PendataanBUJKShow = ({ data }) => {
                                 <div className="font-medium">Dokumen NIB</div>
                                 {
                                     dokumenNIB ? (
-                                        <div className="flex gap-x-2 items-start mt-1 group">
-                                            <div className="bg-blue-100 text-blue-600 rounded p-2">
-                                                <LiaFileAlt size={18} />
+                                        <div className="flex items-start gap-x-8 mt-1">
+                                            <div className="flex gap-x-2 items-start group">
+                                                <div className="bg-blue-100 text-blue-600 rounded p-2">
+                                                    <LiaFileAlt size={18} />
+                                                </div>
+                                                <a href={dokumenNIB.filePath} target="_blank" className="group-hover:text-blue-600 group-hover:underline">
+                                                    <div className="font-normal uppercase">{usaha.nama}</div>
+                                                    <div className="font-light text-slate-500 line-clamp-1">{dokumenNIB.fileName}</div>
+                                                </a>
                                             </div>
-                                            <a href={dokumenNIB.filePath} target="_blank" className="group-hover:text-blue-600 group-hover:underline">
-                                                <div className="font-normal uppercase">{usaha.nama}</div>
-                                                <div className="font-light text-slate-500 line-clamp-1">{dokumenNIB.fileName}</div>
-                                            </a>
+                                            <Dropdown ref={dokumenNIBDropdownRef}>
+                                                <Dropdown.Toggle
+                                                    onClick={toggleDokumenNIBDropdown}
+                                                    className="rounded text-slate-500 py-0.5 hover:bg-slate-200"
+                                                >
+                                                    <LiaEllipsisVSolid size={14} />
+                                                </Dropdown.Toggle>
+                                                <Dropdown.Menu
+                                                    isVisible={isDokumenNIBDropdownOpen}
+                                                    className="min-w-36 flex flex-col right-0 py-2 space-y-0.5 text-xs text-slate-700"
+                                                >
+                                                    <a
+                                                        href={dokumenNIB.filePath}
+                                                        className="flex items-center gap-x-2 px-4 py-2 hover:bg-slate-100 hover:text-blue-600"
+                                                        target="_blank"
+                                                        download
+                                                    >
+                                                        <LiaFileDownloadSolid size={16} />
+                                                        <span>Download File</span>
+                                                    </a>
+                                                    <button
+                                                        className="flex items-center gap-x-2 px-4 py-2 text-red-500 hover:bg-slate-100"
+                                                        onClick={() => {toggleDokumenNIBDropdown(); setIsModalDeleteOpen(true)}}
+                                                    >
+                                                        <LiaTrashAltSolid size={16} />
+                                                        <span>Hapus</span>
+                                                    </button>
+                                                </Dropdown.Menu>
+                                            </Dropdown>
                                         </div>
                                     ) : (
                                         <label htmlFor="dokumenNIB">
@@ -111,29 +155,6 @@ const PendataanBUJKShow = ({ data }) => {
                     </Card.Body>
                 </Card>
                 <DaftarSertifikatStandar usaha={usaha} />
-                {/* <Card className="w-full h-fit">
-                    <Card.Header className="flex justify-between items-center">
-                        <h3 className="font-medium text-slate-700">Laporan</h3>
-                    </Card.Header>
-                    <Card.Body className="p-4 space-y-5">
-                        <div className="space-y-2 text-xs">
-                            <button
-                                type="button"
-                                className="group w-full py-5 rounded border border-dashed border-blue-200 bg-blue-50 hover:bg-blue-100"
-                            >
-                                <div className="rounded bg-blue-100 group-hover:bg-blue-200 text-blue-600 w-fit mx-auto p-2">
-                                    <LiaCloudUploadAltSolid size={24} />
-                                </div>
-                                <div className="mt-2 text-slate-700">
-                                    <div className="">
-                                        <span className="font-medium text-blue-600 group-hover:underline">Klik di sini</span> untuk menambah laporan
-                                    </div>
-                                    <div className="font-light text-slate-500">(Maks. 2 MB)</div>
-                                </div>
-                            </button>
-                        </div>
-                    </Card.Body>
-                </Card> */}
                 <DaftarLaporan usaha={usaha} />
                 <div className="col-span-2">
                     <DaftarPaketPekerjaan
@@ -142,6 +163,21 @@ const PendataanBUJKShow = ({ data }) => {
                     />
                 </div>
             </div>
+            {
+                dokumenNIB && (
+                    <ModalDelete
+                        isVisible={isModalDeleteOpen}
+                        onClose={() => setIsModalDeleteOpen(false)}
+                        url={`/admin/pendataan/usaha/${usaha.id}/nib`}
+                        id={dokumenNIB.fileId}
+                    >
+                        <div className="font-medium text-sm text-slate-700 mb-1">Apakah Anda yakin ingin menghapus Dokumen NIB ini?</div>
+                        <div className="font-light text-xs text-slate-500 mb-3">
+                            Data yang telah dihapus tidak dapat dikembalikan.
+                        </div>
+                    </ModalDelete>
+                )
+            }
         </>
     );
 }

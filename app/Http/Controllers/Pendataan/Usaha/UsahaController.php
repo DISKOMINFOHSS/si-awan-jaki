@@ -105,4 +105,23 @@ class UsahaController extends Controller
 
         return back();
     }
+
+    public function destroyDokumenNIB(string $id, string $file_id)
+    {
+        if (!$this->usahaService->checkUsahaExists($id)) {
+            return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
+        }
+
+        if (!$this->fileService->checkFileExists($file_id)) {
+            return back()->withErrors(['message' => 'File Dokumen NIB tidak ditemukan.']);
+        }
+
+        $fileId = $this->usahaService->deleteDokumenNIB($id);
+
+        if ($file_id == $fileId) {
+            $this->fileService->deleteFile($fileId);
+        }
+
+        return back();
+    }
 }

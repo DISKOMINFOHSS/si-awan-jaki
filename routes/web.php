@@ -37,6 +37,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::post('/', 'store')->name('store');
 
                     Route::post('/{id}/nib', 'storeDokumenNIB');
+                    Route::delete('/{id}/nib/{file_id}', 'destroyDokumenNIB');
 
                     Route::get('/{jenis_usaha}', 'index')->name('index');
                 });

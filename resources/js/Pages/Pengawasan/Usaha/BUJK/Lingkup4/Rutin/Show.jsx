@@ -66,7 +66,7 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                             className="min-w-full flex flex-col right-0 py-2 space-y-0.5 text-xs text-slate-700"
                         >
                             <a
-                                href={`/admin/pendataan/usaha/${usaha.id}`}
+                                href={`/admin/pendataan/usaha/bujk/${usaha.id}`}
                                 target="_blank"
                                 className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
                             >
@@ -154,18 +154,6 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                             </div>
                         </Card.Body>
                     </Card>
-                    {/* <Card className="w-full h-fit">
-                        <Card.Header className="flex justify-between items-center">
-                            <div>
-                                <h3 className="font-medium text-slate-700 leading-tight">Dokumen Nomor Induk Berusaha (NIB)</h3>
-                            </div>
-                        </Card.Header>
-                        <Card.Body className="p-4">
-                            <div className="space-y-4 text-xs">
-
-                            </div>
-                        </Card.Body>
-                    </Card> */}
                 </div>
                 <div className="space-y-4">
                     <InformasiUmumPengawasan pengawasan={pengawasan} />

@@ -21,6 +21,7 @@ import DaftarLaporan from "../../../../Components/Usaha/BUJK/DaftarLaporan";
 import Dropdown from "../../../../Components/Dropdown";
 import useToggleWithClickOutside from "../../../../Hooks/useToggleWithClickOutside";
 import ModalDelete from "../../../../Components/ModalDelete";
+import FormDokumenNIB from "../../../../Components/Usaha/FormDokumenNIB";
 
 const PendataanBUJKShow = ({ data }) => {
     console.log(data);
@@ -33,7 +34,8 @@ const PendataanBUJKShow = ({ data }) => {
         toggleDokumenNIBDropdown,
     ] = useToggleWithClickOutside(false);
 
-    const [isModalDeleteOpen, setIsModalDeleteOpen] = React.useState(false);
+    const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
+    const [ isModalNIBOpen, setIsModalNIBOpen ] = React.useState(false);
 
     return (
         <>
@@ -115,25 +117,26 @@ const PendataanBUJKShow = ({ data }) => {
                                             </Dropdown>
                                         </div>
                                     ) : (
-                                        <label htmlFor="dokumenNIB">
-                                            <div className="group mt-1 w-fit flex items-center justify-between gap-x-10 p-2 rounded border border-dashed border-slate-200 hover:bg-slate-100">
-                                                <div className="flex items-start gap-x-2">
-                                                    <div className="rounded bg-slate-100 group-hover:bg-slate-200 text-slate-500 w-fit p-2">
-                                                        <LiaCloudUploadAltSolid size={18} />
-                                                    </div>
-                                                    <div>
-                                                        <div className="font-normal text-xs ">Upload Dokumen NIB</div>
-                                                        <div className="font-light text-slate-500 text-[11px]">Maks. 2 MB</div>
-                                                    </div>
+                                        <button
+                                            type="button"
+                                            className="group mt-1 w-fit flex items-center justify-between gap-x-10 p-2 rounded border border-dashed border-slate-200 hover:bg-slate-100"
+                                            onClick={() => setIsModalNIBOpen(true)}
+                                        >
+                                            <div className="flex items-start gap-x-2">
+                                                <div className="rounded bg-blue-50 group-hover:bg-blue-100 text-blue-500 w-fit p-2">
+                                                    <LiaCloudUploadAltSolid size={18} />
                                                 </div>
-                                                <div>
-                                                    <button className="text-[11px] text-slate-700 border border-slate-200 bg-white px-2 py-1 rounded">
-                                                        Browse
-                                                    </button>
+                                                <div className="text-left">
+                                                    <div className="font-normal text-xs">Upload Dokumen NIB</div>
+                                                    <div className="font-light text-slate-500 text-[11px]">Maks. 2 MB</div>
                                                 </div>
                                             </div>
-                                            <input type="file" id="dokumenNIB" className="hidden" />
-                                        </label>
+                                            <div>
+                                                <div className="text-[11px] text-slate-700 border border-slate-200 bg-white px-2 py-1 rounded">
+                                                    Browse
+                                                </div>
+                                            </div>
+                                        </button>
                                     )
                                 }
                             </div>
@@ -164,7 +167,7 @@ const PendataanBUJKShow = ({ data }) => {
                 </div>
             </div>
             {
-                dokumenNIB && (
+                dokumenNIB ? (
                     <ModalDelete
                         isVisible={isModalDeleteOpen}
                         onClose={() => setIsModalDeleteOpen(false)}
@@ -176,6 +179,12 @@ const PendataanBUJKShow = ({ data }) => {
                             Data yang telah dihapus tidak dapat dikembalikan.
                         </div>
                     </ModalDelete>
+                ) : (
+                    <FormDokumenNIB
+                        isVisible={isModalNIBOpen}
+                        onClose={() => setIsModalNIBOpen(false)}
+                        usaha={usaha}
+                    />
                 )
             }
         </>

@@ -36,7 +36,7 @@ export default ({ isVisible, onClose, usaha }) => {
         <>
             <Modal isVisible={isVisible} className="h-fit w-full max-w-lg mt-10">
                 <Modal.Header onClose={onClose}>
-                    <div className="text-center mb-7">
+                    <div className="text-center mb-5">
                         <h1 className="font-medium text-slate-800">Tambah Dokumen NIB</h1>
                         <h2 className="text-xs text-slate-500 font-light">Pendataan Usaha Jasa Konstruksi di Kab. Hulu Sungai Selatan</h2>
                     </div>

@@ -4,7 +4,8 @@ import Layout from "../../../../Components/Layout";
 import Breadcrumb from "../../../../Components/Breadcrumb";
 import Card from "../../../../Components/Card";
 
-import DaftarSertifikatStandar from "../../../../Components/Usaha/DaftarSertifikatStandar";
+// import DaftarSertifikatStandar from "../../../../Components/Usaha/DaftarSertifikatStandar";
+import DaftarSertifikatStandar from "../../../../Components/Usaha/BUJK/DaftarSertifikatStandar";
 import DaftarPaketPekerjaan from "../../../../Components/Usaha/DaftarPaketPekerjaan";
 
 import {

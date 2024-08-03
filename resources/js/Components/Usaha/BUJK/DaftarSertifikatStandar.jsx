@@ -1,21 +1,19 @@
 import React from "react";
 
-import Card from "../Card";
-import FormSBU from "./FormSBU";
-import Dropdown from "../Dropdown";
+import Card from "../../Card";
+import Dropdown from "../../Dropdown";
+import FormSertifikatStandar from "./FormSertifikatStandar";
 
-import useToggleWithClickOutside from "../../Hooks/useToggleWithClickOutside";
+import useToggleWithClickOutside from "../../../Hooks/useToggleWithClickOutside";
 
 import {
+    LiaEllipsisVSolid,
+    LiaFileDownloadSolid,
+    LiaTrashAltSolid,
+    LiaFileAlt,
     LiaPlusCircleSolid,
     LiaCloudUploadAltSolid,
-    LiaFileAlt,
-    LiaEllipsisVSolid,
-    LiaEditSolid,
-    LiaFileDownloadSolid,
-    LiaTrashAltSolid
 } from "react-icons/lia";
-import FormSertifikatStandar from "./BUJK/FormSertifikatStandar";
 
 function FileDropdown({ filePath }) {
     const [
@@ -59,12 +57,12 @@ function FileDropdown({ filePath }) {
                 </button>
             </Dropdown.Menu>
         </Dropdown>
-    )
+    );
 }
 
 export default ({ usaha }) => {
     const { sertifikatStandar } = usaha;
-    const [isModalSBUOpen, setIsModalSBUOpen] = React.useState(false);
+    const [ isModalSBUOpen, setIsModalSBUOpen ] = React.useState(false);
 
     return (
         <>
@@ -123,16 +121,6 @@ export default ({ usaha }) => {
                     </div>
                 </Card.Body>
             </Card>
-            {/* <FormSBU
-                isVisible={isModalSBUOpen}
-                onClose={() => setIsModalSBUOpen(false)}
-                usaha={{
-                    id: usaha.id,
-                    nama: usaha.nama,
-                    nib: usaha.nib,
-                    pjbu: usaha.pjbu
-                }}
-            /> */}
             <FormSertifikatStandar
                 isVisible={isModalSBUOpen}
                 onClose={() => setIsModalSBUOpen(false)}

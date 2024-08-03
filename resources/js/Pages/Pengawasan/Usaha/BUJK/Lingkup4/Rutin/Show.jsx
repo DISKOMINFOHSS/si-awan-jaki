@@ -4,6 +4,7 @@ import Layout from "../../../../../../Components/Layout";
 import Breadcrumb from "../../../../../../Components/Breadcrumb";
 import Card from "../../../../../../Components/Card";
 import Dropdown from "../../../../../../Components/Dropdown";
+import FormDokumenNIB from "../../../../../../Components/Usaha/FormDokumenNIB";
 import { InformasiTertibPengawasanLingkup4, InformasiUmumPengawasan, InformasiUsaha } from "../../../../../../Components/Usaha/BUJK/InformasiPengawasan";
 
 import useToggleWithClickOutside from "../../../../../../Hooks/useToggleWithClickOutside";
@@ -15,8 +16,9 @@ import {
     LiaInfoCircleSolid,
     LiaFileAlt,
     LiaCloudUploadAltSolid,
+    LiaSearchSolid,
+    LiaPlusCircleSolid,
 } from "react-icons/lia";
-import FormDokumenNIB from "../../../../../../Components/Usaha/FormDokumenNIB";
 
 const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
     console.log(data);
@@ -159,6 +161,32 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                     <InformasiUmumPengawasan pengawasan={pengawasan} />
                     <InformasiTertibPengawasanLingkup4 pengawasan={pengawasan} />
                 </div>
+            </div>
+            <div>
+                <Card className="w-full h-fit">
+                    <Card.Header className="flex justify-between items-center">
+                        <div>
+                            <h3 className="font-medium text-slate-700 leading-tight">Sertifikat Badan Usaha (SBU)</h3>
+                            <h4 className="font-light text-slate-500 text-[11px]">Daftar Sertifikat Standar Badan Usaha Jasa Konstruksi</h4>
+                        </div>
+                        <div className="flex items-center gap-x-2">
+                            <div className="relative mx-2">
+                                <div className="pointer-events-none absolute inset-y-0 left-2 flex items-center">
+                                    <LiaSearchSolid size={18} className="text-slate-500 -scale-x-100" />
+                                </div>
+                                <input type="search" name="search" placeholder="Cari..."
+                                className="border border-slate-200 rounded py-2 pl-8 block w-56 text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs" />
+                            </div>
+                            <button
+                                className="w-full flex justify-center items-center space-x-1 text-white bg-blue-600 hover:bg-blue-800 rounded text-[11px] tracking-wide px-2.5 py-2 shadow-sm"
+                                // onClick={() => {setSelectedPaketPekerjaan({}), setIsModalKesesuaianKegiatanOpen(true)}}
+                            >
+                                <LiaPlusCircleSolid size={16}/>
+                                <span>Tambah</span>
+                            </button>
+                        </div>
+                    </Card.Header>
+                </Card>
             </div>
             <FormDokumenNIB
                 isVisible={isModalNIBOpen}

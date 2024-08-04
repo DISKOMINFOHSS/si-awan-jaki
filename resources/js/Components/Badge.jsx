@@ -11,6 +11,7 @@ function Badge({ bg, size, children }) {
             "bg-red-100 text-red-500": bg === "red",
         },
         {
+            "px-3 text-[9px]": size === "2xs",
             "py-0.5 px-3 text-[10px]": size === "xs",
             "py-1 px-4 text-[11px]": !size,
         }

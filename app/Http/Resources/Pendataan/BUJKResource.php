@@ -31,11 +31,14 @@ class BUJKResource extends JsonResource
                 function ($sertifikat)
                 {
                     return [
-                        'id'       => $sertifikat->id,
-                        'fileId'   => $sertifikat->sertifikat_id,
-                        'fileName' => $sertifikat->name,
-                        'filePath' => Storage::url($sertifikat->path),
-                        'status'   => $sertifikat->status,
+                        'id'              => $sertifikat->id,
+                        'nomorSertifikat' => $sertifikat->nomor_sertifikat,
+                        'jenisUsaha'      => $sertifikat->jenis_usaha,
+                        'subklasifikasi'  => $sertifikat->subklasifikasi,
+                        'status'          => (bool)$sertifikat->status,
+                        'fileId'          => $sertifikat->sertifikat_id,
+                        'fileName'        => $sertifikat->name,
+                        'filePath'        => Storage::url($sertifikat->path),
                     ];
                 }
             ),

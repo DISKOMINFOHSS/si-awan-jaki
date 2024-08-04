@@ -21,12 +21,14 @@ class PendataanBUJKService
     public function addSertifikatStandarBUJK(array $data): int
     {
         $sertifikatId = DB::table('sertifikat_standar_bujk')->insertGetId([
-            'sertifikat_id' => $data['sertifikat_id'],
-            'status'        => true,
-            'usaha_id'      => $data['usaha_id'],
-            'created_by'    => $data['created_by'],
-            'created_at'    => now(),
-            'updated_at'    => now(),
+            'nomor_sertifikat' => $data['nomor_sertifikat'],
+            'sertifikat_id'    => $data['sertifikat_id'],
+            'jenis_usaha'      => $data['jenis_usaha'],
+            'status'           => true,
+            'usaha_id'         => $data['usaha_id'],
+            'created_by'       => $data['created_by'],
+            'created_at'       => now(),
+            'updated_at'       => now(),
         ]);
 
         return $sertifikatId;
@@ -34,9 +36,13 @@ class PendataanBUJKService
 
     public function getDaftarSertifikatStandarBUJK(string $usahaId): DBCollection
     {
-        return DB::table('sertifikat_standar_bujk as sbu')->join('files', 'files.id', 'sbu.id')
+        return DB::table('sertifikat_standar_bujk as sbu')->leftJoin('files', 'files.id', 'sbu.sertifikat_id')
+            ->leftJoin('rincian_sertifikat_standar_bujk as rincian', 'rincian.sertifikat_standar_id', 'sbu.id')
             ->where('sbu.usaha_id', $usahaId)
-            ->select('sbu.id', 'sbu.sertifikat_id', 'sbu.status', 'files.path', 'files.name')
+            ->select(
+                'sbu.id', 'sbu.nomor_sertifikat', 'sbu.status', 'sbu.jenis_usaha', 'rincian.subklasifikasi',
+                'sbu.sertifikat_id', 'files.path', 'files.name',
+            )
             ->orderBy('sbu.created_at', 'desc')
             ->get();
     }
@@ -49,6 +55,19 @@ class PendataanBUJKService
             ->select('sbu.id', 'sbu.sertifikat_id', 'sbu.status', 'files.path', 'files.name')
             ->orderBy('sbu.created_at', 'desc')
             ->get();
+    }
+
+    public function addRincianSertifikatStandarBUJK(array $data): int
+    {
+        $rincianId = DB::table('rincian_sertifikat_standar_bujk')->insertGetId([
+            'sertifikat_standar_id' => $data['sertifikat_standar_id'],
+            'subklasifikasi'        => $data['subklasifikasi'],
+            'created_by'            => $data['created_by'],
+            'created_at'            => now(),
+            'updated_at'            => now(),
+        ]);
+
+        return $rincianId;
     }
 
     public function addLaporanBUJK(array $data): int

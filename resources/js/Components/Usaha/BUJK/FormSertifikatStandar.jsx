@@ -2,28 +2,55 @@ import React from "react";
 import { useForm } from "@inertiajs/react";
 
 import Modal from "../../Modal";
+import ModalError from "../../ModalError";
 
 import {
     LiaCloudUploadAltSolid,
     LiaFileAlt,
     LiaTimesSolid,
-    LiaSpinnerSolid
+    LiaSpinnerSolid,
+    LiaTrashAltSolid,
 } from "react-icons/lia";
-import ModalError from "../../ModalError";
 
-export default ({ isVisible, onClose, usaha }) => {
+export default ({ isVisible, onClose, usaha, sertifikatStandar }) => {
     const { data, setData, post, processing, progress } = useForm({
         nomorSertifikat: '',
         dokumenSBU: '',
-        jenis: '',
+        jenis: 'Jasa Konsultansi Konstruksi',
         subklasifikasi: ''
     });
+
+    React.useEffect(() => {
+        setData({
+            ...data,
+            id: sertifikatStandar.id,
+            nomorSertifikat: sertifikatStandar.nomorSertifikat ? sertifikatStandar.nomorSertifikat : '',
+            jenis: sertifikatStandar.jenisUsaha ? sertifikatStandar.jenisUsaha : 'Jasa Konsultansi Konstruksi',
+            subklasifikasi: sertifikatStandar.subklasifikasi ? sertifikatStandar.subklasifikasi : '',
+            dokumenSBU: sertifikatStandar.fileId ? {
+                fileId: sertifikatStandar.fileId,
+                fileName: sertifikatStandar.fileName,
+                filePath: sertifikatStandar.filePath,
+            } : '',
+        });
+    }, [sertifikatStandar]);
+
+    console.log(data, sertifikatStandar);
 
     const [isModalErrorOpen, setIsModalErrorOpen] = React.useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
+        // post(`/admin/pendataan/usaha/bujk/${usaha.id}/sbu`, {
+        //     onSuccess: () => {
+        //         onClose();
+        //     },
+        //     onError: () => {
+        //         onClose();
+        //         setIsModalErrorOpen(true);
+        //     },
+        // });
     }
 
     return (
@@ -31,7 +58,7 @@ export default ({ isVisible, onClose, usaha }) => {
             <Modal isVisible={isVisible} className="w-full max-w-2xl h-fit mt-10">
                 <Modal.Header onClose={onClose}>
                     <div className="text-center mb-7">
-                        <h1 className="font-medium text-slate-800">Tambah Sertifikat Standar Badan Usaha Jasa Konstruksi</h1>
+                        <h1 className="font-medium text-slate-800">{sertifikatStandar ? "Detail" : "Tambah"} Sertifikat Badan Usaha (SBU) Konstruksi</h1>
                         <h2 className="text-xs text-slate-500 font-light">Pendataan Badan Usaha Jasa Konstruksi</h2>
                     </div>
                 </Modal.Header>
@@ -93,6 +120,24 @@ export default ({ isVisible, onClose, usaha }) => {
                                         </div>
                                         <input type="file" id="dokumenNIB" className="hidden" onChange={e => setData('dokumenSBU', e.target.files[0])} />
                                     </label>
+                                ) : data.dokumenSBU.fileId ? (
+                                    <div className="flex items-center justify-between border border-slate-200 p-2 rounded mt-1 text-xs">
+                                        <div className="rounded flex gap-x-2 items-start group">
+                                            <div className="bg-blue-100 text-blue-600 rounded p-2">
+                                                <LiaFileAlt size={18} />
+                                            </div>
+                                            <a href={data.dokumenSBU.filePath} target="_blank" className="group-hover:text-blue-600 group-hover:underline">
+                                                <div className="font-normal">Sertifikat Badan Usaha (SBU) Konstruksi</div>
+                                                <div className="font-light text-slate-500 line-clamp-1">{data.dokumenSBU.fileName}</div>
+                                            </a>
+                                        </div>
+                                        <button
+                                            className="rounded px-1 py-0.5 text-red-500 hover:bg-slate-100"
+                                            onClick={() => setData('dokumenSBU', '')}
+                                        >
+                                            <LiaTrashAltSolid size={18} />
+                                        </button>
+                                    </div>
                                 ) : (
                                     <div className="space-y-2 text-xs text-slate-800">
                                         <div className="flex justify-between border border-slate-200 p-2 rounded">
@@ -115,7 +160,7 @@ export default ({ isVisible, onClose, usaha }) => {
                                     </div>
                                 )
                             }
-                            </div>
+                        </div>
                         <div>
                             <label htmlFor="jenis" className="block mb-2 text-xs font-medium text-slate-800">Jenis Usaha <span className="text-red-400">*</span></label>
                             <select
@@ -147,7 +192,7 @@ export default ({ isVisible, onClose, usaha }) => {
                             <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-3" onClick={onClose}>Batal</button>
                             <button type="submit" disabled={processing} className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-2.5">
                                 { processing && <LiaSpinnerSolid className="animate-spin" /> }
-                                Tambah
+                                { sertifikatStandar ? "Simpan" : "Tambah"}
                             </button>
                         </div>
                     </form>

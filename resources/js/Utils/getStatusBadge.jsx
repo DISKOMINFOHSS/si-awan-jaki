@@ -37,6 +37,15 @@ function getSesuaiStatusBadge (isSesuai) {
     }
 }
 
+function getAktifStatusBadge (isAktif) {
+    switch(isAktif) {
+        case true:
+            return <Badge bg="green" size="2xs">Aktif</Badge>
+        case false:
+            return <Badge bg="red" size="2xs">Tidak Aktif</Badge>
+    }
+}
+
 function getTertibStatusBadgePDF (isTertib) {
     switch(isTertib) {
         case true:
@@ -56,6 +65,7 @@ function getStatusBadgePDF (isTrue, label) {
 }
 
 export {
+    getAktifStatusBadge,
     getSesuaiStatusBadge,
     getTertibStatusBadge,
     getTertibStatusBadgePDF,

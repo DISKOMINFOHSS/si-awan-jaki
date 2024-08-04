@@ -43,28 +43,70 @@ class BUJKController extends Controller
         ]);
     }
 
+    // public function storeSertifikat(string $id, Request $request)
+    // {
+    //     if (!$this->usahaService->checkUsahaExists($id)) {
+    //         return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
+    //     }
+
+    //     $validatedData = $request->validate(['dokumenSBU.*' => 'required|file|max:2048']);
+    //     $userId = auth()->user()->id;
+
+    //     foreach($request->file('dokumenSBU') as $dokumen) {
+    //         $dokumenSBU = $this->fileService->addFile([
+    //             'file'       => $dokumen,
+    //             'path'       => 'public/files/usaha/sbu',
+    //             'created_by' => $userId,
+    //         ]);
+
+    //         $this->bujkService->addSertifikatStandarBUJK([
+    //             'sertifikat_id' => $dokumenSBU,
+    //             'usaha_id'      => $id,
+    //             'created_by'    => $userId,
+    //         ]);
+    //     }
+
+    //     return redirect("/admin/pendataan/usaha/bujk/$id");
+    // }
+
     public function storeSertifikat(string $id, Request $request)
     {
         if (!$this->usahaService->checkUsahaExists($id)) {
             return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
         }
 
-        $validatedData = $request->validate(['dokumenSBU.*' => 'required|file|max:2048']);
+        $validatedData = $request->validate([
+            'nomorSertifikat' => 'required',
+            'dokumenSBU'      => 'nullable|file|max:2048',
+            'jenis'           => 'required',
+            'subklasifikasi'  => 'required'
+        ]);
         $userId = auth()->user()->id;
 
-        foreach($request->file('dokumenSBU') as $dokumen) {
+        $data = [
+            'nomor_sertifikat' => $validatedData['nomorSertifikat'],
+            'jenis_usaha'      => $validatedData['jenis'],
+            'usaha_id'         => $id,
+            'created_by'       => $userId,
+        ];
+
+        if ($request->hasFile('dokumenSBU')) {
             $dokumenSBU = $this->fileService->addFile([
-                'file'       => $dokumen,
+                'file'       => $request->file('dokumenSBU'),
                 'path'       => 'public/files/usaha/sbu',
                 'created_by' => $userId,
             ]);
 
-            $this->bujkService->addSertifikatStandarBUJK([
-                'sertifikat_id' => $dokumenSBU,
-                'usaha_id'      => $id,
-                'created_by'    => $userId,
-            ]);
+            $data['sertifikat_id'] = $dokumenSBU;
         }
+
+        $sbuId = $this->bujkService->addSertifikatStandarBUJK($data);
+
+        $this->bujkService->addRincianSertifikatStandarBUJK([
+            'sertifikat_standar_id' => $sbuId,
+            'subklasifikasi'        => $validatedData['subklasifikasi'],
+            'created_by'            => $userId,
+        ]);
 
         return redirect("/admin/pendataan/usaha/bujk/$id");
     }

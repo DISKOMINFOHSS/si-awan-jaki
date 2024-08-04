@@ -14,6 +14,7 @@ import {
     LiaPlusCircleSolid,
     LiaCloudUploadAltSolid,
 } from "react-icons/lia";
+import { getAktifStatusBadge } from "../../../Utils/getStatusBadge";
 
 function FileDropdown({ filePath }) {
     const [
@@ -64,6 +65,9 @@ export default ({ usaha }) => {
     const { sertifikatStandar } = usaha;
     const [ isModalSBUOpen, setIsModalSBUOpen ] = React.useState(false);
 
+    const [ isModalDetailSBUOpen, setIsModalDetailSBUOpen ] = React.useState(false);
+    const [ selectedSertifikat, setSelectedSertifikat ] = React.useState({});
+
     return (
         <>
             <Card className="w-full h-fit">
@@ -75,7 +79,7 @@ export default ({ usaha }) => {
                     <div>
                         <button
                             className="w-full flex justify-center items-center gap-x-1 text-blue-500 border border-blue-500 hover:bg-slate-100 rounded text-xs tracking-wide p-2 shadow-sm"
-                            onClick={() => setIsModalSBUOpen(true)}
+                            onClick={() => {setSelectedSertifikat({}), setIsModalSBUOpen(true)}}
                         >
                             <LiaPlusCircleSolid size={16} />
                             <span>Tambah</span>
@@ -101,19 +105,49 @@ export default ({ usaha }) => {
                                     <div className="font-light text-slate-500">(Maks. 2 MB)</div>
                                 </div>
                             </button> :
-                            sertifikatStandar.map(({ id, fileId, fileName, filePath, status }) => (
-                                <div key={id} className="flex items-start justify-between gap-x-1 text-xs">
-                                    <div className="flex gap-x-2 items-start group">
+                            // sertifikatStandar.map(({ id, nomorSertifikat, fileId, fileName, filePath, status }) => (
+                            //     <div key={id} className="flex items-start justify-between gap-x-1 text-xs">
+                            //         <div className="flex gap-x-2 items-start group cursor-pointer" onClick={() => setIsModalDetailSBUOpen(true)}>
+                            //             <div className="bg-blue-100 text-blue-600 rounded p-2">
+                            //                 <LiaFileAlt size={18} />
+                            //             </div>
+                            //             <div className="group-hover:text-blue-600 group-hover:underline">
+                            //                 <div className="font-medium flex gap-x-2">
+                            //                     <span>Sertifikat Badan Usaha (SBU) Konstruksi</span>
+                            //                     {getAktifStatusBadge(status)}
+                            //                 </div>
+                            //                 <div className="font-light text-slate-500">{`Nomor Sertifikat: ${nomorSertifikat}`}</div>
+                            //                 <div className="font-light text-slate-500">{fileName}</div>
+                            //             </div>
+
+                            //         </div>
+                            //         <div>
+                            //             <FileDropdown filePath={filePath} />
+                            //         </div>
+                            //     </div>
+                            // ))
+                            sertifikatStandar.map((sertifikat) => (
+                                <div key={sertifikat.id} className="flex items-start justify-between gap-x-1 text-xs">
+                                    <div className="flex gap-x-2 items-start group cursor-pointer" onClick={() => {setSelectedSertifikat(sertifikat), setIsModalSBUOpen(true)}}>
                                         <div className="bg-blue-100 text-blue-600 rounded p-2">
                                             <LiaFileAlt size={18} />
                                         </div>
-                                        <a href={filePath} target="_blank" className="group-hover:text-blue-600 group-hover:underline">
-                                            <div className="font-medium">Sertifikat {usaha.nama}</div>
+                                        <div className="group-hover:text-blue-600 group-hover:underline">
+                                            <div className="font-medium flex gap-x-2">
+                                                <span>Sertifikat Badan Usaha (SBU) Konstruksi</span>
+                                                {getAktifStatusBadge(sertifikat.status)}
+                                            </div>
+                                            <div className="font-light text-slate-500">{`Nomor Sertifikat: ${sertifikat.nomorSertifikat}`}</div>
+                                            <div className="font-light text-slate-500">{sertifikat.fileName}</div>
+                                        </div>
+                                        {/* <a href={filePath} target="_blank" className="group-hover:text-blue-600 group-hover:underline">
+                                            <div className="font-medium">Sertifikat Standar {usaha.nama}</div>
+                                            <div className="font-light text-slate-500">{`No. ${nomorSertifikat}`}</div>
                                             <div className="font-light text-slate-500">{fileName}</div>
-                                        </a>
+                                        </a> */}
                                     </div>
                                     <div>
-                                        <FileDropdown filePath={filePath} />
+                                        <FileDropdown filePath={sertifikat.filePath} />
                                     </div>
                                 </div>
                             ))
@@ -130,7 +164,19 @@ export default ({ usaha }) => {
                     nib: usaha.nib,
                     pjbu: usaha.pjbu
                 }}
+                sertifikatStandar={selectedSertifikat}
             />
+            {/* <FormDetailSertifikatStandar
+                isVisible={isModalDetailSBUOpen}
+                onClose={() => setIsModalDetailSBUOpen(false)}
+                usaha={{
+                    id: usaha.id,
+                    nama: usaha.nama,
+                    nib: usaha.nib,
+                    pjbu: usaha.pjbu
+                }}
+                sertifikatStandar={selectedSertifikat}
+            /> */}
         </>
     )
 }

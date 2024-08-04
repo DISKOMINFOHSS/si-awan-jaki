@@ -18,7 +18,7 @@ export default ({
 
     function handleDeleteButtonClick(e) {
         e.preventDefault();
-        // console.log(`${url}/${id}`);
+        console.log(`${url}/${id}`);
         router.delete(`${url}/${id}`, {
             preserveScroll: true,
             onSuccess: () => {

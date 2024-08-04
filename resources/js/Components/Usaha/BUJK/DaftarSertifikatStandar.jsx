@@ -15,8 +15,9 @@ import {
     LiaCloudUploadAltSolid,
 } from "react-icons/lia";
 import { getAktifStatusBadge } from "../../../Utils/getStatusBadge";
+import ModalDelete from "../../ModalDelete";
 
-function FileDropdown({ filePath }) {
+function FileDropdown({ sertifikatId, filePath, onDelete }) {
     const [
         fileDropdownRef,
         isFileDropdownOpened,
@@ -52,6 +53,7 @@ function FileDropdown({ filePath }) {
                 </button> */}
                 <button
                     className="flex items-center gap-x-2 px-4 py-2 text-red-500 hover:bg-slate-100"
+                    onClick={() => {toggleFileDropdown(), onDelete(sertifikatId)}}
                 >
                     <LiaTrashAltSolid size={16} />
                     <span>Hapus</span>
@@ -65,8 +67,16 @@ export default ({ usaha }) => {
     const { sertifikatStandar } = usaha;
     const [ isModalSBUOpen, setIsModalSBUOpen ] = React.useState(false);
 
-    const [ isModalDetailSBUOpen, setIsModalDetailSBUOpen ] = React.useState(false);
+
     const [ selectedSertifikat, setSelectedSertifikat ] = React.useState({});
+
+    const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
+    const [ selectedSertifikatId, setSelectedSertifikatId ] = React.useState('');
+
+    const handleDeleteClick = (sertifikatId) => {
+        setSelectedSertifikatId(sertifikatId);
+        setIsModalDeleteOpen(true);
+    }
 
     return (
         <>
@@ -105,27 +115,6 @@ export default ({ usaha }) => {
                                     <div className="font-light text-slate-500">(Maks. 2 MB)</div>
                                 </div>
                             </button> :
-                            // sertifikatStandar.map(({ id, nomorSertifikat, fileId, fileName, filePath, status }) => (
-                            //     <div key={id} className="flex items-start justify-between gap-x-1 text-xs">
-                            //         <div className="flex gap-x-2 items-start group cursor-pointer" onClick={() => setIsModalDetailSBUOpen(true)}>
-                            //             <div className="bg-blue-100 text-blue-600 rounded p-2">
-                            //                 <LiaFileAlt size={18} />
-                            //             </div>
-                            //             <div className="group-hover:text-blue-600 group-hover:underline">
-                            //                 <div className="font-medium flex gap-x-2">
-                            //                     <span>Sertifikat Badan Usaha (SBU) Konstruksi</span>
-                            //                     {getAktifStatusBadge(status)}
-                            //                 </div>
-                            //                 <div className="font-light text-slate-500">{`Nomor Sertifikat: ${nomorSertifikat}`}</div>
-                            //                 <div className="font-light text-slate-500">{fileName}</div>
-                            //             </div>
-
-                            //         </div>
-                            //         <div>
-                            //             <FileDropdown filePath={filePath} />
-                            //         </div>
-                            //     </div>
-                            // ))
                             sertifikatStandar.map((sertifikat) => (
                                 <div key={sertifikat.id} className="flex items-start justify-between gap-x-1 text-xs">
                                     <div className="flex gap-x-2 items-start group cursor-pointer" onClick={() => {setSelectedSertifikat(sertifikat), setIsModalSBUOpen(true)}}>
@@ -140,14 +129,13 @@ export default ({ usaha }) => {
                                             <div className="font-light text-slate-500">{`Nomor Sertifikat: ${sertifikat.nomorSertifikat}`}</div>
                                             <div className="font-light text-slate-500">{sertifikat.fileName}</div>
                                         </div>
-                                        {/* <a href={filePath} target="_blank" className="group-hover:text-blue-600 group-hover:underline">
-                                            <div className="font-medium">Sertifikat Standar {usaha.nama}</div>
-                                            <div className="font-light text-slate-500">{`No. ${nomorSertifikat}`}</div>
-                                            <div className="font-light text-slate-500">{fileName}</div>
-                                        </a> */}
                                     </div>
                                     <div>
-                                        <FileDropdown filePath={sertifikat.filePath} />
+                                        <FileDropdown
+                                            sertifikatId={sertifikat.id}
+                                            filePath={sertifikat.filePath}
+                                            onDelete={handleDeleteClick}
+                                        />
                                     </div>
                                 </div>
                             ))
@@ -166,17 +154,17 @@ export default ({ usaha }) => {
                 }}
                 sertifikatStandar={selectedSertifikat}
             />
-            {/* <FormDetailSertifikatStandar
-                isVisible={isModalDetailSBUOpen}
-                onClose={() => setIsModalDetailSBUOpen(false)}
-                usaha={{
-                    id: usaha.id,
-                    nama: usaha.nama,
-                    nib: usaha.nib,
-                    pjbu: usaha.pjbu
-                }}
-                sertifikatStandar={selectedSertifikat}
-            /> */}
+            <ModalDelete
+                isVisible={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+                url={`/admin/pendataan/usaha/bujk/${usaha.id}/sbu`}
+                id={selectedSertifikatId}
+            >
+                <div className="font-medium text-sm text-slate-700 mb-1">Apakah Anda yakin ingin menghapus Dokumen SBU ini?</div>
+                <div className="font-light text-xs text-slate-500 mb-3">
+                    Data yang telah dihapus tidak dapat dikembalikan.
+                </div>
+            </ModalDelete>
         </>
     )
 }

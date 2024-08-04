@@ -58,6 +58,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                     Route::post('/{id}/sbu', 'storeSertifikat');
                     Route::post('/{id}/sbu/{sertifikat_id}', 'updateSertifikat');
+                    Route::delete('/{id}/sbu/{sertifikat_id}', 'destroySertifikat');
                 });
 
                 Route::name('usaha_perseorangan.')->prefix('usaha-perseorangan')

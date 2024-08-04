@@ -165,6 +165,26 @@ class BUJKController extends Controller
         return redirect("/admin/pendataan/usaha/bujk/$id");
     }
 
+    public function destroySertifikat(string $id, string $sertifikat_id)
+    {
+        if (!$this->usahaService->checkUsahaExists($id)) {
+            return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
+        }
+
+        if (!$this->bujkService->checkSertifikatStandarBUJKExists($sertifikat_id)) {
+            return back()->withErrors(['message' => 'Sertifikat tidak ditemukan.']);
+        }
+
+        $sertifikat = $this->bujkService->getSertifikatStandarBUJKById($sertifikat_id);
+
+        $this->bujkService->deleteRincianSertifikatStandarBUJK($sertifikat->id);
+        $this->bujkService->deleteSertifikatStandarBUJK($sertifikat->id);
+
+        if ($sertifikat->sertifikat_id) $this->fileService->deleteFile($sertifikat->sertifikat_id);
+
+        return back();
+    }
+
     public function storePaketPekerjaan(string $id, Request $request)
     {
         if (!$this->usahaService->checkUsahaExists($id)) {

@@ -88,6 +88,11 @@ class PendataanBUJKService
             ->update(['sertifikat_id' => $sertifikatId, 'updated_at' => now()]);
     }
 
+    public function deleteSertifikatStandarBUJK(string $id)
+    {
+        return DB::table('sertifikat_standar_bujk')->where('id', $id)->delete();
+    }
+
     public function addRincianSertifikatStandarBUJK(array $data): int
     {
         $rincianId = DB::table('rincian_sertifikat_standar_bujk')->insertGetId([
@@ -112,6 +117,11 @@ class PendataanBUJKService
                     'updated_at'     => now(),
                 ],
             );
+    }
+
+    public function deleteRincianSertifikatStandarBUJK(string $sertifikatId)
+    {
+        return DB::table('rincian_sertifikat_standar_bujk')->where('sertifikat_standar_id', $sertifikatId)->delete();
     }
 
     public function addLaporanBUJK(array $data): int

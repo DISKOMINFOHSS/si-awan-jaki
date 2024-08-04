@@ -55,7 +55,9 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                     Route::post('/{id}/laporan', 'storeLaporan');
                     Route::post('/{id}/paket-pekerjaan', 'storePaketPekerjaan');
+
                     Route::post('/{id}/sbu', 'storeSertifikat');
+                    Route::post('/{id}/sbu/{sertifikat_id}', 'updateSertifikat');
                 });
 
                 Route::name('usaha_perseorangan.')->prefix('usaha-perseorangan')

@@ -43,32 +43,6 @@ class BUJKController extends Controller
         ]);
     }
 
-    // public function storeSertifikat(string $id, Request $request)
-    // {
-    //     if (!$this->usahaService->checkUsahaExists($id)) {
-    //         return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
-    //     }
-
-    //     $validatedData = $request->validate(['dokumenSBU.*' => 'required|file|max:2048']);
-    //     $userId = auth()->user()->id;
-
-    //     foreach($request->file('dokumenSBU') as $dokumen) {
-    //         $dokumenSBU = $this->fileService->addFile([
-    //             'file'       => $dokumen,
-    //             'path'       => 'public/files/usaha/sbu',
-    //             'created_by' => $userId,
-    //         ]);
-
-    //         $this->bujkService->addSertifikatStandarBUJK([
-    //             'sertifikat_id' => $dokumenSBU,
-    //             'usaha_id'      => $id,
-    //             'created_by'    => $userId,
-    //         ]);
-    //     }
-
-    //     return redirect("/admin/pendataan/usaha/bujk/$id");
-    // }
-
     public function storeSertifikat(string $id, Request $request)
     {
         if (!$this->usahaService->checkUsahaExists($id)) {
@@ -81,6 +55,7 @@ class BUJKController extends Controller
             'jenis'           => 'required',
             'subklasifikasi'  => 'required'
         ]);
+
         $userId = auth()->user()->id;
 
         $data = [
@@ -91,13 +66,11 @@ class BUJKController extends Controller
         ];
 
         if ($request->hasFile('dokumenSBU')) {
-            $dokumenSBU = $this->fileService->addFile([
+            $data['sertifikat_id'] = $this->fileService->addFile([
                 'file'       => $request->file('dokumenSBU'),
                 'path'       => 'public/files/usaha/sbu',
                 'created_by' => $userId,
             ]);
-
-            $data['sertifikat_id'] = $dokumenSBU;
         }
 
         $sbuId = $this->bujkService->addSertifikatStandarBUJK($data);
@@ -109,6 +82,55 @@ class BUJKController extends Controller
         ]);
 
         return redirect("/admin/pendataan/usaha/bujk/$id");
+    }
+
+    public function updateSertifikat(string $id, string $sertifikat_id, Request $request)
+    {
+        if (!$this->usahaService->checkUsahaExists($id)) {
+            return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
+        }
+
+        if (!$this->bujkService->checkSertifikatStandarBUJKExists($sertifikat_id)) {
+            return back()->withErrors(['message' => 'Sertifikat tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'nomorSertifikat' => 'required',
+            'jenis'           => 'required',
+            'subklasifikasi'  => 'required'
+        ]);
+
+        $sertifikat = $this->bujkService->getSertifikatStandarBUJKById($sertifikat_id);
+        $userId = auth()->user()->id;
+
+        if ($request->hasFile('dokumenSBU')) {
+            $request->validate(['dokumenSBU' => 'nullable|file|max:2048']);
+
+            $dokumenSBU = $this->fileService->addFile([
+                'file'       => $request->file('dokumenSBU'),
+                'path'       => 'public/files/usaha/sbu',
+                'created_by' => $userId,
+            ]);
+
+            $this->bujkService->updateFileSertifikatIdSertifikatStandarBUJK($sertifikat_id, $dokumenSBU);
+            if ($sertifikat->sertifikat_id) $this->fileService->deleteFile($sertifikat->sertifikat_id);
+
+        } elseif (!$request->filled('dokumenSBU') && $sertifikat->sertifikat_id) {
+            $this->bujkService->updateFileSertifikatIdSertifikatStandarBUJK($sertifikat_id, null);
+            $this->fileService->deleteFile($sertifikat->sertifikat_id);
+        }
+
+        $this->bujkService->updateSertifikatStandarBUJK($sertifikat_id, [
+            'nomor_sertifikat' => $validatedData['nomorSertifikat'],
+            'jenis_usaha'      => $validatedData['jenis'],
+        ]);
+
+        $this->bujkService->updateRincianSertifikatStandarBUJK($sertifikat_id, [
+            'subklasifikasi' => $validatedData['subklasifikasi'],
+            'created_by'     => $userId,
+        ]);
+
+        return back();
     }
 
     public function storeLaporan(string $id, Request $request)

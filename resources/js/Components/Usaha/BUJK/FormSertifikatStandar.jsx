@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 
 import Modal from "../../Modal";
 import ModalError from "../../ModalError";
@@ -35,22 +35,34 @@ export default ({ isVisible, onClose, usaha, sertifikatStandar }) => {
         });
     }, [sertifikatStandar]);
 
-    console.log(data, sertifikatStandar);
-
-    const [isModalErrorOpen, setIsModalErrorOpen] = React.useState(false);
+    const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
-        // post(`/admin/pendataan/usaha/bujk/${usaha.id}/sbu`, {
-        //     onSuccess: () => {
-        //         onClose();
-        //     },
-        //     onError: () => {
-        //         onClose();
-        //         setIsModalErrorOpen(true);
-        //     },
-        // });
+        if (data.id) {
+            post(`/admin/pendataan/usaha/bujk/${usaha.id}/sbu/${data.id}`, {
+                onSuccess: () => {
+                    onClose();
+                },
+                onError: (errors) => {
+                    console.log('put', errors);
+                    onClose();
+                    setIsModalErrorOpen(true);
+                },
+            });
+        } else {
+            post(`/admin/pendataan/usaha/bujk/${usaha.id}/sbu`, {
+                onSuccess: () => {
+                    onClose();
+                },
+                onError: (errors) => {
+                    console.log('post', errors);
+                    onClose();
+                    setIsModalErrorOpen(true);
+                },
+            });
+        }
     }
 
     return (
@@ -58,7 +70,7 @@ export default ({ isVisible, onClose, usaha, sertifikatStandar }) => {
             <Modal isVisible={isVisible} className="w-full max-w-2xl h-fit mt-10">
                 <Modal.Header onClose={onClose}>
                     <div className="text-center mb-7">
-                        <h1 className="font-medium text-slate-800">{sertifikatStandar ? "Detail" : "Tambah"} Sertifikat Badan Usaha (SBU) Konstruksi</h1>
+                        <h1 className="font-medium text-slate-800">{sertifikatStandar.id ? "Detail" : "Tambah"} Sertifikat Badan Usaha (SBU) Konstruksi</h1>
                         <h2 className="text-xs text-slate-500 font-light">Pendataan Badan Usaha Jasa Konstruksi</h2>
                     </div>
                 </Modal.Header>
@@ -101,7 +113,7 @@ export default ({ isVisible, onClose, usaha, sertifikatStandar }) => {
                             <div className="block mb-2 text-xs font-medium text-slate-800">Dokumen SBU <span className="font-light text-slate-500">(Opsional)</span></div>
                             {
                                 data.dokumenSBU === '' ? (
-                                    <label htmlFor="dokumenNIB">
+                                    <label htmlFor="dokumenSBU">
                                         <div className="group mt-1 w-full flex items-center justify-between gap-x-10 p-2 rounded border border-dashed border-slate-200 hover:bg-slate-100 cursor-pointer">
                                             <div className="flex items-start gap-x-2">
                                             <div className="rounded bg-blue-50 group-hover:bg-blue-100 text-blue-500 w-fit p-2">
@@ -118,7 +130,7 @@ export default ({ isVisible, onClose, usaha, sertifikatStandar }) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="file" id="dokumenNIB" className="hidden" onChange={e => setData('dokumenSBU', e.target.files[0])} />
+                                        <input type="file" id="dokumenSBU" className="hidden" onChange={e => setData('dokumenSBU', e.target.files[0])} />
                                     </label>
                                 ) : data.dokumenSBU.fileId ? (
                                     <div className="flex items-center justify-between border border-slate-200 p-2 rounded mt-1 text-xs">
@@ -192,7 +204,7 @@ export default ({ isVisible, onClose, usaha, sertifikatStandar }) => {
                             <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-3" onClick={onClose}>Batal</button>
                             <button type="submit" disabled={processing} className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-2.5">
                                 { processing && <LiaSpinnerSolid className="animate-spin" /> }
-                                { sertifikatStandar ? "Simpan" : "Tambah"}
+                                { sertifikatStandar.id ? "Simpan" : "Tambah"}
                             </button>
                         </div>
                     </form>

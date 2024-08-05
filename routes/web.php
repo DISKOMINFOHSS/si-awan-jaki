@@ -145,6 +145,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     ->group(function () {
                         Route::get('/', 'indexBUJK');
                         Route::get('/{id}/rutin', 'showPengawasanRutinBUJK');
+                        Route::post('/{id}/verification', 'verifyPengawasanRutinBUJK');
                     });
 
                 });

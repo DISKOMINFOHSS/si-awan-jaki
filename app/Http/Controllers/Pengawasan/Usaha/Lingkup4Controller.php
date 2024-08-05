@@ -43,6 +43,7 @@ class Lingkup4Controller extends Controller
 
         $usaha = $this->usahaService->getUsahaById($validatedData['usahaId']);
         $jenisUsaha = $usaha->jenisUsaha;
+        $pengawasanId;
 
         $data = [
             'jenis_pengawasan'    => $validatedData['jenis'],
@@ -56,7 +57,7 @@ class Lingkup4Controller extends Controller
             $pengawasanId = $this->pengawasanLingkup4Service->addPengawasanBUJK($data);
         }
 
-        return redirect("/admin/pengawasan/usaha/4/$jenisUsaha->slug");
+        return redirect("/admin/pengawasan/usaha/4/$jenisUsaha->slug/$pengawasanId");
     }
 
     public function indexBUJK()
@@ -88,5 +89,32 @@ class Lingkup4Controller extends Controller
                 'pengawasan'        => new PengawasanRutinBUJKLingkup4Resource($pengawasan),
             ],
         ]);
+    }
+
+    public function verifyPengawasanRutinBUJK(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup4Service->checkPengawasanBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'syaratSBU'        => 'required|boolean',
+            'syaratNIB'        => 'required|boolean',
+            'tertibPengawasan' => 'required|boolean',
+            'catatan'          => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup4Service->verifyPengawasanBUJK(
+            $id,
+        [
+            'tertib_persyaratan_sbu' => $validatedData['syaratSBU'],
+            'tertib_persyaratan_nib' => $validatedData['syaratNIB'],
+            'tertib_pengawasan'      => $validatedData['tertibPengawasan'],
+            'catatan'                => $validatedData['catatan'],
+            'verified_by'            => $userId,
+        ]);
+
+        return redirect("/admin/pengawasan/usaha/4/bujk/$id/rutin");
     }
 }

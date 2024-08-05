@@ -5,6 +5,8 @@ import Breadcrumb from "../../../../../../Components/Breadcrumb";
 import Card from "../../../../../../Components/Card";
 import Dropdown from "../../../../../../Components/Dropdown";
 import FormDokumenNIB from "../../../../../../Components/Usaha/FormDokumenNIB";
+import FormSertifikatStandar from "../../../../../../Components/Usaha/BUJK/FormSertifikatStandar";
+import ModalDelete from "../../../../../../Components/ModalDelete";
 import { InformasiTertibPengawasanLingkup4, InformasiUmumPengawasan, InformasiUsaha } from "../../../../../../Components/Usaha/BUJK/InformasiPengawasan";
 
 import useToggleWithClickOutside from "../../../../../../Hooks/useToggleWithClickOutside";
@@ -21,8 +23,7 @@ import {
     LiaEditSolid,
     LiaTrashAltSolid,
 } from "react-icons/lia";
-import FormSertifikatStandar from "../../../../../../Components/Usaha/BUJK/FormSertifikatStandar";
-import ModalDelete from "../../../../../../Components/ModalDelete";
+import FormVerifikasiPengawasanLingkup4 from "../../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup4";
 
 const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
     console.log(data);
@@ -43,6 +44,8 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
     const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
     const [ selectedSertifikatId, setSelectedSertifikatId ] = React.useState('');
 
+    const [ isModalVerificationOpened, setIsModalVerificationOpened ] = React.useState(false);
+
     return (
         <>
             <Breadcrumb>
@@ -61,7 +64,7 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                     <button
                         type="button"
                         className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
-                        // onClick={() => setIsModalVerificationOpened(true)}
+                        onClick={() => setIsModalVerificationOpened(true)}
                     >
                         <LiaListAltSolid size={18} />
                         <span>Verifikasi Pengawasan</span>
@@ -262,6 +265,12 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                     pjbu: usaha.pjbu
                 }}
                 sertifikatStandar={selectedSertifikat}
+            />
+            <FormVerifikasiPengawasanLingkup4
+                isVisible={isModalVerificationOpened}
+                onClose={() => setIsModalVerificationOpened(false)}
+                lingkupPengawasan={lingkupPengawasan}
+                pengawasan={pengawasan}
             />
             <ModalDelete
                 isVisible={isModalDeleteOpen}

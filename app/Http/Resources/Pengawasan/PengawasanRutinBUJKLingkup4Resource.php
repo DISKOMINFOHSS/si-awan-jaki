@@ -47,8 +47,8 @@ class PengawasanRutinBUJKLingkup4Resource extends JsonResource
                     }
                 ),
             ],
-            'tertibpersyaratanSBU' => $this->tertib_persyaratan_sbu,
-            'tertibpersyaratanNIB' => $this->tertib_persyaratan_nib,
+            'tertibPersyaratanSBU' => $this->tertib_persyaratan_sbu,
+            'tertibPersyaratanNIB' => $this->tertib_persyaratan_nib,
             'tertibPengawasan'     => $this->tertib_pengawasan,
             'catatan'              => $this->catatan,
             'createdBy'            => $this->createdBy->nama,

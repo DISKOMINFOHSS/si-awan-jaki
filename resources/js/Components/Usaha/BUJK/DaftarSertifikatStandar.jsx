@@ -3,8 +3,10 @@ import React from "react";
 import Card from "../../Card";
 import Dropdown from "../../Dropdown";
 import FormSertifikatStandar from "./FormSertifikatStandar";
+import ModalDelete from "../../ModalDelete";
 
 import useToggleWithClickOutside from "../../../Hooks/useToggleWithClickOutside";
+import { getAktifStatusBadge } from "../../../Utils/getStatusBadge";
 
 import {
     LiaEllipsisVSolid,
@@ -14,8 +16,6 @@ import {
     LiaPlusCircleSolid,
     LiaCloudUploadAltSolid,
 } from "react-icons/lia";
-import { getAktifStatusBadge } from "../../../Utils/getStatusBadge";
-import ModalDelete from "../../ModalDelete";
 
 function FileDropdown({ sertifikatId, filePath, onDelete }) {
     const [
@@ -65,9 +65,8 @@ function FileDropdown({ sertifikatId, filePath, onDelete }) {
 
 export default ({ usaha }) => {
     const { sertifikatStandar } = usaha;
+
     const [ isModalSBUOpen, setIsModalSBUOpen ] = React.useState(false);
-
-
     const [ selectedSertifikat, setSelectedSertifikat ] = React.useState({});
 
     const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);

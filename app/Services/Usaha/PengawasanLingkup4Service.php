@@ -20,6 +20,11 @@ class PengawasanLingkup4Service
         return $pengawasan->id;
     }
 
+    public function checkPengawasanBUJKExists(string $id): bool
+    {
+        return PengawasanBUJKLingkup4::where('id', $id)->exists();
+    }
+
     public function getDaftarPengawasanBUJK(): EloquentCollection
     {
         return PengawasanBUJKLingkup4::with([
@@ -43,5 +48,20 @@ class PengawasanLingkup4Service
                       );
             }
         ])->where('id', $id)->firstOrFail();
+    }
+
+    public function verifyPengawasanBUJK(string $id, array $data)
+    {
+        $pengawasan = PengawasanBUJKLingkup4::find($id);
+
+        $pengawasan->tertib_persyaratan_sbu = $data['tertib_persyaratan_sbu'];
+        $pengawasan->tertib_persyaratan_nib = $data['tertib_persyaratan_nib'];
+        $pengawasan->tertib_pengawasan = $data['tertib_pengawasan'];
+        $pengawasan->catatan = $data['catatan'];
+
+        $pengawasan->verified_by = $data['verified_by'];
+        $pengawasan->verified_at = now();
+
+        $pengawasan->save();
     }
 }

@@ -80,6 +80,7 @@ class Lingkup4Controller extends Controller
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(4);
 
         $pengawasan = $this->pengawasanLingkup4Service->getPengawasanBUJKById($id);
+        $pengawasan['usaha']['sertifikat_standar'] = $this->bujkService->getDaftarSertifikatStandarBUJKAktif($pengawasan->usaha->id);
 
         return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup4/Rutin/Show', [
             'data' => [

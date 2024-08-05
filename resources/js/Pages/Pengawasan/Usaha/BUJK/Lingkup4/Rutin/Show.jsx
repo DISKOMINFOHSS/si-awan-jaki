@@ -18,7 +18,11 @@ import {
     LiaCloudUploadAltSolid,
     LiaSearchSolid,
     LiaPlusCircleSolid,
+    LiaEditSolid,
+    LiaTrashAltSolid,
 } from "react-icons/lia";
+import FormSertifikatStandar from "../../../../../../Components/Usaha/BUJK/FormSertifikatStandar";
+import ModalDelete from "../../../../../../Components/ModalDelete";
 
 const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
     console.log(data);
@@ -32,6 +36,12 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
     ] = useToggleWithClickOutside(false);
 
     const [ isModalNIBOpen, setIsModalNIBOpen ] = React.useState(false);
+
+    const [ isModalSBUOpen, setIsModalSBUOpen ] = React.useState(false);
+    const [ selectedSertifikat, setSelectedSertifikat ] = React.useState({});
+
+    const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
+    const [ selectedSertifikatId, setSelectedSertifikatId ] = React.useState('');
 
     return (
         <>
@@ -162,7 +172,7 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                     <InformasiTertibPengawasanLingkup4 pengawasan={pengawasan} />
                 </div>
             </div>
-            <div>
+            <div className="my-4">
                 <Card className="w-full h-fit">
                     <Card.Header className="flex justify-between items-center">
                         <div>
@@ -179,13 +189,62 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                             </div>
                             <button
                                 className="w-full flex justify-center items-center space-x-1 text-white bg-blue-600 hover:bg-blue-800 rounded text-[11px] tracking-wide px-2.5 py-2 shadow-sm"
-                                // onClick={() => {setSelectedPaketPekerjaan({}), setIsModalKesesuaianKegiatanOpen(true)}}
+                                onClick={() => {setSelectedSertifikat({}), setIsModalSBUOpen(true)}}
                             >
                                 <LiaPlusCircleSolid size={16}/>
                                 <span>Tambah</span>
                             </button>
                         </div>
                     </Card.Header>
+                    <Card.Body>
+                        <div className="relative overflow-x-auto">
+                            <table className="w-full text-xs">
+                                <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase">
+                                    <tr>
+                                        <th scope="col" className="p-4 font-medium border-r border-slate-200">#</th>
+                                        <th scope="col" className="p-4 font-medium min-w-72 border-r border-slate-200">Nomor Sertifikat Standar</th>
+                                        <th scope="col" className="p-4 font-medium min-w-44 border-r border-slate-200">Jenis Usaha</th>
+                                        <th scope="col" className="p-4 font-medium min-w-72 border-r border-slate-200">Subklasifikasi Usaha</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-slate-700">
+                                {
+                                    usaha.daftarSertifikatStandar.map((sertifikat, i) => (
+                                        <tr key={sertifikat.id} className="border-b border-slate-100 hover:bg-slate-50">
+                                            <td className="px-4 py-5 text-center">{i + 1}</td>
+                                            <td className="px-4 py-5">
+                                                <div>
+                                                    <div>Sertifikat Badan Usaha (SBU) Konstruksi</div>
+                                                    <div className="font-light text-slate-500">Nomor Sertifikat: {sertifikat.nomorSertifikat}</div>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-5 text-center">{sertifikat.jenisUsaha}</td>
+                                            <td className="px-4 py-5 font-light">{sertifikat.subklasifikasi}</td>
+                                            <td className="px-4 py-5 text-center">
+                                                <div className="flex gap-x-2">
+                                                    <button
+                                                        type="button"
+                                                        className="rounded border border-slate-200 text-slate-500 p-2 hover:bg-slate-200"
+                                                        onClick={() => {setSelectedSertifikat(sertifikat), setIsModalSBUOpen(true)}}
+                                                    >
+                                                        <LiaEditSolid size={18} />
+                                                    </button>
+                                                    <button
+                                                        className="rounded border border-slate-200 text-red-500 p-2 hover:bg-slate-200"
+                                                        onClick={() => {setSelectedSertifikatId(sertifikat.id), setIsModalDeleteOpen(true)}}
+                                                    >
+                                                        <LiaTrashAltSolid size={18} />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </Card.Body>
                 </Card>
             </div>
             <FormDokumenNIB
@@ -193,6 +252,28 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                 onClose={() => setIsModalNIBOpen(false)}
                 usaha={usaha}
             />
+            <FormSertifikatStandar
+                isVisible={isModalSBUOpen}
+                onClose={() => setIsModalSBUOpen(false)}
+                usaha={{
+                    id: usaha.id,
+                    nama: usaha.nama,
+                    nib: usaha.nib,
+                    pjbu: usaha.pjbu
+                }}
+                sertifikatStandar={selectedSertifikat}
+            />
+            <ModalDelete
+                isVisible={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+                url={`/admin/pendataan/usaha/bujk/${usaha.id}/sbu`}
+                id={selectedSertifikatId}
+            >
+                <div className="font-medium text-sm text-slate-700 mb-1">Apakah Anda yakin ingin menghapus Dokumen SBU ini?</div>
+                <div className="font-light text-xs text-slate-500 mb-3">
+                    Data yang telah dihapus tidak dapat dikembalikan.
+                </div>
+            </ModalDelete>
         </>
     )
 }

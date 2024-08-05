@@ -22,20 +22,30 @@ class PengawasanRutinBUJKLingkup4Resource extends JsonResource
             'jenisPengawasan'      => $this->jenis_pengawasan,
             'tanggalPengawasan'    => $this->tanggal_pengawasan,
             'usaha'                => [
-                'id'           => $usaha->id,
-                'nama'         => $usaha->nama,
-                'nib'          => $usaha->nib,
-                // 'dokumenNIB'   => [
-                //     'fileName' => $usaha->name,
-                //     'filePath' => Storage::url($usaha->path),
-                // ],
-                'dokumenNIB'   => $this->when($usaha->dokumen_nib, [
+                'id'                      => $usaha->id,
+                'nama'                    => $usaha->nama,
+                'nib'                     => $usaha->nib,
+                'dokumenNIB'              => $this->when($usaha->dokumen_nib, [
                     'fileName' => $usaha->name,
                     'filePath' => Storage::url($usaha->path),
                 ]),
-                'pjbu'         => $usaha->pjbu,
-                'alamat'       => $usaha->alamat,
-
+                'pjbu'                    => $usaha->pjbu,
+                'alamat'                  => $usaha->alamat,
+                'daftarSertifikatStandar' => $usaha->sertifikat_standar->transform(
+                    function ($sertifikat)
+                    {
+                        return [
+                            'id'              => $sertifikat->id,
+                            'nomorSertifikat' => $sertifikat->nomor_sertifikat,
+                            'jenisUsaha'      => $sertifikat->jenis_usaha,
+                            'subklasifikasi'  => $sertifikat->subklasifikasi,
+                            'status'          => (bool)$sertifikat->status,
+                            'fileId'          => $sertifikat->sertifikat_id,
+                            'fileName'        => $sertifikat->name,
+                            'filePath'        => Storage::url($sertifikat->path),
+                        ];
+                    }
+                ),
             ],
             'tertibpersyaratanSBU' => $this->tertib_persyaratan_sbu,
             'tertibpersyaratanNIB' => $this->tertib_persyaratan_nib,

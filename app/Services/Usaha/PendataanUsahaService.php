@@ -64,6 +64,16 @@ class PendataanUsahaService
         return Usaha::where('id', $id)->exists();
     }
 
+    public function getDaftarUsahaByJenisUsaha(string $jenisUsaha): EloquentCollection
+    {
+        return Usaha::join('master_jenis_usaha as jenis_usaha', 'usaha.jenis_usaha_id', 'jenis_usaha.id')
+            ->where('jenis_usaha', $jenisUsaha)
+            ->leftJoin('files', 'files.id', 'usaha.dokumen_nib')
+            ->select('usaha.*', 'files.id as fileId', 'files.path as filePath', 'files.name as fileName')
+            ->orderBy('usaha.nama')
+            ->get();
+    }
+
     public function getUsahaById(string $id): Usaha
     {
         return Usaha::with(['jenisUsaha' => function (Builder $query) use ($id) {

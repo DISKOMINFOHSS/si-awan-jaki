@@ -68,6 +68,14 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 });
             });
 
+            // Pendataan Proyek
+            Route::name('proyek.')->prefix('proyek')
+            ->controller(App\Http\Controllers\Pendataan\Proyek\ProyekController::class)
+            ->group(function () {
+                Route::get('/', 'index');
+                Route::get('/create', 'create');
+            });
+
             // Pendataan Bangunan
             Route::name('bangunan.')->prefix('bangunan')
                 ->controller(App\Http\Controllers\Pendataan\Bangunan\BangunanController::class)

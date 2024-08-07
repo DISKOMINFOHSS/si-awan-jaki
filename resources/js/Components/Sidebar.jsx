@@ -12,6 +12,9 @@ import {
     LiaHardHatSolid,
     LiaBuildingSolid,
     LiaCalendar,
+    LiaChartBar,
+    LiaCalendarDaySolid,
+    LiaExclamationTriangleSolid,
 } from "react-icons/lia";
 
 function Sidebar({ isOpened, children }) {
@@ -115,6 +118,23 @@ export default ({ isOpened }) => {
                     href="/admin/pengawasan/pemanfaatan-produk"
                     icon={<LiaBuildingSolid size={20} />}
                     text="Tertib Pemanfaatan Produk"
+                />
+            </Sidebar.Menu>
+            <Sidebar.Menu title="Jenis Pengawasan">
+                <Sidebar.Item
+                    href="#"
+                    icon={<LiaCalendarDaySolid size={20} />}
+                    text="Pengawasan Rutin"
+                />
+                <Sidebar.Item
+                    href="#"
+                    icon={<LiaExclamationTriangleSolid size={20} />}
+                    text="Pengawasan Insidental"
+                />
+                <Sidebar.Item
+                    href="#"
+                    icon={<LiaChartBar size={20} />}
+                    text="Pengawasan Progres"
                 />
             </Sidebar.Menu>
             <Sidebar.Menu title="Rekapitulasi">

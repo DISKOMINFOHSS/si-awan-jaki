@@ -105,7 +105,7 @@ export default ({ isVisible, onClose, jenisUsaha }) => {
                                                         <LiaFileAlt size={18} />
                                                     </div>
                                                     <div>
-                                                        <div className="font-normal line-clamp-2">{data.dokumenNIB.name}</div>
+                                                        <div className="font-normal line-clamp-1">{data.dokumenNIB.name}</div>
                                                         <div className="font-light text-slate-500">{parseFloat(data.dokumenNIB.size/1000000).toFixed(1)} MB</div>
                                                     </div>
                                                 </div>

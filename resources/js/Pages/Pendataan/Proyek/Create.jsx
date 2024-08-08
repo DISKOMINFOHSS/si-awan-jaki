@@ -6,9 +6,11 @@ import Card from "../../../Components/Card";
 
 import { LiaHomeSolid, LiaCloudUploadAltSolid } from "react-icons/lia";
 import { FormInformasi, FormPenggunaJasa, FormPenyediaJasa } from "../../../Components/Proyek/FormKegiatan";
+import { usePage } from "@inertiajs/react";
 
 const PendataanProyekCreate = ({ data }) => {
     console.log(data);
+    const { proyekId } = usePage().props;
     const { daftarUsaha } = data;
 
     return (
@@ -37,7 +39,7 @@ const PendataanProyekCreate = ({ data }) => {
                     <h4 className="font-light text-xs text-slate-500">Silakan lengkapi informasi terkait</h4>
                 </div>
                 <div className="col-span-3">
-                    <FormPenyediaJasa daftarUsaha={daftarUsaha} />
+                    <FormPenyediaJasa proyekId={proyekId} daftarUsaha={daftarUsaha} />
                 </div>
             </div>
             <div className="grid grid-cols-4 gap-4 pt-5">
@@ -46,7 +48,7 @@ const PendataanProyekCreate = ({ data }) => {
                     <h4 className="font-light text-xs text-slate-500">Silakan lengkapi informasi terkait</h4>
                 </div>
                 <div className="col-span-3">
-                    <FormPenggunaJasa />
+                    <FormPenggunaJasa proyekId={proyekId} />
                 </div>
             </div>
 

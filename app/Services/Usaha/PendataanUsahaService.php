@@ -35,6 +35,11 @@ class PendataanUsahaService
         return JenisUsaha::find($id);
     }
 
+    public function getJenisUsahaByJenisUsaha(string $jenisUsaha): JenisUsaha
+    {
+        return JenisUsaha::where('jenis_usaha', $jenisUsaha)->first();
+    }
+
     // Jenis Usaha Rantai Pasok
     public function getDaftarJenisRantaiPasok(): DBCollection
     {

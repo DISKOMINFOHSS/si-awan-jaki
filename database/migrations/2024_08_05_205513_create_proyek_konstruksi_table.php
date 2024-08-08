@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('proyek_konstruksi', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->int('kode_paket')->nullable();
+            $table->integer('kode_paket')->nullable();
             $table->text('nama_paket');
             $table->string('nomor_kontrak')->nullable();
             $table->string('sumber_dana');
+            $table->year('tahun_anggaran')->nullable();
             $table->decimal('nilai_pagu', 12, 2)->nullable();
             $table->decimal('nilai_kontrak', 12, 2)->nullable();
 
+            $table->date('tanggal_kontrak')->nullable();
             $table->date('mulai_pelaksanaan')->nullable();
             $table->date('selesai_pelaksanaan')->nullable();
 
@@ -32,7 +34,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->foreign('penyedia_jasa_id')->references('id')->on('usaha');
-            $table->foreign('pengguna_jasa_id')->references('id')->on('pengguna_jasa');
+            $table->foreign('pengguna_jasa_id')->references('id')->on('pengguna_jasa_konstruksi');
             $table->foreign('created_by')->references('id')->on('users');
         });
     }

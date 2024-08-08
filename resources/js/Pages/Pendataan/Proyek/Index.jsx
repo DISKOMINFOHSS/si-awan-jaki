@@ -10,15 +10,19 @@ import {
     LiaAngleDownSolid,
     LiaAngleRightSolid,
 } from "react-icons/lia";
+import Card from "../../../Components/Card";
 
 const PendataanProyekIndex = ({ data }) => {
+    console.log(data);
+    const { daftarProyek } = data;
+
     return (
         <>
             <div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-200">
                 <div>
                     <div className="flex gap-x-2 items-center">
                         <h1 className="font-medium text-xl text-slate-800">Proyek Konstruksi</h1>
-                        <span className="rounded-full text-[11px] px-2 py-0.5 bg-blue-100 text-blue-500 font-medium">0</span>
+                        <span className="rounded-full text-[11px] px-2 py-0.5 bg-blue-100 text-blue-500 font-medium">{daftarProyek.length}</span>
                     </div>
                     <h2 className="font-light text-xs text-slate-500">Pendataan Penyelenggaraan Jasa Konstruksi di Kab. Hulu Sungai Selatan</h2>
                 </div>
@@ -52,6 +56,33 @@ const PendataanProyekIndex = ({ data }) => {
                     </button>
                 </div>
             </div>
+            <Card className="w-full">
+                <Card.Body>
+                    <div className="relative overflow-x-auto">
+                        <table className="w-full text-xs">
+                            <tbody>
+                                {
+                                    daftarProyek.map((proyek) => (
+                                        <tr key={proyek.id} className="border-b border-slate-100 hover:bg-slate-50">
+                                            <td className="p-4">
+                                                <div>
+                                                    <Link href={`/admin/pendataan/proyek/${proyek.id}`} className="hover:text-blue-600 hover:underline">{proyek.namaPaket}</Link>
+                                                    <div className="font-light text-slate-500">Tahun Anggaran {proyek.tahunAnggaran}</div>
+                                                </div>
+                                            </td>
+                                            <td className="p-4 flex justify-end">
+                                                <Link href={`/admin/pendataan/usaha/${proyek.id}`} className="w-fit p-2 flex items-center gap-x-1.5 text-slate-600 hover:text-blue-600">
+                                                    <LiaAngleRightSolid size={16} />
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </Card.Body>
+            </Card>
         </>
     );
 }

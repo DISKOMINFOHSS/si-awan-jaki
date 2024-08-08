@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pendataan\Proyek;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Pendataan\ProyekKonstruksiCollection;
 use App\Services\FileService;
 use App\Services\Usaha\PendataanUsahaService;
 use App\Services\Penyelenggaraan\PendataanProyekService;
@@ -27,7 +28,13 @@ class ProyekController extends Controller
 
     public function index()
     {
-        return Inertia::render('Pendataan/Proyek/Index');
+        $daftarProyek = $this->proyekService->getDaftarProyekKonstruksi();
+
+        return Inertia::render('Pendataan/Proyek/Index', [
+            'data' => [
+                'daftarProyek' => new ProyekKonstruksiCollection($daftarProyek),
+            ],
+        ]);
     }
 
     public function create()

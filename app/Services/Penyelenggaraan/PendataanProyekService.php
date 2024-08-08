@@ -4,6 +4,7 @@ namespace App\Services\Penyelenggaraan;
 
 use App\Models\Penyelenggaraan\ProyekKonstruksi;
 use App\Models\Penyelenggaraan\PenggunaJasa;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class PendataanProyekService
 {
@@ -28,6 +29,11 @@ class PendataanProyekService
     public function checkProyekKonstruksiExists(string $id): bool
     {
         return ProyekKonstruksi::where('id', $id)->exists();
+    }
+
+    public function getDaftarProyekKonstruksi(): EloquentCollection
+    {
+        return ProyekKonstruksi::all();
     }
 
     // Penyedia Jasa

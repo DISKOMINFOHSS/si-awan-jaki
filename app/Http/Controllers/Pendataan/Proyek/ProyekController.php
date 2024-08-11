@@ -161,7 +161,7 @@ class ProyekController extends Controller
 
         $this->proyekService->addPenggunaJasaToProyekKonstruksi($id, $penggunaJasaId);
 
-        return redirect("/admin/pendataan/proyek");
+        return back();
     }
 
     public function show(string $id)

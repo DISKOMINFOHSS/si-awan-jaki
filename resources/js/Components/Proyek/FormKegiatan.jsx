@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 
 import Card from "../Card";
 import SelectUsaha from "../Usaha/SelectUsaha";
@@ -11,6 +11,7 @@ import {
     LiaTimesSolid,
 } from "react-icons/lia";
 import ModalError from "../ModalError";
+import ModalSuccess from "../ModalSuccess";
 
 function FormInformasi() {
     const { data, setData, post, processing, reset } = useForm({
@@ -26,11 +27,15 @@ function FormInformasi() {
     });
 
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
+    const [ isModalSuccessOpen, setIsModalSuccessOpen ] = React.useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
         post(`/admin/pendataan/proyek`, {
             preserveScroll: true,
+            onSuccess: () => {
+                setIsModalSuccessOpen(true);
+            },
             onError: (errors) => {
                 console.log(errors);
                 setIsModalErrorOpen(true);
@@ -168,6 +173,26 @@ function FormInformasi() {
                     Gagal menambahkan proyek konstruksi baru. Silakan periksa kembali informasi yang diisi.
                 </div>
             </ModalError>
+            <ModalSuccess
+                isVisible={isModalSuccessOpen}
+                onClose={() => setIsModalSuccessOpen(false)}
+            >
+                <div className="text-center my-2.5">
+                    <div className="font-medium text-slate-700">Berhasil!</div>
+                    <div className="font-light text-xs text-slate-500 mb-2">
+                        Proyek konstruksi berhasil ditambahkan.
+                    </div>
+                </div>
+                <div className="w-full">
+                    <button
+                        type="button"
+                        className="w-full bg-slate-100 text-slate-700 font-medium text-xs rounded py-2 px-2.5"
+                        onClick={() => setIsModalSuccessOpen(false)}
+                    >
+                        Tutup
+                    </button>
+                </div>
+            </ModalSuccess>
         </>
     );
 }
@@ -183,6 +208,7 @@ function FormPenyediaJasa({ proyekId, daftarUsaha }) {
     });
     const [ isSelectUsahaVisible, setIsSelectUsahaVisible ] = React.useState(false);
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
+    const [ isModalSuccessOpen, setIsModalSuccessOpen ] = React.useState(false);
 
     React.useEffect(() => {
         const timeoutId = setTimeout(() => setIsSelectUsahaVisible(false), 1000);
@@ -212,6 +238,9 @@ function FormPenyediaJasa({ proyekId, daftarUsaha }) {
         if (proyekId) {
             post(`/admin/pendataan/proyek/${proyekId}/penyedia-jasa`, {
                 preserveScroll: true,
+                onSuccess: () => {
+                    setIsModalSuccessOpen(true);
+                },
                 onError: (errors) => {
                     console.log(errors);
                     setIsModalErrorOpen(true);
@@ -357,6 +386,26 @@ function FormPenyediaJasa({ proyekId, daftarUsaha }) {
                     Gagal menambahkan penyedia jasa proyek konstruksi. Silakan periksa kembali.
                 </div>
             </ModalError>
+            <ModalSuccess
+                isVisible={isModalSuccessOpen}
+                onClose={() => setIsModalSuccessOpen(false)}
+            >
+                <div className="text-center my-2">
+                    <div className="font-medium text-slate-700">Berhasil!</div>
+                    <div className="font-light text-xs text-slate-500 mb-4">
+                        Penyedia jasa berhasil ditambahkan.
+                    </div>
+                </div>
+                <div className="w-full">
+                    <button
+                        type="button"
+                        className="w-full bg-slate-100 text-slate-700 font-medium text-xs rounded py-2 px-2.5"
+                        onClick={() => setIsModalSuccessOpen(false)}
+                    >
+                        Tutup
+                    </button>
+                </div>
+            </ModalSuccess>
         </>
     );
 }
@@ -364,7 +413,7 @@ function FormPenyediaJasa({ proyekId, daftarUsaha }) {
 function FormPenggunaJasa({ proyekId }) {
     const { data, setData, post, processing, reset } = useForm({
         nama: '',
-        pelakuPengadaan: 'KPA',
+        pelakuPengadaan: 'Kuasa Pengguna Anggaran',
         nip: '',
         jabatan: '',
         sk: '',
@@ -373,12 +422,16 @@ function FormPenggunaJasa({ proyekId }) {
     });
 
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
+    const [ isModalSuccessOpen, setIsModalSuccessOpen ] = React.useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
         if (proyekId) {
             post(`/admin/pendataan/proyek/${proyekId}/pengguna-jasa`, {
-                preserveScroll: true,
+                // preserveScroll: true,
+                onSuccess: () => {
+                    setIsModalSuccessOpen(true);
+                },
                 onError: (errors) => {
                     console.log(errors);
                     setIsModalErrorOpen(true);
@@ -495,6 +548,32 @@ function FormPenggunaJasa({ proyekId }) {
                     Gagal menambahkan pengguna jasa proyek konstruksi. Silakan periksa kembali.
                 </div>
             </ModalError>
+            <ModalSuccess
+                isVisible={isModalSuccessOpen}
+                onClose={() => setIsModalSuccessOpen(false)}
+            >
+                <div className="text-center my-2">
+                    <div className="font-medium text-slate-700">Berhasil!</div>
+                    <div className="font-light text-xs text-slate-500 mb-3">
+                        Pengguna jasa berhasil ditambahkan.
+                    </div>
+                </div>
+                <div className="w-full">
+                    <button
+                        type="button"
+                        className="w-full bg-slate-100 text-slate-700 font-medium text-xs rounded py-2 px-2.5"
+                        onClick={() => setIsModalSuccessOpen(false)}
+                    >
+                        Tutup
+                    </button>
+                    {/* <Link
+                        href={`/admin/pendataan/proyek/${proyekId}`}
+                        className="block text-center w-full bg-blue-500 text-white font-medium text-xs rounded py-2 px-2.5"
+                    >
+                        Lihat Proyek Konstruksi
+                    </Link> */}
+                </div>
+            </ModalSuccess>
         </>
     )
 }

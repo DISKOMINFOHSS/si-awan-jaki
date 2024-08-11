@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Pendataan\Proyek;
 
 use Inertia\Inertia;
+use App\Enums\PelakuPengadaan;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Pendataan\ProyekKonstruksiCollection;
+use App\Http\Resources\Pendataan\ProyekKonstruksiResource;
 use App\Services\FileService;
 use App\Services\Usaha\PendataanUsahaService;
 use App\Services\Penyelenggaraan\PendataanProyekService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProyekController extends Controller
 {
@@ -141,7 +144,7 @@ class ProyekController extends Controller
 
         $validatedData = $request->validate([
             'nama'            => 'required',
-            'pelakuPengadaan' => 'required',
+            'pelakuPengadaan' => ['required', Rule::enum(PelakuPengadaan::class)],
         ]);
         $userId = auth()->user()->id;
 
@@ -159,5 +162,16 @@ class ProyekController extends Controller
         $this->proyekService->addPenggunaJasaToProyekKonstruksi($id, $penggunaJasaId);
 
         return redirect("/admin/pendataan/proyek");
+    }
+
+    public function show(string $id)
+    {
+        $proyekKonstruksi = $this->proyekService->getProyekKonstruksiById($id);
+
+        return Inertia::render('Pendataan/Proyek/Show', [
+            'data' => [
+                'proyekKonstruksi' => new ProyekKonstruksiResource($proyekKonstruksi),
+            ],
+        ]);
     }
 }

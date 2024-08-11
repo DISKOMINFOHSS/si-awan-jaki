@@ -11,6 +11,7 @@ import {
     LiaAngleRightSolid,
 } from "react-icons/lia";
 import Card from "../../../Components/Card";
+import formatCurrencyToIDR from "../../../Utils/formatCurrencyToIDR";
 
 const PendataanProyekIndex = ({ data }) => {
     console.log(data);
@@ -60,17 +61,27 @@ const PendataanProyekIndex = ({ data }) => {
                 <Card.Body>
                     <div className="relative overflow-x-auto">
                         <table className="w-full text-xs">
-                            <tbody>
+                            <tbody className="text-slate-800">
                                 {
                                     daftarProyek.map((proyek) => (
                                         <tr key={proyek.id} className="border-b border-slate-100 hover:bg-slate-50">
                                             <td className="p-4">
                                                 <div>
-                                                    <Link href={`/admin/pendataan/proyek/${proyek.id}`} className="hover:text-blue-600 hover:underline">{proyek.namaPaket}</Link>
-                                                    <div className="font-light text-slate-500">Tahun Anggaran {proyek.tahunAnggaran}</div>
+                                                    <Link href={`/admin/pendataan/proyek/${proyek.id}`} className="line-clamp-1 hover:text-blue-600 hover:underline">{proyek.namaPaket}</Link>
+                                                    <div className="font-light text-slate-500 flex items-center gap-x-2">
+                                                        <span>Tahun Anggaran {proyek.tahunAnggaran}</span>
+                                                        <span>-</span>
+                                                        <span>Nilai Kontrak : {formatCurrencyToIDR(proyek.nilaiKontrak)}</span>
+                                                    </div>
                                                 </div>
                                             </td>
-                                            <td className="p-4 flex justify-end">
+                                            <td className="p-4 min-w-56 hidden md:table-cell">
+                                                <div>
+                                                    <div>Penyedia Jasa</div>
+                                                    <div className="font-light text-slate-500 line-clamp-1">{proyek.penyediaJasa.nama}</div>
+                                                </div>
+                                            </td>
+                                            <td className="p-4 max-w-16 flex items-center justify-end">
                                                 <Link href={`/admin/pendataan/usaha/${proyek.id}`} className="w-fit p-2 flex items-center gap-x-1.5 text-slate-600 hover:text-blue-600">
                                                     <LiaAngleRightSolid size={16} />
                                                 </Link>

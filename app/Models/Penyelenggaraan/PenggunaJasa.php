@@ -2,6 +2,7 @@
 
 namespace App\Models\Penyelenggaraan;
 
+use App\Enums\PelakuPengadaan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -20,5 +21,9 @@ class PenggunaJasa extends Model
         'instansi',
         'alamat',
         'created_by'
+    ];
+
+    protected $casts = [
+        'pelaku_pengadaan' => PelakuPengadaan::class,
     ];
 }

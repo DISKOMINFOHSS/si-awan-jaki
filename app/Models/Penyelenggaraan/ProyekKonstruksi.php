@@ -32,7 +32,7 @@ class ProyekKonstruksi extends Model
 
     public function penyediaJasa(): BelongsTo
     {
-        return $this->belongTo(Usaha::class, 'penyedia_jasa_id');
+        return $this->belongsTo(Usaha::class, 'penyedia_jasa_id');
     }
 
     public function penggunaJasa(): BelongsTo

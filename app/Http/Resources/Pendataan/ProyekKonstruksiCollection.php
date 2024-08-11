@@ -26,6 +26,7 @@ class ProyekKonstruksiCollection extends ResourceCollection
                 'nilaiKontrak'              => $proyek->nilai_kontrak,
                 'tanggalMulaiPelaksanaan'   => $proyek->mulai_pelaksanaan,
                 'tanggalSelesaiPelaksanaan' => $proyek->selesai_pelaksanaan,
+                'penyediaJasa'              => $proyek->penyediaJasa,
             ];
         });
     }

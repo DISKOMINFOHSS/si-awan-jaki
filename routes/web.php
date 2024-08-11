@@ -76,6 +76,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 Route::get('/create', 'create');
                 Route::post('/', 'store');
 
+                Route::get('/{id}', 'show');
                 Route::post('/{id}/penyedia-jasa', 'storePenyediaJasa');
                 Route::post('/{id}/pengguna-jasa', 'storePenggunaJasa');
             });

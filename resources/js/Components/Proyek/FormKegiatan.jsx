@@ -418,9 +418,9 @@ function FormPenggunaJasa({ proyekId }) {
                                 name="pelakuPengadaan" id="pelakuPengadaan" value={data.pelakuPengadaan} onChange={e => setData('pelakuPengadaan', e.target.value)}
                                 className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                             >
-                                <option value="KPA">Kuasa Pengguna Anggaran</option>
-                                <option value="PPK">Pejabat Pembuat Komitmen</option>
-                                <option value="Perwakilan">Perwakilan Masyarakat, Swasta, atau Badan Usaha</option>
+                                <option value="Kuasa Pengguna Anggaran">Kuasa Pengguna Anggaran</option>
+                                <option value="Pejabat Pembuat Komitmen">Pejabat Pembuat Komitmen</option>
+                                <option value="Perwakilan Masyarakat, Swasta, atau Badan Usaha">Perwakilan Masyarakat, Swasta, atau Badan Usaha</option>
                             </select>
                         </div>
                         <div className="col-span-2">

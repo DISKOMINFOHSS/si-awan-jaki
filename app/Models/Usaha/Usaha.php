@@ -3,6 +3,7 @@
 namespace App\Models\Usaha;
 
 use App\Models\User;
+use App\Models\Penyelenggaraan\ProyekKonstruksi;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -39,5 +40,10 @@ class Usaha extends Model
     public function pengawasanLingkup2(): HasMany
     {
         return $this->hasMany(PengawasanBUJKLingkup2::class, 'usaha_id');
+    }
+
+    public function proyekKonstruksi(): HasMany
+    {
+        return $this->hasMany(ProyekKonstruksi::class, 'penyedia_jasa_id');
     }
 }

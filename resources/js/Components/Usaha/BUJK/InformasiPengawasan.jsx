@@ -96,13 +96,13 @@ const InformasiUmumPengawasan = ({ pengawasan }) => {
                     </div>
                     <div>
                         <div className="font-medium">Tanggal Pengawasan</div>
-                        <div className="font-light text-slate-500">{formatDateToIndonesia(new Date(pengawasan.tanggalPengawasan))}</div>
+                        <div className="font-light text-slate-500">{formatDateToIndonesia(pengawasan.tanggalPengawasan)}</div>
                     </div>
                 </div>
                 <div className="grid grid-cols-2 gap-x-4 pt-3">
                     <div>
                         <div className="font-medium">Tanggal Verifikasi</div>
-                        <div className="font-light text-slate-500">{pengawasan.verifiedAt ? formatDateToIndonesia(new Date(pengawasan.verifiedAt)) : '-'}</div>
+                        <div className="font-light text-slate-500">{pengawasan.verifiedAt ? formatDateToIndonesia(pengawasan.verifiedAt) : '-'}</div>
                     </div>
                     <div>
                         <div className="font-medium">Verifikasi oleh</div>

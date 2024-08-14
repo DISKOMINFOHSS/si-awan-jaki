@@ -13,17 +13,17 @@ import {
 import ModalError from "../ModalError";
 import ModalSuccess from "../ModalSuccess";
 
-function FormInformasi() {
+function FormInformasi({ proyekKonstruksi }) {
     const { data, setData, post, processing, reset } = useForm({
-        namaPaket: '',
-        nomorKontrak: '',
-        sumberDana: 'APBD',
-        tanggalMulai: '',
-        tanggalSelesai: '',
-        tanggalKontrak: '',
-        tahunAnggaran: '2024',
-        nilaiKontrak: '',
-        nilaiPagu: '',
+        namaPaket: proyekKonstruksi.namaPaket ? proyekKonstruksi.namaPaket : '',
+        nomorKontrak: proyekKonstruksi.nomorKontrak ? proyekKonstruksi.nomorKontrak : '',
+        sumberDana: proyekKonstruksi.sumberDana ? proyekKonstruksi.sumberDana : 'APBD',
+        tanggalMulai: proyekKonstruksi.tanggalMulaiPelaksanaan ? proyekKonstruksi.tanggalMulaiPelaksanaan : '',
+        tanggalSelesai: proyekKonstruksi.tanggalSelesaiPelaksanaan ? proyekKonstruksi.tanggalSelesaiPelaksanaan : '',
+        tanggalKontrak: proyekKonstruksi.tanggalKontrak ? proyekKonstruksi.tanggalKontrak : '',
+        tahunAnggaran: proyekKonstruksi.tahunAnggaran ? proyekKonstruksi.tahunAnggaran : '2024',
+        nilaiKontrak: proyekKonstruksi.nilaiKontrak ? proyekKonstruksi.nilaiKontrak : '',
+        nilaiPagu: proyekKonstruksi.nilaiPagu ? proyekKonstruksi.nilaiPagu : '',
     });
 
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
@@ -428,7 +428,7 @@ function FormPenggunaJasa({ proyekId }) {
         e.preventDefault();
         if (proyekId) {
             post(`/admin/pendataan/proyek/${proyekId}/pengguna-jasa`, {
-                // preserveScroll: true,
+                preserveScroll: true,
                 onSuccess: () => {
                     setIsModalSuccessOpen(true);
                 },

@@ -161,7 +161,7 @@ class ProyekController extends Controller
 
         $this->proyekService->addPenggunaJasaToProyekKonstruksi($id, $penggunaJasaId);
 
-        return back();
+        return redirect("/admin/pendataan/proyek/$id");
     }
 
     public function show(string $id)
@@ -169,6 +169,17 @@ class ProyekController extends Controller
         $proyekKonstruksi = $this->proyekService->getProyekKonstruksiById($id);
 
         return Inertia::render('Pendataan/Proyek/Show', [
+            'data' => [
+                'proyekKonstruksi' => new ProyekKonstruksiResource($proyekKonstruksi),
+            ],
+        ]);
+    }
+
+    public function edit(string $id)
+    {
+        $proyekKonstruksi = $this->proyekService->getProyekKonstruksiById($id);
+
+        return Inertia::render('Pendataan/Proyek/Edit', [
             'data' => [
                 'proyekKonstruksi' => new ProyekKonstruksiResource($proyekKonstruksi),
             ],

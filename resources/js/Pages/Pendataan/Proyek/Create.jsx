@@ -28,7 +28,7 @@ const PendataanProyekCreate = ({ data }) => {
                     <h1 className="font-medium text-xl text-slate-800">Tambah Proyek Konstruksi</h1>
                     <h2 className="font-light text-xs text-slate-500">Pendataan Penyelenggaraan Jasa Konstruksi di Kab. Hulu Sungai Selatan</h2>
                 </div>
-                <div className="flex items-center gap-x-2">
+                {/* <div className="flex items-center gap-x-2">
                     {
                         proyekId && (
                             <Link
@@ -40,7 +40,7 @@ const PendataanProyekCreate = ({ data }) => {
                             </Link>
                         )
                     }
-                </div>
+                </div> */}
             </div>
             <div className="grid grid-cols-4 gap-4 pb-5 border-b border-slate-200">
                 <div className="mt-1">
@@ -48,7 +48,7 @@ const PendataanProyekCreate = ({ data }) => {
                     <h4 className="font-light text-xs text-slate-500">Silakan lengkapi informasi terkait</h4>
                 </div>
                 <div className="col-span-3">
-                    <FormInformasi />
+                    <FormInformasi proyekKonstruksi={{}} />
                 </div>
             </div>
             <div className="grid grid-cols-4 gap-4 py-5 border-b border-slate-200">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pendataan\Proyek;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Pendataan\ProyekKonstruksiCollection;
+use App\Http\Resources\Pendataan\ProyekKonstruksiResource;
 use App\Services\Usaha\PendataanUsahaService;
 use App\Services\Penyelenggaraan\PendataanProyekService;
 use Illuminate\Http\Request;
@@ -40,6 +41,17 @@ class ProyekController extends Controller
         return Inertia::render('Pendataan/Proyek/Create', [
             'data' => [
                 'daftarUsaha' => $daftarUsaha,
+            ],
+        ]);
+    }
+
+    public function show(string $id)
+    {
+        $proyekKonstruksi = $this->proyekService->getProyekKonstruksiById($id);
+
+        return Inertia::render('Pendataan/Proyek/Show', [
+            'data' => [
+                'proyekKonstruksi' => new ProyekKonstruksiResource($proyekKonstruksi),
             ],
         ]);
     }

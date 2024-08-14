@@ -74,6 +74,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             ->group(function () {
                 Route::get('/', 'index');
                 Route::get('/create', 'create');
+
+                Route::get('/{id}', 'show');
             });
 
             // Pendataan Bangunan

@@ -15,11 +15,20 @@ class PendataanProyekService
             'penyediaJasa' => function (Builder $query)
             {
                 $query->select('id', 'nama', 'nib', 'pjbu', 'alamat');
-            },
-            'penggunaJasa' => function (Builder $query)
-            {
-                $query->select('id', 'nama', 'pelaku_pengadaan as pelakuPengadaan');
             }
-        ])->get();
+        ])->orderBy('tahun_anggaran', 'asc')
+          ->orderBy('nama_paket')
+          ->get();
+    }
+
+    public function getProyekKonstruksiById(string $id): ProyekKonstruksi
+    {
+        return ProyekKonstruksi::with([
+            'penyediaJasa' => function (Builder $query)
+            {
+                $query->select('id', 'nama', 'nib', 'pjbu', 'alamat');
+            },
+            'penggunaJasa'
+        ])->where('id', $id)->first();
     }
 }

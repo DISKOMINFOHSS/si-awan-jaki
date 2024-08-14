@@ -24,7 +24,7 @@ const PendataanProyekIndex = ({ data }) => {
                 <div>
                     <div className="flex gap-x-2 items-center">
                         <h1 className="font-medium text-xl text-slate-800">Proyek Konstruksi</h1>
-                        <span className="rounded-full text-[11px] px-2 py-0.5 bg-blue-100 text-blue-500 font-medium">0</span>
+                        <span className="rounded-full text-[11px] px-2 py-0.5 bg-blue-100 text-blue-500 font-medium">{daftarProyek.length}</span>
                     </div>
                     <h2 className="font-light text-xs text-slate-500">Pendataan Penyelenggaraan Jasa Konstruksi di Kab. Hulu Sungai Selatan</h2>
                 </div>

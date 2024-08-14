@@ -3,6 +3,7 @@ import { Link } from "@inertiajs/react";
 
 import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
+import { FormInformasi } from "../../../Components/Proyek/FormEditKegiatan";
 
 import {
     LiaHomeSolid,
@@ -33,6 +34,15 @@ const PendataanProyekEdit = ({ data }) => {
                         <LiaToolsSolid size={16} />
                         <span>Lihat Proyek Konstruksi</span>
                     </Link>
+                </div>
+            </div>
+            <div className="grid grid-cols-4 gap-4 pb-5 border-b border-slate-200">
+                <div className="mt-1">
+                    <h3 className="font-medium text-slate-800">Informasi Umum</h3>
+                    <h4 className="font-light text-xs text-slate-500">Silakan lengkapi informasi terkait</h4>
+                </div>
+                <div className="col-span-3">
+                    <FormInformasi proyekKonstruksi={proyekKonstruksi} />
                 </div>
             </div>
         </>

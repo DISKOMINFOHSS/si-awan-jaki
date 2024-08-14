@@ -2,10 +2,13 @@ import React from "react";
 
 import Breadcrumb from "../../../Components/Breadcrumb";
 import Layout from "../../../Components/Layout";
-import Card from "../../../Components/Card";
+import {
+    FormInformasi,
+    FormPenggunaJasa,
+    FormPenyediaJasa
+} from "../../../Components/Proyek/FormAddKegiatan";
 
-import { LiaHomeSolid, LiaCloudUploadAltSolid } from "react-icons/lia";
-import { FormInformasi, FormPenggunaJasa, FormPenyediaJasa } from "../../../Components/Proyek/FormKegiatan";
+import { LiaHomeSolid } from "react-icons/lia";
 
 const PendataanProyekCreate = ({ data }) => {
     console.log(data);
@@ -15,7 +18,7 @@ const PendataanProyekCreate = ({ data }) => {
         <>
             <Breadcrumb>
                 <Breadcrumb.Item href="/admin/dashboard"><LiaHomeSolid size={14} /></Breadcrumb.Item>
-                <Breadcrumb.Item href={`/admin/pendataan/proyek/`}>Daftar Proyek Konstruksi</Breadcrumb.Item>
+                <Breadcrumb.Item href={`/admin/pendataan/proyek-konstruksi/`}>Daftar Proyek Konstruksi</Breadcrumb.Item>
                 <Breadcrumb.Item active>Tambah Proyek Konstruksi</Breadcrumb.Item>
             </Breadcrumb>
             <div className="w-full mb-5">
@@ -31,7 +34,7 @@ const PendataanProyekCreate = ({ data }) => {
                     <FormInformasi />
                 </div>
             </div>
-            <div className="grid grid-cols-4 gap-4 py-5 border-b border-slate-200">
+            {/* <div className="grid grid-cols-4 gap-4 py-5 border-b border-slate-200">
                 <div className="mt-1">
                     <h3 className="font-medium text-slate-800">Penyedia Jasa</h3>
                     <h4 className="font-light text-xs text-slate-500">Silakan lengkapi informasi terkait</h4>
@@ -48,7 +51,7 @@ const PendataanProyekCreate = ({ data }) => {
                 <div className="col-span-3">
                     <FormPenggunaJasa />
                 </div>
-            </div>
+            </div> */}
 
         </>
     )

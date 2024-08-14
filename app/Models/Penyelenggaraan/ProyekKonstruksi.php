@@ -23,6 +23,7 @@ class ProyekKonstruksi extends Model
         'tahun_anggaran',
         'nilai_pagu',
         'nilai_kontrak',
+        'tanggal_kontrak',
         'mulai_pelaksanaan',
         'selesai_pelaksanaan',
         'penyedia_jasa_id',

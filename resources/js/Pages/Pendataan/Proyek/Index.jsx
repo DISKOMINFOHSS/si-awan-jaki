@@ -41,7 +41,7 @@ const PendataanProyekIndex = ({ data }) => {
                 </div>
                 <div className="flex items-center gap-x-3">
                     <Link
-                        href="/admin/pendataan/proyek/create"
+                        href="/admin/pendataan/proyek-konstruksi/create"
                         className="w-full flex justify-center items-center space-x-1 text-white bg-blue-600 hover:bg-blue-800 rounded text-xs tracking-wide p-2.5 shadow-sm"
                     >
                         <LiaPlusSolid className="stroke-2" />
@@ -68,7 +68,7 @@ const PendataanProyekIndex = ({ data }) => {
                                         <tr key={proyek.id} className="border-b border-slate-100 hover:bg-slate-50">
                                             <td className="p-4">
                                                 <div>
-                                                    <Link href={`/admin/pendataan/proyek/${proyek.id}`} className="hover:text-blue-600 hover:underline">{proyek.namaPaket}</Link>
+                                                    <Link href={`/admin/pendataan/proyek-konstruksi/${proyek.id}`} className="hover:text-blue-600 hover:underline">{proyek.namaPaket}</Link>
                                                     <div className="font-light text-slate-500 flex items-center gap-x-2">
                                                         <span>Tahun Anggaran {proyek.tahunAnggaran}</span>
                                                         <span>-</span>
@@ -79,11 +79,11 @@ const PendataanProyekIndex = ({ data }) => {
                                             <td className="p-4 min-w-56 hidden md:table-cell">
                                                 <div>
                                                     <div>Penyedia Jasa</div>
-                                                    <div className="font-light text-slate-500 line-clamp-1">{proyek.penyediaJasa.nama}</div>
+                                                    <div className="font-light text-slate-500 line-clamp-1">{proyek.penyediaJasa ? proyek.penyediaJasa.nama : '-'}</div>
                                                 </div>
                                             </td>
                                             <td className="p-4 max-w-16">
-                                                <Link href={`/admin/pendataan/usaha/${proyek.id}`} className="w-fit p-2 flex items-center gap-x-1.5 text-slate-600 hover:text-blue-600">
+                                                <Link href={`/admin/pendataan/proyek-konstruksi/${proyek.id}`} className="w-fit p-2 flex items-center gap-x-1.5 text-slate-600 hover:text-blue-600">
                                                     <LiaAngleRightSolid size={16} />
                                                 </Link>
                                             </td>

@@ -9,6 +9,24 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class PendataanProyekService
 {
+    public function addProyekKonstruksi(array $data): string
+    {
+        $proyek = ProyekKonstruksi::create([
+            'nama_paket'          => $data['nama_paket'],
+            'nomor_kontrak'       => $data['nomor_kontrak'],
+            'sumber_dana'         => $data['sumber_dana'],
+            'tahun_anggaran'      => $data['tahun_anggaran'],
+            'nilai_pagu'          => $data['nilai_pagu'],
+            'nilai_kontrak'       => $data['nilai_kontrak'],
+            'tanggal_kontrak'     => $data['tanggal_kontrak'],
+            'mulai_pelaksanaan'   => $data['mulai_pelaksanaan'],
+            'selesai_pelaksanaan' => $data['selesai_pelaksanaan'],
+            'created_by'          => $data['created_by'],
+        ]);
+
+        return $proyek->id;
+    }
+
     public function getDaftarProyekKonstruksi(): EloquentCollection
     {
         return ProyekKonstruksi::with([

@@ -20,7 +20,7 @@ const PendataanProyekShow = ({ data }) => {
         <>
             <Breadcrumb>
                 <Breadcrumb.Item href="/admin/dashboard"><LiaHomeSolid size={14} /></Breadcrumb.Item>
-                <Breadcrumb.Item href={`/admin/pendataan/proyek`}>Daftar Proyek Konstruksi</Breadcrumb.Item>
+                <Breadcrumb.Item href={`/admin/pendataan/proyek-konstruksi`}>Daftar Proyek Konstruksi</Breadcrumb.Item>
                 <Breadcrumb.Item active>Detail Proyek Konstruksi</Breadcrumb.Item>
             </Breadcrumb>
             <div className="flex justify-between items-center mb-4">
@@ -33,7 +33,7 @@ const PendataanProyekShow = ({ data }) => {
                 <Informasi proyekKonstruksi={proyekKonstruksi} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <InformasiPenyediaJasa penyediaJasa={proyekKonstruksi.penyediaJasa} />
+                <InformasiPenyediaJasa penyediaJasa={proyekKonstruksi.penyediaJasa ? proyekKonstruksi.penyediaJasa : ''} />
                 <InformasiPenggunaJasa penggunaJasa={proyekKonstruksi.penggunaJasa ? proyekKonstruksi.penggunaJasa : ''} />
             </div>
         </>

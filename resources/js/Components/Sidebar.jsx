@@ -93,7 +93,7 @@ export default ({ isOpened }) => {
                     text="Usaha Jasa Konstruksi"
                 />
                 <Sidebar.Item
-                    href="/admin/pendataan/proyek"
+                    href="/admin/pendataan/proyek-konstruksi"
                     icon={<LiaToolsSolid size={20} />}
                     text="Proyek Konstruksi"
                 />

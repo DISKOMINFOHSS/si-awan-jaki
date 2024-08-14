@@ -181,14 +181,10 @@ class ProyekController extends Controller
 
         $oldPenyediaJasaId = $this->proyekService->getPenyediaJasaIdById($id);
         $proyekKonstruksi  = $this->proyekService->addPenyediaJasaToProyekKonstruksi($id, $penyediaJasaId);
-        // dd($oldPenyediaJasaId, $penyediaJasaId);
-
-        // jika null, tambah paket pakerjaan
-        // jika old dan current berbeda, tambah paket pekerjaan di current, hapus di old
 
         if ($oldPenyediaJasaId !== $penyediaJasaId)
         {
-            $paketPekerjaan = $this->bujkService->getPaketPekerjaanByNamaPaketAndUsahaId($proyekKonstruksi->nama_paket, $oldPenyediaJasaId);
+            $paketPekerjaan = $oldPenyediaJasaId ? $this->bujkService->getPaketPekerjaanByNamaPaketAndUsahaId($proyekKonstruksi->nama_paket, $oldPenyediaJasaId) : null;
             if (!$paketPekerjaan)
             {
                 $this->bujkService->addPaketPekerjaan([
@@ -208,6 +204,45 @@ class ProyekController extends Controller
                 $this->bujkService->updateUsahaIdFromPaketPekerjaan($paketPekerjaan->id, $penyediaJasaId);
             }
         }
+
+        return back();
+    }
+
+    public function storePenggunaJasa(string $id, Request $request)
+    {
+        if (!$this->proyekService->checkProyekKonstruksiExists($id))
+        {
+            return back()->withErrors(['message' => 'Proyek Konstruksi tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'nama'            => 'required',
+            'pelakuPengadaan' => 'required',
+        ]);
+
+        $userId = auth()->user()->id;
+        $penggunaJasaId = '';
+
+        $data = [
+            'nama'             => $validatedData['nama'],
+            'pelaku_pengadaan' => $validatedData['pelakuPengadaan'],
+            'nip'              => $request->input('nip'),
+            'jabatan'          => $request->input('jabatan'),
+            'sk'               => $request->input('sk'),
+            'instansi'         => $request->input('instansi'),
+            'alamat'           => $request->input('alamat'),
+        ];
+
+        if ($request->filled('penggunaJasaId'))
+        {
+            $penggunaJasaId = $this->proyekService->updatePenggunaJasa($request->input('penggunaJasaId'), $data);
+        } else
+        {
+            $data['created_by'] = $userId;
+            $penggunaJasaId = $this->proyekService->addPenggunaJasa($data);
+        }
+
+        $this->proyekService->addPenggunaJasaToProyekKonstruksi($id, $penggunaJasaId);
 
         return back();
     }

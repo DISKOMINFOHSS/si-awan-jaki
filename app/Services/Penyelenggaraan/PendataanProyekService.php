@@ -99,4 +99,48 @@ class PendataanProyekService
     {
         return ProyekKonstruksi::find($id)->penyedia_jasa_id;
     }
+
+    // Pengguna Jasa
+    public function addPenggunaJasa(array $data): string
+    {
+        $penggunaJasa = PenggunaJasa::create([
+            'nama'             => $data['nama'],
+            'pelaku_pengadaan' => $data['pelaku_pengadaan'],
+            'nip'              => $data['nip'],
+            'jabatan'          => $data['jabatan'],
+            'sk'               => $data['sk'],
+            'instansi'         => $data['instansi'],
+            'alamat'           => $data['alamat'],
+            'created_by'       => $data['created_by'],
+        ]);
+
+        return $penggunaJasa->id;
+    }
+
+    public function updatePenggunaJasa(string $id, array $data): string
+    {
+        $penggunaJasa = PenggunaJasa::find($id);
+
+        $penggunaJasa->nama = $data['nama'];
+        $penggunaJasa->pelaku_pengadaan = $data['pelaku_pengadaan'];
+        $penggunaJasa->nip = $data['nip'];
+        $penggunaJasa->jabatan = $data['jabatan'];
+        $penggunaJasa->sk = $data['sk'];
+        $penggunaJasa->instansi = $data['instansi'];
+        $penggunaJasa->alamat = $data['alamat'];
+
+        $penggunaJasa->save();
+
+        return $penggunaJasa->id;
+    }
+
+    public function addPenggunaJasaToProyekKonstruksi(string $id, string $penggunaJasaId): string
+    {
+        $proyek = ProyekKonstruksi::find($id);
+        $proyek->pengguna_jasa_id = $penggunaJasaId;
+
+        $proyek->save();
+
+        return $proyek->id;
+    }
 }

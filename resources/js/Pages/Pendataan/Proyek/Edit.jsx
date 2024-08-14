@@ -5,6 +5,7 @@ import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import {
     FormInformasi,
+    FormPenggunaJasa,
     FormPenyediaJasa
 } from "../../../Components/Proyek/FormEditKegiatan";
 
@@ -21,6 +22,7 @@ const PendataanProyekEdit = ({ data }) => {
         <>
             <Breadcrumb>
                 <Breadcrumb.Item href="/admin/dashboard"><LiaHomeSolid size={14} /></Breadcrumb.Item>
+                <Breadcrumb.Item href="">...</Breadcrumb.Item>
                 <Breadcrumb.Item href={`/admin/pendataan/proyek-konstruksi/${proyekKonstruksi.id}`}>Detail Proyek Konstruksi</Breadcrumb.Item>
                 <Breadcrumb.Item active>Edit Proyek Konstruksi</Breadcrumb.Item>
             </Breadcrumb>
@@ -58,6 +60,18 @@ const PendataanProyekEdit = ({ data }) => {
                         proyekId={proyekKonstruksi.id}
                         selectedUsaha={proyekKonstruksi.penyediaJasa ? proyekKonstruksi.penyediaJasa : ''}
                         daftarUsaha={daftarUsaha}
+                    />
+                </div>
+            </div>
+            <div className="grid grid-cols-4 gap-4 pt-5">
+                <div className="mt-1">
+                    <h3 className="font-medium text-slate-800">Pengguna Jasa</h3>
+                    <h4 className="font-light text-xs text-slate-500">Silakan lengkapi informasi terkait</h4>
+                </div>
+                <div className="col-span-3">
+                    <FormPenggunaJasa
+                        proyekId={proyekKonstruksi.id}
+                        penggunaJasa={proyekKonstruksi.penggunaJasa ? proyekKonstruksi.penggunaJasa : ''}
                     />
                 </div>
             </div>

@@ -80,6 +80,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 Route::put('/{id}', 'update');
                 Route::get('/{id}/edit', 'edit');
 
+                Route::post('/{id}/pengguna-jasa', 'storePenggunaJasa');
                 Route::post('/{id}/penyedia-jasa', 'storePenyediaJasa');
             });
 

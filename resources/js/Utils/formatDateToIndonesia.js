@@ -5,10 +5,7 @@ function formatDateToIndonesia(date) {
       year: 'numeric'
     };
 
-    const formatter = new Intl.DateTimeFormat('id-ID', options);
-    const formattedDate = formatter.format(date);
-
-    return formattedDate;
+    return new Intl.DateTimeFormat('id-ID', options).format(new Date(date));
 }
 
 export default formatDateToIndonesia;

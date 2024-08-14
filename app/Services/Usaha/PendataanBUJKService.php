@@ -201,6 +201,13 @@ class PendataanBUJKService
             ->get();
     }
 
+    public function getPaketPekerjaanByNamaPaketAndUsahaId(string $namaPaket, string $usahaId)
+    {
+        return PaketPekerjaan::where('nama_paket', 'like', $namaPaket)
+            ->where('usaha_id', $usahaId)
+            ->first();
+    }
+
     public function updatePaketPekerjaan(array $data): int
     {
         $paketPekerjaan = PaketPekerjaan::find($data['id']);
@@ -217,5 +224,21 @@ class PendataanBUJKService
         $paketPekerjaan->save();
 
         return $paketPekerjaan->id;
+    }
+
+    public function updateUsahaIdFromPaketPekerjaan(string $id, string $usahaId): string
+    {
+        $paketPekerjaan = PaketPekerjaan::find($id);
+
+        $paketPekerjaan->usaha_id = $usahaId;
+        $paketPekerjaan->save();
+
+        return $paketPekerjaan->id;
+    }
+
+    public function deletePaketPekerjaan(string $id)
+    {
+        $paketPekerjaan = PaketPekerjaan::find($id);
+        $paketPekerjaan->delete();
     }
 }

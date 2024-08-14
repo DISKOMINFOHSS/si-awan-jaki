@@ -3,7 +3,10 @@ import { Link } from "@inertiajs/react";
 
 import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
-import { FormInformasi } from "../../../Components/Proyek/FormEditKegiatan";
+import {
+    FormInformasi,
+    FormPenyediaJasa
+} from "../../../Components/Proyek/FormEditKegiatan";
 
 import {
     LiaHomeSolid,
@@ -12,14 +15,14 @@ import {
 
 const PendataanProyekEdit = ({ data }) => {
     console.log(data);
-    const { proyekKonstruksi } = data;
+    const { proyekKonstruksi, daftarUsaha } = data;
 
     return (
         <>
             <Breadcrumb>
                 <Breadcrumb.Item href="/admin/dashboard"><LiaHomeSolid size={14} /></Breadcrumb.Item>
-                <Breadcrumb.Item href={`/admin/pendataan/proyek-konstruksi`}>Daftar Proyek Konstruksi</Breadcrumb.Item>
-                <Breadcrumb.Item active>Detail Proyek Konstruksi</Breadcrumb.Item>
+                <Breadcrumb.Item href={`/admin/pendataan/proyek-konstruksi/${proyekKonstruksi.id}`}>Detail Proyek Konstruksi</Breadcrumb.Item>
+                <Breadcrumb.Item active>Edit Proyek Konstruksi</Breadcrumb.Item>
             </Breadcrumb>
             <div className="flex justify-between items-center mb-5">
                 <div>
@@ -43,6 +46,19 @@ const PendataanProyekEdit = ({ data }) => {
                 </div>
                 <div className="col-span-3">
                     <FormInformasi proyekKonstruksi={proyekKonstruksi} />
+                </div>
+            </div>
+            <div className="grid grid-cols-4 gap-4 py-5 border-b border-slate-200">
+                <div className="mt-1">
+                    <h3 className="font-medium text-slate-800">Penyedia Jasa</h3>
+                    <h4 className="font-light text-xs text-slate-500">Silakan lengkapi informasi terkait</h4>
+                </div>
+                <div className="col-span-3">
+                    <FormPenyediaJasa
+                        proyekId={proyekKonstruksi.id}
+                        selectedUsaha={proyekKonstruksi.penyediaJasa ? proyekKonstruksi.penyediaJasa : ''}
+                        daftarUsaha={daftarUsaha}
+                    />
                 </div>
             </div>
         </>

@@ -75,8 +75,12 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 Route::get('/', 'index');
                 Route::post('/', 'store');
                 Route::get('/create', 'create');
+
                 Route::get('/{id}', 'show');
+                Route::put('/{id}', 'update');
                 Route::get('/{id}/edit', 'edit');
+
+                Route::post('/{id}/penyedia-jasa', 'storePenyediaJasa');
             });
 
             // Pendataan Bangunan

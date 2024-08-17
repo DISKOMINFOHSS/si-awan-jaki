@@ -9,9 +9,6 @@ import {
 import { LiaHomeSolid } from "react-icons/lia";
 
 const PendataanProyekCreate = ({ data }) => {
-    console.log(data);
-    const { daftarUsaha } = data;
-
     return (
         <>
             <Breadcrumb>

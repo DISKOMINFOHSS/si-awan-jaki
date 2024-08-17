@@ -119,6 +119,16 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                 });
 
+            Route::name('penyelenggaraan')->prefix('/penyelenggaraan')
+            ->group(function () {
+                Route::prefix('/apbd')->group(function () {
+                    Route::controller(App\Http\Controllers\Pengawasan\Penyelenggaraan\APBD\PenyelenggaraanController::class)
+                    ->group(function () {
+                        Route::get('/', 'index');
+                    });
+                });
+            });
+
             Route::name('usaha.')->prefix('/usaha')->group(function() {
                 Route::name('1.')->prefix('/1')
                 ->controller(App\Http\Controllers\Pengawasan\Usaha\UsahaRantaiPasokController::class)

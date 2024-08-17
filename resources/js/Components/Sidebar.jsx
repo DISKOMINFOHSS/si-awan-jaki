@@ -110,7 +110,7 @@ export default ({ isOpened }) => {
                     text="Tertib Usaha"
                 />
                 <Sidebar.Item
-                    href="/admin/pengawasan/penyelenggaraan/apbd"
+                    href="/admin/pengawasan/penyelenggaraan/APBD"
                     icon={<LiaHardHatSolid size={20} />}
                     text="Tertib Penyelenggaraan"
                 />

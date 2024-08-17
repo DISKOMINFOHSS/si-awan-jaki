@@ -63,7 +63,7 @@ const PengawasanPenyelenggaraanAPBDIndex = ({ data }) => {
                     tanggalMulaiPelaksanaan: tanggalMulaiPelaksanaan,
                     tanggalSelesaiPelaksanaan, tanggalSelesaiPelaksanaan,
                     penyediaJasa: penyedia_jasa ? penyedia_jasa.nama : '',
-                    penggunaJasa: pengguna_jasa ? pengguna_jasa.instansi : '',
+                    penggunaJasa: pengguna_jasa ? (pengguna_jasa.instansi ? pengguna_jasa.instansi : '') : '',
                 }))}
             />
         </>

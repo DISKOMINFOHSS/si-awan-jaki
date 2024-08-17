@@ -2,16 +2,19 @@ import React from "react";
 import { useForm } from "@inertiajs/react";
 
 import Modal from "../Modal";
-
-import { LiaAngleDownSolid } from "react-icons/lia";
 import SelectProyekKonstruksi from "./SelectProyekKonstruksi";
+import ModalError from "../ModalError";
+
+import { LiaAngleDownSolid, LiaSpinnerSolid } from "react-icons/lia";
 
 export default ({
     isVisible,
     onClose,
     daftarProyek,
+    sumberDana = 'APBD',
 }) => {
     const [ isSelectProyekKonstruksiVisible, setIsSelectProyekKonstruksiVisible ] = React.useState(false);
+    const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
 
     const { data, setData, processing, post, reset } = useForm({
         proyek: 'Pilih Proyek Konstruksi',
@@ -52,6 +55,16 @@ export default ({
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
+        post(`/admin/pengawasan/penyelenggaraan/${sumberDana}`, {
+            onSuccess: () => {
+                onClose();
+                reset();
+            },
+            onError: (errors) => {
+                console.log(errors);
+                setIsModalErrorOpen(true);
+            },
+        });
     }
 
     return (
@@ -150,15 +163,24 @@ export default ({
                             <button
                                 type="submit"
                                 className="flex justify-center items-center gap-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2.5 px-3 hover:bg-blue-800"
-                                // disabled={processing}
+                                disabled={processing}
                             >
-                                {/* { processing && <LiaSpinnerSolid className="animate-spin" />} */}
+                                { processing && <LiaSpinnerSolid className="animate-spin" />}
                                 Simpan
                             </button>
                         </div>
                     </form>
                 </Modal.Body>
             </Modal>
+            <ModalError
+                isVisible={isModalErrorOpen}
+                onClose={() => setIsModalErrorOpen(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Gagal menambahkan pengawasan baru. Silakan periksa kembali informasi yang diisi.
+                </div>
+            </ModalError>
         </>
     )
 }

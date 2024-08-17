@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pengawasan\Penyelenggaraan\APBD;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Pengawasan\PengawasanPenyelenggaraanCollection;
 use App\Services\Penyelenggaraan\PendataanProyekService;
 use App\Services\Penyelenggaraan\PengawasanPenyelenggaraanService;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class PenyelenggaraanController extends Controller
         return Inertia::render('Pengawasan/Penyelenggaraan/APBD/Index', [
             'data' => [
                 'daftarProyek'     => $daftarProyek,
-                'daftarPengawasan' => $daftarPengawasan,
+                'daftarPengawasan' => new PengawasanPenyelenggaraanCollection($daftarPengawasan)
             ],
         ]);
     }

@@ -24,7 +24,14 @@ class PengawasanPenyelenggaraanService
         return PengawasanPenyelenggaraan::withWhereHas(
             'proyekKonstruksi', function ($query) use ($sumberDana)
             {
-                $query->where('sumber_dana', $sumberDana);
+                $query->leftJoin('usaha', 'proyek_konstruksi.penyedia_jasa_id', 'usaha.id')
+                      ->where('proyek_konstruksi.sumber_dana', $sumberDana)
+                      ->select(
+                        'proyek_konstruksi.id as id',
+                        'proyek_konstruksi.nama_paket as namaPaket',
+                        'proyek_konstruksi.nomor_kontrak as nomorKontrak',
+                        'usaha.nama as penyediaJasa'
+                    );
             }
         )->orderBy('created_at')
          ->get();

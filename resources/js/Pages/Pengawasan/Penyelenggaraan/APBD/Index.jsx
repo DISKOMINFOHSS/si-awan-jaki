@@ -6,10 +6,11 @@ import Breadcrumb from "../../../../Components/Breadcrumb";
 import { LiaHomeSolid, LiaPlusSolid } from "react-icons/lia";
 import Tabs from "../../../../Components/Tabs";
 import FormAddPengawasan from "../../../../Components/Proyek/FormAddPengawasan";
+import DaftarPengawasan from "../../../../Components/Proyek/APBD/DaftarPengawasan";
 
 const PengawasanPenyelenggaraanAPBDIndex = ({ data }) => {
     console.log(data);
-    const { daftarProyek } = data;
+    const { daftarProyek, daftarPengawasan } = data;
 
     const [ isModalPengawasanOpen, setIsModalPengawasanOpen ] = React.useState(false);
     const tabList = [
@@ -27,7 +28,7 @@ const PengawasanPenyelenggaraanAPBDIndex = ({ data }) => {
             <div className="flex justify-between items-center mb-4">
                 <div>
                     <h1 className="font-medium text-xl text-slate-800">Tertib Penyelenggaraan Konstruksi</h1>
-                    <h2 className="font-light text-xs text-slate-500">Pengawasan Tertib Pemanfaatan Produk Jasa Konstruksi dengan Sumber Dana dari APBD</h2>
+                    <h2 className="font-light text-xs text-slate-500">Pengawasan Tertib Pemanfaatan Produk Jasa Konstruksi berdasarkan PERMEN PUPR Nomor 1 Tahun 2023</h2>
                 </div>
                 <div>
                     <button
@@ -40,7 +41,11 @@ const PengawasanPenyelenggaraanAPBDIndex = ({ data }) => {
                 </div>
             </div>
             <Tabs tabList={tabList}>
-                <Tabs.Tab>Pengawasan Rutin</Tabs.Tab>
+                <Tabs.Tab>
+                    <DaftarPengawasan
+                        daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Rutin')}
+                    />
+                </Tabs.Tab>
                 <Tabs.Tab>Pengawasan Insidental</Tabs.Tab>
             </Tabs>
             <FormAddPengawasan

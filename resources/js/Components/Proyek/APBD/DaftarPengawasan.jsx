@@ -75,7 +75,7 @@ export default ({ daftarPengawasan }) => {
                                         <td className="px-4 py-5 text-center">{i + 1}</td>
                                         <td className="px-4 py-5">
                                             <div>
-                                                <Link href={`/admin/pengawasan/penyelenggaraan/APBD/${pengawasan.id}/${pengawasan.jenisPengawasan.toLowerCase()}`} className="hover:text-blue-600 hover:underline">
+                                                <Link href={`/admin/pengawasan/penyelenggaraan/APBD/${pengawasan.jenisPengawasan.toLowerCase()}/${pengawasan.id}`} className="hover:text-blue-600 hover:underline">
                                                     {pengawasan.proyekKonstruksi.namaPaket}
                                                 </Link>
                                                 <div className="font-light text-slate-500 capitalize">{`Nomor Kontrak: ${pengawasan.proyekKonstruksi.nomorKontrak}`}</div>

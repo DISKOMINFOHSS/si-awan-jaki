@@ -42,4 +42,14 @@ class PengawasanPenyelenggaraan extends Model
     {
         return $this->belongsTo(ProyekKonstruksi::class, 'proyek_konstruksi_id');
     }
+
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function verifiedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'verified_by')->withDefault();
+    }
 }

@@ -119,13 +119,22 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                 });
 
-            Route::name('penyelenggaraan')->prefix('/penyelenggaraan')
+            Route::name('penyelenggaraan.')->prefix('/penyelenggaraan')
             ->group(function () {
-                Route::prefix('/APBD')->group(function () {
+                Route::name('APBD.')->prefix('/APBD')
+                ->group(function () {
                     Route::controller(App\Http\Controllers\Pengawasan\Penyelenggaraan\APBD\PenyelenggaraanController::class)
                     ->group(function () {
                         Route::get('/', 'index');
                         Route::post('/', 'store');
+
+                    });
+
+                    // Pengawasan Rutin
+                    Route::name('rutin.')->prefix('/rutin/{id}')
+                    ->controller(App\Http\Controllers\Pengawasan\Penyelenggaraan\APBD\PengawasanRutinController::class)
+                    ->group(function () {
+                        Route::get('/', 'show');
                     });
                 });
             });

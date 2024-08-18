@@ -3,6 +3,7 @@
 namespace App\Services\Penyelenggaraan;
 
 use App\Models\Penyelenggaraan\PengawasanPenyelenggaraan;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class PengawasanPenyelenggaraanService
@@ -35,5 +36,27 @@ class PengawasanPenyelenggaraanService
             }
         )->orderBy('created_at')
          ->get();
+    }
+
+    public function getPengawasanById(string $id): PengawasanPenyelenggaraan
+    {
+        return PengawasanPenyelenggaraan::with([
+            'proyekKonstruksi' => function (Builder $query)
+            {
+                $query->leftJoin('usaha', 'proyek_konstruksi.penyedia_jasa_id', 'usaha.id')
+                      ->leftJoin('pengguna_jasa_konstruksi as pengguna_jasa', 'proyek_konstruksi.pengguna_jasa_id', 'pengguna_jasa.id')
+                      ->select(
+                        'proyek_konstruksi.id as id',
+                        'proyek_konstruksi.nama_paket as namaPaket',
+                        'proyek_konstruksi.nilai_kontrak as nilaiKontrak',
+                        'proyek_konstruksi.nomor_kontrak as nomorKontrak',
+                        'proyek_konstruksi.mulai_pelaksanaan as tanggalMulaiPelaksanaan',
+                        'proyek_konstruksi.selesai_pelaksanaan as tanggalSelesaiPelaksanaan',
+                        'usaha.nama as penyediaJasa',
+                        'pengguna_jasa.nama as penggunaJasa',
+                        'pengguna_jasa.instansi as instansiPenggunaJasa',
+                    );
+            }
+        ])->where('id', $id)->firstOrFail();
     }
 }

@@ -12,11 +12,13 @@ import {
     LiaEllipsisHSolid,
     LiaInfoCircleSolid,
 } from "react-icons/lia";
+import { InformasiProyekKonstruksi, InformasiUmumPengawasan } from "../../../../../Components/Proyek/InformasiPengawasan";
+import DaftarLingkupPengawasanRutin from "../../../../../Components/Proyek/DaftarLingkupPengawasanRutin";
 
 const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
     console.log(data);
     const { pengawasan } = data;
-    const { proyekKonstruksi } = pengawasan;
+    const { proyekKonstruksi, daftarLingkupPengawasan } = pengawasan;
 
     const [
         moreDropdownRef,
@@ -41,13 +43,12 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
                     <button
                         type="button"
                         className="w-fit whitespace-nowrap flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
-                        // onClick={() => setIsModalVerificationOpened(true)}
                     >
                         <LiaListAltSolid size={18} />
                         <span>Verifikasi Pengawasan</span>
                     </button>
                     <Dropdown ref={moreDropdownRef}>
-                    <Dropdown.Toggle
+                        <Dropdown.Toggle
                             onClick={toggleMoreDropdown}
                             className="w-fit min-h-10 flex justify-center items-center space-x-1 text-slate-500 border border-slate-200 rounded text-xs tracking-wide p-2.5 shadow-sm"
                         >
@@ -76,6 +77,18 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
                     </Dropdown>
                 </div>
             </div>
+            <div className="grid grid-cols-2 gap-4 w-full mt-4">
+                <div className="space-y-4">
+                    <InformasiProyekKonstruksi proyekKonstruksi={proyekKonstruksi} />
+                </div>
+                <div className="space-y-4">
+                    <InformasiUmumPengawasan pengawasan={pengawasan} />
+                </div>
+            </div>
+            <DaftarLingkupPengawasanRutin
+                pengawasanId={pengawasan.id}
+                daftarLingkupPengawasan={daftarLingkupPengawasan}
+            />
         </>
     );
 }

@@ -48,13 +48,14 @@ class PengawasanPenyelenggaraanService
                       ->select(
                         'proyek_konstruksi.id as id',
                         'proyek_konstruksi.nama_paket as namaPaket',
+                        'proyek_konstruksi.sumber_dana as sumberDana',
                         'proyek_konstruksi.nilai_kontrak as nilaiKontrak',
                         'proyek_konstruksi.nomor_kontrak as nomorKontrak',
                         'proyek_konstruksi.mulai_pelaksanaan as tanggalMulaiPelaksanaan',
                         'proyek_konstruksi.selesai_pelaksanaan as tanggalSelesaiPelaksanaan',
                         'usaha.nama as penyediaJasa',
                         'pengguna_jasa.nama as penggunaJasa',
-                        'pengguna_jasa.instansi as instansiPenggunaJasa',
+                        'pengguna_jasa.instansi as penggunaJasaInstansi',
                     );
             }
         ])->where('id', $id)->firstOrFail();

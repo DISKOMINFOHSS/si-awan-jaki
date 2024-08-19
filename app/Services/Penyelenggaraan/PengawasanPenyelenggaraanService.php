@@ -20,6 +20,11 @@ class PengawasanPenyelenggaraanService
         return $pengawasan->id;
     }
 
+    public function checkPengawasanExists(string $id): bool
+    {
+        return PengawasanPenyelenggaraan::where('id', $id)->exists();
+    }
+
     public function getDaftarPengawasanBySumberDana(string $sumberDana): EloquentCollection
     {
         return PengawasanPenyelenggaraan::withWhereHas(

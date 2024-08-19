@@ -135,6 +135,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     ->controller(App\Http\Controllers\Pengawasan\Penyelenggaraan\APBD\PengawasanRutinController::class)
                     ->group(function () {
                         Route::get('/', 'show');
+                        Route::post('/', 'store');
                     });
                 });
             });

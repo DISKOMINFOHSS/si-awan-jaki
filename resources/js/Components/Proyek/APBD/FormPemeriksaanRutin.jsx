@@ -1,19 +1,64 @@
 import React from "react";
+import { useForm } from "@inertiajs/react";
+
 import Card from "../../Card";
 import InputPemeriksaan from "../../InputPemeriksaan";
+import ModalError from "../../ModalError";
+import ModalSuccess from "../../ModalSuccess";
+
+import { LiaSpinnerSolid } from "react-icons/lia";
 
 export default ({
     pengawasanId,
     daftarPemeriksaan,
-    lingkupId
+    lingkupPengawasan,
 }) => {
+    const { data, setData, post, processing, transform } = useForm({
+        lingkupId: lingkupPengawasan.id,
+        daftarPemeriksaan: daftarPemeriksaan,
+    });
+
+    const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
+    const [ isModalSuccessOpen, setIsModalSuccessOpen ] = React.useState(false);
+
+    function handleHasilPemeriksaanChange(hasilPemeriksaan) {
+        setData('daftarPemeriksaan',
+            data.daftarPemeriksaan.map(pemeriksaan => {
+                return hasilPemeriksaan.label === pemeriksaan.label ? { ...pemeriksaan, ...hasilPemeriksaan } : pemeriksaan
+            })
+        );
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(data);
+
+        transform((data) => ({
+            lingkupId: data.lingkupId,
+            kesimpulan: data.daftarPemeriksaan.map(({ label, kesimpulan }) => ({[label]: kesimpulan})),
+            catatan: data.daftarPemeriksaan.map(({ label, catatan }) => ({[label]: catatan})),
+        }));
+
+        post(`/admin/pengawasan/penyelenggaraan/APBD/rutin/${pengawasanId}`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setIsModalSuccessOpen(true);
+            },
+            onError: (errors) => {
+                console.log(errors);
+                setIsModalErrorOpen(true);
+            }
+        })
+
+    }
+
     return (
         <>
             <Card>
                 <Card.Body className="p-4">
                     {
-                        daftarPemeriksaan.map((pemeriksaan, i) => (
-                            <React.Fragment key={`${lingkupId}-${i}`}>
+                        data.daftarPemeriksaan.map((pemeriksaan, i) => (
+                            <React.Fragment key={`${lingkupPengawasan.id}-${i}`}>
                                 <div className="space-y-4 text-slate-800 mb-4">
                                     <div className="grid grid-cols-3 gap-4">
                                         <div className="text-xs">
@@ -23,11 +68,11 @@ export default ({
                                             </p>
                                         </div>
                                         <InputPemeriksaan
-                                            id={`${lingkupId}-${i}`}
+                                            id={`${lingkupPengawasan.id}-${i}`}
                                             label={pemeriksaan.label}
-                                            kesimpulan=''
-                                            catatan=''
-                                            onInputChange={() => {}}
+                                            kesimpulan={pemeriksaan.kesimpulan}
+                                            catatan={pemeriksaan.catatan}
+                                            onInputChange={handleHasilPemeriksaanChange}
                                         />
                                     </div>
                                 </div>
@@ -38,21 +83,45 @@ export default ({
                     <div className="w-full flex justify-end items-center gap-x-2">
                         <button
                             type="button"
-                            className="flex justify-center items-center gap-x-1 bg-white font-medium text-xs text-slate-700 rounded py-2.5 px-3 hover:bg-slate-100 border border-slate-200"
-                            // onClick={() => reset()}
-                        >
-                            Hapus
-                        </button>
-                        <button
-                            type="button"
+                            disabled={processing}
                             className="flex justify-center items-center gap-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2.5 px-3"
-                            // onClick={() => handleClick()}
+                            onClick={handleSubmit}
                         >
+                            { processing && <LiaSpinnerSolid className="animate-spin" /> }
                             Simpan
                         </button>
                     </div>
                 </Card.Body>
             </Card>
+            <ModalError
+                isVisible={isModalErrorOpen}
+                onClose={() => setIsModalErrorOpen(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Gagal menambahkan pemeriksaan {lingkupPengawasan.lingkupPengawasan}. Silakan periksa kembali informasi yang diisi.
+                </div>
+            </ModalError>
+            <ModalSuccess
+                isVisible={isModalSuccessOpen}
+                onClose={() => setIsModalSuccessOpen(false)}
+            >
+                <div className="text-center my-2.5">
+                    <div className="font-medium text-slate-700">Berhasil!</div>
+                    <div className="font-light text-xs text-slate-500 mb-2">
+                        Pemeriksaan {lingkupPengawasan.lingkupPengawasan} berhasil ditambahkan.
+                    </div>
+                </div>
+                <div className="w-full">
+                    <button
+                        type="button"
+                        className="w-full bg-slate-100 text-slate-700 font-medium text-xs rounded py-2 px-2.5"
+                        onClick={() => setIsModalSuccessOpen(false)}
+                    >
+                        Tutup
+                    </button>
+                </div>
+            </ModalSuccess>
         </>
     )
 }

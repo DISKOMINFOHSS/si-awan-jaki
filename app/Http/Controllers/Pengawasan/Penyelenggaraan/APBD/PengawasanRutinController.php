@@ -33,4 +33,20 @@ class PengawasanRutinController extends Controller
             ],
         ]);
     }
+
+    public function store(string $id, Request $request)
+    {
+        if (!$this->pengawasanService->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'lingkupId'      => 'required|exists:master_lingkup_pengawasan_penyelenggaraan,id',
+            'kesimpulan.*.*' => 'required|boolean',
+        ]);
+
+        dd($request->all());
+
+        return redirect("/admin/pengawasan/penyelenggaraan/APBD/rutin/$id");
+    }
 }

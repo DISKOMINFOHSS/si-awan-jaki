@@ -37,7 +37,8 @@ export default ({
                     </div>
                     <div className="col-span-2">
                         <FormPemeriksaanRutin
-                            lingkupId={lingkupPengawasan.id}
+                            pengawasanId={pengawasanId}
+                            lingkupPengawasan={lingkupPengawasan}
                             daftarPemeriksaan={lingkupPengawasan.daftarPemeriksaan}
                         />
                     </div>

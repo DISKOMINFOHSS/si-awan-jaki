@@ -23,19 +23,23 @@ class PengawasanPenyelenggaraanAPBDResource extends JsonResource
                 function ($lingkupPengawasan)
                 {
                     $caraPemeriksaan = $lingkupPengawasan->cara_pemeriksaan;
-                    // $kesimpulan = $lingkupPengawasan->kesimpulan;
+                    $kesimpulan = (array)json_decode($lingkupPengawasan->kesimpulan_pemeriksaan);
+                    $catatan = (array)json_decode($lingkupPengawasan->catatan_pemeriksaan);
 
                     return [
                         'id'                => $lingkupPengawasan->id,
                         'lingkupPengawasan' => $lingkupPengawasan->lingkupPengawasan,
                         'indikator'         => $lingkupPengawasan->indikator,
                         'dokumen'           => $lingkupPengawasan->dokumen,
+                        'kesimpulan'        => $kesimpulan,
                         'daftarPemeriksaan' => array_map(
-                            function ($pemeriksaan) use ($caraPemeriksaan)
+                            function ($pemeriksaan) use ($caraPemeriksaan, $kesimpulan, $catatan)
                             {
                                 return [
                                     'label'           => $pemeriksaan,
                                     'caraPemeriksaan' => $caraPemeriksaan[$pemeriksaan],
+                                    'kesimpulan'      => array_key_exists($pemeriksaan, $kesimpulan) ? $kesimpulan[$pemeriksaan] : null,
+                                    'catatan'         => array_key_exists($pemeriksaan, $catatan) ? $catatan[$pemeriksaan] : null,
                                 ];
                             }, $lingkupPengawasan->kesimpulan
                         ),

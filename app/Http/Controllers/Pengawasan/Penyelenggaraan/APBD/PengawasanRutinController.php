@@ -25,7 +25,7 @@ class PengawasanRutinController extends Controller
     public function show(string $id)
     {
         $pengawasan = $this->pengawasanService->getPengawasanById($id);
-        $pengawasan['daftar_lingkup_pengawasan'] = $this->pengawasanRutinService->getDaftarLingkupPengawasan();
+        $pengawasan['daftar_lingkup_pengawasan'] = $this->pengawasanRutinService->getDaftarLingkupPengawasan($id);
 
         return Inertia::render('Pengawasan/Penyelenggaraan/APBD/Rutin/Show', [
             'data' => [
@@ -41,11 +41,19 @@ class PengawasanRutinController extends Controller
         }
 
         $validatedData = $request->validate([
-            'lingkupId'      => 'required|exists:master_lingkup_pengawasan_penyelenggaraan,id',
-            'kesimpulan.*.*' => 'required|boolean',
+            'lingkupId'    => 'required|exists:master_lingkup_pengawasan_penyelenggaraan,id',
+            'kesimpulan.*' => 'required|boolean',
         ]);
+        $userId = auth()->user()->id;
 
-        dd($request->all());
+        // dd($request->all());
+        $this->pengawasanRutinService->addPemeriksaanPengawasan([
+            'pengawasan_id'          => $id,
+            'lingkup_id'             => $validatedData['lingkupId'],
+            'kesimpulan_pemeriksaan' => json_encode($validatedData['kesimpulan']),
+            'catatan_pemeriksaan'    => json_encode($request->input('catatan')),
+            'created_by'             => $userId,
+        ]);
 
         return redirect("/admin/pengawasan/penyelenggaraan/APBD/rutin/$id");
     }

@@ -33,11 +33,27 @@ export default ({
         e.preventDefault();
         console.log(data);
 
-        transform((data) => ({
-            lingkupId: data.lingkupId,
-            kesimpulan: data.daftarPemeriksaan.map(({ label, kesimpulan }) => ({[label]: kesimpulan})),
-            catatan: data.daftarPemeriksaan.map(({ label, catatan }) => ({[label]: catatan})),
-        }));
+        transform((data) => {
+            const kesimpulanPemeriksaan = {};
+            const catatanPemeriksaan = {};
+
+            data.daftarPemeriksaan.map(({ label, kesimpulan, catatan }) => {
+                kesimpulanPemeriksaan[label] = kesimpulan;
+                catatanPemeriksaan[label] = catatan;
+            })
+
+            return {
+                lingkupId: data.lingkupId,
+                kesimpulan: kesimpulanPemeriksaan,
+                catatan: catatanPemeriksaan,
+            }
+        });
+
+        // transform((data) => ({
+        //     lingkupId: data.lingkupId,
+        //     kesimpulan: data.daftarPemeriksaan.map(({ label, kesimpulan }) => ({[label]: kesimpulan})),
+        //     catatan: data.daftarPemeriksaan.map(({ label, catatan }) => ({[label]: catatan})),
+        // }));
 
         post(`/admin/pengawasan/penyelenggaraan/APBD/rutin/${pengawasanId}`, {
             preserveScroll: true,

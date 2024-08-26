@@ -128,6 +128,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                         Route::get('/', 'index');
                         Route::post('/', 'store');
 
+                        Route::post('/{id}/verification', 'verify');
+
                     });
 
                     // Pengawasan Rutin

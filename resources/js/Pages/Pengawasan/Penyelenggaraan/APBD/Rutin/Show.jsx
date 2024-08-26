@@ -14,6 +14,7 @@ import {
 } from "react-icons/lia";
 import { InformasiProyekKonstruksi, InformasiUmumPengawasan } from "../../../../../Components/Proyek/InformasiPengawasan";
 import DaftarLingkupPengawasanRutin from "../../../../../Components/Proyek/DaftarLingkupPengawasanRutin";
+import FormVerifikasiPengawasan from "../../../../../Components/Proyek/FormVerifikasiPengawasan";
 
 const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
     console.log(data);
@@ -25,6 +26,8 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
         isMoreDropdownOpened,
         toggleMoreDropdown
     ] = useToggleWithClickOutside(false);
+
+    const [ isModalVerificationOpen, setIsModalVerificationOpen ] = React.useState(false);
 
     return (
         <>
@@ -43,6 +46,7 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
                     <button
                         type="button"
                         className="w-fit whitespace-nowrap flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                        onClick={() => setIsModalVerificationOpen(true)}
                     >
                         <LiaListAltSolid size={18} />
                         <span>Verifikasi Pengawasan</span>
@@ -88,6 +92,11 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
             <DaftarLingkupPengawasanRutin
                 pengawasanId={pengawasan.id}
                 daftarLingkupPengawasan={daftarLingkupPengawasan}
+            />
+            <FormVerifikasiPengawasan
+                isVisible={isModalVerificationOpen}
+                onClose={() => setIsModalVerificationOpen(false)}
+                pengawasan={pengawasan}
             />
         </>
     );

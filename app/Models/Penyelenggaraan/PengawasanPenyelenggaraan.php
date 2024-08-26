@@ -38,6 +38,22 @@ class PengawasanPenyelenggaraan extends Model
         'created_by',
     ];
 
+    protected $casts = [
+        'tertib_proses_pemilihan_penyedia_jasa'  => 'boolean',
+        'tertib_penerapan_standar_kontrak'       => 'boolean',
+        'tertib_penggunaan_tkk'                  => 'boolean',
+        'tertib_pemberian_pekerjaan'             => 'boolean',
+        'tertib_ketersediaan_dokumen_standar_k4' => 'boolean',
+        'tertib_penerapan_smkk'                  => 'boolean',
+        'tertib_antisipasi_kecelakaan'           => 'boolean',
+        'tertib_penerapan_manajemen_mutu'        => 'boolean',
+        'tertib_pemenuhan_penyediaan_mptk'       => 'boolean',
+        'tertib_penggunaan_mptk'                 => 'boolean',
+        'tertib_penggunaan_pdn'                  => 'boolean',
+        'tertib_pemenuhan_standar_lingkungan'    => 'boolean',
+        'tertib_pengawasan'                      => 'boolean',
+    ];
+
     public function proyekKonstruksi(): BelongsTo
     {
         return $this->belongsTo(ProyekKonstruksi::class, 'proyek_konstruksi_id');

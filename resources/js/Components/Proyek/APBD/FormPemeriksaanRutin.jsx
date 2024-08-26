@@ -49,12 +49,6 @@ export default ({
             }
         });
 
-        // transform((data) => ({
-        //     lingkupId: data.lingkupId,
-        //     kesimpulan: data.daftarPemeriksaan.map(({ label, kesimpulan }) => ({[label]: kesimpulan})),
-        //     catatan: data.daftarPemeriksaan.map(({ label, catatan }) => ({[label]: catatan})),
-        // }));
-
         post(`/admin/pengawasan/penyelenggaraan/APBD/rutin/${pengawasanId}`, {
             preserveScroll: true,
             onSuccess: () => {
@@ -124,7 +118,7 @@ export default ({
             >
                 <div className="text-center my-2.5">
                     <div className="font-medium text-slate-700">Berhasil!</div>
-                    <div className="font-light text-xs text-slate-500 mb-2">
+                    <div className="font-light text-xs text-slate-500 mb-4">
                         Pemeriksaan {lingkupPengawasan.lingkupPengawasan} berhasil ditambahkan.
                     </div>
                 </div>

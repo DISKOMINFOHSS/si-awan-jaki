@@ -44,7 +44,7 @@ export default ({ daftarPengawasan }) => {
                         <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase">
                             <tr className="border-b border-slate-200">
                                 <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">#</th>
-                                <th scope="col" rowSpan="2" className="p-4 font-medium min-w-80 border-r border-slate-200">Kegiatan Konstruksi<br />(Nama Paket)</th>
+                                <th scope="col" rowSpan="2" className="p-4 font-medium min-w-96 border-r border-slate-200">Kegiatan Konstruksi<br />(Nama Paket)</th>
                                 <th scope="col" rowSpan="2" className="p-4 font-medium min-w-48 border-r border-slate-200">Nama Penyedia Jasa</th>
                                 <th scope="col" rowSpan="2" className="p-4 font-medium min-w-40 border-r border-slate-200">Tanggal Pengawasan</th>
                                 <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">Proses Pemilihan Penyedia Jasa</th>

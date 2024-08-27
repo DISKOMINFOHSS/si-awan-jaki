@@ -12,7 +12,7 @@ import {
     LiaEllipsisHSolid,
     LiaInfoCircleSolid,
 } from "react-icons/lia";
-import { InformasiProyekKonstruksi, InformasiUmumPengawasan } from "../../../../../Components/Proyek/InformasiPengawasan";
+import { InformasiProyekKonstruksi, InformasiTertibPengawasan, InformasiUmumPengawasan } from "../../../../../Components/Proyek/InformasiPengawasan";
 import DaftarLingkupPengawasanRutin from "../../../../../Components/Proyek/DaftarLingkupPengawasanRutin";
 import FormVerifikasiPengawasan from "../../../../../Components/Proyek/FormVerifikasiPengawasan";
 
@@ -84,9 +84,10 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
             <div className="grid grid-cols-2 gap-4 w-full mt-4">
                 <div className="space-y-4">
                     <InformasiProyekKonstruksi proyekKonstruksi={proyekKonstruksi} />
+                    <InformasiUmumPengawasan pengawasan={pengawasan} />
                 </div>
                 <div className="space-y-4">
-                    <InformasiUmumPengawasan pengawasan={pengawasan} />
+                    <InformasiTertibPengawasan pengawasan={pengawasan} />
                 </div>
             </div>
             <DaftarLingkupPengawasanRutin

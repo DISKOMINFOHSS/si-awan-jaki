@@ -11,24 +11,41 @@ export default ({
     onClose,
     pengawasan,
 }) => {
+    const {
+        tertibProsesPemilihanPenyediaJasa,
+        tertibPenerapanStandarKontrak,
+        tertibPenggunaanTKK,
+        tertibPemberianPekerjaan,
+        tertibKetersediaanDokumenStandarK4,
+        tertibPenerapanSMKK,
+        tertibAntisipasiKecelakaan,
+        tertibPenerapanManajemenMutu,
+        tertibPemenuhanPenyediaanMPTK,
+        tertibPenggunaanMPTK,
+        tertibPenggunaanPDN,
+        tertibPemenuhanStandarLingkungan,
+        tertibPengawasan,
+        catatan,
+    } = pengawasan;
+
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
     const [ processing, setProcessing ] = React.useState(false);
 
     const [ values, setValues ] = React.useState({
-        prosesPemilihanPenyediaJasa: '',
-        penerapanStandarKontrak: '',
-        penggunaanTKKBersertifikat: '',
-        pemberianPekerjaan: '',
-        ketersediaanDokumenStandarK4: '',
-        penerapanSMKK: '',
-        antisipasiKecelakaan: '',
-        penerapanManajemenMutu: '',
-        pemenuhanPenyediaanMPK: '',
-        penggunaanMPTK: '',
-        penggunaanPDN: '',
-        pemenuhanStandarLingkungan: '',
-        tertibPengawasan: '',
-        catatan: '',
+        prosesPemilihanPenyediaJasa: tertibProsesPemilihanPenyediaJasa,
+        penerapanStandarKontrak: tertibPenerapanStandarKontrak,
+        penggunaanTKKBersertifikat: tertibPenggunaanTKK,
+        pemberianPekerjaan: tertibPemberianPekerjaan,
+        ketersediaanDokumenStandarK4: tertibKetersediaanDokumenStandarK4,
+        penerapanSMKK: tertibPenerapanSMKK,
+        antisipasiKecelakaan: tertibAntisipasiKecelakaan,
+        penerapanManajemenMutu: tertibPenerapanManajemenMutu,
+        pemenuhanPenyediaanMPK: tertibPemenuhanPenyediaanMPTK,
+        penggunaanMPTK: tertibPenggunaanMPTK,
+        penggunaanPDN: tertibPenggunaanPDN,
+        pemenuhanStandarLingkungan: tertibPemenuhanStandarLingkungan,
+        tertibPengawasan: tertibPengawasan,
+        catatan: catatan ? catatan : '',
     });
     const handleInputChange = (value) => setValues({ ...values, ...value });
 
@@ -61,7 +78,7 @@ export default ({
                 <Modal.Header onClose={onClose}>
                     <div className="mb-4">
                         <h1 className="font-medium text-slate-800">Verifikasi Pengawasan</h1>
-                        <h2 className="text-xs text-slate-500 font-light">Pengawasan Tertib Penyelenggaran Jasa Konstruksi</h2>
+                        <h2 className="text-xs text-slate-500 font-light">Pengawasan Tertib Penyelenggaraan Jasa Konstruksi</h2>
                     </div>
                 </Modal.Header>
                 <Modal.Body>

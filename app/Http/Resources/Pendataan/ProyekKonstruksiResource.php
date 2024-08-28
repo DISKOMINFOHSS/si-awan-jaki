@@ -27,6 +27,16 @@ class ProyekKonstruksiResource extends JsonResource
             'tanggalSelesaiPelaksanaan' => $this->selesai_pelaksanaan,
             'penyediaJasa'              => $this->whenLoaded('penyediaJasa'),
             'penggunaJasa'              => $this->whenLoaded('penggunaJasa'),
+            'daftarSuratPernyataan'     => $this->daftar_surat_pernyataan ? $this->daftar_surat_pernyataan->transform(
+                function ($lingkupPengawasan)
+                {
+                    return [
+                        'id'                => $lingkupPengawasan->id,
+                        'lingkupPengawasan' => $lingkupPengawasan->lingkupPengawasan,
+                        'suratPernyataan'   => $lingkupPengawasan->suratPernyataan,
+                    ];
+                }
+            ) : null,
         ];
     }
 }

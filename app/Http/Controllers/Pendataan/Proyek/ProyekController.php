@@ -80,6 +80,7 @@ class ProyekController extends Controller
     public function show(string $id)
     {
         $proyekKonstruksi = $this->proyekService->getProyekKonstruksiById($id);
+        $proyekKonstruksi['daftar_surat_pernyataan'] = $this->proyekService->getDaftarSuratPernyataanByProyekKonstruksiId($proyekKonstruksi->id);
 
         return Inertia::render('Pendataan/Proyek/Show', [
             'data' => [

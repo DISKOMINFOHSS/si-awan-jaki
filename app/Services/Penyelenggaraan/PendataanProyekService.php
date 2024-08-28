@@ -4,8 +4,10 @@ namespace App\Services\Penyelenggaraan;
 
 use App\Models\Penyelenggaraan\ProyekKonstruksi;
 use App\Models\Penyelenggaraan\PenggunaJasa;
+use App\Models\Penyelenggaraan\PemeriksaanRutinPenyelenggaraanAPBD;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Query\JoinClause;
 
 class PendataanProyekService
 {
@@ -162,5 +164,41 @@ class PendataanProyekService
         $proyek->save();
 
         return $proyek->id;
+    }
+
+    // Surat Pernyataan
+    // public function addSuratPernyataan(string $proyekId, array $data)
+    // {
+
+    // }
+
+    public function getDaftarSuratPernyataanByProyekKonstruksiId(string $proyekId)
+    {
+        return PemeriksaanRutinPenyelenggaraanAPBD::join(
+            'master_lingkup_pengawasan_penyelenggaraan as lingkup_pengawasan',
+            'lingkup_pengawasan.id',
+            'master_pemeriksaan_pengawasan_rutin_penyelenggaraan_dana_apbd.lingkup_id'
+        )->with(
+            [
+                'suratPernyataan' => function (Builder $query) use ($proyekId)
+                {
+                    $query->leftJoin('surat_pernyataan_penyelenggaraan_konstruksi as surat_pernyataan', function (JoinClause $join) use ($proyekId)
+                        {
+                            $join->on('master_kategori_surat_pernyataan_pengawasan_penyelenggaraan.id', '=', 'surat_pernyataan.kategori_surat_pernyataan_id')
+                                ->where('surat_pernyataan.proyek_konstruksi_id', $proyekId);
+                        }
+                    )->select(
+                        'master_kategori_surat_pernyataan_pengawasan_penyelenggaraan.id',
+                        'lingkup_id',
+                        'kategori',
+                        'surat_pernyataan.surat_pernyataan_id'
+                    );
+                }
+            ]
+        )->select(
+            'lingkup_pengawasan.id',
+            'master_pemeriksaan_pengawasan_rutin_penyelenggaraan_dana_apbd.lingkup_id',
+            'lingkup_pengawasan.lingkup_pengawasan as lingkupPengawasan',
+        )->get();
     }
 }

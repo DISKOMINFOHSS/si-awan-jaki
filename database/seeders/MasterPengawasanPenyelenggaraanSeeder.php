@@ -182,5 +182,41 @@ class MasterPengawasanPenyelenggaraanSeeder extends Seeder
                 'kesimpulan'       => json_encode(array('Tersedia', 'Sesuai')),
             ],
         ]);
+
+        // Surat Pernyataan
+        DB::table('master_kategori_surat_pernyataan_pengawasan_penyelenggaraan')->insert([
+            [
+                'lingkup_id' => 1,
+                'kategori'   => 'Surat Pernyataan Kesesuaian Proses Pemilihan Penyedia Jasa Konstruksi',
+            ],
+            [
+                'lingkup_id' => 2,
+                'kategori'   => 'Surat Pernyataan tentang penyusunan dan pelaksanaan Kontrak Kerja Konstruksi',
+            ],
+            [
+                'lingkup_id' => 3,
+                'kategori'   => 'Surat Pernyataan tentang penerapan Standar Keamanan, Keselamatan, Kesehatan, dan Keberlanjutan Konstruksi',
+            ],
+            [
+                'lingkup_id' => 4,
+                'kategori'   => 'Surat Pernyataan tentang Penerapan Manajemen Mutu',
+            ],
+            [
+                'lingkup_id' => 5,
+                'kategori'   => 'Surat Pernyataan tentang Pengelolaan dan Penggunaan Material, Peralatan, dan Teknologi Konstruksi',
+            ],
+            [
+                'lingkup_id' => 5,
+                'kategori'   => 'Surat Pernyataan Pimpinan BUJK tentang Pengelolaan dan Penggunaan Material, Peralatan, dan Teknologi Konstruksi',
+            ],
+            [
+                'lingkup_id' => 6,
+                'kategori'   => 'Surat Pernyataan tentang Pengelolaan dan Pemanfaatan Sumber Material Konstruksi',
+            ],
+            [
+                'lingkup_id' => 6,
+                'kategori'   => 'Surat Pernyataan Pimpinan BUJK tentang Pengelolaan dan Pemanfaatan Sumber Material Konstruksi',
+            ],
+        ]);
     }
 }

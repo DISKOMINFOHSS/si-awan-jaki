@@ -30,6 +30,7 @@ class PengawasanPenyelenggaraanAPBDResource extends JsonResource
                         'id'                => $lingkupPengawasan->id,
                         'lingkupPengawasan' => $lingkupPengawasan->lingkupPengawasan,
                         'indikator'         => $lingkupPengawasan->indikator,
+                        'suratPernyataan'   => $lingkupPengawasan->suratPernyataan,
                         'dokumen'           => $lingkupPengawasan->dokumen,
                         'kesimpulan'        => $kesimpulan,
                         'daftarPemeriksaan' => array_map(

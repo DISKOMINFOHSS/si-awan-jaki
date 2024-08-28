@@ -25,7 +25,9 @@ class PengawasanRutinController extends Controller
     public function show(string $id)
     {
         $pengawasan = $this->pengawasanService->getPengawasanById($id);
-        $pengawasan['daftar_lingkup_pengawasan'] = $this->pengawasanRutinService->getDaftarLingkupPengawasan($id);
+        $proyekId = $pengawasan->proyekKonstruksi->id;
+
+        $pengawasan['daftar_lingkup_pengawasan'] = $this->pengawasanRutinService->getDaftarLingkupPengawasan($id, $proyekId);
 
         return Inertia::render('Pengawasan/Penyelenggaraan/APBD/Rutin/Show', [
             'data' => [

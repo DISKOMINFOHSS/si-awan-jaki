@@ -34,7 +34,7 @@ const PendataanProyekEdit = ({ data }) => {
                 <div className="flex items-center gap-x-2">
                     <Link
                         href={`/admin/pendataan/proyek-konstruksi/${proyekKonstruksi.id}`}
-                        className="w-fit flex justify-center items-center gap-x-2 text-white bg-blue-600 rounded text-xs tracking-wide px-3 py-2.5 shadow-sm hover:bg-blue-800 hover:text-white"
+                        className="w-fit flex justify-center items-center gap-x-2 text-blue-600 bg-blue-50 rounded text-xs tracking-wide px-3 py-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
                     >
                         <LiaToolsSolid size={16} />
                         <span>Lihat Proyek Konstruksi</span>

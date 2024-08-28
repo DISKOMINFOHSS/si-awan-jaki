@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class PengawasanRutinPenyelenggaraanAPBDService
 {
-    public function getDaftarLingkupPengawasan(string $pengawasanId)
+    public function getDaftarLingkupPengawasan(string $pengawasanId, string $proyekId)
     {
         return PemeriksaanRutinPenyelenggaraanAPBD::join(
             'master_lingkup_pengawasan_penyelenggaraan as lingkup_pengawasan',
@@ -23,7 +23,23 @@ class PengawasanRutinPenyelenggaraanAPBDService
                      ->where('hasil_pemeriksaan.pengawasan_id', $pengawasanId);
             }
         )->with(
-            ['indikator']
+            [
+                'indikator',
+                'suratPernyataan' => function (Builder $query) use ($proyekId)
+                {
+                    $query->leftJoin('surat_pernyataan_penyelenggaraan_konstruksi as surat_pernyataan', function (JoinClause $join) use ($proyekId)
+                        {
+                            $join->on('master_kategori_surat_pernyataan_pengawasan_penyelenggaraan.id', '=', 'surat_pernyataan.kategori_surat_pernyataan_id')
+                                ->where('surat_pernyataan.proyek_konstruksi_id', $proyekId);
+                        }
+                    )->select(
+                        'surat_pernyataan.id',
+                        'lingkup_id',
+                        'kategori',
+                        'surat_pernyataan.surat_pernyataan_id'
+                    );
+                }
+            ]
         )->select(
             'lingkup_pengawasan.id',
             'master_pemeriksaan_pengawasan_rutin_penyelenggaraan_dana_apbd.*',

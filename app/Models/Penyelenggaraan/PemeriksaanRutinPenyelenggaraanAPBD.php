@@ -22,4 +22,9 @@ class PemeriksaanRutinPenyelenggaraanAPBD extends Model
     {
         return $this->hasMany(IndikatorPengawasanPenyelenggaraanAPBD::class, 'lingkup_id', 'lingkup_id');
     }
+
+    public function suratPernyataan(): HasMany
+    {
+        return $this->hasMany(SuratPernyataanPenyelenggaraan::class, 'lingkup_id', 'lingkup_id');
+    }
 }

@@ -53,7 +53,7 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
 
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
 
-    const { data, setData, post, processing, progress } = useForm({
+    const { data, setData, post, processing, progress, reset } = useForm({
         dokumenSurat: '',
         kategoriId: '',
         kategori: 'Pilih Kategori Surat Pernyataan',
@@ -74,6 +74,7 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
         post(`/admin/pendataan/proyek-konstruksi/${proyekKonstruksi.id}/surat-pernyataan`, {
             onSuccess: () => {
                 onClose();
+                reset();
             },
             onError: (errors) => {
                 console.log('post', errors);
@@ -179,6 +180,14 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                     </div>
                                 )
                             }
+                        </div>
+                        <div className="col-span-2">
+                            {
+                                progress && (
+                                <div className="w-full bg-slate-200 rounded h-2.5">
+                                    <div className={`animate-pulse bg-blue-600 h-2.5 rounded-full w-[${progress.percentage}%]`}></div>
+                                </div>
+                            )}
                         </div>
                          <div className="col-span-2 flex justify-end items-center gap-x-2">
                             <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-3" onClick={onClose}>Batal</button>

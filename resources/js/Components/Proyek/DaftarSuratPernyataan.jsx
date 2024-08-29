@@ -10,6 +10,7 @@ import {
 import FormAddSuratPernyataan from "./FormAddSuratPernyataan";
 
 export default ({ proyekKonstruksi }) => {
+    const { daftarSuratPernyataan } = proyekKonstruksi;
     const [ isModalSuratPernyataanOpen, setIsModalSuratPernyataanOpen ] = React.useState(false);
 
     return (
@@ -34,26 +35,17 @@ export default ({ proyekKonstruksi }) => {
                     <div className="relative overflow-x-auto">
                         <table className="w-full text-xs">
                             <tbody>
-                                <tr className="bg-blue-100">
-                                    <td colSpan="2" className="px-4 py-2">
-                                        1. Pengawasan terhadap proses pemilihan Penyedia Jasa
-                                    </td>
-                                </tr>
-                                <tr className="bg-blue-100">
-                                    <td colSpan="2" className="px-4 py-2">
-                                        2. Pengawasan terhadap penyusunan dan pelaksanaan Kontrak Kerja Konstruksi
-                                    </td>
-                                </tr>
-                                <tr className="bg-blue-100">
-                                    <td colSpan="2" className="px-4 py-2">
-                                        3. Pengawasan terhadap penerapan Standar Keamanan, Keselamatan, Kesehatan, dan Keberlanjutan Konstruksi
-                                    </td>
-                                </tr>
-                                <tr className="bg-blue-100">
-                                    <td colSpan="2" className="px-4 py-2">
-                                        4. Pengawasan terhadap penerapan manajemen mutu Konstruksi
-                                    </td>
-                                </tr>
+                                {
+                                    daftarSuratPernyataan.map((suratPernyataan) => {
+                                        return (
+                                            <React.Fragment key={suratPernyataan.id}>
+                                                <tr className="bg-blue-100">
+                                                    <td colSpan="2" className="px-4 py-2">{suratPernyataan.id}. {suratPernyataan.lingkupPengawasan}</td>
+                                                </tr>
+                                            </React.Fragment>
+                                        );
+                                    })
+                                }
                                 <tr className="border-b border-slate-100 hover:bg-slate-50">
                                     <td className="px-4 py-2.5">
                                         <div className="flex gap-x-2 items-start group cursor-pointer">
@@ -85,11 +77,6 @@ export default ({ proyekKonstruksi }) => {
                                 <tr className="bg-blue-100">
                                     <td colSpan="2" className="px-4 py-2">
                                         5. Pengawasan terhadap penggunaan material, peralatan dan teknologi konstruksi
-                                    </td>
-                                </tr>
-                                <tr className="bg-blue-100">
-                                    <td colSpan="2" className="px-4 py-2">
-                                        6. Pengawasan terhadap pengelolaan dan pemanfaatan sumber material Konstruksi
                                     </td>
                                 </tr>
                                 <tr className="border-b border-slate-100 hover:bg-slate-50">

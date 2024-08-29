@@ -4,6 +4,7 @@ namespace App\Http\Resources\Pendataan;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class ProyekKonstruksiResource extends JsonResource
 {
@@ -33,7 +34,19 @@ class ProyekKonstruksiResource extends JsonResource
                     return [
                         'id'                => $lingkupPengawasan->id,
                         'lingkupPengawasan' => $lingkupPengawasan->lingkupPengawasan,
-                        'suratPernyataan'   => $lingkupPengawasan->suratPernyataan,
+                        'suratPernyataan'   => $lingkupPengawasan->suratPernyataan->transform(
+                            function ($suratPernyataan)
+                            {
+                                return [
+                                    'kategoriId'        => $suratPernyataan->id,
+                                    'kategori'          => $suratPernyataan->kategori,
+                                    'suratPernyataanId' => $suratPernyataan->suratPernyataanId,
+                                    'fileId'            => $suratPernyataan->fileId,
+                                    'fileName'          => $suratPernyataan->fileName,
+                                    'filePath'          => $suratPernyataan->filePath ? Storage::url($suratPernyataan->filePath) : null,
+                                ];
+                            }
+                        ),
                     ];
                 }
             ) : null,

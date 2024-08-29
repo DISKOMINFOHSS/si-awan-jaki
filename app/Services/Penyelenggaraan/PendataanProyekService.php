@@ -8,6 +8,7 @@ use App\Models\Penyelenggaraan\PemeriksaanRutinPenyelenggaraanAPBD;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Facades\DB;
 
 class PendataanProyekService
 {
@@ -167,10 +168,19 @@ class PendataanProyekService
     }
 
     // Surat Pernyataan
-    // public function addSuratPernyataan(string $proyekId, array $data)
-    // {
-
-    // }
+    public function addSuratPernyataan(string $proyekId, array $data)
+    {
+        $suratPernyataan = DB::table('surat_pernyataan_penyelenggaraan_konstruksi')->updateOrInsert(
+            [
+                'kategori_surat_pernyataan_id' => $data['kategori_surat_pernyataan_id'],
+                'proyek_konstruksi_id'         => $proyekId
+            ],
+            [
+                'surat_pernyataan_id'          => $data['surat_pernyataan_id'],
+                'created_by'                   => $data['created_by'],
+            ],
+        );
+    }
 
     public function getDaftarSuratPernyataanByProyekKonstruksiId(string $proyekId)
     {
@@ -186,12 +196,16 @@ class PendataanProyekService
                         {
                             $join->on('master_kategori_surat_pernyataan_pengawasan_penyelenggaraan.id', '=', 'surat_pernyataan.kategori_surat_pernyataan_id')
                                 ->where('surat_pernyataan.proyek_konstruksi_id', $proyekId);
-                        }
-                    )->select(
+                        })
+                    ->leftJoin('files', 'files.id', 'surat_pernyataan.surat_pernyataan_id')
+                    ->select(
                         'master_kategori_surat_pernyataan_pengawasan_penyelenggaraan.id',
                         'lingkup_id',
                         'kategori',
-                        'surat_pernyataan.surat_pernyataan_id'
+                        'surat_pernyataan.id as suratPernyataanId',
+                        'files.id as fileId',
+                        'files.path as filePath',
+                        'files.name as fileName',
                     );
                 }
             ]

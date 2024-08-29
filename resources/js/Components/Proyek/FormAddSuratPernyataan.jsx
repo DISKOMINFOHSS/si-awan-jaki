@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "@inertiajs/react";
 
 import Modal from "../Modal";
+import ModalError from "../ModalError";
 
 import {
     LiaCloudUploadAltSolid,
@@ -16,7 +17,7 @@ const SelectKategoriSurat = ({ isVisible, onSelect, daftarSuratPernyataan }) => 
 
     const kategoriSuratPernyataan = [];
     daftarSuratPernyataan.map(({ id, suratPernyataan }) => {
-        suratPernyataan.map(({ id: kategoriId, kategori }) => {
+        suratPernyataan.map(({ kategoriId, kategori }) => {
             kategoriSuratPernyataan.push({
                 lingkupId: id,
                 kategoriId: kategoriId,
@@ -24,13 +25,15 @@ const SelectKategoriSurat = ({ isVisible, onSelect, daftarSuratPernyataan }) => 
             });
         });
     });
+    console.log(kategoriSuratPernyataan);
 
     return (
-        <div className= "absolute flex z-20 bg-white mt-1.5 py-2 rounded shadow-xl min-w-full max-h-40 overflow-y-auto flex-col space-y-0.5 text-xs text-slate-700">
+        <div className="absolute flex z-20 bg-white mt-1.5 py-2 rounded shadow-xl min-w-full max-h-40 overflow-y-auto flex-col space-y-0.5 text-xs text-slate-700">
             {
                 kategoriSuratPernyataan.map(({ lingkupId, kategoriId, kategori }) => (
                     <div
-                        key={kategoriId} className="px-5 py-2 border-b border-slate-100 space-y-1 group hover:bg-slate-100 hover:text-blue-600"
+                        key={kategoriId}
+                        className="px-5 py-2 border-b border-slate-100 space-y-1 group hover:bg-slate-100 hover:text-blue-600"
                         onClick={() => onSelect({ kategoriId: kategoriId, kategori: kategori })}
                     >
                         <div>
@@ -47,6 +50,8 @@ const SelectKategoriSurat = ({ isVisible, onSelect, daftarSuratPernyataan }) => 
 export default ({ isVisible, onClose, proyekKonstruksi }) => {
     const { daftarSuratPernyataan } = proyekKonstruksi;
     const [ isSelectKategoriSuratVisible, setIsSelectKategoriSuratVisible ] = React.useState(false);
+
+    const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
 
     const { data, setData, post, processing, progress } = useForm({
         dokumenSurat: '',
@@ -66,6 +71,16 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
+        post(`/admin/pendataan/proyek-konstruksi/${proyekKonstruksi.id}/surat-pernyataan`, {
+            onSuccess: () => {
+                onClose();
+            },
+            onError: (errors) => {
+                console.log('post', errors);
+                onClose();
+                setIsModalErrorOpen(true);
+            },
+        })
     }
 
     return (
@@ -100,7 +115,7 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                         <div>
                             <label htmlFor="penyediaJasa" className="block mb-2 text-xs font-medium text-slate-800">Nama Penyedia Jasa</label>
                             <input
-                                type="text" name="penyediaJasa" id="penyediaJasa" value={''} disabled
+                                type="text" name="penyediaJasa" id="penyediaJasa" value={proyekKonstruksi.penyediaJasa.nama} disabled
                                 className="px-3 py-2 block w-full rounded-md bg-slate-50 border-slate-200 text-slate-500 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                             />
                         </div>
@@ -175,6 +190,15 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                     </form>
                 </Modal.Body>
             </Modal>
+            <ModalError
+                isVisible={isModalErrorOpen}
+                onClose={() => setIsModalErrorOpen(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Gagal menambahkan Surat Pernyataan. Silakan periksa kembali informasi yang diisi.
+                </div>
+            </ModalError>
         </>
     )
 }

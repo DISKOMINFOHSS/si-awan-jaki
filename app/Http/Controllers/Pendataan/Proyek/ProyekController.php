@@ -247,4 +247,33 @@ class ProyekController extends Controller
 
         return back();
     }
+
+    public function storeSuratPernyataan(string $id, Request $request)
+    {
+        if (!$this->proyekService->checkProyekKonstruksiExists($id))
+        {
+            return back()->withErrors(['message' => 'Proyek Konstruksi tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'kategoriId'   => 'required|exists:master_kategori_surat_pernyataan_pengawasan_penyelenggaraan,id',
+            'dokumenSurat' => 'required|file|max:2048',
+        ]);
+        $userId = auth()->user()->id;
+
+        $suratPernyataanId = $this->fileService->addFile([
+            'file'       => $request->file('dokumenSurat'),
+            'path'       => 'public/files/usaha/surat-pernyataan',
+            'created_by' => $userId,
+        ]);
+
+        $this->proyekService->addSuratPernyataan(
+            $id,
+            [
+                'kategori_surat_pernyataan_id' => $validatedData['kategoriId'],
+                'surat_pernyataan_id'          => $suratPernyataanId,
+                'created_by'                   => $userId,
+            ]
+        );
+    }
 }

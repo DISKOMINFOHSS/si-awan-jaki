@@ -9,7 +9,9 @@ import {
     LiaSearchSolid,
 } from "react-icons/lia";
 
-const RekapitulasiTertibPemanfaatanProdukIndex = () => {
+const RekapitulasiTertibPemanfaatanProdukIndex = ({ data }) => {
+    console.log(data);
+
     return (
         <>
             <Breadcrumb>

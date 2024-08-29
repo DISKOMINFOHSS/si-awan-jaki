@@ -233,6 +233,21 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             });
         });
 
+        // Rekapitulasi
+        Route::name('rekapitulasi.')->prefix('rekapitulasi')
+        ->group(function () {
+            Route::controller(App\Http\Controllers\Rekapitulasi\RekapitulasiController::class)
+            ->group(function () {
+                Route::get('/{tahun?}', 'index');
+            });
+
+            // Route::controller(App\Http\Controllers\Rekapitulasi\UsahaController::class)
+            // ->group(function () {
+            //     Route::get('/{tahun}/tertib-usaha', 'index');
+            //     Route::get('/{tahun}/tertib-usaha/bujk', 'indexBUJK');
+            // });
+        });
+
         // Route::name('rekapitulasi.')->prefix('/rekapitulasi')
         // ->group(function () {
         //     Route::get('/{?year}')

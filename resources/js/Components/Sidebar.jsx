@@ -139,7 +139,7 @@ export default ({ isOpened }) => {
             </Sidebar.Menu>
             <Sidebar.Menu title="Rekapitulasi">
                 <Sidebar.Item
-                    href="#"
+                    href="/admin/rekapitulasi"
                     icon={<LiaCalendar size={20} />}
                     text="Tahun 2024"
                 />

@@ -208,6 +208,34 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/{lingkup_id}', 'category');
                 });
             });
+
+            // Pengawasan Rutin
+            // Route::name('rutin.')->prefix('/rutin')
+            // ->group(function () {
+            //     Route::controller(App\Http\Controllers\Pengawasan\Rutin\PengawasanRutinController::class)
+            //     ->group(function () {
+            //         Route::get('/{?year}', 'index');
+            //     });
+            // });
         });
+
+        // Jenis Pengawasan
+        Route::name('jenis_pengawasan.')->prefix('/jenis-pengawasan')
+        ->group(function () {
+
+            // Pengawasan Rutin
+            Route::name('rutin.')->prefix('/rutin')
+            ->group(function () {
+                Route::controller(App\Http\Controllers\JenisPengawasan\Rutin\PengawasanRutinController::class)
+                ->group(function () {
+                    Route::get('/{year?}', 'index');
+                });
+            });
+        });
+
+        // Route::name('rekapitulasi.')->prefix('/rekapitulasi')
+        // ->group(function () {
+        //     Route::get('/{?year}')
+        // });
     }
 );

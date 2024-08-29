@@ -8,7 +8,6 @@ import {
     LiaTrashAltSolid
 } from "react-icons/lia";
 import FormAddSuratPernyataan from "./FormAddSuratPernyataan";
-import { Link } from "@inertiajs/react";
 
 export default ({ proyekKonstruksi }) => {
     const { daftarSuratPernyataan } = proyekKonstruksi;
@@ -20,7 +19,7 @@ export default ({ proyekKonstruksi }) => {
                 <Card.Header className="flex justify-between items-center">
                     <div>
                         <h3 className="font-medium text-slate-700 leading-tight">Surat Pernyataan</h3>
-                        {/* <h4 className="font-light text-slate-500 text-[11px]">Daftar Surat Pernyataan</h4> */}
+                        <h4 className="font-light text-slate-500 text-xs">Bukti Dukung Pengawasan Rutin Tertib Penyelenggaraan Jasa Konstruksi</h4>
                     </div>
                     <div>
                         <button

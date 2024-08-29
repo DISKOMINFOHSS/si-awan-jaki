@@ -122,7 +122,7 @@ export default ({ isOpened }) => {
             </Sidebar.Menu>
             <Sidebar.Menu title="Jenis Pengawasan">
                 <Sidebar.Item
-                    href="#"
+                    href="/admin/jenis-pengawasan/rutin"
                     icon={<LiaCalendarDaySolid size={20} />}
                     text="Pengawasan Rutin"
                 />

@@ -6,10 +6,10 @@ use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class RekapitulasiController extends Controller
+class TertibPemanfaatanProdukController extends Controller
 {
     public function index(?string $tahun = '2024')
     {
-        return Inertia::render('Rekapitulasi/Index');
+        return Inertia::render('Rekapitulasi/TertibPemanfaatanProduk/Index');
     }
 }

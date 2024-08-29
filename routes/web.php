@@ -228,7 +228,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             ->group(function () {
                 Route::controller(App\Http\Controllers\JenisPengawasan\Rutin\PengawasanRutinController::class)
                 ->group(function () {
-                    Route::get('/{year?}', 'index');
+                    Route::get('/{tahun?}', 'index');
                 });
             });
         });
@@ -239,6 +239,12 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             Route::controller(App\Http\Controllers\Rekapitulasi\RekapitulasiController::class)
             ->group(function () {
                 Route::get('/{tahun?}', 'index');
+            });
+
+            Route::name('pemanfaatan_produk.')->prefix('{tahun?}/pemanfaatan-produk')
+            ->controller(App\Http\Controllers\Rekapitulasi\TertibPemanfaatanProdukController::class)
+            ->group(function () {
+                Route::get('/', 'index');
             });
 
             // Route::controller(App\Http\Controllers\Rekapitulasi\UsahaController::class)

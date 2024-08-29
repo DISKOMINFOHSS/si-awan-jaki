@@ -184,7 +184,7 @@ const RekapitulasiIndex = () => {
                     <Card className="h-fit">
                         <Card.Body className="p-4">
                             <div className="text-sm text-slate-800 font-medium mb-4 hover:text-blue-600 hover:underline">
-                                <Link href="/admin/laporan/2024/tertib-pemanfaatan-produk">
+                                <Link href="/admin/rekapitulasi/2024/pemanfaatan-produk">
                                     Tertib Pemanfaatan Produk Jasa Konstruksi
                                 </Link>
                             </div>

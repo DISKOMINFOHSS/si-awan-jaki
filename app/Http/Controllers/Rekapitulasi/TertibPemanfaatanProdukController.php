@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Rekapitulasi;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Rekapitulasi\BangunanCollection;
 use App\Services\Rekapitulasi\TertibPemanfaatanProdukService;
 use Illuminate\Http\Request;
 
@@ -19,11 +20,12 @@ class TertibPemanfaatanProdukController extends Controller
 
     public function index(?string $tahun = '2024')
     {
-        $daftarPengawasan = $this->rekapPengawasanService->getDaftarPengawasan($tahun);
+        $daftarBangunan = $this->rekapPengawasanService->getDaftarBangunan($tahun);
 
         return Inertia::render('Rekapitulasi/TertibPemanfaatanProduk/Index', [
             'data' => [
-                'daftarPengawasan' => $daftarPengawasan,
+                'daftarBangunan' => $daftarBangunan,
+                'daftarBangunanv2' => new BangunanCollection($daftarBangunan),
             ],
         ]);
     }

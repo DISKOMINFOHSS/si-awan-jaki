@@ -3,14 +3,26 @@ import React from "react";
 import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import Card from "../../../Components/Card";
+import FormVerifikasiPemanfaatanProduk from "../../../Components/Rekapitulasi/FormVerifikasiPemanfaatanProduk";
 
 import {
+    LiaCheckCircleSolid,
     LiaHomeSolid,
     LiaSearchSolid,
 } from "react-icons/lia";
+import { formatDateToIndonesia } from "../../../Utils/formatDate";
 
 const RekapitulasiTertibPemanfaatanProdukIndex = ({ data }) => {
     console.log(data);
+    const { daftarBangunanv2: daftarBangunan } = data;
+
+    const [ isModalVerificationOpen, setIsModalVerificationOpen ] = React.useState(false);
+    const [ selectedBangunan, setSelectedBangunan ] = React.useState({});
+
+    function handleVerificationButtonClick(bangunan) {
+        setSelectedBangunan(bangunan);
+        setIsModalVerificationOpen(true);
+    }
 
     return (
         <>
@@ -61,7 +73,11 @@ const RekapitulasiTertibPemanfaatanProdukIndex = ({ data }) => {
                                 <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 uppercase">
                                     <tr className="border-b border-slate-200">
                                         <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">#</th>
-                                        <th scope="col" rowSpan="2" className="p-4 font-medium min-w-60 border-r border-slate-200">Nama Bangunan Konstruksi</th>
+                                        <th scope="col" rowSpan="2" className="p-4 font-medium min-w-72 border-r border-slate-200">Nama Bangunan Konstruksi</th>
+                                        <th scope="col" rowSpan="2" className="p-4 font-medium min-w-48 border-r border-slate-200">Lokasi</th>
+                                        <th scope="col" rowSpan="2" className="p-4 font-medium min-w-36 border-r border-slate-200">Tanggal dan Tahun Pembangunan</th>
+                                        <th scope="col" rowSpan="2" className="p-4 font-medium min-w-36 border-r border-slate-200">Tanggal dan Tahun Pemanfaatan</th>
+                                        <th scope="col" rowSpan="2" className="p-4 font-medium min-w-32 border-r border-slate-200">Umur Konstruksi</th>
                                         <th scope="col" colSpan="2" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Fungsi Peruntukannya</th>
                                         <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">Rencana Umur Konstruksi</th>
                                         <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">Kapasitas dan Beban</th>
@@ -75,11 +91,59 @@ const RekapitulasiTertibPemanfaatanProdukIndex = ({ data }) => {
                                         <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Program Pemeliharaan</th>
                                     </tr>
                                 </thead>
+                                <tbody className="text-slate-700">
+                                    {
+                                        daftarBangunan.map((bangunan, i) => (
+                                            <tr key={bangunan.id} className="border-b border-slate-100 hover:bg-slate-100">
+                                                <td className="px-4 py-5 text-center">{i + 1}</td>
+                                                <td className="px-4 py-5">
+                                                    <div>
+                                                        <div className="uppercase hover:text-blue-600 hover:underline">{bangunan.nama}</div>
+                                                        <div className="font-light text-slate-500 capitalize">{`Nomor Kontrak: ${bangunan.nomorKontrak}`}</div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-5">
+                                                    <div>
+                                                        <div className="line-clamp-2">{bangunan.lokasi}</div>
+                                                        <div className="font-light capitalize line-clamp-2">{`${bangunan.desaKelurahan.toLowerCase()}, ${bangunan.kecamatan.toLowerCase()}`}</div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-5 text-center">
+                                                    {`${formatDateToIndonesia(bangunan.tanggalMulaiBangun)} s.d ${formatDateToIndonesia(bangunan.tanggalSelesaiBangun)}`}
+                                                </td>
+                                                <td className="px-4 py-5 text-center">{formatDateToIndonesia(bangunan.tanggalPemanfaatan)}</td>
+                                                <td className="px-4 py-5 text-center">{bangunan.umurKonstruksi}</td>
+                                                <td className="px-4 py-5 text-center"></td>
+                                                <td className="px-4 py-5 text-center"></td>
+                                                <td className="px-4 py-5 text-center"></td>
+                                                <td className="px-4 py-5 text-center"></td>
+                                                <td className="px-4 py-5 text-center"></td>
+                                                <td className="px-4 py-5 text-center"></td>
+                                                <td className="px-4 py-5 text-center">
+                                                    <div className="flex justify-end gap-x-2">
+                                                        <button
+                                                            type="button"
+                                                            className="rounded border border-slate-200 text-slate-500 p-2 hover:bg-slate-200"
+                                                            onClick={() => handleVerificationButtonClick(bangunan)}
+                                                        >
+                                                            <LiaCheckCircleSolid size={18} />
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
                             </table>
                         </div>
                     </Card.Body>
                 </Card>
             </div>
+            <FormVerifikasiPemanfaatanProduk
+                isVisible={isModalVerificationOpen}
+                onClose={() => setIsModalVerificationOpen(false)}
+                bangunan={selectedBangunan}
+            />
         </>
     );
 }

@@ -32,6 +32,16 @@ class PengawasanPemanfaatanProduk extends Model
         'created_by',
     ];
 
+    protected $casts = [
+        'tertib_kesesuaian_fungsi'       => 'boolean',
+        'tertib_kesesuaian_lokasi'       => 'boolean',
+        'tertib_rencana_umur_konstruksi' => 'boolean',
+        'tertib_kapasitas_beban'         => 'boolean',
+        'tertib_pemeliharaan_bangunan'   => 'boolean',
+        'tertib_program_pemeliharaan'    => 'boolean',
+        'tertib_pengawasan'              => 'boolean',
+    ];
+
     public function bangunan(): BelongsTo
     {
         return $this->belongsTo(Bangunan::class, 'bangunan_id');

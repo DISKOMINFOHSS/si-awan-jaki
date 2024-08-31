@@ -54,7 +54,7 @@ const RekomendasiPengawasanPemanfaatanProdukCreate = ({ data }) => {
 
             <FormRekomendasi
                 pengawasan="Pengawasan Tertib Pemanfaatan Produk Jasa Konstruksi"
-                rekomendasiPengawasan={rekomendasiPengawasan[0]}
+                rekomendasiPengawasan={rekomendasiPengawasan.length ? rekomendasiPengawasan[0] : {}}
                 link={`pemanfaatan-produk/${pengawasan.id}`}
             />
         </>

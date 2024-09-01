@@ -241,10 +241,11 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 Route::get('/{tahun?}', 'index');
             });
 
-            Route::name('pemanfaatan_produk.')->prefix('{tahun?}/pemanfaatan-produk')
+            Route::name('pemanfaatan_produk.')
             ->controller(App\Http\Controllers\Rekapitulasi\TertibPemanfaatanProdukController::class)
             ->group(function () {
-                Route::get('/', 'index');
+                Route::get('/{tahun?}/pemanfaatan-produk', 'index');
+                Route::post('/{tahun}/pemanfaatan-produk', 'store');
             });
 
             // Route::controller(App\Http\Controllers\Rekapitulasi\UsahaController::class)

@@ -13,7 +13,7 @@ class TertibPemanfaatanProdukController extends Controller
     protected $rekapPengawasanService;
 
     public function __construct(
-        TertibPemanfaatanProdukService $rekapPengawasanService
+        TertibPemanfaatanProdukService $rekapPengawasanService,
     ) {
         $this->rekapPengawasanService = $rekapPengawasanService;
     }
@@ -28,5 +28,23 @@ class TertibPemanfaatanProdukController extends Controller
                 'daftarBangunanv2' => new BangunanCollection($daftarBangunan),
             ],
         ]);
+    }
+
+    public function store(string $tahun, Request $request)
+    {
+        $validatedData = $request->validate([
+            'bangunanId'            => 'required|exists:bangunan,id',
+            'kesesuaianFungsi'      => 'required|boolean',
+            'kesesuaianLokasi'      => 'required|boolean',
+            'rencanaUmurKonstruksi' => 'required|boolean',
+            'kapasitasBeban'        => 'required|boolean',
+            'pemeliharaanBangunan'  => 'required|boolean',
+            'programPemeliharaan'   => 'required|boolean',
+            'tertibPengawasan'      => 'required|boolean',
+            'catatan'               => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        dd($request->all());
     }
 }

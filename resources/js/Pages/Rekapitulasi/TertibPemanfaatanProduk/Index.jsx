@@ -11,6 +11,7 @@ import {
     LiaSearchSolid,
 } from "react-icons/lia";
 import { formatDateToIndonesia } from "../../../Utils/formatDate";
+import { getTertibStatusBadge } from "../../../Utils/getStatusBadge";
 
 const RekapitulasiTertibPemanfaatanProdukIndex = ({ data }) => {
     console.log(data);
@@ -113,20 +114,21 @@ const RekapitulasiTertibPemanfaatanProdukIndex = ({ data }) => {
                                                 </td>
                                                 <td className="px-4 py-5 text-center">{formatDateToIndonesia(bangunan.tanggalPemanfaatan)}</td>
                                                 <td className="px-4 py-5 text-center">{bangunan.umurKonstruksi}</td>
-                                                <td className="px-4 py-5 text-center"></td>
-                                                <td className="px-4 py-5 text-center"></td>
-                                                <td className="px-4 py-5 text-center"></td>
-                                                <td className="px-4 py-5 text-center"></td>
-                                                <td className="px-4 py-5 text-center"></td>
-                                                <td className="px-4 py-5 text-center"></td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(bangunan.tertibKesesuaianFungsi)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(bangunan.tertibKesesuaianLokasi)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(bangunan.tertibRencanaUmurKonstruksi)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(bangunan.tertibKapasitasBeban)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(bangunan.tertibPemeliharaanBangunan)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(bangunan.tertibProgramPemeliharaan)}</td>
                                                 <td className="px-4 py-5 text-center">
                                                     <div className="flex justify-end gap-x-2">
                                                         <button
                                                             type="button"
-                                                            className="rounded border border-slate-200 text-slate-500 p-2 hover:bg-slate-200"
+                                                            className="flex items-center gap-x-1 rounded border border-slate-200 text-green-500 p-2 hover:bg-slate-200"
                                                             onClick={() => handleVerificationButtonClick(bangunan)}
                                                         >
                                                             <LiaCheckCircleSolid size={18} />
+                                                            <span>Verifikasi</span>
                                                         </button>
                                                     </div>
                                                 </td>

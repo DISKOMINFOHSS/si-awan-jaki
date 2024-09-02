@@ -4,6 +4,11 @@ export default ({
     id, isTrue, onInputChange, label
 }) => {
     const [value, setValue] = React.useState(isTrue);
+
+    React.useEffect(() => {
+        setValue(isTrue);
+    }, [isTrue]);
+
     function handleInputChange(e) {
         setValue(e.target.value === "true");
         onInputChange({ [e.target.name]: e.target.value === "true" });

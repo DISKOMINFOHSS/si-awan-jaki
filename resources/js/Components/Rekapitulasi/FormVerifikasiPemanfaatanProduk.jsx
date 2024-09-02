@@ -1,8 +1,9 @@
 import React from "react";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 
 import Modal from "../Modal";
 import InputRadio from "../InputRadio";
+import ModalError from "../ModalError";
 
 import { getTertibStatusBadge } from "../../Utils/getStatusBadge";
 import { formatDateWithWeekdayToIndonesia } from "../../Utils/formatDate";
@@ -36,7 +37,7 @@ const DaftarPengawasan = ({ daftarPengawasan }) => {
 }
 
 export default ({ isVisible, onClose, bangunan }) => {
-
+    const { url } = usePage();
     const { daftarPengawasan } = bangunan;
     const {
         tertibKesesuaianFungsi,
@@ -49,16 +50,6 @@ export default ({ isVisible, onClose, bangunan }) => {
         catatan
     }  = bangunan;
 
-    // const [ values, setValues ] = React.useState({
-    //     kesesuaianFungsi: '',
-    //     kesesuaianLokasi: '',
-    //     rencanaUmurKonstruksi: '',
-    //     kapasitasBeban: '',
-    //     pemeliharaanBangunan: '',
-    //     programPemeliharaan: '',
-    //     tertibPengawasan: '',
-    //     catatan: '',
-    // });
     const { data: values, setData: setValues, processing, post, reset } = useForm({
         kesesuaianFungsi: '',
         kesesuaianLokasi: '',
@@ -86,24 +77,24 @@ export default ({ isVisible, onClose, bangunan }) => {
         });
     }, [bangunan]);
 
-    // React.useEffect(() => {
-    //     setValues({
-    //         ...values,
-    //         bangunanId: bangunan.id,
-    //         kesesuaianFungsi: typeof(tertibKesesuaianFungsi) === 'boolean' ? tertibKesesuaianFungsi : '',
-    //         kesesuaianLokasi: typeof(tertibKesesuaianLokasi) === 'boolean' ? tertibKesesuaianLokasi : '',
-    //         rencanaUmurKonstruksi: getFormData(tertibRencanaUmurKonstruksi),
-    //     });
-    // }, [bangunan]);
-
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(values, bangunan.id);
+        // console.log(url, values, bangunan.id);
 
-        onClose();
-        reset();
+        post(`${url}`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+                onClose();
+            },
+            onError: (errors) => {
+                console.log(errors);
+                onClose();
+                setIsModalErrorOpen(true);
+            },
+        });
     }
 
     if (!Object.keys(bangunan).length) return null;
@@ -285,6 +276,15 @@ export default ({ isVisible, onClose, bangunan }) => {
                     </div>
                 </Modal.Body>
             </Modal>
+            <ModalError
+                isVisible={isModalErrorOpen}
+                onClose={() => setIsModalErrorOpen(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Gagal melakukan verifikasi pengawasan tahunan. Silakan periksa kembali.
+                </div>
+            </ModalError>
         </>
     );
 }

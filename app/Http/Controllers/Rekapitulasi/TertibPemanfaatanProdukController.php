@@ -45,6 +45,22 @@ class TertibPemanfaatanProdukController extends Controller
         ]);
         $userId = auth()->user()->id;
 
-        dd($request->all());
+        $this->rekapPengawasanService->storeVerifikasiPengawasanTahunan(
+            $tahun,
+            $validatedData['bangunanId'],
+            [
+                'tertib_kesesuaian_fungsi'       => $validatedData['kesesuaianFungsi'],
+                'tertib_kesesuaian_lokasi'       => $validatedData['kesesuaianLokasi'],
+                'tertib_rencana_umur_konstruksi' => $validatedData['rencanaUmurKonstruksi'],
+                'tertib_kapasitas_beban'         => $validatedData['kapasitasBeban'],
+                'tertib_pemeliharaan_bangunan'   => $validatedData['pemeliharaanBangunan'],
+                'tertib_program_pemeliharaan'    => $validatedData['programPemeliharaan'],
+                'tertib_pengawasan'              => $validatedData['tertibPengawasan'],
+                'catatan'                        => $validatedData['catatan'],
+                'created_by'                     => $userId,
+            ],
+        );
+
+        return redirect()->back();
     }
 }

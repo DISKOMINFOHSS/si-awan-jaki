@@ -24,8 +24,7 @@ class TertibPemanfaatanProdukController extends Controller
 
         return Inertia::render('Rekapitulasi/TertibPemanfaatanProduk/Index', [
             'data' => [
-                'daftarBangunan' => $daftarBangunan,
-                'daftarBangunanv2' => new BangunanCollection($daftarBangunan),
+                'daftarBangunan' => new BangunanCollection($daftarBangunan),
             ],
         ]);
     }

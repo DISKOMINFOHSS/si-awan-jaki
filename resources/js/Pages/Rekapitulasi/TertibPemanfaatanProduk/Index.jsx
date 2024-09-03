@@ -17,7 +17,7 @@ import {
 
 const RekapitulasiTertibPemanfaatanProdukIndex = ({ data }) => {
     console.log(data);
-    const { daftarBangunanv2: daftarBangunan } = data;
+    const { daftarBangunan } = data;
 
     const [ isModalVerificationOpen, setIsModalVerificationOpen ] = React.useState(false);
     const [ selectedBangunan, setSelectedBangunan ] = React.useState({});

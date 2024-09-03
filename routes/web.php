@@ -246,6 +246,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             ->group(function () {
                 Route::get('/{tahun?}/pemanfaatan-produk', 'index');
                 Route::post('/{tahun}/pemanfaatan-produk', 'store');
+
+                Route::get('/{tahun}/pemanfaatan-produk/pdf', 'show');
             });
 
             // Route::controller(App\Http\Controllers\Rekapitulasi\UsahaController::class)

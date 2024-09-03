@@ -1,5 +1,5 @@
 import React from "react";
-import { Font, Text } from "@react-pdf/renderer";
+import { Font, Text, View } from "@react-pdf/renderer";
 import { createTw } from "react-pdf-tailwind";
 
 import Badge from "../Components/Badge";
@@ -55,6 +55,25 @@ function getTertibStatusBadgePDF (isTertib) {
     }
 }
 
+function getTertibStatusBadgeRekapitulasiPDF(isTertib) {
+    switch(isTertib) {
+        case true:
+            return (
+                <View style={tw("w-full flex flex-row justify-center items-center gap-x-1")}>
+                    <Text style={tw("bg-green-400 rounded-full w-1.5 h-1.5")}></Text>
+                    <Text>Tertib</Text>
+                </View>
+            );
+        case false:
+            return (
+                <View style={tw("flex flex-row justify-center items-center gap-x-1")}>
+                    <Text style={tw("bg-red-400 rounded-full w-1.5 h-1.5")}></Text>
+                    <Text>Belum Tertib</Text>
+                </View>
+            );
+    }
+}
+
 function getStatusBadgePDF (isTrue, label) {
     switch(isTrue) {
         case true:
@@ -69,5 +88,6 @@ export {
     getSesuaiStatusBadge,
     getTertibStatusBadge,
     getTertibStatusBadgePDF,
+    getTertibStatusBadgeRekapitulasiPDF,
     getStatusBadgePDF,
 };

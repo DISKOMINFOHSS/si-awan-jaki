@@ -5,13 +5,15 @@ import Breadcrumb from "../../../Components/Breadcrumb";
 import Card from "../../../Components/Card";
 import FormVerifikasiPemanfaatanProduk from "../../../Components/Rekapitulasi/FormVerifikasiPemanfaatanProduk";
 
+import { formatDateToIndonesia } from "../../../Utils/formatDate";
+import { getTertibStatusBadge } from "../../../Utils/getStatusBadge";
+
 import {
     LiaCheckCircleSolid,
     LiaHomeSolid,
     LiaSearchSolid,
+    LiaFileExportSolid
 } from "react-icons/lia";
-import { formatDateToIndonesia } from "../../../Utils/formatDate";
-import { getTertibStatusBadge } from "../../../Utils/getStatusBadge";
 
 const RekapitulasiTertibPemanfaatanProdukIndex = ({ data }) => {
     console.log(data);
@@ -45,6 +47,16 @@ const RekapitulasiTertibPemanfaatanProdukIndex = ({ data }) => {
                             <div>
                                 <h3 className="font-medium text-sm text-slate-700">Bangunan Konstruksi</h3>
                                 <h4 className="font-light text-xs text-slate-500">Pengawasan Tertib Pemanfaatan Produk Jasa Konstruksi</h4>
+                            </div>
+                            <div>
+                                <a
+                                    href={`/admin/rekapitulasi/2024/pemanfaatan-produk/pdf`}
+                                    target="_blank"
+                                    className="w-full flex justify-center items-center space-x-1 text-blue-500 border border-blue-400 rounded text-xs tracking-wide px-3 py-2.5 hover:bg-slate-100 hover:text-blue-500 focus:border-blue-400 focus:ring-blue-400 focus:text-blue-500"
+                                >
+                                    <LiaFileExportSolid size={16} />
+                                    <span>Export PDF</span>
+                                </a>
                             </div>
                         </div>
                         <div className="flex items-center gap-x-2.5">
@@ -100,7 +112,7 @@ const RekapitulasiTertibPemanfaatanProdukIndex = ({ data }) => {
                                                 <td className="px-4 py-5">
                                                     <div>
                                                         <div className="uppercase hover:text-blue-600 hover:underline">{bangunan.nama}</div>
-                                                        <div className="font-light text-slate-500 capitalize">{`Nomor Kontrak: ${bangunan.nomorKontrak}`}</div>
+                                                        <div className="font-light text-slate-500">{`Nomor Kontrak: ${bangunan.nomorKontrak}`}</div>
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-5">
@@ -124,7 +136,7 @@ const RekapitulasiTertibPemanfaatanProdukIndex = ({ data }) => {
                                                     <div className="flex justify-end gap-x-2">
                                                         <button
                                                             type="button"
-                                                            className="flex items-center gap-x-1 rounded border border-slate-200 text-green-500 p-2 hover:bg-slate-200"
+                                                            className="flex items-center gap-x-1 rounded border border-slate-200 text-blue-500 p-2 hover:bg-slate-200"
                                                             onClick={() => handleVerificationButtonClick(bangunan)}
                                                         >
                                                             <LiaCheckCircleSolid size={18} />

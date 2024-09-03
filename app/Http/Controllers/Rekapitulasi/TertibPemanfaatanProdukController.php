@@ -63,4 +63,15 @@ class TertibPemanfaatanProdukController extends Controller
 
         return redirect()->back();
     }
+
+    public function show(string $tahun)
+    {
+        $daftarBangunan = $this->rekapPengawasanService->getDaftarBangunan($tahun);
+
+        return Inertia::render('Rekapitulasi/TertibPemanfaatanProduk/Show', [
+            'data' => [
+                'daftarBangunan' => new BangunanCollection($daftarBangunan),
+            ],
+        ]);
+    }
 }

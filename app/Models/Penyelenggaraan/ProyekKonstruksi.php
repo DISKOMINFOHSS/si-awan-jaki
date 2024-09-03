@@ -32,6 +32,16 @@ class ProyekKonstruksi extends Model
         'created_by',
     ];
 
+    protected $casts = [
+        'tertib_antisipasi_kecelakaan'        => 'boolean',
+        'tertib_penerapan_manajemen_mutu'     => 'boolean',
+        'tertib_pemenuhan_penyediaan_mptk'    => 'boolean',
+        'tertib_penggunaan_mptk'              => 'boolean',
+        'tertib_penggunaan_pdn'               => 'boolean',
+        'tertib_pemenuhan_standar_lingkungan' => 'boolean',
+        'tertib_pengawasan'                   => 'boolean',
+    ];
+
     public function penyediaJasa(): BelongsTo
     {
         return $this->belongsTo(Usaha::class, 'penyedia_jasa_id');

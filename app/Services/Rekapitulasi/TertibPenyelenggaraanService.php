@@ -18,8 +18,13 @@ class TertibPenyelenggaraanService
         {
             $join->on('proyek_konstruksi.id', '=', 'pengawasan_tahunan.proyek_konstruksi_id')
                  ->where('tahun', $tahun);
-        })->select(
+        })->leftJoin('usaha', 'proyek_konstruksi.penyedia_jasa_id', 'usaha.id')
+          ->leftJoin('pengguna_jasa_konstruksi as pengguna_jasa', 'proyek_konstruksi.pengguna_jasa_id', 'pengguna_jasa.id')
+          ->select(
             'proyek_konstruksi.*',
+            'usaha.nama as penyedia_jasa',
+            'pengguna_jasa.nama as pengguna_jasa',
+            'pengguna_jasa.instansi as pengguna_jasa_instansi',
             'pengawasan_tahunan.tahun',
             'pengawasan_tahunan.tertib_proses_pemilihan_penyedia_jasa',
             'pengawasan_tahunan.tertib_penerapan_standar_kontrak',
@@ -35,7 +40,7 @@ class TertibPenyelenggaraanService
             'pengawasan_tahunan.tertib_pemenuhan_standar_lingkungan',
             'pengawasan_tahunan.tertib_pengawasan',
             'pengawasan_tahunan.catatan',
-        )->orderBy('proyek_konstruksi.nama_paket')
-         ->get();
+         )->orderBy('proyek_konstruksi.nama_paket')
+          ->get();
     }
 }

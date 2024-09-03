@@ -1,11 +1,14 @@
 import React from "react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 
 import Layout from "../../Components/Layout";
 import Card from "../../Components/Card";
 import { LiaCalendarDaySolid, LiaChartBar, LiaExclamationTriangleSolid } from "react-icons/lia";
 
 const RekapitulasiIndex = () => {
+    const { url } = usePage();
+    const tahun = url.split('/')[3];
+
     return (
         <>
             <div className="flex justify-between items-center mb-4">
@@ -139,8 +142,10 @@ const RekapitulasiIndex = () => {
                     </Card>
                     <Card className="h-fit">
                         <Card.Body className="p-4">
-                            <div className="text-sm text-slate-800 font-medium mb-4 group-hover:text-blue-600 group-hover:underline">
-                                Tertib Penyelenggaraan Jasa Konstruksi
+                            <div className="text-sm text-slate-800 font-medium mb-4 hover:text-blue-600 hover:underline">
+                                <Link href={`/admin/rekapitulasi/${tahun}/penyelenggaraan`}>
+                                    Tertib Penyelenggaraan Jasa Konstruksi
+                                </Link>
                             </div>
                             <div className="relative overflow-x-auto">
                                 <table className="w-full text-xs">
@@ -184,7 +189,7 @@ const RekapitulasiIndex = () => {
                     <Card className="h-fit">
                         <Card.Body className="p-4">
                             <div className="text-sm text-slate-800 font-medium mb-4 hover:text-blue-600 hover:underline">
-                                <Link href="/admin/rekapitulasi/2024/pemanfaatan-produk">
+                                <Link href={`/admin/rekapitulasi/${tahun}/pemanfaatan-produk`}>
                                     Tertib Pemanfaatan Produk Jasa Konstruksi
                                 </Link>
                             </div>

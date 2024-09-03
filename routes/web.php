@@ -236,6 +236,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
         // Rekapitulasi
         Route::name('rekapitulasi.')->prefix('rekapitulasi')
         ->group(function () {
+            Route::redirect('/', "/admin/rekapitulasi/" . date('Y'));
+
             Route::controller(App\Http\Controllers\Rekapitulasi\RekapitulasiController::class)
             ->group(function () {
                 Route::get('/{tahun?}', 'index');
@@ -248,6 +250,15 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 Route::post('/{tahun}/pemanfaatan-produk', 'store');
 
                 Route::get('/{tahun}/pemanfaatan-produk/pdf', 'show');
+            });
+
+            Route::name('penyelenggaraan.')
+            ->controller(App\Http\Controllers\Rekapitulasi\TertibPenyelenggaraanController::class)
+            ->group(function () {
+                Route::get('/{tahun}/penyelenggaraan', 'index')->whereNumber('tahun');
+                // Route::post('/{tahun}/pemanfaatan-produk', 'store');
+
+                // Route::get('/{tahun}/pemanfaatan-produk/pdf', 'show');
             });
 
             // Route::controller(App\Http\Controllers\Rekapitulasi\UsahaController::class)

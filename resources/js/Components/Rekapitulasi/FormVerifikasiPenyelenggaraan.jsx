@@ -8,6 +8,7 @@ import { formatDateWithWeekdayToIndonesia } from "../../Utils/formatDate";
 import { getTertibStatusBadge } from "../../Utils/getStatusBadge";
 
 import { LiaSpinnerSolid } from "react-icons/lia";
+import ModalError from "../ModalError";
 
 const DaftarPengawasan = ({ daftarPengawasan }) => {
     return (
@@ -105,18 +106,18 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
         e.preventDefault();
         console.log(url, data, proyekKonstruksi.id);
 
-        // post(`${url}`, {
-        //     preserveScroll: true,
-        //     onSuccess: () => {
-        //         reset();
-        //         onClose();
-        //     },
-        //     onError: (errors) => {
-        //         console.log(errors);
-        //         onClose();
-        //         setIsModalErrorOpen(true);
-        //     },
-        // });
+        post(`${url}`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+                onClose();
+            },
+            onError: (errors) => {
+                console.log(errors);
+                onClose();
+                setIsModalErrorOpen(true);
+            },
+        });
     }
 
     if (!Object.keys(proyekKonstruksi).length) return null;
@@ -376,6 +377,15 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                     </div>
                 </Modal.Body>
             </Modal>
+            <ModalError
+                isVisible={isModalErrorOpen}
+                onClose={() => setIsModalErrorOpen(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Gagal melakukan verifikasi pengawasan tahunan. Silakan periksa kembali.
+                </div>
+            </ModalError>
         </>
     );
 }

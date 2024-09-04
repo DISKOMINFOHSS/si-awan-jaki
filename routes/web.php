@@ -256,7 +256,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             ->controller(App\Http\Controllers\Rekapitulasi\TertibPenyelenggaraanController::class)
             ->group(function () {
                 Route::get('/{tahun}/penyelenggaraan', 'index')->whereNumber('tahun');
-                // Route::post('/{tahun}/pemanfaatan-produk', 'store');
+                Route::post('/{tahun}/penyelenggaraan', 'store')->whereNumber('tahun');
 
                 // Route::get('/{tahun}/pemanfaatan-produk/pdf', 'show');
             });

@@ -261,6 +261,15 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 Route::get('/{fileName}', 'show');
             });
 
+            Route::name('usaha.')->prefix('/{tahun}/tertib-usaha')
+            ->controller(App\Http\Controllers\Rekapitulasi\TertibUsahaController::class)
+            ->group(function () {
+                Route::get('/', 'index');
+                // Route::post('/', 'store');
+
+                // Route::get('/{fileName}', 'show');
+            });
+
             // Route::controller(App\Http\Controllers\Rekapitulasi\UsahaController::class)
             // ->group(function () {
             //     Route::get('/{tahun}/tertib-usaha', 'index');

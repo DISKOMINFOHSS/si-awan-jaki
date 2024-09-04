@@ -13,6 +13,7 @@ import {
     LiaSearchSolid,
     LiaCheckCircleSolid,
 } from "react-icons/lia";
+import FormVerifikasiPenyelenggaraan from "../../../Components/Rekapitulasi/FormVerifikasiPenyelenggaraan";
 
 const RekapitulasiTertibPenyelenggaraanIndex = ({ data }) => {
     console.log(data);
@@ -20,6 +21,14 @@ const RekapitulasiTertibPenyelenggaraanIndex = ({ data }) => {
     const tahun = url.split('/')[3];
 
     const { daftarProyekKonstruksi } = data;
+
+    const [ isModalVerificationOpen, setIsModalVerificationOpen ] = React.useState(false);
+    const [ selectedProyekKonstruksi, setSelectedProyekKonstruksi ] = React.useState({});
+
+    function handleVerificationButtonClick(proyekKonstruksi) {
+        setSelectedProyekKonstruksi(proyekKonstruksi);
+        setIsModalVerificationOpen(true);
+    }
 
     return (
         <>
@@ -131,7 +140,7 @@ const RekapitulasiTertibPenyelenggaraanIndex = ({ data }) => {
                                                         <button
                                                             type="button"
                                                             className="flex items-center gap-x-1 rounded border border-slate-200 text-blue-500 p-2 hover:bg-slate-200"
-                                                            // onClick={() => handleVerificationButtonClick(bangunan)}
+                                                            onClick={() => handleVerificationButtonClick(proyek)}
                                                         >
                                                             <LiaCheckCircleSolid size={18} />
                                                             <span>Verifikasi</span>
@@ -147,6 +156,11 @@ const RekapitulasiTertibPenyelenggaraanIndex = ({ data }) => {
                     </Card.Body>
                 </Card>
             </div>
+            <FormVerifikasiPenyelenggaraan
+                isVisible={isModalVerificationOpen}
+                onClose={() => setIsModalVerificationOpen(false)}
+                proyekKonstruksi={selectedProyekKonstruksi}
+            />
         </>
     );
 }

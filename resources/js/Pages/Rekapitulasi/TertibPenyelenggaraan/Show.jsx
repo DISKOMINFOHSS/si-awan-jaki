@@ -4,6 +4,7 @@ import { Font, Document, PDFViewer, Page, View, Text } from "@react-pdf/renderer
 import { createTw } from "react-pdf-tailwind"
 
 import { inter } from "../../../Utils/fonts";
+import { getTertibStatusBadgeRekapitulasiPDF } from "../../../Utils/getStatusBadge";
 
 Font.registerHyphenationCallback(word => [word]);
 Font.register({ family: 'Inter', fonts: inter });
@@ -20,6 +21,20 @@ export default ({ data }) => {
     const { daftarPengawasanTahunan } = data;
     console.log(data);
     const { url } = usePage();
+
+    const listExample = [
+        ...daftarPengawasanTahunan,
+        ...daftarPengawasanTahunan,
+        ...daftarPengawasanTahunan,
+        ...daftarPengawasanTahunan,
+        ...daftarPengawasanTahunan,
+        ...daftarPengawasanTahunan,
+        ...daftarPengawasanTahunan,
+        ...daftarPengawasanTahunan,
+        ...daftarPengawasanTahunan,
+        ...daftarPengawasanTahunan,
+        ...daftarPengawasanTahunan,
+    ];
 
     return (
         <PDFViewer width="100%" style={tw("min-h-screen")}>
@@ -63,6 +78,36 @@ export default ({ data }) => {
                                 </View>
                             </View>
                         </View>
+                        {
+                            listExample.map((pengawasan, i) => (
+                            // daftarPengawasanTahunan.map((pengawasan, i) => (
+                                <View wrap={false} key={i} style={tw("flex flex-row w-full text-[8px]")}>
+                                    <View style={tw("w-[3%] border-b border-l border-slate-800 p-1")}>
+                                        <Text style={tw("text-center")}>{i + 1}</Text>
+                                    </View>
+                                    <View style={tw("w-[32%] border-b border-slate-800 flex flex-row text-center")}>
+                                        <View style={tw("w-[70%] border-l border-slate-800 px-1.5 py-1 text-left")}>
+                                            <Text style={tw("text-justify")}>{pengawasan.namaPaket}</Text>
+                                            <Text style={tw("font-light text-slate-500 mt-0.5")}>Nomor Kontrak : {pengawasan.nomorKontrak}</Text>
+                                        </View>
+                                        <Text style={tw("w-[30%] border-l border-slate-800 p-1")}>{pengawasan.penyediaJasa.nama}</Text>
+                                    </View>
+                                    <View style={tw("w-[65%] border-b border-l border-slate-800 flex flex-row text-center")}>
+                                        <View style={tw("w-[15%] p-1")}>{getTertibStatusBadgeRekapitulasiPDF(pengawasan.tertibProsesPemilihanPenyediaJasa)}</View>
+                                        <View style={tw("w-[45%] border-l border-slate-800 flex flex-row")}>
+                                            <View style={tw("w-[30%] border-r border-slate-800 p-1")}>{getTertibStatusBadgeRekapitulasiPDF(pengawasan.tertibPenerapanStandarKontrak)}</View>
+                                            <View style={tw("w-[35%] border-r border-slate-800 p-1")}>{getTertibStatusBadgeRekapitulasiPDF(pengawasan.tertibPenggunaanTKK)}</View>
+                                            <View style={tw("w-[35%] p-1")}>{getTertibStatusBadgeRekapitulasiPDF(pengawasan.tertibPemberianPekerjaan)}</View>
+                                        </View>
+                                        <View style={tw("w-[40%] border-x border-slate-800 flex flex-row")}>
+                                            <View style={tw("w-[35%] border-r border-slate-800 p-1")}>{getTertibStatusBadgeRekapitulasiPDF(pengawasan.tertibKetersediaanDokumenStandarK4)}</View>
+                                            <View style={tw("w-[30%] border-r border-slate-800 p-1")}>{getTertibStatusBadgeRekapitulasiPDF(pengawasan.tertibPenerapanSMKK)}</View>
+                                            <View style={tw("w-[35%] p-1")}>{getTertibStatusBadgeRekapitulasiPDF(pengawasan.tertibAntisipasiKecelakaan)}</View>
+                                        </View>
+                                    </View>
+                                </View>
+                            ))
+                        }
                     </View>
                     <Text
                         render={({ pageNumber }) => (`- ${pageNumber} -`)} fixed

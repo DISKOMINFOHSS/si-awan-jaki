@@ -252,13 +252,13 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 Route::get('/{tahun}/pemanfaatan-produk/pdf', 'show');
             });
 
-            Route::name('penyelenggaraan.')
+            Route::name('penyelenggaraan.')->prefix('/{tahun}/penyelenggaraan')
             ->controller(App\Http\Controllers\Rekapitulasi\TertibPenyelenggaraanController::class)
             ->group(function () {
-                Route::get('/{tahun}/penyelenggaraan', 'index')->whereNumber('tahun');
-                Route::post('/{tahun}/penyelenggaraan', 'store')->whereNumber('tahun');
+                Route::get('/', 'index');
+                Route::post('/', 'store');
 
-                // Route::get('/{tahun}/pemanfaatan-produk/pdf', 'show');
+                Route::get('/{fileName}', 'show');
             });
 
             // Route::controller(App\Http\Controllers\Rekapitulasi\UsahaController::class)

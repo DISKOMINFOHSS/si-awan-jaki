@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources\Rekapitulasi;
 
-use App\Http\Resources\Rekapitulasi\PengawasanTertibPenyelenggaraanResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ProyekKonstruksiCollection extends ResourceCollection
+class PengawasanTertibPenyelenggaraanTahunanCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -28,12 +27,6 @@ class ProyekKonstruksiCollection extends ResourceCollection
                         'id'   => $proyek->penyedia_jasa_id,
                         'nama' => $proyek->penyedia_jasa,
                     ],
-                    'penggunaJasa'                       => [
-                        'id'       => $proyek->pengguna_jasa_id,
-                        'nama'     => $proyek->pengguna_jasa,
-                        'instansi' => $proyek->pengguna_jasa_instansi,
-                    ],
-                    'daftarPengawasan'                   => PengawasanTertibPenyelenggaraanResource::collection($proyek->pengawasan),
                     'tertibProsesPemilihanPenyediaJasa'  => $proyek->tertib_proses_pemilihan_penyedia_jasa,
                     'tertibPenerapanStandarKontrak'      => $proyek->tertib_penerapan_standar_kontrak,
                     'tertibPenggunaanTKK'                => $proyek->tertib_penggunaan_tkk,

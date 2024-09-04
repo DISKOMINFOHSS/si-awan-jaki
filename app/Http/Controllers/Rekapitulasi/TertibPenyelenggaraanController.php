@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Rekapitulasi;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Rekapitulasi\PengawasanTertibPenyelenggaraanTahunanCollection;
 use App\Http\Resources\Rekapitulasi\ProyekKonstruksiCollection;
 use App\Services\Rekapitulasi\TertibPenyelenggaraanService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class TertibPenyelenggaraanController extends Controller
 {
@@ -75,5 +75,16 @@ class TertibPenyelenggaraanController extends Controller
         );
 
         return redirect()->back();
+    }
+
+    public function show(string $tahun, string $fileName)
+    {
+        $daftarPengawasanTahunan = $this->rekapPengawasanService->getDaftarPengawasanTahunan($tahun);
+
+        return Inertia::render('Rekapitulasi/TertibPenyelenggaraan/Show', [
+            'data' => [
+                'daftarPengawasanTahunan' => new PengawasanTertibPenyelenggaraanTahunanCollection($daftarPengawasanTahunan),
+            ],
+        ]);
     }
 }

@@ -148,6 +148,32 @@ export default ({ data }) => {
                                 </View>
                             </View>
                         </View>
+                        {
+                            listExample.map((pengawasan, i) => (
+                            // daftarPengawasanTahunan.map((pengawasan, i) => (
+                                <View wrap={false} key={i} style={tw("flex flex-row w-full text-[8px]")}>
+                                    <View style={tw("w-[3%] border-b border-l border-slate-800 p-1")}>
+                                        <Text style={tw("text-center")}>{i + 1}</Text>
+                                    </View>
+                                    <View style={tw("w-[32%] border-b border-slate-800 flex flex-row text-center")}>
+                                        <View style={tw("w-[70%] border-l border-slate-800 px-1.5 py-1 text-left")}>
+                                            <Text style={tw("text-justify")}>{pengawasan.namaPaket}</Text>
+                                            <Text style={tw("font-light text-slate-500 mt-0.5")}>Nomor Kontrak : {pengawasan.nomorKontrak}</Text>
+                                        </View>
+                                        <Text style={tw("w-[30%] border-l border-slate-800 p-1")}>{pengawasan.penyediaJasa.nama}</Text>
+                                    </View>
+                                    <View style={tw("w-[65%] border-b border-l border-slate-800 flex flex-row text-center")}>
+                                        <View style={tw("w-[15%] p-1")}>{getTertibStatusBadgeRekapitulasiPDF(pengawasan.tertibPenerapanManajemenMutu)}</View>
+                                        <View style={tw("w-[60%] border-l border-slate-800 flex flex-row")}>
+                                            <View style={tw("w-[28%] border-r border-slate-800 p-1")}>{getTertibStatusBadgeRekapitulasiPDF(pengawasan.tertibPemenuhanPenyediaanMPTK)}</View>
+                                            <View style={tw("w-[28%] border-r border-slate-800 p-1")}>{getTertibStatusBadgeRekapitulasiPDF(pengawasan.tertibPenggunaanMPTK)}</View>
+                                            <View style={tw("w-[44%] p-1")}>{getTertibStatusBadgeRekapitulasiPDF(pengawasan.tertibPenggunaanPDN)}</View>
+                                        </View>
+                                        <View style={tw("w-[25%] border-x border-slate-800 p-1")}>{getTertibStatusBadgeRekapitulasiPDF(pengawasan.tertibPemenuhanStandarLingkungan)}</View>
+                                    </View>
+                                </View>
+                            ))
+                        }
                     </View>
                     <Text
                         render={({ pageNumber }) => (`- ${pageNumber} -`)} fixed

@@ -1,10 +1,13 @@
 import React from "react";
+import { useForm, usePage } from "@inertiajs/react";
+
 import Modal from "../Modal";
 import InputRadio from "../InputRadio";
-import { LiaToolsSolid } from "react-icons/lia";
+
 import { formatDateWithWeekdayToIndonesia } from "../../Utils/formatDate";
 import { getTertibStatusBadge } from "../../Utils/getStatusBadge";
-import { usePage } from "@inertiajs/react";
+
+import { LiaSpinnerSolid } from "react-icons/lia";
 
 const DaftarPengawasan = ({ daftarPengawasan }) => {
     return (
@@ -39,6 +42,7 @@ const DaftarPengawasan = ({ daftarPengawasan }) => {
 
 export default ({ isVisible, onClose, proyekKonstruksi }) => {
     const { url } = usePage();
+    const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
 
     const { daftarPengawasan } = proyekKonstruksi;
     const {
@@ -58,6 +62,62 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
         catatan,
     } = proyekKonstruksi;
 
+    const { data, setData, processing, post, reset } = useForm({
+        prosesPemilihanPenyediaJasa: '',
+        penerapanStandarKontrak: '',
+        penggunaanTKKBersertifikat: '',
+        pemberianPekerjaan: '',
+        ketersediaanDokumenStandarK4: '',
+        penerapanSMKK: '',
+        antisipasiKecelakaan: '',
+        penerapanManajemenMutu: '',
+        pemenuhanPenyediaanMPK: '',
+        penggunaanMPTK: '',
+        penggunaanPDN: '',
+        pemenuhanStandarLingkungan: '',
+        tertibPengawasan: '',
+        catatan: '',
+    });
+    const handleInputChange = (value) => setData({ ...data, ...value });
+
+    React.useEffect(() => {
+        setData({
+            ...data,
+            proyekId: proyekKonstruksi.id,
+            prosesPemilihanPenyediaJasa: typeof(tertibProsesPemilihanPenyediaJasa) === 'boolean' ? tertibProsesPemilihanPenyediaJasa : '',
+            penerapanStandarKontrak: typeof(tertibPenerapanStandarKontrak) === 'boolean' ? tertibPenerapanStandarKontrak :  '',
+            penggunaanTKKBersertifikat: typeof(tertibPenggunaanTKK) === 'boolean' ? tertibPenggunaanTKK :  '',
+            pemberianPekerjaan: typeof(tertibPemberianPekerjaan) === 'boolean' ? tertibPemberianPekerjaan :  '',
+            ketersediaanDokumenStandarK4: typeof(tertibKetersediaanDokumenStandarK4) === 'boolean' ? tertibKetersediaanDokumenStandarK4 :  '',
+            penerapanSMKK: typeof(tertibPenerapanSMKK) === 'boolean' ? tertibPenerapanSMKK :  '',
+            antisipasiKecelakaan: typeof(tertibAntisipasiKecelakaan) === 'boolean' ? tertibAntisipasiKecelakaan :  '',
+            penerapanManajemenMutu: typeof(tertibPenerapanManajemenMutu) === 'boolean' ? tertibPenerapanManajemenMutu :  '',
+            pemenuhanPenyediaanMPK: typeof(tertibPemenuhanPenyediaanMPTK) === 'boolean' ? tertibPemenuhanPenyediaanMPTK :  '',
+            penggunaanMPTK: typeof(tertibPenggunaanMPTK) === 'boolean' ? tertibPenggunaanMPTK :  '',
+            penggunaanPDN: typeof(tertibPenggunaanPDN) === 'boolean' ? tertibPenggunaanPDN :  '',
+            pemenuhanStandarLingkungan: typeof(tertibPemenuhanStandarLingkungan) === 'boolean' ? tertibPemenuhanStandarLingkungan :  '',
+            tertibPengawasan: typeof(tertibPengawasan) === 'boolean' ? tertibPengawasan :  '',
+            catatan: catatan ? catatan : '',
+        });
+    }, [proyekKonstruksi]);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(url, data, proyekKonstruksi.id);
+
+        // post(`${url}`, {
+        //     preserveScroll: true,
+        //     onSuccess: () => {
+        //         reset();
+        //         onClose();
+        //     },
+        //     onError: (errors) => {
+        //         console.log(errors);
+        //         onClose();
+        //         setIsModalErrorOpen(true);
+        //     },
+        // });
+    }
 
     if (!Object.keys(proyekKonstruksi).length) return null;
 
@@ -77,7 +137,7 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="space-y-4">
-                        <form className="grid grid-cols-4 gap-4 text-xs">
+                        <form onSubmit={handleSubmit} className="grid grid-cols-4 gap-4 text-xs">
                             <div className="space-y-4 border-b border-slate-100 pb-4">
                                 <div>
                                     <div className="font-light text-slate-500">Lingkup Pengawasan 1</div>
@@ -86,8 +146,8 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                 <div>
                                     <InputRadio
                                         id="prosesPemilihanPenyediaJasa"
-                                        isTrue={''}
-                                        onInputChange={() => {}}
+                                        isTrue={data.prosesPemilihanPenyediaJasa}
+                                        onInputChange={handleInputChange}
                                         label="Tertib"
                                     />
                                 </div>
@@ -103,8 +163,8 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                     </div>
                                     <InputRadio
                                         id="penerapanStandarKontrak"
-                                        isTrue={''}
-                                        onInputChange={() => {}}
+                                        isTrue={data.penerapanStandarKontrak}
+                                        onInputChange={handleInputChange}
                                         label="Tertib"
                                     />
                                 </div>
@@ -114,8 +174,8 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                     </div>
                                     <InputRadio
                                         id="penggunaanTKKBersertifikat"
-                                        isTrue={''}
-                                        onInputChange={() => {}}
+                                        isTrue={data.penggunaanTKKBersertifikat}
+                                        onInputChange={handleInputChange}
                                         label="Tertib"
                                     />
                                 </div>
@@ -126,8 +186,8 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                     </div>
                                     <InputRadio
                                         id="pemberianPekerjaan"
-                                        isTrue={''}
-                                        onInputChange={() => {}}
+                                        isTrue={data.pemberianPekerjaan}
+                                        onInputChange={handleInputChange}
                                         label="Tertib"
                                     />
                                 </div>
@@ -143,8 +203,8 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                     </div>
                                     <InputRadio
                                         id="ketersediaanDokumenStandarK4"
-                                        isTrue={''}
-                                        onInputChange={() => {}}
+                                        isTrue={data.ketersediaanDokumenStandarK4}
+                                        onInputChange={handleInputChange}
                                         label="Tertib"
                                     />
                                 </div>
@@ -154,8 +214,8 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                     </div>
                                     <InputRadio
                                         id="penerapanSMKK"
-                                        isTrue={''}
-                                        onInputChange={() => {}}
+                                        isTrue={data.penerapanSMKK}
+                                        onInputChange={handleInputChange}
                                         label="Tertib"
                                     />
                                 </div>
@@ -165,8 +225,8 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                     </div>
                                     <InputRadio
                                         id="antisipasiKecelakaan"
-                                        isTrue={''}
-                                        onInputChange={() => {}}
+                                        isTrue={data.antisipasiKecelakaan}
+                                        onInputChange={handleInputChange}
                                         label="Tertib"
                                     />
                                 </div>
@@ -179,8 +239,8 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                 <div>
                                     <InputRadio
                                         id="penerapanManajemenMutu"
-                                        isTrue={''}
-                                        onInputChange={() => {}}
+                                        isTrue={data.penerapanManajemenMutu}
+                                        onInputChange={handleInputChange}
                                         label="Tertib"
                                     />
                                 </div>
@@ -196,8 +256,8 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                     </div>
                                     <InputRadio
                                         id="pemenuhanPenyediaanMPK"
-                                        isTrue={''}
-                                        onInputChange={() => {}}
+                                        isTrue={data.pemenuhanPenyediaanMPK}
+                                        onInputChange={handleInputChange}
                                         label="Tertib"
                                     />
                                 </div>
@@ -207,8 +267,8 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                     </div>
                                     <InputRadio
                                         id="penggunaanMPTK"
-                                        isTrue={''}
-                                        onInputChange={() => {}}
+                                        isTrue={data.penggunaanMPTK}
+                                        onInputChange={handleInputChange}
                                         label="Tertib"
                                     />
                                 </div>
@@ -218,8 +278,8 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                     </div>
                                     <InputRadio
                                         id="penggunaanPDN"
-                                        isTrue={''}
-                                        onInputChange={() => {}}
+                                        isTrue={data.penggunaanPDN}
+                                        onInputChange={handleInputChange}
                                         label="Tertib"
                                     />
                                 </div>
@@ -235,16 +295,38 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                     </div>
                                     <InputRadio
                                         id="pemenuhanStandarLingkungan"
-                                        isTrue={''}
-                                        onInputChange={() => {}}
+                                        isTrue={data.pemenuhanStandarLingkungan}
+                                        onInputChange={handleInputChange}
                                         label="Tertib"
                                     />
                                 </div>
                             </div>
-                            <div className="col-span-4 flex justify-end items-center gap-x-2">
+                            <div className="col-span-3 grid grid-cols-3 gap-x-4 gap-y-1.5">
+                                <div className="space-y-2 text-xs">
+                                    <div>
+                                        <div className="text-slate-800">Hasil Pengawasan <span className="text-red-400">*</span></div>
+                                        <div className="font-light text-[11px] text-slate-500">Kesimpulan Verifikasi Pengawasan</div>
+                                    </div>
+                                    <InputRadio
+                                        id="tertibPengawasan"
+                                        isTrue={data.tertibPengawasan}
+                                        onInputChange={handleInputChange}
+                                        label="Tertib"
+                                    />
+                                </div>
+                                <div className="col-span-2 space-y-2 text-xs">
+                                    <label htmlFor="catatan" className="block text-slate-800">Catatan Pengawasan</label>
+                                    <textarea
+                                        name="catatan" id="catatan" rows="2"
+                                        value={data.catatan} onChange={e => setData({ ...data, catatan: e.target.value})}
+                                        className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-span-1 flex justify-end items-end gap-x-2">
                                 <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-3" onClick={onClose}>Batal</button>
                                 <button type="submit" className="flex justify-center items-center gap-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-3">
-                                    {/* { processing && <LiaSpinnerSolid className="animate-spin" />} */}
+                                    { processing && <LiaSpinnerSolid className="animate-spin" />}
                                     Verifikasi
                                 </button>
                             </div>
@@ -256,11 +338,11 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                                         <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">#</th>
                                         <th scope="col" rowSpan="2" className="p-4 font-medium min-w-48 border-r border-slate-200">Tanggal<br />Pengawasan</th>
                                         <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">Proses Pemilihan Penyedia Jasa</th>
-                                    <th scope="col" colSpan="3" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Pengawasan terhadap Kontrak Kerja Konstruksi</th>
-                                    <th scope="col" colSpan="3" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Pengawasan terhadap Penerapan Standar Keamanan, Keselamatan, Kesehatan, dan Keberlanjutan Konstruksi</th>
-                                    <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">Penerapan Sistem Manajemen Mutu Konstruksi</th>
-                                    <th scope="col" colSpan="3" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Pengelolaan dan Penggunaan Material, Peralatan, dan Teknologi Konstruksi</th>
-                                    <th scope="col" colSpan="1" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200 min-w-48">Pengelolaan dan Pemanfaatan Sumber Material Konstruksi</th>
+                                        <th scope="col" colSpan="3" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Pengawasan terhadap Kontrak Kerja Konstruksi</th>
+                                        <th scope="col" colSpan="3" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Pengawasan terhadap Penerapan Standar Keamanan, Keselamatan, Kesehatan, dan Keberlanjutan Konstruksi</th>
+                                        <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">Penerapan Sistem Manajemen Mutu Konstruksi</th>
+                                        <th scope="col" colSpan="3" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Pengelolaan dan Penggunaan Material, Peralatan, dan Teknologi Konstruksi</th>
+                                        <th scope="col" colSpan="1" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200 min-w-48">Pengelolaan dan Pemanfaatan Sumber Material Konstruksi</th>
                                     </tr>
                                     <tr className="border-b border-slate-200">
                                         <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Penerapan Standar Kontrak</th>

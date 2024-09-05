@@ -12,4 +12,9 @@ class TertibUsahaController extends Controller
     {
         return Inertia::render('Rekapitulasi/TertibUsaha/Index');
     }
+
+    public function show(string $tahun, string $fileName)
+    {
+        return Inertia::render('Rekapitulasi/TertibUsaha/Show');
+    }
 }

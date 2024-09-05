@@ -267,7 +267,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 Route::get('/', 'index');
                 // Route::post('/', 'store');
 
-                // Route::get('/{fileName}', 'show');
+                Route::get('/{fileName}', 'show');
             });
 
             // Route::controller(App\Http\Controllers\Rekapitulasi\UsahaController::class)

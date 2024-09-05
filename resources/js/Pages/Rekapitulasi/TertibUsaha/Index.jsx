@@ -38,7 +38,7 @@ const RekapitulasiTertibUsahaIndex = ({ data }) => {
                             </div>
                             <div>
                                 <a
-                                    href={`/admin/rekapitulasi/${tahun}/penyelenggaraan/rekapitulasi-penyelenggaraan-${tahun}.pdf`}
+                                    href={`/admin/rekapitulasi/${tahun}/tertib-usaha/rekapitulasi-tertib-usaha-${tahun}.pdf`}
                                     target="_blank"
                                     className="w-full flex justify-center items-center space-x-1 text-blue-500 border border-blue-400 rounded text-xs tracking-wide px-3 py-2.5 hover:bg-slate-100 hover:text-blue-500 focus:border-blue-400 focus:ring-blue-400 focus:text-blue-500"
                                 >
@@ -73,8 +73,8 @@ const RekapitulasiTertibUsahaIndex = ({ data }) => {
                                 <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 uppercase">
                                     <tr className="border-b border-slate-200">
                                         <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">#</th>
-                                        <th scope="col" rowSpan="2" className="p-4 font-medium min-w-64 border-r border-slate-200">Nama Badan Usaha /<br />NIB</th>
-                                        <th scope="col" rowSpan="2" className="p-4 font-medium min-w-48 border-r border-slate-200">PJBU</th>
+                                        <th scope="col" rowSpan="2" className="p-4 font-medium min-w-52 border-r border-slate-200">Nama Badan Usaha /<br />NIB</th>
+                                        <th scope="col" rowSpan="2" className="p-4 font-medium min-w-32 border-r border-slate-200">PJBU</th>
                                         <th scope="col" colSpan="4" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Kesesuaian Kegiatan Konstruksi</th>
                                         <th scope="col" colSpan="2" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Kesesuaian Kegiatan Usaha Jasa Konstruksi dan Segmentasi Pasar Jasa Konstruksi</th>
                                         <th scope="col" colSpan="2" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Pemenuhan Persyaratan Usaha</th>
@@ -88,8 +88,8 @@ const RekapitulasiTertibUsahaIndex = ({ data }) => {
                                         <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Layanan</th>
                                         <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Bentuk</th>
                                         <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Kualifikasi</th>
-                                        <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">SBU</th>
-                                        <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">NIB</th>
+                                        <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200 min-w-20">SBU</th>
+                                        <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200 min-w-20">NIB</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-slate-700">

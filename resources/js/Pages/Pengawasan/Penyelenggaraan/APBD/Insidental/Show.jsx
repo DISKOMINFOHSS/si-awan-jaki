@@ -2,16 +2,29 @@ import React from "react";
 
 import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
+import Dropdown from "../../../../../Components/Dropdown";
+import DaftarLingkupPengawasanInsidental from "../../../../../Components/Proyek/APBD/DaftarLingkupPengawasanInsidental";
 import { InformasiProyekKonstruksi, InformasiUmumPengawasan } from "../../../../../Components/Proyek/InformasiPengawasan";
+
+import useToggleWithClickOutside from "../../../../../Hooks/useToggleWithClickOutside";
 
 import {
     LiaHomeSolid,
+    LiaEllipsisHSolid,
+    LiaInfoCircleSolid,
+    LiaListAltSolid
 } from "react-icons/lia";
 
 const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
     console.log(data);
     const { pengawasan } = data;
-    const { proyek_konstruksi } = pengawasan;
+    const { proyek_konstruksi: proyekKonstruksi, daftar_lingkup_pengawasan:daftarLingkupPengawasan } = pengawasan;
+
+    const [
+        moreDropdownRef,
+        isMoreDropdownOpened,
+        toggleMoreDropdown
+    ] = useToggleWithClickOutside(false);
 
     return (
         <>
@@ -24,13 +37,55 @@ const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
             <div className="flex justify-between items-center gap-x-5 mt-2 mb-4">
                 <div>
                     <h3 className="font-light text-xs text-slate-500">Pengawasan Tertib Penyelenggaraan Jasa Konstruksi</h3>
-                    <h1 className="text-base text-slate-800 leading-tight">{proyek_konstruksi.namaPaket}</h1>
+                    <h1 className="text-base text-slate-800 leading-tight">{proyekKonstruksi.namaPaket}</h1>
+                </div>
+                <div className="flex items-center gap-x-2.5">
+                    {/* <button
+                        type="button"
+                        className="w-fit whitespace-nowrap flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                        onClick={() => setIsModalVerificationOpen(true)}
+                    >
+                        <LiaListAltSolid size={18} />
+                        <span>Verifikasi Pengawasan</span>
+                    </button> */}
+                    <Dropdown ref={moreDropdownRef}>
+                        <Dropdown.Toggle
+                            onClick={toggleMoreDropdown}
+                            className="w-fit min-h-10 flex justify-center items-center space-x-1 text-slate-500 border border-slate-200 rounded text-xs tracking-wide p-2.5 shadow-sm"
+                        >
+                            <LiaEllipsisHSolid size={16} />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu
+                            isVisible={isMoreDropdownOpened}
+                            className="min-w-full flex flex-col right-0 py-2 space-y-0.5 text-xs text-slate-700"
+                        >
+                            <a
+                                href={`/admin/pendataan/proyek-konstruksi/${proyekKonstruksi.id}`}
+                                target="_blank"
+                                className="flex items-center gap-x-3 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                            >
+                                <LiaInfoCircleSolid size={16} />
+                                <span>Informasi Proyek Konstruksi</span>
+                            </a>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-3 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                            >
+                                <LiaListAltSolid size={16} />
+                                <span>Verifikasi Pengawasan</span>
+                            </button>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-4 w-full mt-4">
-                {/* <InformasiProyekKonstruksi proyekKonstruksi={proyekKonstruksi} />
-                <InformasiUmumPengawasan pengawasan={pengawasan} /> */}
+            <div className="grid grid-cols-2 gap-4 w-full my-4">
+                <InformasiProyekKonstruksi proyekKonstruksi={proyekKonstruksi} />
+                {/* <InformasiUmumPengawasan pengawasan={pengawasan} /> */}
             </div>
+            <DaftarLingkupPengawasanInsidental
+                pengawasanId={pengawasan.id}
+                daftarLingkupPengawasan={daftarLingkupPengawasan}
+            />
         </>
     );
 }

@@ -46,7 +46,11 @@ const PengawasanPenyelenggaraanAPBDIndex = ({ data }) => {
                         daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Rutin')}
                     />
                 </Tabs.Tab>
-                <Tabs.Tab>Pengawasan Insidental</Tabs.Tab>
+                <Tabs.Tab>
+                    <DaftarPengawasan
+                        daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Insidental')}
+                    />
+                </Tabs.Tab>
             </Tabs>
             <FormAddPengawasan
                 isVisible={isModalPengawasanOpen}

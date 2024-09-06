@@ -141,6 +141,13 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                         Route::get('/', 'show');
                         Route::post('/', 'store');
                     });
+
+                    Route::name('insidental.')->prefix('/insidental/{id}')
+                    ->controller(App\Http\Controllers\Pengawasan\Penyelenggaraan\APBD\PengawasanInsidentalController::class)
+                    ->group(function () {
+                        Route::get('/', 'show');
+                        // Route::post('/', 'store');
+                    });
                 });
             });
 

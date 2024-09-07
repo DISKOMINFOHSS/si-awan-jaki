@@ -16,6 +16,7 @@ import {
     LiaListAltSolid
 } from "react-icons/lia";
 import Card from "../../../../../Components/Card";
+import FormVerifikasiPengawasan from "../../../../../Components/Proyek/FormVerifikasiPengawasan";
 
 const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
     console.log(data);
@@ -44,6 +45,8 @@ const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
         toggleMoreDropdown
     ] = useToggleWithClickOutside(false);
 
+    const [ isModalVerificationOpen, setIsModalVerificationOpen ] = React.useState(false);
+
     return (
         <>
             <Breadcrumb>
@@ -55,17 +58,17 @@ const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
             <div className="flex justify-between items-center gap-x-5 mt-2 mb-4">
                 <div>
                     <h3 className="font-light text-xs text-slate-500">Pengawasan Tertib Penyelenggaraan Jasa Konstruksi</h3>
-                    <h1 className="text-base text-slate-800 leading-tight">{proyekKonstruksi.namaPaket}</h1>
+                    <h1 className="font-medium text-base text-slate-800 leading-tight">{proyekKonstruksi.namaPaket}</h1>
                 </div>
                 <div className="flex items-center gap-x-2.5">
-                    {/* <button
+                    <button
                         type="button"
                         className="w-fit whitespace-nowrap flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
                         onClick={() => setIsModalVerificationOpen(true)}
                     >
                         <LiaListAltSolid size={18} />
                         <span>Verifikasi Pengawasan</span>
-                    </button> */}
+                    </button>
                     <Dropdown ref={moreDropdownRef}>
                         <Dropdown.Toggle
                             onClick={toggleMoreDropdown}
@@ -88,6 +91,7 @@ const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
                             <button
                                 type="button"
                                 className="flex items-center gap-x-3 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpen(true)}}
                             >
                                 <LiaListAltSolid size={16} />
                                 <span>Verifikasi Pengawasan</span>
@@ -219,6 +223,11 @@ const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
             <DaftarLingkupPengawasanInsidental
                 pengawasanId={pengawasan.id}
                 daftarLingkupPengawasan={daftarLingkupPengawasan}
+            />
+            <FormVerifikasiPengawasan
+                isVisible={isModalVerificationOpen}
+                onClose={() => setIsModalVerificationOpen(false)}
+                pengawasan={pengawasan}
             />
         </>
     );

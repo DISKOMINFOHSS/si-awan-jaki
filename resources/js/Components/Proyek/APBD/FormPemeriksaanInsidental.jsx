@@ -7,22 +7,40 @@ import {
     LiaSpinnerSolid
 } from "react-icons/lia";
 
-const KesimpulanPemeriksaan = ({ indikatorId, pemeriksaanId, id, kesimpulan }) => {
-    return kesimpulan.split('/').length !== 1 ? (
+const KesimpulanPemeriksaan = ({
+    indikatorId,
+    pemeriksaanId,
+    id,
+    kesimpulan,
+    hasil,
+    onHasilChange
+}) => {
+    const [ hasilPemeriksaan, setHasilPemeriksaan ] = React.useState(hasil ? hasil : '');
+
+    function handleInputChange(e) {
+        setHasilPemeriksaan(e.target.value);
+        onHasilChange({ id: id, hasil: e.target.value });
+    }
+
+    return kesimpulan.split(' / ').length !== 1 ? (
         <>
             <div className="flex items-start gap-x-2">
                 <input
-                    type="radio" id={`true-${indikatorId}-${pemeriksaanId}-${id}`} name={`kesimpulan-${indikatorId}-${pemeriksaanId}-${id}`} value={true}
+                    type="radio" id={`true-${indikatorId}-${pemeriksaanId}-${id}`} name={`kesimpulan-${indikatorId}-${pemeriksaanId}-${id}`}
+                    // value={true} onChange={handleInputChange} checked={hasilPemeriksaan === true}
+                    value={kesimpulan.split(' / ')[0]} onChange={handleInputChange} checked={hasilPemeriksaan === kesimpulan.split(' / ')[0]}
                     className="w-3.5 h-3.5 mt-0.5 text-blue-600 border-slate-200 focus:ring-blue-500 focus:ring-2"
                 />
-                <label htmlFor={`true-${indikatorId}-${pemeriksaanId}-${id}`} className="text-slate-700">{kesimpulan.split('/')[0]}</label>
+                <label htmlFor={`true-${indikatorId}-${pemeriksaanId}-${id}`} className="text-slate-700">{kesimpulan.split(' / ')[0]}</label>
             </div>
             <div className="flex items-start gap-x-2">
                 <input
-                    type="radio" id={`false-${indikatorId}-${pemeriksaanId}-${id}`} name={`kesimpulan-${indikatorId}-${pemeriksaanId}-${id}`} value={false}
+                    type="radio" id={`false-${indikatorId}-${pemeriksaanId}-${id}`} name={`kesimpulan-${indikatorId}-${pemeriksaanId}-${id}`}
+                    // value={false} onChange={handleInputChange} checked={hasilPemeriksaan === false}
+                    value={kesimpulan.split(' / ')[1]} onChange={handleInputChange} checked={hasilPemeriksaan === kesimpulan.split(' / ')[1]}
                     className="w-3.5 h-3.5 mt-0.5 text-blue-600 border-slate-200 focus:ring-blue-500 focus:ring-2"
                 />
-                <label htmlFor={`false-${indikatorId}-${pemeriksaanId}-${id}`} className="text-slate-700">{kesimpulan.split('/')[1]} {kesimpulan.split('/')[0]}</label>
+                <label htmlFor={`false-${indikatorId}-${pemeriksaanId}-${id}`} className="text-slate-700">{kesimpulan.split(' / ')[1]} {kesimpulan.split(' / ')[0]}</label>
             </div>
         </>
     ) : (
@@ -31,7 +49,8 @@ const KesimpulanPemeriksaan = ({ indikatorId, pemeriksaanId, id, kesimpulan }) =
             <div className="flex items-center gap-x-2 mt-1">
                 <input
                     type="text" name={`kesimpulan-${indikatorId}-${pemeriksaanId}-${id}`}
-                    className="px-3 py-1 block w-8 rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                    value={hasilPemeriksaan} onChange={handleInputChange}
+                    className="px-2 py-1 block w-10 rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                 />
                 <span>{kesimpulan.split(/[()]/)[1]}</span>
             </div>
@@ -39,7 +58,38 @@ const KesimpulanPemeriksaan = ({ indikatorId, pemeriksaanId, id, kesimpulan }) =
     );
 }
 
-const FormPemeriksaan = ({ indikatorId, id, pemeriksaan, kesimpulan }) => {
+const FormPemeriksaan = ({
+    indikatorId,
+    id,
+    pemeriksaan,
+    kesimpulan,
+    hasil,
+    onHasilChange,
+    catatan,
+    onCatatanChange,
+}) => {
+    const [ values, setValues ] = React.useState({
+        hasil: hasil ? hasil : Array(kesimpulan.length).fill(undefined),
+        catatan: catatan ? catatan : '',
+    });
+
+    function handleHasilChange(hasilPemeriksaan) {
+        const updatedHasil = values.hasil.map((h, i) => hasilPemeriksaan.id === i ? hasilPemeriksaan.hasil : h);
+        setValues({ ...values, hasil: updatedHasil});
+        onHasilChange({
+            id: id,
+            hasil: updatedHasil,
+        });
+    }
+
+    function handleCatatanChange(e) {
+        setValues({ ...values, catatan: e.target.value});
+        onCatatanChange({
+            id: id,
+            catatan: e.target.value,
+        });
+    }
+
     return (
         <div className="space-y-4 text-slate-800 mb-4">
             <div className="grid grid-cols-2 gap-4">
@@ -62,6 +112,8 @@ const FormPemeriksaan = ({ indikatorId, id, pemeriksaan, kesimpulan }) => {
                                         pemeriksaanId={id}
                                         id={i}
                                         kesimpulan={k}
+                                        hasil={values.hasil[i]}
+                                        onHasilChange={handleHasilChange}
                                     />
                                     { i+1 !== kesimpulan.length && <div className="col-span-2 border-b border-slate-100"></div> }
                                 </div>
@@ -72,7 +124,7 @@ const FormPemeriksaan = ({ indikatorId, id, pemeriksaan, kesimpulan }) => {
                         <label htmlFor={`catatan-${indikatorId}-${id}`} className="block mb-2 text-xs font-medium text-slate-800">Catatan Pemeriksaan</label>
                         <textarea
                             name={`catatan-${indikatorId}-${id}`} id={`catatan-${indikatorId}-${id}`} rows="2"
-                            // value={hasilPemeriksaan.catatan} onChange={handleInputChange}
+                            value={values.catatan} onChange={handleCatatanChange}
                             className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                         />
                     </div>
@@ -86,9 +138,26 @@ export default ({
     pengawasanId,
     indikator,
 }) => {
-    const { id, indikator: namaIndikator, caraPemeriksaan, kesimpulan } = indikator;
+    const { id, indikator: namaIndikator, caraPemeriksaan, kesimpulan, hasilPemeriksaan } = indikator;
 
-    const { data, setData, processing, post } = useForm({});
+    const { data, setData, processing, post } = useForm({
+        indikatorId: id,
+        hasil: hasilPemeriksaan ? hasilPemeriksaan.hasil : Array(caraPemeriksaan.length).fill(undefined),
+        catatan: hasilPemeriksaan ? hasilPemeriksaan.catatan : Array(caraPemeriksaan.length).fill(undefined),
+    });
+
+    function handleHasilChange(hasil) {
+        setData('hasil', data.hasil.map((h, i) => hasil.id === i ? hasil.hasil : h));
+    }
+
+    function handleCatatanChange(catatan) {
+        setData('catatan', data.catatan.map((c, i) => catatan.id === i ? catatan.catatan : c ));
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(data);
+    }
 
     return (
         <>
@@ -118,6 +187,10 @@ export default ({
                                             id={i}
                                             pemeriksaan={pemeriksaan}
                                             kesimpulan={kesimpulan[i]}
+                                            catatan={data.catatan[i]}
+                                            onCatatanChange={handleCatatanChange}
+                                            hasil={data.hasil[i]}
+                                            onHasilChange={handleHasilChange}
                                         />
                                         { i+1 !== caraPemeriksaan.length && <div className="my-4 border-b border-slate-200"></div> }
                                     </React.Fragment>
@@ -128,7 +201,7 @@ export default ({
                                     type="button"
                                     disabled={processing}
                                     className="flex justify-center items-center gap-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2.5 px-3"
-                                    // onClick={handleSubmit}
+                                    onClick={handleSubmit}
                                 >
                                     { processing && <LiaSpinnerSolid className="animate-spin" /> }
                                     Simpan

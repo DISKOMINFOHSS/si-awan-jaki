@@ -2,12 +2,13 @@ import React from "react";
 
 import Tabs from "../../Tabs";
 import Card from "../../Card";
+import FormPemeriksaanInsidental from "./FormPemeriksaanInsidental";
 
 export default ({
     pengawasanId,
     daftarLingkupPengawasan
 }) => {
-    const tabList = daftarLingkupPengawasan.map(({ id, lingkup_pengawasan: lingkupPengawasan }) => ({ label: `${id}. ${lingkupPengawasan}`}));
+    const tabList = daftarLingkupPengawasan.map(({ id, lingkupPengawasan }) => ({ label: `${id}. ${lingkupPengawasan}`}));
 
     return (
         <>
@@ -16,11 +17,11 @@ export default ({
                     daftarLingkupPengawasan.map((lingkupPengawasan) => (
                         <Tabs.Tab key={lingkupPengawasan.id}>
                             <div>
-                                <h4 className="font-light text-xs text-slate-500">Lingkup Pengawasan</h4>
-                                <h3 className="font-medium text-slate-800">{`${lingkupPengawasan.id}. ${lingkupPengawasan.lingkup_pengawasan}`}</h3>
+                                <h4 className="font-light text-xs text-slate-500">Lingkup Pengawasan Tertib Penyelenggaraan</h4>
+                                <h3 className="font-medium text-slate-800">{`${lingkupPengawasan.id}. ${lingkupPengawasan.lingkupPengawasan}`}</h3>
                             </div>
-                            {
-                                lingkupPengawasan.indikator_apbd.map(({ id, indikator, cara_pemeriksaan, kesimpulan }) => (
+                            {/* {
+                                lingkupPengawasan.indikator.map(({ id, indikator, caraPemeriksaan, kesimpulan }) => (
                                     <div key={id} className="grid grid-cols-4 gap-5 my-4">
                                         <div className="text-xs space-y-2">
                                             <div>
@@ -30,17 +31,12 @@ export default ({
                                                     <span className="text-justify">{indikator}</span>
                                                 </div>
                                             </div>
-                                            {/* <div>
-                                                <h4 className="font-medium text-slate-800">Dokumen yang diperiksa</h4>
-                                                <p className="font-light text-slate-500 text-justify">
-                                                </p>
-                                            </div> */}
                                         </div>
                                         <div className="col-span-3">
                                             <Card>
                                                 <Card.Body className="p-4">
                                                     {
-                                                        cara_pemeriksaan.map((pemeriksaan, i) => (
+                                                        caraPemeriksaan.map((pemeriksaan, i) => (
                                                             <React.Fragment key={i}>
                                                                 <div className="space-y-4 text-slate-800 mb-4">
                                                                     <div className="grid grid-cols-2 gap-4">
@@ -105,7 +101,7 @@ export default ({
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                { i+1 !== cara_pemeriksaan.length && <div className="my-4 border-b border-slate-200"></div> }
+                                                                { i+1 !== caraPemeriksaan.length && <div className="my-4 border-b border-slate-200"></div> }
                                                             </React.Fragment>
                                                         ))
                                                     }
@@ -116,7 +112,6 @@ export default ({
                                                             className="flex justify-center items-center gap-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2.5 px-3"
                                                             // onClick={handleSubmit}
                                                         >
-                                                            {/* { processing && <LiaSpinnerSolid className="animate-spin" /> } */}
                                                             Simpan
                                                         </button>
                                                     </div>
@@ -124,6 +119,15 @@ export default ({
                                             </Card>
                                         </div>
                                     </div>
+                                ))
+                            } */}
+                            {
+                                lingkupPengawasan.indikator.map((indikator) => (
+                                    <FormPemeriksaanInsidental
+                                        key={indikator.id}
+                                        pengawasanId={pengawasanId}
+                                        indikator={indikator}
+                                    />
                                 ))
                             }
                         </Tabs.Tab>

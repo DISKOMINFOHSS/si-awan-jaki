@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pengawasan\Penyelenggaraan\APBD;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Pengawasan\TertibPenyelenggaraan\PengawasanInsidentalAPBDResource;
 use App\Services\Penyelenggaraan\PengawasanPenyelenggaraanService;
 use App\Services\Penyelenggaraan\PengawasanInsidentalPenyelenggaraanAPBDService;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class PengawasanInsidentalController extends Controller
 
         return Inertia::render('Pengawasan/Penyelenggaraan/APBD/Insidental/Show', [
             'data' => [
-                'pengawasan' => $pengawasan,
+                'pengawasan' => new PengawasanInsidentalAPBDResource($pengawasan),
             ],
         ]);
     }

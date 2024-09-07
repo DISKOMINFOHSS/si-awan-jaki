@@ -127,6 +127,7 @@ export default ({
                                         key={indikator.id}
                                         pengawasanId={pengawasanId}
                                         indikator={indikator}
+                                        lingkupPengawasan={lingkupPengawasan.lingkupPengawasan}
                                     />
                                 ))
                             }

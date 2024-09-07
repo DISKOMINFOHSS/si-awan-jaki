@@ -21,10 +21,14 @@ class LingkupPengawasanInsidentalAPBDResource extends JsonResource
                 function ($indikator)
                 {
                     return [
-                        'id'              => $indikator->id,
-                        'indikator'       => $indikator->indikator,
-                        'caraPemeriksaan' => $indikator->cara_pemeriksaan,
-                        'kesimpulan'      => $indikator->kesimpulan
+                        'id'               => $indikator->id,
+                        'indikator'        => $indikator->indikator,
+                        'caraPemeriksaan'  => $indikator->cara_pemeriksaan,
+                        'kesimpulan'       => $indikator->kesimpulan,
+                        'hasilPemeriksaan' => [
+                            'hasil'   => $indikator->kesimpulan_pemeriksaan,
+                            'catatan' => $indikator->catatan_pemeriksaan,
+                        ],
                     ];
                 }
             ),

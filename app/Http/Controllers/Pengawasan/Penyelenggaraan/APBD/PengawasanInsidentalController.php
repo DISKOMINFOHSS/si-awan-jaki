@@ -35,4 +35,31 @@ class PengawasanInsidentalController extends Controller
             ],
         ]);
     }
+
+    public function store(string $id, Request $request)
+    {
+        if (!$this->pengawasanService->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'indikatorId' => 'required|exists:master_indikator_pengawasan_penyelenggaraan_dana_apbd,id',
+            'hasil'       => 'required|array',
+            'catatan'     => 'required|array',
+        ]);
+        $userId = auth()->user()->id;
+
+        // dd($request->all());
+        $this->pengawasanInsidentalService->addPemeriksaanPengawasan(
+            $id,
+            $validatedData['indikatorId'],
+            [
+                'kesimpulan_pemeriksaan' => json_encode($validatedData['hasil']),
+                'catatan_pemeriksaan'    => json_encode($validatedData['catatan']),
+                'created_by'             => $userId,
+            ],
+        );
+
+        return back();
+    }
 }

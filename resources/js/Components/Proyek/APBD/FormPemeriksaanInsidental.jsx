@@ -6,6 +6,8 @@ import Card from "../../Card";
 import {
     LiaSpinnerSolid
 } from "react-icons/lia";
+import ModalError from "../../ModalError";
+import ModalSuccess from "../../ModalSuccess";
 
 const KesimpulanPemeriksaan = ({
     indikatorId,
@@ -137,14 +139,18 @@ const FormPemeriksaan = ({
 export default ({
     pengawasanId,
     indikator,
+    lingkupPengawasan,
 }) => {
     const { id, indikator: namaIndikator, caraPemeriksaan, kesimpulan, hasilPemeriksaan } = indikator;
 
     const { data, setData, processing, post } = useForm({
         indikatorId: id,
-        hasil: hasilPemeriksaan ? hasilPemeriksaan.hasil : Array(caraPemeriksaan.length).fill(undefined),
-        catatan: hasilPemeriksaan ? hasilPemeriksaan.catatan : Array(caraPemeriksaan.length).fill(undefined),
+        hasil: hasilPemeriksaan.hasil ? hasilPemeriksaan.hasil : Array(caraPemeriksaan.length).fill(undefined),
+        catatan: hasilPemeriksaan.catatan ? hasilPemeriksaan.catatan : Array(caraPemeriksaan.length).fill(undefined),
     });
+
+    const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
+    const [ isModalSuccessOpen, setIsModalSuccessOpen ] = React.useState(false);
 
     function handleHasilChange(hasil) {
         setData('hasil', data.hasil.map((h, i) => hasil.id === i ? hasil.hasil : h));
@@ -157,6 +163,17 @@ export default ({
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
+
+        post(`/admin/pengawasan/penyelenggaraan/APBD/insidental/${pengawasanId}`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setIsModalSuccessOpen(true);
+            },
+            onError: (errors) => {
+                console.log(errors);
+                setIsModalErrorOpen(true);
+            }
+        });
     }
 
     return (
@@ -211,6 +228,35 @@ export default ({
                     </Card>
                 </div>
             </div>
+            <ModalError
+                isVisible={isModalErrorOpen}
+                onClose={() => setIsModalErrorOpen(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Gagal menambahkan pemeriksaan {lingkupPengawasan} pada indikator {namaIndikator}. Silakan periksa kembali informasi yang diisi.
+                </div>
+            </ModalError>
+            <ModalSuccess
+                isVisible={isModalSuccessOpen}
+                onClose={() => setIsModalSuccessOpen(false)}
+            >
+                <div className="my-2.5">
+                    <div className="font-medium text-center text-slate-700">Berhasil!</div>
+                    <div className="font-light text-justify text-xs text-slate-500 mb-4">
+                        Pemeriksaan {lingkupPengawasan} pada indikator {namaIndikator} berhasil ditambahkan.
+                    </div>
+                </div>
+                <div className="w-full">
+                    <button
+                        type="button"
+                        className="w-full bg-slate-100 text-slate-700 font-medium text-xs rounded py-2 px-2.5"
+                        onClick={() => setIsModalSuccessOpen(false)}
+                    >
+                        Tutup
+                    </button>
+                </div>
+            </ModalSuccess>
         </>
     )
 }

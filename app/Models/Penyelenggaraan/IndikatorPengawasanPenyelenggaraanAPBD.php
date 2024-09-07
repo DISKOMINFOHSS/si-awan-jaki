@@ -15,8 +15,10 @@ class IndikatorPengawasanPenyelenggaraanAPBD extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'cara_pemeriksaan' => 'array',
-        'kesimpulan'       => 'array',
+        'cara_pemeriksaan'       => 'array',
+        'kesimpulan'             => 'array',
+        'kesimpulan_pemeriksaan' => 'array',
+        'catatan_pemeriksaan'    => 'array',
     ];
 
     public function lingkupPengawasan(): BelongsTo

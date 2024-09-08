@@ -73,8 +73,8 @@ class Lingkup4Controller extends Controller
                     ],
                     [
                         'pengawasan_lingkup_4' => $pengawasanId,
-                        'created_at'           => now(),
-                        'updated_at'           => now(),
+                        // 'created_at'           => now(),
+                        // 'updated_at'           => now(),
                     ],
                 );
             }

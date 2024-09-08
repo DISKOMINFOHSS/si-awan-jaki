@@ -77,9 +77,9 @@ class Lingkup5Controller extends Controller
                     'end'   => ($tanggalPengawasan >= strtotime($tahunPengawasan . '-01-01')) && ($tanggalPengawasan <= strtotime($tahunPengawasan . '-06-30')) ? ($tahunPengawasan . '-06-30') : ($tahunPengawasan . '-12-31'),
                 ],
                 [
-                    'pengawasan_lingkup_2' => $pengawasanId,
-                    'created_at'           => now(),
-                    'updated_at'           => now(),
+                    'pengawasan_lingkup_5' => $pengawasanId,
+                    // 'created_at'           => now(),
+                    // 'updated_at'           => now(),
                 ],
             );
         }

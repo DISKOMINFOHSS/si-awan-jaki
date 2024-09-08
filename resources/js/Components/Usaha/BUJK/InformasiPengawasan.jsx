@@ -51,7 +51,7 @@ const InformasiTambahanPengawasan = ({ statusIzinUsaha, statusVerifikasiNIB }) =
                         </div>
                         <div className="flex items-center gap-x-2">
                             <input
-                                type="radio" id="kepemilikanIzinUsahaFalse" name="kepemilikanIzinUsaha" value="0" readOnly checked={!statusIzinUsaha === "Aktif"}
+                                type="radio" id="kepemilikanIzinUsahaFalse" name="kepemilikanIzinUsaha" value="0" readOnly checked={statusIzinUsaha === "Tidak Aktif"}
                                 className="w-3.5 h-3.5 text-blue-600 border-slate-200 focus:ring-blue-500 focus:ring-2"
                             />
                             <label htmlFor="kepemilikanIzinUsahaFalse" className="text-slate-700">Tidak Aktif</label>

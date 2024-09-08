@@ -20,8 +20,10 @@ import {
     LiaListAltSolid,
     LiaEllipsisHSolid,
     LiaInfoCircleSolid,
+    LiaEditSolid,
 } from "react-icons/lia";
 import FormVerifikasiPengawasanLingkup2 from "../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup2";
+import FormEditPengawasanKegiatan from "../../../../../Components/Usaha/BUJK/FormEditPengawasanKegiatan";
 
 const PengawasanBUJKLingkup2Show = ({ data }) => {
     console.log(data);
@@ -34,6 +36,7 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
         toggleMoreDropdown
     ] = useToggleWithClickOutside(false);
 
+    const [ isModalEditOpen, setIsModalEditOpen ] = React.useState(false);
     const [isModalVerificationOpened, setIsModalVerificationOpened] = React.useState(false);
 
     return (
@@ -71,13 +74,21 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                             className="min-w-full flex flex-col right-0 py-2 space-y-0.5 text-xs text-slate-700"
                         >
                             <a
-                                href={`/admin/pendataan/usaha/${usaha.id}`}
+                                href={`/admin/pendataan/usaha/bujk/${usaha.id}`}
                                 target="_blank"
                                 className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
                             >
                                 <LiaInfoCircleSolid size={16} />
                                 <span>Informasi Usaha</span>
                             </a>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalEditOpen(true)}}
+                            >
+                                <LiaEditSolid size={16} />
+                                <span>Edit Pengawasan</span>
+                            </button>
                             <button
                                 type="button"
                                 className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
@@ -147,6 +158,12 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
             <FormVerifikasiPengawasanLingkup2
                 isVisible={isModalVerificationOpened}
                 onClose={() => setIsModalVerificationOpened(false)}
+                lingkupPengawasan={lingkupPengawasan}
+                pengawasan={pengawasan}
+            />
+            <FormEditPengawasanKegiatan
+                isVisible={isModalEditOpen}
+                onClose={() => setIsModalEditOpen(false)}
                 lingkupPengawasan={lingkupPengawasan}
                 pengawasan={pengawasan}
             />

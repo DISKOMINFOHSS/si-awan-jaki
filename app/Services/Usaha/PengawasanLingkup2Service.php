@@ -35,7 +35,7 @@ class PengawasanLingkup2Service
             {
                 $query->select('id', 'nama', 'nib');
             }
-        ])->orderBy('created_by', 'desc')
+        ])->orderBy('tanggal_pengawasan', 'desc')
           ->get();
     }
 
@@ -66,6 +66,24 @@ class PengawasanLingkup2Service
                       );
             }
         ])->where('id', $id)->firstOrFail();
+    }
+
+    public function getPengawasanBUJK(string $id): PengawasanBUJKLingkup2
+    {
+        return PengawasanBUJKLingkup2::find($id);
+    }
+
+    public function updatePengawasanBUJK(string $id, array $data): PengawasanBUJKLingkup2
+    {
+        $pengawasan = PengawasanBUJKLingkup2::find($id);
+
+        $pengawasan->tanggal_pengawasan = $data['tanggal_pengawasan'];
+        $pengawasan->status_izin_usaha = $data['status_izin_usaha'];
+        $pengawasan->status_verifikasi_nib = $data['status_verifikasi_nib'];
+
+        $pengawasan->save();
+
+        return $pengawasan;
     }
 
     public function verifyPengawasanBUJK(string $id, array $data)

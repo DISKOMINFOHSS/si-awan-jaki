@@ -21,9 +21,11 @@ import {
     LiaEllipsisHSolid,
     LiaInfoCircleSolid,
     LiaEditSolid,
+    LiaTrashAltSolid,
 } from "react-icons/lia";
 import FormVerifikasiPengawasanLingkup2 from "../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup2";
 import FormEditPengawasanKegiatan from "../../../../../Components/Usaha/BUJK/FormEditPengawasanKegiatan";
+import ModalDelete from "../../../../../Components/ModalDelete";
 
 const PengawasanBUJKLingkup2Show = ({ data }) => {
     console.log(data);
@@ -38,6 +40,7 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
 
     const [ isModalEditOpen, setIsModalEditOpen ] = React.useState(false);
     const [isModalVerificationOpened, setIsModalVerificationOpened] = React.useState(false);
+    const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
 
     return (
         <>
@@ -96,6 +99,14 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                             >
                                 <LiaListAltSolid size={16} />
                                 <span>Verifikasi Pengawasan</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left text-red-500 hover:bg-slate-100 hover:text-red-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalDeleteOpen(true)}}
+                            >
+                                <LiaTrashAltSolid size={16} />
+                                <span>Hapus Pengawasan</span>
                             </button>
                             {/* <button
                                 type="button"
@@ -167,6 +178,17 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                 lingkupPengawasan={lingkupPengawasan}
                 pengawasan={pengawasan}
             />
+            <ModalDelete
+                isVisible={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+                url={`/admin/pengawasan/usaha/2`}
+                id={pengawasan.id}
+            >
+                <div className="font-medium text-sm text-slate-700 mb-1">Apakah Anda yakin ingin menghapus pengawasan ini?</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Data yang telah dihapus tidak dapat dikembalikan.
+                </div>
+            </ModalDelete>
         </>
     );
 }

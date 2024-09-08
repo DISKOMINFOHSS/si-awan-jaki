@@ -187,6 +187,28 @@ class Lingkup2Controller extends Controller
         return redirect("/admin/pengawasan/usaha/2/$id");
     }
 
+    public function destroy(string $id)
+    {
+        if (!$this->pengawasanLingkup2Service->checkPengawasanBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $pengawasan = $this->pengawasanLingkup2Service->getPengawasanBUJK($id);
+
+        if ($pengawasan->jenis_pengawasan === "Rutin")
+        {
+            $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJKByLingkup2Id($pengawasan->id);
+            $this->pengawasanRutinService->updatePengawasanRutinBUJK(
+                $pengawasanRutin->id,
+                ['pengawasan_lingkup_2' => null]
+            );
+        }
+
+        $this->pengawasanLingkup2Service->deletePengawasanBUJK($id);
+
+        return redirect("/admin/pengawasan/usaha/2");
+    }
+
     public function storeKesesuaianKegiatan(string $id, Request $request)
     {
         if (!$this->pengawasanLingkup2Service->checkPengawasanBUJKExists($id)) {

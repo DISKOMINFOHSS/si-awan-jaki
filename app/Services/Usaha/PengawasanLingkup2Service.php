@@ -28,6 +28,12 @@ class PengawasanLingkup2Service
         return PengawasanBUJKLingkup2::where('id', $id)->exists();
     }
 
+    public function deletePengawasanBUJK(string $id)
+    {
+        $pengawasan = PengawasanBUJKLingkup2::find($id);
+        $pengawasan->delete();
+    }
+
     public function getDaftarPengawasanBUJK(): EloquentCollection
     {
         return PengawasanBUJKLingkup2::with([

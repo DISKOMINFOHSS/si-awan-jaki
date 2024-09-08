@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup5Collection;
 use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup5Resource;
+use App\Services\JenisPengawasan\PengawasanRutinTertibUsahaService;
 use App\Services\Usaha\PendataanBUJKService;
 use App\Services\Usaha\PengawasanUsahaService;
 use App\Services\Usaha\PengawasanLingkup5Service;
@@ -16,16 +17,20 @@ class Lingkup5Controller extends Controller
 {
     protected $bujkService;
     protected $pengawasanService;
+    protected $pengawasanLingkup5Service;
+    protected $pengawasanRutinService;
 
     public function __construct(
         PendataanBUJKService $bujkService,
         PengawasanUsahaService $pengawasanService,
         PengawasanLingkup5Service $pengawasanLingkup5Service,
+        PengawasanRutinTertibUsahaService $pengawasanRutinService,
     )
     {
         $this->bujkService = $bujkService;
         $this->pengawasanService = $pengawasanService;
         $this->pengawasanLingkup5Service = $pengawasanLingkup5Service;
+        $this->pengawasanRutinService = $pengawasanRutinService;
     }
 
     public function index()
@@ -59,6 +64,25 @@ class Lingkup5Controller extends Controller
             'usaha_id'              => $validatedData['usahaId'],
             'created_by'            => $userId,
         ]);
+
+        if ($validatedData['jenis'] === 'Rutin')
+        {
+            $tanggalPengawasan = strtotime($validatedData['tanggal']);
+            $tahunPengawasan = date('Y', $tanggalPengawasan);
+
+            $this->pengawasanRutinService->addPengawasanRutinBUJK(
+                $validatedData['usahaId'],
+                [
+                    'start' => ($tanggalPengawasan >= strtotime($tahunPengawasan . '-01-01')) && ($tanggalPengawasan <= strtotime($tahunPengawasan . '-06-30')) ? ($tahunPengawasan . '-01-01') : ($tahunPengawasan . '-07-01'),
+                    'end'   => ($tanggalPengawasan >= strtotime($tahunPengawasan . '-01-01')) && ($tanggalPengawasan <= strtotime($tahunPengawasan . '-06-30')) ? ($tahunPengawasan . '-06-30') : ($tahunPengawasan . '-12-31'),
+                ],
+                [
+                    'pengawasan_lingkup_2' => $pengawasanId,
+                    'created_at'           => now(),
+                    'updated_at'           => now(),
+                ],
+            );
+        }
 
         return redirect("/admin/pengawasan/usaha/5/$pengawasanId");
     }

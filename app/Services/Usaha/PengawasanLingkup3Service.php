@@ -28,6 +28,12 @@ class PengawasanLingkup3Service
         return PengawasanBUJKLingkup3::where('id', $id)->exists();
     }
 
+    public function deletePengawasanBUJK(string $id)
+    {
+        $pengawasan = PengawasanBUJKLingkup3::find($id);
+        $pengawasan->delete();
+    }
+
     public function getDaftarPengawasanBUJK(): EloquentCollection
     {
         return PengawasanBUJKLingkup3::with([
@@ -62,6 +68,24 @@ class PengawasanLingkup3Service
                       );
             }
         ])->where('id', $id)->firstOrFail();
+    }
+
+    public function getPengawasanBUJK(string $id): PengawasanBUJKLingkup3
+    {
+        return PengawasanBUJKLingkup3::find($id);
+    }
+
+    public function updatePengawasanBUJK(string $id, array $data): PengawasanBUJKLingkup3
+    {
+        $pengawasan = PengawasanBUJKLingkup3::find($id);
+
+        $pengawasan->tanggal_pengawasan = $data['tanggal_pengawasan'];
+        $pengawasan->status_izin_usaha = $data['status_izin_usaha'];
+        $pengawasan->status_verifikasi_nib = $data['status_verifikasi_nib'];
+
+        $pengawasan->save();
+
+        return $pengawasan;
     }
 
     public function verifyPengawasanBUJK(string $id, array $data)

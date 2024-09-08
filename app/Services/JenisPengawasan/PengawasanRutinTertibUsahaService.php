@@ -40,5 +40,10 @@ class PengawasanRutinTertibUsahaService
         return PengawasanBUJKRutin::where('pengawasan_lingkup_2', $pengawasanLingkup2Id)->first();
     }
 
+    public function getPengawasanRutinBUJKByLingkup3Id(string $pengawasanLingkup3Id)
+    {
+        return PengawasanBUJKRutin::where('pengawasan_lingkup_3', $pengawasanLingkup3Id)->first();
+    }
+
 
 }

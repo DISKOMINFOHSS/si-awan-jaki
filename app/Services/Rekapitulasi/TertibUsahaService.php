@@ -39,6 +39,7 @@ class TertibUsahaService
             'usaha.nib',
             'usaha.pjbu',
             'pengawasan_tahunan.id as pengawasan_id',
+            'pengawasan_tahunan.tahun',
             'pengawasan_tahunan.tertib_jenis_usaha',
             'pengawasan_tahunan.tertib_sifat_usaha',
             'pengawasan_tahunan.tertib_klasifikasi_usaha',
@@ -76,5 +77,33 @@ class TertibUsahaService
                 'created_by'                => $data['created_by'],
             ],
         );
+    }
+
+    public function getDaftarTertibUsahaBUJKTahunan(string $tahun)
+    {
+        return Usaha::join('pengawasan_tahunan_tertib_usaha_bujk as pengawasan_tahunan', function (JoinClause $join) use ($tahun)
+        {
+            $join->on('usaha.id', '=', 'pengawasan_tahunan.bujk_id')
+                 ->where('tahun', $tahun);
+        })->select(
+            'usaha.id',
+            'usaha.nama',
+            'usaha.nib',
+            'usaha.pjbu',
+            'pengawasan_tahunan.id as pengawasan_id',
+            'pengawasan_tahunan.tahun',
+            'pengawasan_tahunan.tertib_jenis_usaha',
+            'pengawasan_tahunan.tertib_sifat_usaha',
+            'pengawasan_tahunan.tertib_klasifikasi_usaha',
+            'pengawasan_tahunan.tertib_layanan_usaha',
+            'pengawasan_tahunan.tertib_bentuk_usaha',
+            'pengawasan_tahunan.tertib_kualifikasi_usaha',
+            'pengawasan_tahunan.tertib_persyaratan_sbu',
+            'pengawasan_tahunan.tertib_persyaratan_nib',
+            'pengawasan_tahunan.tertib_pengembangan_usaha',
+            'pengawasan_tahunan.tertib_pengawasan',
+            'pengawasan_tahunan.catatan',
+         )->orderBy('usaha.nama')
+          ->get();
     }
 }

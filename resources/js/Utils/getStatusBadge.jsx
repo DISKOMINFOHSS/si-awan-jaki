@@ -66,9 +66,10 @@ function getTertibStatusBadgeRekapitulasiPDF(isTertib) {
             );
         case false:
             return (
-                <View style={tw("flex flex-row justify-center items-center gap-x-1")}>
+                <View style={tw("flex flex-row flex-wrap justify-center items-center gap-x-1")}>
                     <Text style={tw("bg-red-400 rounded-full w-1.5 h-1.5")}></Text>
-                    <Text>Belum Tertib</Text>
+                    <Text>Belum</Text>
+                    <Text>Tertib</Text>
                 </View>
             );
     }

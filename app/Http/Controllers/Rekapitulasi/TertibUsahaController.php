@@ -70,6 +70,13 @@ class TertibUsahaController extends Controller
 
     public function show(string $tahun, string $fileName)
     {
-        return Inertia::render('Rekapitulasi/TertibUsaha/Show');
+        // $daftarTertibUsahaBUJK = $this->rekapPengawasanService->getDaftarTertibUsahaBUJKTahunanWithPengawasanRutin($tahun);
+        $daftarTertibUsahaBUJK = $this->rekapPengawasanService->getDaftarTertibUsahaBUJKTahunan($tahun);
+
+        return Inertia::render('Rekapitulasi/TertibUsaha/Show', [
+            'data' => [
+                'daftarTertibUsahaBUJK' => PengawasanTertibUsahaBUJKResource::collection($daftarTertibUsahaBUJK),
+            ],
+        ]);
     }
 }

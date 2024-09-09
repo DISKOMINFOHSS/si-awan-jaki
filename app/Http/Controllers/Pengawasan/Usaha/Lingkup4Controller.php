@@ -132,6 +132,32 @@ class Lingkup4Controller extends Controller
         return redirect("/admin/pengawasan/usaha/4/$jenisUsaha->slug/$pengawasan->id/$jenisPengawasan");
     }
 
+    public function destroy(string $id)
+    {
+        if (!$this->pengawasanLingkup4Service->checkPengawasanBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $pengawasan = $this->pengawasanLingkup4Service->getPengawasan($id);
+        $jenisUsaha = $pengawasan->usaha->jenisUsaha;
+
+        if ($jenisUsaha->jenis_usaha === "Badan Usaha Jasa Konstruksi")
+        {
+            if ($pengawasan->jenis_pengawasan === "Rutin")
+            {
+                $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJKByLingkup4Id($pengawasan->id);
+                $this->pengawasanRutinService->updatePengawasanRutinBUJK(
+                    $pengawasanRutin->id,
+                    ['pengawasan_lingkup_4' => null]
+                );
+            }
+
+            $this->pengawasanLingkup4Service->deletePengawasanBUJK($id);
+        }
+
+        return redirect("/admin/pengawasan/usaha/4/$jenisUsaha->slug");
+    }
+
     public function indexBUJK()
     {
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(4);

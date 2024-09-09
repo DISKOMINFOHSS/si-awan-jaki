@@ -15,6 +15,8 @@ const RekapitulasiTertibUsahaIndex = ({ data }) => {
     const { url } = usePage();
     const tahun = url.split('/')[3];
 
+    console.log(data);
+
     return (
         <>
             <Breadcrumb>

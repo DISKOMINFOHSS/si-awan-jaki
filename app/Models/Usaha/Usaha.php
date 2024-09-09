@@ -46,4 +46,9 @@ class Usaha extends Model
     {
         return $this->hasMany(ProyekKonstruksi::class, 'penyedia_jasa_id');
     }
+
+    public function pengawasanRutin(): HasMany
+    {
+        return $this->hasMany(PengawasanBUJKRutin::class, 'usaha_id');
+    }
 }

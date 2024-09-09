@@ -22,6 +22,18 @@ class PengawasanBUJKRutin extends Model
         'pengawasan_lingkup_5',
     ];
 
+    protected $casts = [
+        'tertib_jenis_usaha'        => 'boolean',
+        'tertib_sifat_usaha'        => 'boolean',
+        'tertib_klasifikasi_usaha'  => 'boolean',
+        'tertib_layanan_usaha'      => 'boolean',
+        'tertib_bentuk_usaha'       => 'boolean',
+        'tertib_kualifikasi_usaha'  => 'boolean',
+        'tertib_persyaratan_sbu'    => 'boolean',
+        'tertib_persyaratan_nib'    => 'boolean',
+        'tertib_pengembangan_usaha' => 'boolean',
+    ];
+
     public function usaha(): BelongsTo
     {
         return $this->belongsTo(Usaha::class, 'usaha_id');

@@ -282,8 +282,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             ->controller(App\Http\Controllers\Rekapitulasi\TertibUsahaController::class)
             ->group(function () {
                 Route::get('/', 'index');
-                // Route::post('/', 'store');
 
+                Route::post('/bujk', 'storePengawasanBUJK');
                 Route::get('/{fileName}', 'show');
             });
 

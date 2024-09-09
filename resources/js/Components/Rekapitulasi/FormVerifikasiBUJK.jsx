@@ -6,12 +6,26 @@ import InputRadio from "../InputRadio";
 
 import { LiaSpinnerSolid, LiaStoreSolid, LiaUser } from "react-icons/lia";
 import { getTertibStatusBadge } from "../../Utils/getStatusBadge";
+import ModalError from "../ModalError";
 
 export default ({ isVisible, onClose, usaha }) => {
     const { url } = usePage();
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
 
-    const { daftarPengawasanRutin } = usaha;
+    const {
+        daftarPengawasanRutin,
+        tertibJenisUsaha,
+        tertibSifatUsaha,
+        tertibKlasifikasiUsaha,
+        tertibLayananUsaha,
+        tertibBentukUsaha,
+        tertibKualifikasiUsaha,
+        tertibPersyaratanSBU,
+        tertibPersyaratanNIB,
+        tertibPengembanganUsaha,
+        tertibPengawasan,
+        catatan,
+    } = usaha;
 
     const { data, setData, processing, post, reset } = useForm({
         jenisUsaha: '',
@@ -27,6 +41,42 @@ export default ({ isVisible, onClose, usaha }) => {
         catatan: '',
     });
     const handleInputChange = (value) => setData({ ...data, ...value });
+
+    React.useEffect(() => {
+        setData({
+            ...data,
+            usahaId: usaha.usahaId,
+            jenisUsaha: typeof(tertibJenisUsaha) === 'boolean' ? tertibJenisUsaha : '',
+            sifatUsaha: typeof(tertibSifatUsaha) === 'boolean' ? tertibSifatUsaha : '',
+            klasifikasiUsaha: typeof(tertibKlasifikasiUsaha) === 'boolean' ? tertibKlasifikasiUsaha : '',
+            layananUsaha: typeof(tertibLayananUsaha) === 'boolean' ? tertibLayananUsaha : '',
+            bentukUsaha: typeof(tertibBentukUsaha) === 'boolean' ? tertibBentukUsaha : '',
+            kualifikasiUsaha: typeof(tertibKualifikasiUsaha) === 'boolean' ? tertibKualifikasiUsaha : '',
+            syaratSBU: typeof(tertibPersyaratanSBU) === 'boolean' ? tertibPersyaratanSBU : '',
+            syaratNIB: typeof(tertibPersyaratanNIB) === 'boolean' ? tertibPersyaratanNIB : '',
+            pengembanganUsaha: typeof(tertibPengembanganUsaha) === 'boolean' ?tertibPengembanganUsaha : '',
+            tertibPengawasan: typeof(tertibPengawasan) === 'boolean' ? tertibPengawasan : '',
+            catatan: catatan ? catatan : '',
+        });
+    }, [usaha]);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(url, data, usaha.id);
+
+        post(`${url}/bujk`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+                onClose();
+            },
+            onError: (errors) => {
+                console.log(errors);
+                onClose();
+                setIsModalErrorOpen(true);
+            },
+        });
+    }
 
     if (!Object.keys(usaha).length) return null;
 
@@ -51,7 +101,7 @@ export default ({ isVisible, onClose, usaha }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="space-y-4">
-                        <form className="grid grid-cols-2 gap-4 text-xs">
+                        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4 text-xs">
                             <div className="col-span-2 grid grid-cols-4 h-fit gap-x-4 gap-y-2 pb-4 border-b border-slate-100">
                                 <div className="col-span-4">
                                     <div className="font-light text-slate-500">Lingkup Pengawasan 2</div>
@@ -269,6 +319,15 @@ export default ({ isVisible, onClose, usaha }) => {
                     </div>
                 </Modal.Body>
             </Modal>
+            <ModalError
+                isVisible={isModalErrorOpen}
+                onClose={() => setIsModalErrorOpen(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Gagal melakukan verifikasi pengawasan tahunan. Silakan periksa kembali.
+                </div>
+            </ModalError>
         </>
     )
 }

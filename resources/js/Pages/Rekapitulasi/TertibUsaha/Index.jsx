@@ -13,6 +13,7 @@ import {
     LiaSearchSolid,
     LiaCheckCircleSolid
 } from "react-icons/lia";
+import { getTertibStatusBadge } from "../../../Utils/getStatusBadge";
 
 const RekapitulasiTertibUsahaIndex = ({ data }) => {
     const { url } = usePage();
@@ -125,15 +126,15 @@ const RekapitulasiTertibUsahaIndex = ({ data }) => {
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-5 text-center">{usaha.pjbu}</td>
-                                                <td className="px-4 py-5 text-center">{}</td>
-                                                <td className="px-4 py-5 text-center">{}</td>
-                                                <td className="px-4 py-5 text-center">{}</td>
-                                                <td className="px-4 py-5 text-center">{}</td>
-                                                <td className="px-4 py-5 text-center">{}</td>
-                                                <td className="px-4 py-5 text-center">{}</td>
-                                                <td className="px-4 py-5 text-center">{}</td>
-                                                <td className="px-4 py-5 text-center">{}</td>
-                                                <td className="px-4 py-5 text-center">{}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(usaha.tertibJenisUsaha)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(usaha.tertibSifatUsaha)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(usaha.tertibKlasifikasiUsaha)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(usaha.tertibLayananUsaha)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(usaha.tertibBentukUsaha)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(usaha.tertibKualifikasiUsaha)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(usaha.tertibPersyaratanSBU)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(usaha.tertibPersyaratanNIB)}</td>
+                                                <td className="px-4 py-5 text-center">{getTertibStatusBadge(usaha.tertibPengembanganUsaha)}</td>
                                                 <td className="px-4 py-5 text-center">
                                                     <div className="flex justify-end gap-x-2">
                                                         <button

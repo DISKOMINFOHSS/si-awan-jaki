@@ -27,6 +27,19 @@ class Usaha extends Model
         'created_by',
     ];
 
+    protected $casts = [
+        'tertib_jenis_usaha'        => 'boolean',
+        'tertib_sifat_usaha'        => 'boolean',
+        'tertib_klasifikasi_usaha'  => 'boolean',
+        'tertib_layanan_usaha'      => 'boolean',
+        'tertib_bentuk_usaha'       => 'boolean',
+        'tertib_kualifikasi_usaha'  => 'boolean',
+        'tertib_persyaratan_sbu'    => 'boolean',
+        'tertib_persyaratan_nib'    => 'boolean',
+        'tertib_pengembangan_usaha' => 'boolean',
+        'tertib_pengawasan'         => 'boolean',
+    ];
+
     public function jenisUsaha(): BelongsTo
     {
         return $this->belongsTo(JenisUsaha::class);

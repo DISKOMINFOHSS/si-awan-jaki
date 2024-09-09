@@ -17,6 +17,12 @@ class PengawasanLingkup5Service
         return DB::table('master_pemeriksaan_pengembangan_usaha as pemeriksaan')->where('id', $id)->exists();
     }
 
+    public function deletePengawasanBUJK(string $id)
+    {
+        $pengawasan = PengawasanBUJKLingkup5::find($id);
+        $pengawasan->delete();
+    }
+
     public function getDaftarPemeriksaanPengembanganUsaha(string $pengawasanId): DBCollection
     {
         return DB::table('master_pemeriksaan_pengembangan_usaha as pemeriksaan')
@@ -50,6 +56,11 @@ class PengawasanLingkup5Service
         return PengawasanBUJKLingkup5::where('id', $id)->exists();
     }
 
+    public function getPengawasanBUJK(string $id): PengawasanBUJKLingkup5
+    {
+        return PengawasanBUJKLingkup5::find($id);
+    }
+
     public function getDaftarPengawasanBUJK(): EloquentCollection
     {
         return PengawasanBUJKLingkup5::with([
@@ -69,6 +80,16 @@ class PengawasanLingkup5Service
                 $query->select('id', 'nama', 'nib', 'pjbu', 'alamat');
             },
         ])->where('id', $id)->firstOrFail();
+    }
+
+    public function updatePengawasanBUJK(string $id, array $data)
+    {
+        $pengawasan = PengawasanBUJKLingkup5::find($id);
+        $pengawasan->tanggal_pengawasan = $data['tanggal_pengawasan'];
+
+        $pengawasan->save();
+
+        return $pengawasan;
     }
 
     public function verifyPengawasanBUJK(string $id, array $data)

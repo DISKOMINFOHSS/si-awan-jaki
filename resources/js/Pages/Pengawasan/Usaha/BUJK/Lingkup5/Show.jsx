@@ -4,9 +4,15 @@ import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
 import Card from "../../../../../Components/Card";
 import Dropdown from "../../../../../Components/Dropdown";
+
 import FormPemeriksaanPengembanganUsaha from "../../../../../Components/Usaha/BUJK/FormPemeriksaanPengembanganUsaha";
 import FormVerifikasiPengawasanLingkup5 from "../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup5";
-import { InformasiTertibPengawasanLingkup5, InformasiUmumPengawasan, InformasiUsaha } from "../../../../../Components/Usaha/BUJK/InformasiPengawasan";
+import FormEditPengawasan from "../../../../../Components/Usaha/BUJK/FormEditPengawasan";
+import {
+    InformasiTertibPengawasanLingkup5,
+    InformasiUmumPengawasan,
+    InformasiUsaha
+} from "../../../../../Components/Usaha/BUJK/InformasiPengawasan";
 
 import useToggleWithClickOutside from "../../../../../Hooks/useToggleWithClickOutside";
 
@@ -16,7 +22,10 @@ import {
     LiaEllipsisHSolid,
     LiaInfoCircleSolid,
     LiaLinkSolid,
+    LiaEditSolid,
+    LiaTrashAltSolid,
 } from "react-icons/lia";
+import ModalDelete from "../../../../../Components/ModalDelete";
 
 function DaftarPengembanganUsaha({ pengawasanId, daftarPengembanganUsaha }) {
     const daftar = daftarPengembanganUsaha.map((pengembanganUsaha, i) => {
@@ -61,7 +70,9 @@ const PengawasanUBUJKLingkup5Show = ({ data }) => {
         toggleMoreDropdown
     ] = useToggleWithClickOutside(false);
 
+    const [ isModalEditOpen, setIsModalEditOpen ] = React.useState(false);
     const [isModalVerificationOpened, setIsModalVerificationOpened] = React.useState(false);
+    const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
 
     return (
         <>
@@ -108,10 +119,26 @@ const PengawasanUBUJKLingkup5Show = ({ data }) => {
                             <button
                                 type="button"
                                 className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalEditOpen(true)}}
+                            >
+                                <LiaEditSolid size={16} />
+                                <span>Edit Pengawasan</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
                                 // onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpened(true)}}
                             >
                                 <LiaListAltSolid size={16} />
                                 <span>Verifikasi Pengawasan</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left text-red-500 hover:bg-slate-100 hover:text-red-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalDeleteOpen(true)}}
+                            >
+                                <LiaTrashAltSolid size={16} />
+                                <span>Hapus Pengawasan</span>
                             </button>
                             {/* <button
                                 type="button"
@@ -169,6 +196,23 @@ const PengawasanUBUJKLingkup5Show = ({ data }) => {
                 lingkupPengawasan={lingkupPengawasan}
                 pengawasan={pengawasan}
             />
+            <FormEditPengawasan
+                isVisible={isModalEditOpen}
+                onClose={() => setIsModalEditOpen(false)}
+                lingkupPengawasan={lingkupPengawasan}
+                pengawasan={pengawasan}
+            />
+            <ModalDelete
+                isVisible={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+                url={`/admin/pengawasan/usaha/5`}
+                id={pengawasan.id}
+            >
+                <div className="font-medium text-sm text-slate-700 mb-1">Apakah Anda yakin ingin menghapus pengawasan ini?</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Data yang telah dihapus tidak dapat dikembalikan.
+                </div>
+            </ModalDelete>
         </>
     );
 }

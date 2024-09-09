@@ -2,9 +2,9 @@ import React from "react";
 import { useForm } from "@inertiajs/react";
 
 import Modal from "../../Modal";
-import ModalError from "../../ModalError";
 
 import { LiaAngleDownSolid, LiaSpinnerSolid } from "react-icons/lia";
+import ModalError from "../../ModalError";
 
 export default ({
     isVisible,
@@ -21,8 +21,6 @@ export default ({
         pjbu: usaha.pjbu,
         tanggal: pengawasan.tanggalPengawasan,
         jenis: pengawasan.jenisPengawasan,
-        statusIzinUsaha: pengawasan.statusIzinUsaha,
-        statusNIB: pengawasan.statusVerifikasiNIB,
     });
 
     function handleSubmit(e) {
@@ -42,10 +40,7 @@ export default ({
 
     return (
         <>
-            <Modal
-                isVisible={isVisible}
-                className="w-full max-w-xl h-fit mt-10"
-            >
+            <Modal isVisible={isVisible} className="w-full max-w-lg h-fit mt-10">
                 <Modal.Header onClose={onClose}>
                     <div className="text-center mb-7">
                         <h1 className="font-medium text-slate-800">Edit Pengawasan Tertib Usaha</h1>
@@ -66,7 +61,7 @@ export default ({
                             <label htmlFor="jenis" className="block mb-2 text-xs font-medium text-slate-800">Jenis Pengawasan</label>
                             <select
                                 name="jenis" id="jenis" value={data.jenis} disabled
-                                className="px-3 py-2 block w-full rounded-md bg-slate-50 border-slate-200 text-slate-500 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                                className="px-3 py-2 block w-full rounded-md bg-slate-50 border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                             >
                                 <option value="Rutin">Pengawasan Rutin</option>
                                 <option value="Insidental">Pengawasan Insidental</option>
@@ -94,44 +89,6 @@ export default ({
                                 type="text" name="pjbu" id="pjbu" value={data.pjbu} disabled
                                 className="px-3 py-2 block w-full rounded-md bg-slate-50 border-slate-200 text-slate-500 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                             />
-                        </div>
-                        <div className="space-y-2 text-xs">
-                            <label htmlFor="statusIzinUsaha">
-                                <div className="font-medium text-slate-800">Status</div>
-                                <div className="font-light text-[11px] text-slate-500">Perizinan Berusaha</div>
-                            </label>
-                            <select
-                                name="statusIzinUsaha" id="statusIzinUsaha"
-                                value={data.statusIzinUsaha} onChange={e => setData('statusIzinUsaha', e.target.value)}
-                                className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-                            >
-                                <option value="Aktif">Aktif</option>
-                                <option value="Tidak Aktif">Tidak Aktif</option>
-                            </select>
-                        </div>
-                        <div className="space-y-2 text-xs">
-                            <div>
-                                <div className="font-medium text-slate-800">Nomor NIB</div>
-                                <div className="font-light text-[11px] text-slate-500">Status Verifikasi sesuai OSS</div>
-                            </div>
-                            <div className="grid grid-cols-2 h-9 items-center">
-                                <div className="flex items-start gap-x-1.5">
-                                    <input
-                                        type="radio" id="true-statusNIB" name="statusNIB" checked={data.statusNIB}
-                                        value={true} onChange={e => setData('statusNIB', e.target.value === "true")}
-                                        className="w-3.5 h-3.5 text-blue-600 border-slate-200 focus:ring-blue-500 focus:ring-2"
-                                    />
-                                    <label htmlFor="true-statusNIB" className="-mt-0.5 text-slate-700">Terverifikasi</label>
-                                </div>
-                                <div className="flex items-start gap-x-1.5">
-                                    <input
-                                        type="radio" id="false-statusNIB" name="statusNIB" checked={!data.statusNIB}
-                                        value={false} onChange={e => setData('statusNIB', e.target.value === "true")}
-                                        className="w-3.5 h-3.5 text-blue-600 border-slate-200 focus:ring-blue-500 focus:ring-2"
-                                    />
-                                    <label htmlFor="false-statusNIB" className="-mt-0.5 text-slate-700">Belum Terverifikasi</label>
-                                </div>
-                            </div>
                         </div>
                         <div className="col-span-2 flex justify-end items-center gap-x-2">
                             <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-3" onClick={onClose}>Batal</button>

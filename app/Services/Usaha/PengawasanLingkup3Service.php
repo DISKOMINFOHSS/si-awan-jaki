@@ -41,7 +41,7 @@ class PengawasanLingkup3Service
             {
                 $query->select('id', 'nama', 'nib');
             }
-        ])->orderBy('created_by', 'desc')
+        ])->orderBy('tanggal_pengawasan', 'desc')
           ->get();
     }
 

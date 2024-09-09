@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pengawasan\Usaha;
 
 use Inertia\Inertia;
+use App\Helpers\DateTimeHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup4Collection;
 use App\Http\Resources\Pengawasan\PengawasanRutinBUJKLingkup4Resource;
@@ -47,7 +48,6 @@ class Lingkup4Controller extends Controller
 
         $usaha = $this->usahaService->getUsahaById($validatedData['usahaId']);
         $jenisUsaha = $usaha->jenisUsaha;
-        $pengawasanId;
 
         $data = [
             'jenis_pengawasan'    => $validatedData['jenis'],
@@ -58,30 +58,78 @@ class Lingkup4Controller extends Controller
 
         if ($jenisUsaha->jenisUsaha === "Badan Usaha Jasa Konstruksi")
         {
+            if ($validatedData['jenis' === 'Rutin'])
+            {
+                $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJK(
+                    $validatedData['usahaId'],
+                    DateTimeHelper::getHalfYearDateRange($validatedData['tanggal'])
+                );
+
+                if ($pengawasanRutin->pengawasan_lingkup_4) {
+                    return back()->withErrors(['message' => 'Pengawasan pada semester ini sudah ada.']);
+                }
+            }
+
             $pengawasanId = $this->pengawasanLingkup4Service->addPengawasanBUJK($data);
 
             if ($validatedData['jenis'] === 'Rutin')
             {
-                $tanggalPengawasan = strtotime($validatedData['tanggal']);
-                $tahunPengawasan = date('Y', $tanggalPengawasan);
-
-                $this->pengawasanRutinService->addPengawasanRutinBUJK(
-                    $validatedData['usahaId'],
-                    [
-                        'start' => ($tanggalPengawasan >= strtotime($tahunPengawasan . '-01-01')) && ($tanggalPengawasan <= strtotime($tahunPengawasan . '-06-30')) ? ($tahunPengawasan . '-01-01') : ($tahunPengawasan . '-07-01'),
-                        'end'   => ($tanggalPengawasan >= strtotime($tahunPengawasan . '-01-01')) && ($tanggalPengawasan <= strtotime($tahunPengawasan . '-06-30')) ? ($tahunPengawasan . '-06-30') : ($tahunPengawasan . '-12-31'),
-                    ],
-                    [
-                        'pengawasan_lingkup_4' => $pengawasanId,
-                        // 'created_at'           => now(),
-                        // 'updated_at'           => now(),
-                    ],
-                );
+                $this->pengawasanRutinService->updatePengawasanRutinBUJK($pengawasanRutin->id, ['pengawasan_lingkup_4' => $pengawasanId]);
             }
         }
 
         $jenisPengawasan = strtolower($validatedData['jenis']);
         return redirect("/admin/pengawasan/usaha/4/$jenisUsaha->slug/$pengawasanId/$jenisPengawasan");
+    }
+
+    public function update(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup4Service->checkPengawasanBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate(['tanggal' => 'required|date']);
+
+        $pengawasan = $this->pengawasanLingkup4Service->getPengawasan($id);
+        $jenisUsaha = $pengawasan->usaha->jenisUsaha;
+
+        if ($jenisUsaha->jenis_usaha === "Badan Usaha Jasa Konstruksi")
+        {
+            if ($pengawasan->jenis_pengawasan === "Rutin")
+            {
+                $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJKByLingkup4Id($pengawasan->id);
+                $range = DateTimeHelper::getHalfYearDateRange($validatedData['tanggal']);
+
+                if ($pengawasanRutin->start !== $range['start'] || $pengawasanRutin->end !== $range['end'])
+                {
+                    $pengawasanRutin2 = $this->pengawasanRutinService->getPengawasanRutinBUJK($pengawasan->usaha_id, $range);
+
+                    if ($pengawasanRutin2->pengawasan_lingkup_4)
+                    {
+                        return back()->withErrors(['message' => 'Pengawasan pada semester ini sudah ada.']);
+                    }
+
+                    $this->pengawasanRutinService->updatePengawasanRutinBUJK(
+                        $pengawasanRutin->id,
+                        ['pengawasan_lingkup_4' => null]
+                    );
+                    $this->pengawasanRutinService->updatePengawasanRutinBUJK(
+                        $pengawasanRutin2->id,
+                        ['pengawasan_lingkup_4' => $pengawasan->id]
+                    );
+                }
+            }
+
+            $this->pengawasanLingkup4Service->updatePengawasan(
+                $id,
+                [
+                    'tanggal_pengawasan'    => $validatedData['tanggal'],
+                ]
+            );
+        }
+
+        $jenisPengawasan = strtolower($pengawasan->jenis_pengawasan);
+        return redirect("/admin/pengawasan/usaha/4/$jenisUsaha->slug/$pengawasan->id/$jenisPengawasan");
     }
 
     public function indexBUJK()

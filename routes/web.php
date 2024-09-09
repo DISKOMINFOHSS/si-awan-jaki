@@ -194,6 +194,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                     // Route::get('/{jenis_usaha}', 'index')->name('index');
                     Route::post('/', 'store');
+                    Route::put('/{id}', 'update');
 
                     Route::name('bujk.')->prefix('/bujk')
                     ->group(function () {

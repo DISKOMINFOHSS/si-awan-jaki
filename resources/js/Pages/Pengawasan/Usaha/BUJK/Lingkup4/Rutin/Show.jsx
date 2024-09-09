@@ -24,6 +24,7 @@ import {
     LiaTrashAltSolid,
 } from "react-icons/lia";
 import FormVerifikasiPengawasanLingkup4 from "../../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup4";
+import FormEditPengawasan from "../../../../../../Components/Usaha/BUJK/FormEditPengawasan";
 
 const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
     console.log(data);
@@ -44,6 +45,7 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
     const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
     const [ selectedSertifikatId, setSelectedSertifikatId ] = React.useState('');
 
+    const [ isModalEditOpen, setIsModalEditOpen ] = React.useState(false);
     const [ isModalVerificationOpened, setIsModalVerificationOpened ] = React.useState(false);
 
     return (
@@ -88,6 +90,14 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                                 <LiaInfoCircleSolid size={16} />
                                 <span>Informasi Usaha</span>
                             </a>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalEditOpen(true)}}
+                            >
+                                <LiaEditSolid size={16} />
+                                <span>Edit Pengawasan</span>
+                            </button>
                             <button
                                 type="button"
                                 className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
@@ -269,6 +279,12 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
             <FormVerifikasiPengawasanLingkup4
                 isVisible={isModalVerificationOpened}
                 onClose={() => setIsModalVerificationOpened(false)}
+                lingkupPengawasan={lingkupPengawasan}
+                pengawasan={pengawasan}
+            />
+            <FormEditPengawasan
+                isVisible={isModalEditOpen}
+                onClose={() => setIsModalEditOpen(false)}
                 lingkupPengawasan={lingkupPengawasan}
                 pengawasan={pengawasan}
             />

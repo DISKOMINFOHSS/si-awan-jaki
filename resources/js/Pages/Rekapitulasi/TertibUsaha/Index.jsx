@@ -5,10 +5,13 @@ import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import Card from "../../../Components/Card";
 
+import FormVerifikasiBUJK from "../../../Components/Rekapitulasi/FormVerifikasiBUJK";
+
 import {
     LiaHomeSolid,
     LiaFileExportSolid,
     LiaSearchSolid,
+    LiaCheckCircleSolid
 } from "react-icons/lia";
 
 const RekapitulasiTertibUsahaIndex = ({ data }) => {
@@ -16,6 +19,22 @@ const RekapitulasiTertibUsahaIndex = ({ data }) => {
     const tahun = url.split('/')[3];
 
     console.log(data);
+    const { daftarTertibUsahaBUJK } = data;
+
+    const [keyword, setKeyword] = React.useState('');
+    const handleKeywordChange = (event) => setKeyword(event.target.value);
+
+    const [ isModalBUJKVerificationOpen, setIsModalBUJKVerificationOpen ] = React.useState(false);
+    const [ selectedBUJK, setSelectedBUJK ] = React.useState({});
+
+    const filteredDaftarTertibUsahaBUJK = keyword ? daftarTertibUsahaBUJK.filter(({ nama }) => {
+        return nama.toLowerCase().includes(keyword.toLowerCase());
+    }) : daftarTertibUsahaBUJK;
+
+    function handleBUJKVerificationButtonClick(usaha) {
+        setSelectedBUJK(usaha);
+        setIsModalBUJKVerificationOpen(true);
+    }
 
     return (
         <>
@@ -63,7 +82,7 @@ const RekapitulasiTertibUsahaIndex = ({ data }) => {
                                     <LiaSearchSolid size={18} className="text-slate-500 -scale-x-100" />
                                 </div>
                                 <input
-                                    type="search" name="search" placeholder="Cari..."
+                                    type="search" name="search" placeholder="Cari..." value={keyword} onChange={handleKeywordChange}
                                     className="border border-slate-200 rounded py-2 pl-8 block w-56 text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs"
                                 />
                             </div>
@@ -95,12 +114,52 @@ const RekapitulasiTertibUsahaIndex = ({ data }) => {
                                     </tr>
                                 </thead>
                                 <tbody className="text-slate-700">
+                                    {
+                                        filteredDaftarTertibUsahaBUJK.map((usaha, i) => (
+                                            <tr key={usaha.usahaId} className="border-b border-slate-100 hover:bg-slate-100">
+                                                <td className="px-4 py-5 text-center">{i + 1}</td>
+                                                <td className="px-4 py-5">
+                                                    <div>
+                                                        <div className="uppercase hover:text-blue-600 hover:underline">{usaha.nama}</div>
+                                                        <div className="font-light text-slate-500">{`NIB: ${usaha.nib}`}</div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-5 text-center">{usaha.pjbu}</td>
+                                                <td className="px-4 py-5 text-center">{}</td>
+                                                <td className="px-4 py-5 text-center">{}</td>
+                                                <td className="px-4 py-5 text-center">{}</td>
+                                                <td className="px-4 py-5 text-center">{}</td>
+                                                <td className="px-4 py-5 text-center">{}</td>
+                                                <td className="px-4 py-5 text-center">{}</td>
+                                                <td className="px-4 py-5 text-center">{}</td>
+                                                <td className="px-4 py-5 text-center">{}</td>
+                                                <td className="px-4 py-5 text-center">{}</td>
+                                                <td className="px-4 py-5 text-center">
+                                                    <div className="flex justify-end gap-x-2">
+                                                        <button
+                                                            type="button"
+                                                            className="flex items-center gap-x-1 rounded border border-slate-200 text-blue-500 p-2 hover:bg-slate-200"
+                                                            onClick={() => handleBUJKVerificationButtonClick(usaha)}
+                                                        >
+                                                            <LiaCheckCircleSolid size={18} />
+                                                            <span>Verifikasi</span>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
                                 </tbody>
                             </table>
                         </div>
                     </Card.Body>
                 </Card>
             </div>
+            <FormVerifikasiBUJK
+                isVisible={isModalBUJKVerificationOpen}
+                onClose={() => setIsModalBUJKVerificationOpen(false)}
+                usaha={selectedBUJK}
+            />
         </>
     )
 }

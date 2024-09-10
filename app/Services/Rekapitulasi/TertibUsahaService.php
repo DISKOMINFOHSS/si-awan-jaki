@@ -2,12 +2,42 @@
 
 namespace App\Services\Rekapitulasi;
 
+use App\Models\Usaha\PengawasanBUJKRutin;
 use App\Models\Usaha\Usaha;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
 
 class TertibUsahaService
 {
+    public function getDaftarPengawasanRutinBUJK(string $tahun)
+    {
+        return PengawasanBUJKRutin::with('usaha:id,nama,nib,pjbu')
+            ->leftJoin('pengawasan_bujk_lingkup_2', 'pengawasan_bujk_rutin.pengawasan_lingkup_2', 'pengawasan_bujk_lingkup_2.id')
+            ->leftJoin('pengawasan_bujk_lingkup_3', 'pengawasan_bujk_rutin.pengawasan_lingkup_3', 'pengawasan_bujk_lingkup_3.id')
+            ->leftJoin('pengawasan_bujk_lingkup_4', 'pengawasan_bujk_rutin.pengawasan_lingkup_4', 'pengawasan_bujk_lingkup_4.id')
+            ->leftJoin('pengawasan_bujk_lingkup_5', 'pengawasan_bujk_rutin.pengawasan_lingkup_5', 'pengawasan_bujk_lingkup_5.id')
+            ->select(
+                'pengawasan_bujk_rutin.*',
+                'pengawasan_bujk_lingkup_2.tanggal_pengawasan as tanggal_pengawasan_lingkup_2',
+                'pengawasan_bujk_lingkup_2.tertib_jenis_usaha',
+                'pengawasan_bujk_lingkup_2.tertib_jenis_usaha',
+                'pengawasan_bujk_lingkup_2.tertib_sifat_usaha',
+                'pengawasan_bujk_lingkup_2.tertib_klasifikasi_usaha',
+                'pengawasan_bujk_lingkup_2.tertib_layanan_usaha',
+                'pengawasan_bujk_lingkup_3.tanggal_pengawasan as tanggal_pengawasan_lingkup_3',
+                'pengawasan_bujk_lingkup_3.tertib_bentuk_usaha',
+                'pengawasan_bujk_lingkup_3.tertib_kualifikasi_usaha',
+                'pengawasan_bujk_lingkup_4.tanggal_pengawasan as tanggal_pengawasan_lingkup_4',
+                'pengawasan_bujk_lingkup_4.tertib_persyaratan_sbu',
+                'pengawasan_bujk_lingkup_4.tertib_persyaratan_nib',
+                'pengawasan_bujk_lingkup_5.tanggal_pengawasan as tanggal_pengawasan_lingkup_5',
+                'pengawasan_bujk_lingkup_5.tertib_pengembangan_usaha',
+        )->whereYear('start', $tahun)->whereYear('end', $tahun)
+         ->orderBy('updated_at', 'desc')
+         ->limit(5)
+         ->get();
+    }
+
     public function getDaftarTertibUsahaBUJKTahunanWithPengawasanRutin(string $tahun)
     {
         return Usaha::withWhereHas('pengawasanRutin', function ($query) use ($tahun)

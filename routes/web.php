@@ -245,9 +245,11 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             // Pengawasan Rutin
             Route::name('rutin.')->prefix('/rutin')
             ->group(function () {
+                Route::redirect('/', "/admin/jenis-pengawasan/rutin/" . date('Y'));
+
                 Route::controller(App\Http\Controllers\JenisPengawasan\Rutin\PengawasanRutinController::class)
                 ->group(function () {
-                    Route::get('/{tahun?}', 'index');
+                    Route::get('/{tahun}', 'index');
                 });
             });
         });

@@ -4,6 +4,10 @@ import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
 import Dropdown from "../../../../../Components/Dropdown";
 
+import DaftarLingkupPengawasanRutin from "../../../../../Components/Proyek/DaftarLingkupPengawasanRutin";
+import FormVerifikasiPengawasan from "../../../../../Components/Proyek/FormVerifikasiPengawasan";
+import { InformasiProyekKonstruksi, InformasiTertibPengawasan, InformasiUmumPengawasan } from "../../../../../Components/Proyek/InformasiPengawasan";
+
 import useToggleWithClickOutside from "../../../../../Hooks/useToggleWithClickOutside";
 
 import {
@@ -12,9 +16,7 @@ import {
     LiaEllipsisHSolid,
     LiaInfoCircleSolid,
 } from "react-icons/lia";
-import { InformasiProyekKonstruksi, InformasiTertibPengawasan, InformasiUmumPengawasan } from "../../../../../Components/Proyek/InformasiPengawasan";
-import DaftarLingkupPengawasanRutin from "../../../../../Components/Proyek/DaftarLingkupPengawasanRutin";
-import FormVerifikasiPengawasan from "../../../../../Components/Proyek/FormVerifikasiPengawasan";
+
 
 const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
     console.log(data);
@@ -82,11 +84,9 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-4 w-full mt-4">
-                <div className="space-y-4">
-                    <InformasiProyekKonstruksi proyekKonstruksi={proyekKonstruksi} />
-                    <InformasiUmumPengawasan pengawasan={pengawasan} />
-                </div>
-                <div className="space-y-4">
+                <InformasiProyekKonstruksi proyekKonstruksi={proyekKonstruksi} />
+                <InformasiUmumPengawasan pengawasan={pengawasan} />
+                <div className="col-span-2">
                     <InformasiTertibPengawasan pengawasan={pengawasan} />
                 </div>
             </div>

@@ -59,4 +59,18 @@ class PengawasanRutinController extends Controller
 
         return redirect("/admin/pengawasan/penyelenggaraan/APBD/rutin/$id");
     }
+
+    public function showSimak(string $id)
+    {
+        $pengawasan = $this->pengawasanService->getPengawasanById($id);
+        $proyekId = $pengawasan->proyekKonstruksi->id;
+
+        $pengawasan['daftar_lingkup_pengawasan'] = $this->pengawasanRutinService->getDaftarLingkupPengawasan($id, $proyekId);
+
+        return Inertia::render('Pengawasan/Penyelenggaraan/APBD/Rutin/Simak', [
+            'data' => [
+                'pengawasan' => new PengawasanPenyelenggaraanAPBDResource($pengawasan),
+            ],
+        ]);
+    }
 }

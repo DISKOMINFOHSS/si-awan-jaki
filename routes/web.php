@@ -259,7 +259,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
             Route::controller(App\Http\Controllers\Rekapitulasi\RekapitulasiController::class)
             ->group(function () {
-                Route::get('/{tahun?}', 'index');
+                Route::get('/{tahun}', 'index');
             });
 
             Route::name('pemanfaatan_produk.')

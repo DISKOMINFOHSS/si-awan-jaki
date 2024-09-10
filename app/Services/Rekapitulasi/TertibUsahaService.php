@@ -106,4 +106,13 @@ class TertibUsahaService
          )->orderBy('usaha.nama')
           ->get();
     }
+
+    public function getTertibUsahaBUJKCount(string $tahun)
+    {
+        return DB::table('pengawasan_tahunan_tertib_usaha_bujk')
+            ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
+            ->groupBy('tertib_pengawasan')
+            ->where('tahun', $tahun)
+            ->get();
+    }
 }

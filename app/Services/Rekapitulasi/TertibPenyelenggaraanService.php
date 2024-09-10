@@ -106,6 +106,14 @@ class TertibPenyelenggaraanService
             'pengawasan_tahunan.catatan',
          )->orderBy('proyek_konstruksi.nama_paket')
           ->get();
+    }
 
+    public function getTertibPenyelenggaraanCount(string $tahun)
+    {
+        return DB::table('pengawasan_tahunan_tertib_penyelenggaraan')
+            ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
+            ->groupBy('tertib_pengawasan')
+            ->where('tahun', $tahun)
+            ->get();
     }
 }

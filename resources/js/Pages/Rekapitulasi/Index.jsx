@@ -4,10 +4,14 @@ import { Link, usePage } from "@inertiajs/react";
 import Layout from "../../Components/Layout";
 import Card from "../../Components/Card";
 import { LiaCalendarDaySolid, LiaChartBar, LiaExclamationTriangleSolid } from "react-icons/lia";
+import getDefaultData from "../../Utils/getDefaultData";
 
-const RekapitulasiIndex = () => {
+const RekapitulasiIndex = ({ data }) => {
     const { url } = usePage();
     const tahun = url.split('/')[3];
+
+    console.log(data);
+    const { tertibUsaha, tertibPenyelenggaraan, tertibPemanfaatanProduk } = data;
 
     return (
         <>
@@ -82,7 +86,7 @@ const RekapitulasiIndex = () => {
                                             <td className="p-3">
                                                 <div>
                                                     <div className="uppercase text-[11px]">Total</div>
-                                                    <div className="font-light text-slate-500">16</div>
+                                                    <div className="font-light text-slate-500">{getDefaultData(tertibUsaha.totalTertib, 0) + getDefaultData(tertibUsaha.totalBelumTertib, 0)}</div>
                                                 </div>
                                             </td>
                                             <td className="p-3">
@@ -90,7 +94,7 @@ const RekapitulasiIndex = () => {
                                                     <div className="uppercase text-[11px]">Tertib</div>
                                                     <div className="font-light text-slate-500 flex items-center gap-x-1.5">
                                                         <span className="bg-green-400 rounded-full w-1.5 h-1.5 inline-block"></span>
-                                                        <span>16</span>
+                                                        <span>{getDefaultData(tertibUsaha.totalTertib, 0)}</span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -99,7 +103,7 @@ const RekapitulasiIndex = () => {
                                                     <div className="uppercase text-[11px]">Belum Tertib</div>
                                                     <div className="font-light text-slate-500 flex items-center gap-x-1.5">
                                                         <span className="bg-red-400 rounded-full w-1.5 h-1.5 inline-block"></span>
-                                                        <span>0</span>
+                                                        <span>{getDefaultData(tertibUsaha.totalBelumTertib, 0)}</span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -159,7 +163,7 @@ const RekapitulasiIndex = () => {
                                             <td className="p-3">
                                                 <div>
                                                     <div className="uppercase text-[11px]">Total</div>
-                                                    <div className="font-light text-slate-500">16</div>
+                                                    <div className="font-light text-slate-500">{getDefaultData(tertibPenyelenggaraan.totalTertib, 0) + getDefaultData(tertibPenyelenggaraan.totalBelumTertib, 0)}</div>
                                                 </div>
                                             </td>
                                             <td className="p-3">
@@ -167,7 +171,7 @@ const RekapitulasiIndex = () => {
                                                     <div className="uppercase text-[11px]">Tertib</div>
                                                     <div className="font-light text-slate-500 flex items-center gap-x-1.5">
                                                         <span className="bg-green-400 rounded-full w-1.5 h-1.5 inline-block"></span>
-                                                        <span>16</span>
+                                                        <span>{getDefaultData(tertibPenyelenggaraan.totalTertib, 0)}</span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -176,7 +180,7 @@ const RekapitulasiIndex = () => {
                                                     <div className="uppercase text-[11px]">Belum Tertib</div>
                                                     <div className="font-light text-slate-500 flex items-center gap-x-1.5">
                                                         <span className="bg-red-400 rounded-full w-1.5 h-1.5 inline-block"></span>
-                                                        <span>0</span>
+                                                        <span>{getDefaultData(tertibPenyelenggaraan.totalBelumTertib, 0)}</span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -205,7 +209,7 @@ const RekapitulasiIndex = () => {
                                             <td className="p-3">
                                                 <div>
                                                     <div className="uppercase text-[11px]">Total</div>
-                                                    <div className="font-light text-slate-500">16</div>
+                                                    <div className="font-light text-slate-500">{getDefaultData(tertibPemanfaatanProduk.totalTertib, 0) + getDefaultData(tertibPemanfaatanProduk.totalBelumTertib, 0)}</div>
                                                 </div>
                                             </td>
                                             <td className="p-3">
@@ -213,7 +217,7 @@ const RekapitulasiIndex = () => {
                                                     <div className="uppercase text-[11px]">Tertib</div>
                                                     <div className="font-light text-slate-500 flex items-center gap-x-1.5">
                                                         <span className="bg-green-400 rounded-full w-1.5 h-1.5 inline-block"></span>
-                                                        <span>16</span>
+                                                        <span>{getDefaultData(tertibPemanfaatanProduk.totalTertib, 0)}</span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -222,7 +226,7 @@ const RekapitulasiIndex = () => {
                                                     <div className="uppercase text-[11px]">Belum Tertib</div>
                                                     <div className="font-light text-slate-500 flex items-center gap-x-1.5">
                                                         <span className="bg-red-400 rounded-full w-1.5 h-1.5 inline-block"></span>
-                                                        <span>0</span>
+                                                        <span>{getDefaultData(tertibPemanfaatanProduk.totalBelumTertib, 0)}</span>
                                                     </div>
                                                 </div>
                                             </td>

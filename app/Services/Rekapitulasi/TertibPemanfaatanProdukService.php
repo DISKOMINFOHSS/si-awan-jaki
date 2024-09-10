@@ -58,4 +58,13 @@ class TertibPemanfaatanProdukService
             ],
         );
     }
+
+    public function getTertibPemanfaatanProdukCount(string $tahun)
+    {
+        return DB::table('pengawasan_tahunan_tertib_pemanfaatan_produk')
+            ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
+            ->groupBy('tertib_pengawasan')
+            ->where('tahun', $tahun)
+            ->get();
+    }
 }

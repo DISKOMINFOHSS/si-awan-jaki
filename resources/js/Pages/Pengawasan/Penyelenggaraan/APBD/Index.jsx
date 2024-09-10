@@ -20,11 +20,11 @@ const PengawasanPenyelenggaraanAPBDIndex = ({ data }) => {
 
     return (
         <>
-            <Breadcrumb>
+            {/* <Breadcrumb>
                 <Breadcrumb.Item href="/admin/dashboard"><LiaHomeSolid size={14} /></Breadcrumb.Item>
                 <Breadcrumb.Item href="">Pilih Objek Pengawasan</Breadcrumb.Item>
                 <Breadcrumb.Item active>Daftar Pengawasan Tertib Penyelenggaraan</Breadcrumb.Item>
-            </Breadcrumb>
+            </Breadcrumb> */}
             <div className="flex justify-between items-center mb-4">
                 <div>
                     <h1 className="font-medium text-xl text-slate-800">Tertib Penyelenggaraan Konstruksi</h1>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Rekapitulasi\PengawasanBUJKRutinResource;
 use App\Http\Resources\Rekapitulasi\PengawasanTertibUsahaBUJKResource;
 use App\Http\Resources\Pengawasan\TertibPenyelenggaraan\PengawasanPenyelenggaraanAPBDResource;
+use App\Http\Resources\Pengawasan\TertibPemanfaatanProduk\PengawasanPemanfaatanProdukResource;
 use App\Services\Rekapitulasi\TertibUsahaService;
 use App\Services\Rekapitulasi\TertibPenyelenggaraanService;
 use App\Services\Rekapitulasi\TertibPemanfaatanProdukService;
@@ -36,14 +37,19 @@ class PengawasanRutinController extends Controller
         $daftarTertibPenyelenggaraan = $this->rekapTertibPenyelenggaraanService->getDaftarPengawasanRutin($tahun);
         $tertibPenyelenggaraan = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPenyelenggaraanService->getPengawasanRutinCount($tahun));
 
+        $daftarTertibPemanfaatan = $this->rekapTertibPemanfaatanProdukService->getDaftarPengawasanRutin($tahun);
+        $tertibPemanfaatanProduk = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPemanfaatanProdukService->getPengawasanRutinCount($tahun));
+
         return Inertia::render('JenisPengawasan/Rutin/Index', [
             'data' => [
-                'daftarTertibUsaha'           => [
-                    'daftarTertibBUJK' => PengawasanBUJKRutinResource::collection($daftarTertibUsahaBUJK),
+                'daftarTertibUsaha'             => [
+                    'daftarTertibBUJK'              => PengawasanBUJKRutinResource::collection($daftarTertibUsahaBUJK),
                 ],
-                'daftarTertibPenyelenggaraan' => PengawasanPenyelenggaraanAPBDResource::collection($daftarTertibPenyelenggaraan),
-                'totalTertibPengawasan'       => [
-                    'tertibPenyelenggaraan' => $tertibPenyelenggaraan,
+                'daftarTertibPenyelenggaraan'   => PengawasanPenyelenggaraanAPBDResource::collection($daftarTertibPenyelenggaraan),
+                'daftarTertibPemanfaatanProduk' => PengawasanPemanfaatanProdukResource::collection($daftarTertibPemanfaatan),
+                'totalTertibPengawasan'         => [
+                    'tertibPenyelenggaraan'         => $tertibPenyelenggaraan,
+                    'tertibPemanfaatanProduk'       => $tertibPemanfaatanProduk,
                 ],
             ],
         ]);

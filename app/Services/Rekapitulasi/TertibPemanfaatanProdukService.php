@@ -67,4 +67,24 @@ class TertibPemanfaatanProdukService
             ->where('tahun', $tahun)
             ->get();
     }
+
+    public function getDaftarPengawasanRutin(string $tahun)
+    {
+        return PengawasanPemanfaatanProduk::with(['bangunan:id,nama,desa_kelurahan,kecamatan'])
+            ->where('jenis_pengawasan', 'Rutin')
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->orderBy('tanggal_pengawasan', 'desc')
+            ->limit(5)
+            ->get();
+    }
+
+    public function getPengawasanRutinCount(string $tahun)
+    {
+        return DB::table('pengawasan_pemanfaatan_produk')
+            ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
+            ->where('jenis_pengawasan', 'Rutin')
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->groupBy('tertib_pengawasan')
+            ->get();
+    }
 }

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\JenisPengawasan\Rutin;
 
 use Inertia\Inertia;
+use App\Helpers\RekapitulasiHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Rekapitulasi\PengawasanBUJKRutinResource;
 use App\Http\Resources\Rekapitulasi\PengawasanTertibUsahaBUJKResource;
+use App\Http\Resources\Pengawasan\TertibPenyelenggaraan\PengawasanPenyelenggaraanAPBDResource;
 use App\Services\Rekapitulasi\TertibUsahaService;
 use App\Services\Rekapitulasi\TertibPenyelenggaraanService;
 use App\Services\Rekapitulasi\TertibPemanfaatanProdukService;
@@ -31,10 +33,17 @@ class PengawasanRutinController extends Controller
     {
         $daftarTertibUsahaBUJK = $this->rekapTertibUsahaService->getDaftarPengawasanRutinBUJK($tahun);
 
+        $daftarTertibPenyelenggaraan = $this->rekapTertibPenyelenggaraanService->getDaftarPengawasanRutin($tahun);
+        $tertibPenyelenggaraan = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPenyelenggaraanService->getPengawasanRutinCount($tahun));
+
         return Inertia::render('JenisPengawasan/Rutin/Index', [
             'data' => [
-                'daftarTertibUsaha' => [
+                'daftarTertibUsaha'           => [
                     'daftarTertibBUJK' => PengawasanBUJKRutinResource::collection($daftarTertibUsahaBUJK),
+                ],
+                'daftarTertibPenyelenggaraan' => PengawasanPenyelenggaraanAPBDResource::collection($daftarTertibPenyelenggaraan),
+                'totalTertibPengawasan'       => [
+                    'tertibPenyelenggaraan' => $tertibPenyelenggaraan,
                 ],
             ],
         ]);

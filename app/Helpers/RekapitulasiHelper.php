@@ -8,8 +8,17 @@ class RekapitulasiHelper
     {
         foreach($data as $d)
         {
-            $d->tertib_pengawasan === 1 ? $result['totalTertib'] = $d->total_tertib_pengawasan :
-                $result['totalBelumTertib'] = $d->total_tertib_pengawasan;
+            switch ($d->tertib_pengawasan)
+            {
+                case 1:
+                    $result['totalTertib'] = $d->total_tertib_pengawasan;
+                    break;
+                case 0:
+                    $result['totalBelumTertib'] = $d->total_tertib_pengawasan;
+                    break;
+                default:
+                    break;
+            }
         }
 
         return $result;

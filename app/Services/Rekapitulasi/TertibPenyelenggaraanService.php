@@ -3,6 +3,7 @@
 namespace App\Services\Rekapitulasi;
 
 use App\Models\Penyelenggaraan\ProyekKonstruksi;
+use App\Models\Penyelenggaraan\PengawasanPenyelenggaraan;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
@@ -114,6 +115,36 @@ class TertibPenyelenggaraanService
             ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
             ->groupBy('tertib_pengawasan')
             ->where('tahun', $tahun)
+            ->get();
+    }
+
+    public function getDaftarPengawasanRutin(string $tahun)
+    {
+        return PengawasanPenyelenggaraan::withWhereHas(
+            'proyekKonstruksi', function ($query)
+            {
+                $query->leftJoin('usaha', 'proyek_konstruksi.penyedia_jasa_id', 'usaha.id')
+                      ->select(
+                        'proyek_konstruksi.id as id',
+                        'proyek_konstruksi.nama_paket as namaPaket',
+                        'proyek_konstruksi.nomor_kontrak as nomorKontrak',
+                        'usaha.nama as penyediaJasa'
+                    );
+            }
+        )->where('jenis_pengawasan', 'Rutin')
+         ->whereYear('tanggal_pengawasan', $tahun)
+         ->orderBy('tanggal_pengawasan', 'desc')
+         ->limit(5)
+         ->get();
+    }
+
+    public function getPengawasanRutinCount(string $tahun)
+    {
+        return DB::table('pengawasan_penyelenggaraan_konstruksi')
+            ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
+            ->where('jenis_pengawasan', 'Rutin')
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->groupBy('tertib_pengawasan')
             ->get();
     }
 }

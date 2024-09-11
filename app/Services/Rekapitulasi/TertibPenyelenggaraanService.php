@@ -144,6 +144,7 @@ class TertibPenyelenggaraanService
             ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
             ->where('jenis_pengawasan', 'Rutin')
             ->whereYear('tanggal_pengawasan', $tahun)
+            ->whereNotNull('tertib_pengawasan')
             ->groupBy('tertib_pengawasan')
             ->get();
     }

@@ -16,8 +16,6 @@ class RekapitulasiHelper
                 case 0:
                     $result['totalBelumTertib'] = $d->total_tertib_pengawasan;
                     break;
-                default:
-                    break;
             }
         }
 

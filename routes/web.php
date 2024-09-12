@@ -227,15 +227,6 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/{lingkup_id}', 'category');
                 });
             });
-
-            // Pengawasan Rutin
-            // Route::name('rutin.')->prefix('/rutin')
-            // ->group(function () {
-            //     Route::controller(App\Http\Controllers\Pengawasan\Rutin\PengawasanRutinController::class)
-            //     ->group(function () {
-            //         Route::get('/{?year}', 'index');
-            //     });
-            // });
         });
 
         // Jenis Pengawasan
@@ -250,6 +241,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 Route::controller(App\Http\Controllers\JenisPengawasan\Rutin\PengawasanRutinController::class)
                 ->group(function () {
                     Route::get('/{tahun}', 'index');
+                    Route::get('/{tahun}/{file_name}', 'show');
                 });
             });
         });
@@ -291,11 +283,6 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 Route::get('/{fileName}', 'show');
             });
 
-            // Route::controller(App\Http\Controllers\Rekapitulasi\UsahaController::class)
-            // ->group(function () {
-            //     Route::get('/{tahun}/tertib-usaha', 'index');
-            //     Route::get('/{tahun}/tertib-usaha/bujk', 'indexBUJK');
-            // });
         });
 
         // Route::name('rekapitulasi.')->prefix('/rekapitulasi')

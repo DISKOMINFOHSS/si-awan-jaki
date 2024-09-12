@@ -134,7 +134,27 @@ class TertibPenyelenggaraanService
         )->where('jenis_pengawasan', 'Rutin')
          ->whereYear('tanggal_pengawasan', $tahun)
          ->orderBy('tanggal_pengawasan', 'desc')
-         ->limit(5)
+         ->get();
+    }
+
+    public function getDaftarPengawasanRutinOrderByNamaPaket(string $tahun)
+    {
+        return PengawasanPenyelenggaraan::withWhereHas(
+            'proyekKonstruksi', function ($query)
+            {
+                $query->leftJoin('usaha', 'proyek_konstruksi.penyedia_jasa_id', 'usaha.id')
+                      ->select(
+                        'proyek_konstruksi.id as id',
+                        'proyek_konstruksi.nama_paket as namaPaket',
+                        'proyek_konstruksi.nomor_kontrak as nomorKontrak',
+                        'usaha.nama as penyediaJasa'
+                    );
+            }
+        )->join('proyek_konstruksi', 'proyek_konstruksi.id', 'pengawasan_penyelenggaraan_konstruksi.proyek_konstruksi_id')
+         ->where('jenis_pengawasan', 'Rutin')
+         ->whereYear('tanggal_pengawasan', $tahun)
+         ->select('pengawasan_penyelenggaraan_konstruksi.*', 'proyek_konstruksi.nama_paket')
+         ->orderBy('nama_paket')
          ->get();
     }
 

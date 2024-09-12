@@ -116,64 +116,6 @@ const JenisPengawasanRutinIndex = ({ data }) => {
                     </Card.Body>
                 </Card>
             </div>
-            {/* <div className="grid lg:grid-cols-3 xl:grid-cols-4 gap-5 my-4">
-                <Card className="h-fit">
-                    <Card.Body className="p-4 text-xs text-slate-800">
-                        <div className="flex items-start justify-between gap-x-2.5">
-                            <div className="bg-blue-100 text-blue-600 rounded p-2">
-                                <LiaSquare size={20} />
-                            </div>
-                            <div className="text-end">
-                                <div className="font-light text-slate-500 text-[11px]">Pengawasan</div>
-                                <div className="font-medium text-base leading-tight">16</div>
-                                <div className="line-clamp-1 text-slate-500">Total Pengawasan Rutin</div>
-                            </div>
-                        </div>
-                    </Card.Body>
-                </Card>
-                <Card className="h-fit">
-                    <Card.Body className="p-4 text-xs text-slate-800">
-                        <div className="flex items-start justify-between gap-x-2.5">
-                            <div className="bg-blue-100 text-blue-600 rounded p-2">
-                                <LiaUserFriendsSolid size={20} />
-                            </div>
-                            <div className="text-end">
-                                <div className="font-light text-slate-500 text-[11px]">Pengawasan</div>
-                                <div className="font-medium text-base leading-tight">16</div>
-                                <div className="line-clamp-1 text-slate-500">Tertib Usaha Jasa Konstruksi</div>
-                            </div>
-                        </div>
-                    </Card.Body>
-                </Card>
-                <Card className="h-fit">
-                    <Card.Body className="p-4 text-xs text-slate-800">
-                        <div className="flex items-start justify-between gap-x-2.5">
-                            <div className="bg-blue-100 text-blue-600 rounded p-2">
-                                <LiaHardHatSolid size={20} />
-                            </div>
-                            <div className="text-end">
-                                <div className="font-light text-slate-500 text-[11px]">Pengawasan</div>
-                                <div className="font-medium text-base leading-tight">16</div>
-                                <div className="line-clamp-1 text-slate-500">Tertib Penyelenggaraan</div>
-                            </div>
-                        </div>
-                    </Card.Body>
-                </Card>
-                <Card className="h-fit">
-                    <Card.Body className="p-4 text-xs text-slate-800">
-                        <div className="flex items-start justify-between gap-x-2.5">
-                            <div className="bg-blue-100 text-blue-600 rounded p-2">
-                                <LiaBuildingSolid size={20} />
-                            </div>
-                            <div className="text-end">
-                                <div className="font-light text-slate-500 text-[11px]">Pengawasan</div>
-                                <div className="font-medium text-base leading-tight">16</div>
-                                <div className="line-clamp-1 text-slate-500">Tertib Pemanfaatan Produk</div>
-                            </div>
-                        </div>
-                    </Card.Body>
-                </Card>
-            </div> */}
             <Tabs tabList={tabList}>
                 <Tabs.Tab>
                 <Card>
@@ -182,23 +124,6 @@ const JenisPengawasanRutinIndex = ({ data }) => {
                             <div>
                                 <h3 className="font-medium text-sm text-slate-700">Badan Usaha Jasa Konstruksi</h3>
                                 <h4 className="font-light text-xs text-slate-500">Objek Pengawasan Tertib Usaha Jasa Konstruksi</h4>
-                            </div>
-                            <div className="flex items-center gap-x-2">
-                                {/* <div className="relative mx-2">
-                                    <div className="pointer-events-none absolute inset-y-0 left-2 flex items-center">
-                                        <LiaSearchSolid size={18} className="text-slate-500 -scale-x-100" />
-                                    </div>
-                                    <input
-                                        type="search" name="search" placeholder="Cari..."
-                                        className="border border-slate-200 rounded py-2.5 pl-8 block w-56 text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs"
-                                    />
-                                </div> */}
-                                <Link
-                                    href={`/admin/`}
-                                    className="w-fit flex justify-center items-center gap-x-2  text-blue-600 bg-blue-50 rounded text-xs tracking-wide px-3 py-2.5 hover:bg-blue-600 hover:text-white"
-                                >
-                                    Lihat Semua
-                                </Link>
                             </div>
                         </div>
                     </Card.Header>
@@ -234,7 +159,7 @@ const JenisPengawasanRutinIndex = ({ data }) => {
                                 </thead>
                                 <tbody className="text-slate-700">
                                     {
-                                        daftarTertibUsaha.daftarTertibBUJK.map((pengawasan, i) => (
+                                        daftarTertibUsaha.daftarTertibBUJK.slice(0, 5).map((pengawasan, i) => (
                                             <tr key={i} className="border-b border-slate-100 hover:bg-slate-100">
                                                 <td className="px-4 py-5 text-center">{i + 1}</td>
                                                 <td className="px-4 py-5">
@@ -280,6 +205,14 @@ const JenisPengawasanRutinIndex = ({ data }) => {
                             </table>
                         </div>
                     </Card.Body>
+                    <Card.Footer className="p-4 flex justify-center items-center">
+                        <Link
+                            href={`/admin/pengawasan/usaha`}
+                            className="w-full flex justify-center items-center gap-x-2  text-blue-600 bg-blue-50 rounded text-xs tracking-wide px-3 py-2.5 hover:bg-blue-600 hover:text-white"
+                        >
+                            Lihat Semua
+                        </Link>
+                    </Card.Footer>
                 </Card>
                 </Tabs.Tab>
                 <Tabs.Tab>
@@ -289,14 +222,6 @@ const JenisPengawasanRutinIndex = ({ data }) => {
                                 <div>
                                     <h3 className="font-medium text-sm text-slate-700">Proyek Konstruksi</h3>
                                     <h4 className="font-light text-xs text-slate-500">Pengawasan Tertib Penyelenggaraan Jasa Konstruksi</h4>
-                                </div>
-                                <div className="flex items-center gap-x-2">
-                                    <Link
-                                        href={`/admin/pengawasan/penyelenggaraan/APBD`}
-                                        className="w-fit flex justify-center items-center gap-x-2  text-blue-600 bg-blue-50 rounded text-xs tracking-wide px-3 py-2.5 hover:bg-blue-600 hover:text-white"
-                                    >
-                                        Lihat Semua
-                                    </Link>
                                 </div>
                             </div>
                         </Card.Header>
@@ -332,7 +257,7 @@ const JenisPengawasanRutinIndex = ({ data }) => {
                                     </thead>
                                     <tbody className="text-slate-700">
                                         {
-                                            daftarTertibPenyelenggaraan.map((pengawasan, i) => (
+                                            daftarTertibPenyelenggaraan.slice(0, 5).map((pengawasan, i) => (
                                                 <tr key={pengawasan.id} className="border-b border-slate-100 hover:bg-slate-100">
                                                     <td className="px-4 py-5 text-center">{i + 1}</td>
                                                     <td className="px-4 py-5">
@@ -365,6 +290,14 @@ const JenisPengawasanRutinIndex = ({ data }) => {
                                 </table>
                             </div>
                         </Card.Body>
+                        <Card.Footer className="p-4 flex justify-center items-center">
+                            <Link
+                                href={`/admin/pengawasan/penyelenggaraan/APBD`}
+                                className="w-full flex justify-center items-center gap-x-2  text-blue-600 bg-blue-50 rounded text-xs tracking-wide px-3 py-2.5 hover:bg-blue-600 hover:text-white"
+                            >
+                                Lihat Semua
+                            </Link>
+                        </Card.Footer>
                     </Card>
                 </Tabs.Tab>
                 <Tabs.Tab>
@@ -374,14 +307,6 @@ const JenisPengawasanRutinIndex = ({ data }) => {
                                 <div>
                                     <h3 className="font-medium text-sm text-slate-700">Bangunan Konstruksi</h3>
                                     <h4 className="font-light text-xs text-slate-500">Pengawasan Tertib Pemanfaatan Produk Jasa Konstruksi</h4>
-                                </div>
-                                <div className="flex items-center gap-x-2">
-                                    <Link
-                                        href={`/admin/pengawasan/pemanfaatan-produk`}
-                                        className="w-fit flex justify-center items-center gap-x-2  text-blue-600 bg-blue-50 rounded text-xs tracking-wide px-3 py-2.5 hover:bg-blue-600 hover:text-white"
-                                    >
-                                        Lihat Semua
-                                    </Link>
                                 </div>
                             </div>
                         </Card.Header>
@@ -407,7 +332,7 @@ const JenisPengawasanRutinIndex = ({ data }) => {
                                     </thead>
                                     <tbody className="text-slate-700">
                                         {
-                                            daftarTertibPemanfaatanProduk.map((pengawasan, i) => (
+                                            daftarTertibPemanfaatanProduk.slice(0, 5).map((pengawasan, i) => (
                                                 <tr key={pengawasan.id} className="border-b border-slate-100 hover:bg-slate-100">
                                                     <td className="px-4 py-5 text-center">{i + 1}</td>
                                                     <td className="px-4 py-5">
@@ -415,7 +340,7 @@ const JenisPengawasanRutinIndex = ({ data }) => {
                                                             <Link href={`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}`} className="uppercase hover:text-blue-600 hover:underline">
                                                                 {pengawasan.bangunan.nama}
                                                             </Link>
-                                                            <div className="font-light text-slate-500 capitalize">{`${pengawasan.bangunan.desa_kelurahan.toLowerCase()}, ${pengawasan.bangunan.kecamatan.toLowerCase()}`}</div>
+                                                            <div className="font-light text-slate-500 capitalize">{`${pengawasan.bangunan.desaKelurahan.toLowerCase()}, ${pengawasan.bangunan.kecamatan.toLowerCase()}`}</div>
                                                         </div>
                                                     </td>
                                                     <td className="px-4 py-5 text-center">{formatDateToIndonesia(pengawasan.tanggalPengawasan)}</td>
@@ -433,6 +358,14 @@ const JenisPengawasanRutinIndex = ({ data }) => {
                                 </table>
                             </div>
                         </Card.Body>
+                        <Card.Footer className="p-4 flex justify-center items-center">
+                            <Link
+                                href={`/admin/pengawasan/pemanfaatan-produk`}
+                                className="w-full flex justify-center items-center gap-x-2  text-blue-600 bg-blue-50 rounded text-xs tracking-wide px-3 py-2.5 hover:bg-blue-600 hover:text-white"
+                            >
+                                Lihat Semua
+                            </Link>
+                        </Card.Footer>
                     </Card>
                 </Tabs.Tab>
             </Tabs>

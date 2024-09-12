@@ -4,6 +4,7 @@ namespace App\Services\Rekapitulasi;
 
 use App\Models\PemanfaatanProduk\Bangunan;
 use App\Models\PemanfaatanProduk\PengawasanPemanfaatanProduk;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
@@ -70,12 +71,48 @@ class TertibPemanfaatanProdukService
 
     public function getDaftarPengawasanRutin(string $tahun)
     {
-        return PengawasanPemanfaatanProduk::with(['bangunan:id,nama,desa_kelurahan,kecamatan'])
-            ->where('jenis_pengawasan', 'Rutin')
-            ->whereYear('tanggal_pengawasan', $tahun)
-            ->orderBy('tanggal_pengawasan', 'desc')
-            ->limit(5)
-            ->get();
+        return PengawasanPemanfaatanProduk::with([
+            'bangunan' => function (Builder $query)
+            {
+                $query->select(
+                    'id',
+                    'nama',
+                    'nomor_kontrak_pembangunan as nomorKontrak',
+                    'mulai_pembangunan as tanggalMulaiBangun',
+                    'selesai_pembangunan as tanggalSelesaiBangun',
+                    'tanggal_pemanfaatan as tanggalPemanfaatan',
+                    'umur_konstruksi as umurKonstruksi',
+                    'desa_kelurahan as desaKelurahan',
+                    'kecamatan',
+                );
+            }])->where('jenis_pengawasan', 'Rutin')
+               ->whereYear('tanggal_pengawasan', $tahun)
+               ->orderBy('tanggal_pengawasan', 'desc')
+               ->get();
+    }
+
+    public function getDaftarPengawasanRutinOrderByBangunanNama(string $tahun)
+    {
+        return PengawasanPemanfaatanProduk::with([
+            'bangunan' => function (Builder $query)
+            {
+                $query->select(
+                    'id',
+                    'nama',
+                    'nomor_kontrak_pembangunan as nomorKontrak',
+                    'mulai_pembangunan as tanggalMulaiBangun',
+                    'selesai_pembangunan as tanggalSelesaiBangun',
+                    'tanggal_pemanfaatan as tanggalPemanfaatan',
+                    'umur_konstruksi as umurKonstruksi',
+                    'desa_kelurahan as desaKelurahan',
+                    'kecamatan',
+                );
+            }])->join('bangunan', 'bangunan.id', 'pengawasan_pemanfaatan_produk.bangunan_id')
+               ->where('jenis_pengawasan', 'Rutin')
+               ->whereYear('tanggal_pengawasan', $tahun)
+               ->select('pengawasan_pemanfaatan_produk.*', 'bangunan.nama')
+               ->orderBy('nama')
+               ->get();
     }
 
     public function getPengawasanRutinCount(string $tahun)

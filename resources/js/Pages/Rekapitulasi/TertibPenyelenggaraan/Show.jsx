@@ -79,8 +79,8 @@ export default ({ data }) => {
                             </View>
                         </View>
                         {
-                            listExample.map((pengawasan, i) => (
-                            // daftarPengawasanTahunan.map((pengawasan, i) => (
+                            // listExample.map((pengawasan, i) => (
+                            daftarPengawasanTahunan.map((pengawasan, i) => (
                                 <View wrap={false} key={i} style={tw("flex flex-row w-full text-[8px]")}>
                                     <View style={tw("w-[3%] border-b border-l border-slate-800 p-1")}>
                                         <Text style={tw("text-center")}>{i + 1}</Text>
@@ -149,8 +149,8 @@ export default ({ data }) => {
                             </View>
                         </View>
                         {
-                            listExample.map((pengawasan, i) => (
-                            // daftarPengawasanTahunan.map((pengawasan, i) => (
+                            // listExample.map((pengawasan, i) => (
+                            daftarPengawasanTahunan.map((pengawasan, i) => (
                                 <View wrap={false} key={i} style={tw("flex flex-row w-full text-[8px]")}>
                                     <View style={tw("w-[3%] border-b border-l border-slate-800 p-1")}>
                                         <Text style={tw("text-center")}>{i + 1}</Text>

@@ -54,4 +54,17 @@ class PengawasanRutinController extends Controller
             ],
         ]);
     }
+
+    public function show(string $tahun, string $file_name)
+    {
+        $daftarTertibPenyelenggaraan = $this->rekapTertibPenyelenggaraanService->getDaftarPengawasanRutinOrderByNamaPaket($tahun);
+        $daftarTertibPemanfaatan = $this->rekapTertibPemanfaatanProdukService->getDaftarPengawasanRutinOrderByBangunanNama($tahun);
+
+        return Inertia::render('JenisPengawasan/Rutin/Show', [
+            'data' => [
+                'daftarTertibPenyelenggaraan'   => PengawasanPenyelenggaraanAPBDResource::collection($daftarTertibPenyelenggaraan),
+                'daftarTertibPemanfaatanProduk' => PengawasanPemanfaatanProdukResource::collection($daftarTertibPemanfaatan),
+            ],
+        ]);
+    }
 }

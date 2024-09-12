@@ -98,6 +98,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::put('/{id}', 'update');
 
                     Route::post('/{id}/bukti-dukung', 'storeBuktiDukung');
+                    Route::delete('/{id}/bukti-dukung/{bukti_dukung_id}', 'deleteBuktiDukung');
+
                     Route::put('/{id}/pemilik', 'updatePemilik');
                     Route::put('/{id}/pengelola', 'updatePengelola');
                 });

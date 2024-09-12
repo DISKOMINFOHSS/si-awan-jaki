@@ -8,14 +8,22 @@ import {
     LiaTrashAltSolid,
 } from "react-icons/lia";
 import FormBuktiDukung from "./FormBuktiDukung";
+import ModalDelete from "../ModalDelete";
 
 export default ({ bangunanId, daftarBuktiDukung }) => {
     const [ isModalBuktiDukungOpen, setIsModalBuktiDukungOpen ] = React.useState(false);
+    const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
 
     const [ selectedBuktiDukung, setSelectedBuktiDukung ] = React.useState({});
     function handleSelectBuktiDukung(bukti) {
         setSelectedBuktiDukung(bukti);
         setIsModalBuktiDukungOpen(true);
+    }
+
+    const [ selectedIdBuktiDukung, setSelectedIdBuktiDukung ] = React.useState('');
+    function handleDeleteButtonClick(id) {
+        setSelectedIdBuktiDukung(id);
+        setIsModalDeleteOpen(true);
     }
 
     return (
@@ -64,7 +72,9 @@ export default ({ bangunanId, daftarBuktiDukung }) => {
                                                         <LiaEditSolid size={18} />
                                                     </button>
                                                     <button
+                                                        type="button"
                                                         className="rounded border border-slate-200 text-red-500 p-2 hover:bg-slate-200"
+                                                        onClick={() => handleDeleteButtonClick(bukti.id)}
                                                     >
                                                         <LiaTrashAltSolid size={18} />
                                                     </button>
@@ -84,6 +94,17 @@ export default ({ bangunanId, daftarBuktiDukung }) => {
                 bangunanId={bangunanId}
                 buktiDukung={selectedBuktiDukung}
             />
+            <ModalDelete
+                isVisible={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+                url={`/admin/pendataan/bangunan/${bangunanId}/bukti-dukung`}
+                id={selectedIdBuktiDukung}
+            >
+                <div className="font-medium text-slate-700 mb-1">Apakah Anda yakin ingin menghapus bukti dukung ini?</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Data yang telah dihapus tidak dapat dikembalikan.
+                </div>
+            </ModalDelete>
         </>
     )
 }

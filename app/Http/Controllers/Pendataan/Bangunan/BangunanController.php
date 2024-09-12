@@ -228,4 +228,19 @@ class BangunanController extends Controller
 
         return back();
     }
+
+    public function deleteBuktiDukung(string $id, string $bukti_dukung_id)
+    {
+        if (!$this->bangunanService->checkBangunanExists($id)) {
+            return back()->withErrors(['message' => 'Bangunan tidak ditemukan.']);
+        }
+
+        if (!$this->bangunanService->checkBuktiDukungExists($bukti_dukung_id)) {
+            return back()->withErrors(['message' => 'Bukti dukung tidak ditemukan.']);
+        }
+
+        $this->bangunanService->deleteBuktiDukung($bukti_dukung_id, $id);
+
+        return back();
+    }
 }

@@ -193,6 +193,11 @@ class PendataanBangunanService
         ]);
     }
 
+    public function checkBuktiDukungExists(string $id): bool
+    {
+        return DB::table('bukti_dukung_pengawasan_bangunan')->where('id', $id)->exists();
+    }
+
     public function getDaftarBuktiDukungByBangunanId(string $bangunanId): DBCollection
     {
         return DB::table('bukti_dukung_pengawasan_bangunan as bukti_dukung')
@@ -217,8 +222,6 @@ class PendataanBangunanService
     {
         DB::table('bukti_dukung_pengawasan_bangunan')->where('id', $id)
             ->where('bangunan_id', $bangunanId)
-            ->update([
-                'deleted_at' => now()
-            ]);
+            ->delete();
     }
 }

@@ -15,6 +15,10 @@ import {
     LiaListAltSolid,
     LiaEllipsisHSolid,
     LiaInfoCircleSolid,
+    LiaCheckCircleSolid,
+    LiaCheckDoubleSolid,
+    LiaEditSolid,
+    LiaTrashAltSolid,
 } from "react-icons/lia";
 
 
@@ -30,6 +34,7 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
     ] = useToggleWithClickOutside(false);
 
     const [ isModalVerificationOpen, setIsModalVerificationOpen ] = React.useState(false);
+    const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
 
     return (
         <>
@@ -51,7 +56,8 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
                         onClick={() => setIsModalVerificationOpen(true)}
                     >
                         <LiaListAltSolid size={18} />
-                        <span>Verifikasi Pengawasan</span>
+                        {/* <span>Verifikasi Pengawasan</span> */}
+                        <span>Buat Rekomendasi</span>
                     </button>
                     <Dropdown ref={moreDropdownRef}>
                         <Dropdown.Toggle
@@ -70,14 +76,30 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
                                 className="flex items-center gap-x-3 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
                             >
                                 <LiaInfoCircleSolid size={16} />
-                                <span>Informasi Proyek Konstruksi</span>
+                                <span>Informasi Proyek</span>
                             </a>
                             <button
                                 type="button"
                                 className="flex items-center gap-x-3 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
                             >
                                 <LiaListAltSolid size={16} />
+                                <span>Buat Rekomendasi</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-3 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpen(true)}}
+                            >
+                                <LiaCheckCircleSolid size={16} />
                                 <span>Verifikasi Pengawasan</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left text-red-500 hover:bg-slate-100 hover:text-red-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalDeleteOpen(true)}}
+                            >
+                                <LiaTrashAltSolid size={16} />
+                                <span>Hapus Pengawasan</span>
                             </button>
                         </Dropdown.Menu>
                     </Dropdown>

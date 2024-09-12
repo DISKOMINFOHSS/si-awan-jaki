@@ -23,9 +23,6 @@ class BangunanResource extends JsonResource
             'nama'                 => $this->nama,
             'nomorKontrak'         => $this->nomor_kontrak_pembangunan,
             'sumberDana'           => $this->sumber_dana,
-            // 'tanggalMulaiBangun'   => Carbon::parse($this->mulai_pembangunan)->locale('id')->isoFormat('D MMMM Y'),
-            // 'tanggalSelesaiBangun' => Carbon::parse($this->selesai_pembangunan)->locale('id')->isoFormat('D MMMM Y'),
-            // 'tanggalPemanfaatan'   => Carbon::parse($this->tanggal_pemanfaatan)->locale('id')->isoFormat('D MMMM Y'),
             'tanggalMulaiBangun'   => $this->mulai_pembangunan,
             'tanggalSelesaiBangun' => $this->selesai_pembangunan,
             'tanggalPemanfaatan'   => $this->tanggal_pemanfaatan,
@@ -49,6 +46,7 @@ class BangunanResource extends JsonResource
             'lokasi'               => $this->lokasi,
             'desaKelurahan'        => $this->desa_kelurahan,
             'kecamatan'            => $this->kecamatan,
+            'daftarBuktiDukung'    => $this->whenHas('daftar_bukti_dukung'),
         ];
     }
 }

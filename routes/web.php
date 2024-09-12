@@ -97,6 +97,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/{id}/edit', 'edit');
                     Route::put('/{id}', 'update');
 
+                    Route::post('/{id}/bukti-dukung', 'storeBuktiDukung');
                     Route::put('/{id}/pemilik', 'updatePemilik');
                     Route::put('/{id}/pengelola', 'updatePengelola');
                 });

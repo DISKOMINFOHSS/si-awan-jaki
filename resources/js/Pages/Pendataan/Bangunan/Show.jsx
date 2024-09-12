@@ -12,6 +12,7 @@ import {
     LiaEditSolid,
     LiaHomeSolid
 } from "react-icons/lia";
+import DaftarBuktiDukung from "../../../Components/Bangunan/DaftarBuktiDukung";
 
 const PendataanBangunanShow = ({ data }) => {
     const { bangunan } = data;
@@ -19,7 +20,7 @@ const PendataanBangunanShow = ({ data }) => {
 
     const tabList = [
         { label: 'Informasi Bangunan' },
-        { label: 'Pengawasan' },
+        { label: 'Dokumen Bukti Dukung' },
     ];
 
     return (
@@ -61,7 +62,10 @@ const PendataanBangunanShow = ({ data }) => {
                     </div>
                 </Tabs.Tab>
                 <Tabs.Tab>
-
+                    <DaftarBuktiDukung
+                        bangunanId={bangunan.id}
+                        daftarBuktiDukung={bangunan.daftarBuktiDukung}
+                    />
                 </Tabs.Tab>
             </Tabs>
         </>

@@ -93,6 +93,7 @@ class BangunanController extends Controller
     public function show(string $id)
     {
         $bangunan = $this->bangunanService->getBangunan($id);
+        $bangunan['daftar_bukti_dukung'] = $this->bangunanService->getDaftarBuktiDukungByBangunanId($id);
 
         return Inertia::render('Pendataan/Bangunan/Show', [
             'data' => [
@@ -197,5 +198,34 @@ class BangunanController extends Controller
         if ($pengelolaId != $pengelola) {
             $this->bangunanService->updatePengelolaBangunan($id, $pengelola);
         }
+    }
+
+    public function storeBuktiDukung(string $id, Request $request)
+    {
+        if (!$this->bangunanService->checkBangunanExists($id)) {
+            return back()->withErrors(['message' => 'Bangunan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'tahun' => 'required|digits:4',
+            'label' => 'required',
+            'url'   => 'required|url:http,https',
+        ]);
+        $userId = auth()->user()->id;
+
+        $data = [
+            'tahun'      => $validatedData['tahun'],
+            'label'      => $validatedData['label'],
+            'url'        => $validatedData['url'],
+            'created_by' => $userId,
+        ];
+
+        if ($request->has('id')) {
+            $this->bangunanService->updateBuktiDukung($request->input('id'), $data);
+        } else {
+            $this->bangunanService->addBuktiDukung($id, $data);
+        }
+
+        return back();
     }
 }

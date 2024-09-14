@@ -49,6 +49,7 @@ class PengawasanPemanfaatanProdukResource extends JsonResource
                 'lokasi'                => $bangunan->lokasi,
                 'desaKelurahan'         => $bangunan->desa_kelurahan,
                 'kecamatan'             => $bangunan->kecamatan,
+                'daftarBuktiDukung'     => $bangunan->daftar_bukti_dukung,
             ],
             'daftarPemeriksaan'           => $this->daftarPemeriksaan ? $this->daftarPemeriksaan
                 ->transform(function ($pemeriksaan)

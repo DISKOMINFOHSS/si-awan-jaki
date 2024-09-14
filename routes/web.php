@@ -112,6 +112,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/', 'index');
                     Route::post('/', 'store');
                     Route::get('/{id}', 'show');
+                    Route::delete('/{id}', 'destroy');
 
                     Route::post('/{id}/verification', 'storeVerification');
 

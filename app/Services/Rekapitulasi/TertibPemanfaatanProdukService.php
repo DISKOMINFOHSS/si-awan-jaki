@@ -122,6 +122,7 @@ class TertibPemanfaatanProdukService
             ->where('jenis_pengawasan', 'Rutin')
             ->whereYear('tanggal_pengawasan', $tahun)
             ->whereNotNull('tertib_pengawasan')
+            ->whereNull('deleted_at')
             ->groupBy('tertib_pengawasan')
             ->get();
     }

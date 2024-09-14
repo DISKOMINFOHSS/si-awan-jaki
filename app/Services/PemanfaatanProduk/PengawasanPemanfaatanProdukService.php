@@ -109,6 +109,12 @@ class PengawasanPemanfaatanProdukService
         $pengawasan->save();
     }
 
+    public function deletePengawasan(string $id)
+    {
+        $pengawasan = PengawasanPemanfaatanProduk::find($id);
+        $pengawasan->delete();
+    }
+
     public function addPemeriksaanPengawasan(array $data): string
     {
         $pemeriksaan = PemeriksaanPengawasanPemanfaatanProduk::firstOrNew([

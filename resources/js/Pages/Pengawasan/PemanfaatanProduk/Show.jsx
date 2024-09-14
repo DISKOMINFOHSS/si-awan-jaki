@@ -4,9 +4,11 @@ import { router } from "@inertiajs/react";
 import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import Dropdown from "../../../Components/Dropdown";
+import Card from "../../../Components/Card";
+import ModalDelete from "../../../Components/ModalDelete";
+import ModalError from "../../../Components/ModalError";
 
 import FormPemeriksaan from "../../../Components/Bangunan/FormPemeriksaan";
-import ModalError from "../../../Components/ModalError";
 import FormVerifikasiPengawasan from "../../../Components/Bangunan/FormVerifikasiPengawasan";
 import {
     InformasiBangunan,
@@ -20,14 +22,12 @@ import {
     LiaHomeSolid,
     LiaListAltSolid,
     LiaEllipsisHSolid,
-    LiaFileAltSolid,
     LiaFolderSolid,
     LiaCheckCircleSolid,
     LiaInfoCircleSolid,
     LiaTrashAltSolid,
+    LiaPrintSolid,
 } from "react-icons/lia";
-import Card from "../../../Components/Card";
-import ModalDelete from "../../../Components/ModalDelete";
 
 function DaftarLingkupPengawasan({ pengawasanId, daftarLingkupPengawasan }) {
     const daftar = daftarLingkupPengawasan.map((lingkupPengawasan, i) => {
@@ -68,7 +68,6 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
         tertibPemeliharaanBangunan,
         tertibProgramPemeliharaan,
         tertibPengawasan,
-        rekomendasiPengawasan,
     } = pengawasan;
 
     const [
@@ -125,22 +124,26 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                     <h1 className="font-medium text-xl text-slate-800 uppercase">{bangunan.nama}</h1>
                 </div>
                 <div className="flex items-center gap-x-2">
-                        <button
-                            className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
-                            onClick={() => handleRekomendasiClick()}
-                        >
-                            <LiaListAltSolid size={18} />
-                            <span>Buat Rekomendasi</span>
-                        </button>
-                        {/* // <a
-                        //     href={`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/laporan`}
-                        //     target="_blank"
-                        //     className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
-
-                        // >
-                        //     <LiaFileAltSolid size={18} />
-                        //     <span>Lihat Laporan</span>
-                        // </a> */}
+                    {
+                        pengawasan.rekomendasi ? (
+                            <a
+                                href={`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/simak`}
+                                target="_blank"
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                            >
+                                <LiaPrintSolid size={16} />
+                                <span>Cetak PDF</span>
+                            </a>
+                        ) : (
+                            <button
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                                onClick={() => handleRekomendasiClick()}
+                            >
+                                <LiaListAltSolid size={18} />
+                                <span>Buat Rekomendasi</span>
+                            </button>
+                        )
+                    }
                     <Dropdown ref={moreDropdownRef}>
                         <Dropdown.Toggle
                             onClick={toggleMoreDropdown}
@@ -184,13 +187,6 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                                 <LiaTrashAltSolid size={16} />
                                 <span>Hapus Pengawasan</span>
                             </button>
-                            {/* <button
-                                type="button"
-                                className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
-
-                            >
-                                Cetak Laporan
-                            </button> */}
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>

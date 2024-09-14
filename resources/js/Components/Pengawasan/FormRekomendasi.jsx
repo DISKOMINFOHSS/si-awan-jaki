@@ -5,12 +5,13 @@ import Card from "../Card";
 import ModalSuccess from "../ModalSuccess";
 import ModalError from "../ModalError";
 
+import getDefaultData from "../../Utils/getDefaultData";
 import { LiaSpinnerSolid } from "react-icons/lia";
 
-export default ({ tertibPengawasan, url }) => {
+export default ({ tertibPengawasan, rekomendasi, url }) => {
     const { data, setData, post, processing } = useForm({
-        rekomendasi: '',
-        keterangan: '',
+        rekomendasi: getDefaultData(rekomendasi.rekomendasi),
+        keterangan: getDefaultData(rekomendasi.keterangan),
     });
 
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);

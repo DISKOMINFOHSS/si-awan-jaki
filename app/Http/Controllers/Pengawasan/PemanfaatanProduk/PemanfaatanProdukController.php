@@ -64,6 +64,7 @@ class PemanfaatanProdukController extends Controller
         $pengawasan = $this->pengawasanService->getPengawasanById($id);
 
         $pengawasan['daftarPemeriksaan'] = $daftarLingkupPengawasan;
+        $pengawasan['rekomendasi'] = $this->pengawasanService->getRekomendasiPengawasanByPengawasanId($pengawasan->id);
         $pengawasan['bangunan']['daftar_bukti_dukung'] = $this->bangunanService->getDaftarBuktiDukungByBangunanId($pengawasan->bangunan->id);
 
         return Inertia::render('Pengawasan/PemanfaatanProduk/Show', [
@@ -139,26 +140,16 @@ class PemanfaatanProdukController extends Controller
             'verified_by'                    => $userId,
         ]);
 
-        return redirect("/admin/pengawasan/pemanfaatan-produk/$id/rekomendasi/create");
+        return redirect("/admin/pengawasan/pemanfaatan-produk/$id/rekomendasi");
     }
 
     public function showRekomendasi(string $id)
     {
         $pengawasan = $this->pengawasanService->getPengawasanById($id);
+        $pengawasan['rekomendasi'] = $this->pengawasanService->getRekomendasiPengawasanByPengawasanId($pengawasan->id);
         $pengawasan['bangunan']['daftar_bukti_dukung'] = $this->bangunanService->getDaftarBuktiDukungByBangunanId($pengawasan->bangunan->id);
 
         return Inertia::render('Pengawasan/PemanfaatanProduk/Rekomendasi', [
-            'data' => [
-                'pengawasan' => new PengawasanPemanfaatanProdukResource($pengawasan),
-            ],
-        ]);
-    }
-
-    public function createRekomendasi(string $id)
-    {
-        $pengawasan = $this->pengawasanService->getPengawasanById($id);
-
-        return Inertia::render('Pengawasan/PemanfaatanProduk/Rekomendasi/Create', [
             'data' => [
                 'pengawasan' => new PengawasanPemanfaatanProdukResource($pengawasan),
             ],
@@ -174,7 +165,6 @@ class PemanfaatanProdukController extends Controller
         $validatedData = $request->validate([
             'rekomendasi'   => 'required',
             'keterangan'    => 'nullable',
-            'tanggalTemuan' => 'nullable|date'
         ]);
         $userId = auth()->user()->id;
 
@@ -182,11 +172,10 @@ class PemanfaatanProdukController extends Controller
             'pengawasan_id'  => $id,
             'rekomendasi'    => $validatedData['rekomendasi'],
             'keterangan'     => $validatedData['keterangan'],
-            'tanggal_temuan' => $validatedData['tanggalTemuan'],
             'created_by'     => $userId,
         ]);
 
-        return redirect("/admin/pengawasan/pemanfaatan-produk/$id");
+        return back();
     }
 
     public function showLaporan(string $id)

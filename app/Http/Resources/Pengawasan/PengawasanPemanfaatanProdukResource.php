@@ -74,7 +74,7 @@ class PengawasanPemanfaatanProdukResource extends JsonResource
                         }, json_decode($pemeriksaan->kesimpulan)),
                     ];
                 }) : null,
-            'rekomendasiPengawasan'       => $this->whenLoaded('rekomendasi'),
+            'rekomendasi'                 => $this->whenHas('rekomendasi'),
             'createdBy'                   => $this->createdBy->nama,
             'verifiedAt'                  => $this->verified_at ? Carbon::parse($this->verified_at)->locale('id')->isoFormat('D MMMM Y') : null,
             'verifiedBy'                  => $this->verifiedBy->nama,

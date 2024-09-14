@@ -119,8 +119,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/{id}/laporan', 'showLaporan');
 
                     Route::get('/{id}/rekomendasi', 'showRekomendasi');
-                    // Route::post('/{id}/rekomendasi', 'storeRekomendasi');
-                    Route::get('/{id}/rekomendasi/create', 'createRekomendasi');
+                    Route::post('/{id}/rekomendasi', 'storeRekomendasi');
+                    // Route::get('/{id}/rekomendasi/create', 'createRekomendasi');
 
                     Route::post('/{id}/{lingkup_id}', 'storePemeriksaan');
 

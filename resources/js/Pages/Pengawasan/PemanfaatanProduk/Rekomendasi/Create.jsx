@@ -2,7 +2,7 @@ import React from "react";
 
 import Layout from "../../../../Components/Layout";
 import Breadcrumb from "../../../../Components/Breadcrumb";
-import FormRekomendasi from "../../../../Components/Pengawasan/FormRekomendasi";
+import FormRekomendasi from "../../../../Components/Pengawasan/OldFormRekomendasi";
 
 import { LiaHomeSolid, LiaFileAltSolid } from "react-icons/lia";
 

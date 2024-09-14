@@ -142,6 +142,18 @@ class PemanfaatanProdukController extends Controller
         return redirect("/admin/pengawasan/pemanfaatan-produk/$id/rekomendasi/create");
     }
 
+    public function showRekomendasi(string $id)
+    {
+        $pengawasan = $this->pengawasanService->getPengawasanById($id);
+        $pengawasan['bangunan']['daftar_bukti_dukung'] = $this->bangunanService->getDaftarBuktiDukungByBangunanId($pengawasan->bangunan->id);
+
+        return Inertia::render('Pengawasan/PemanfaatanProduk/Rekomendasi', [
+            'data' => [
+                'pengawasan' => new PengawasanPemanfaatanProdukResource($pengawasan),
+            ],
+        ]);
+    }
+
     public function createRekomendasi(string $id)
     {
         $pengawasan = $this->pengawasanService->getPengawasanById($id);

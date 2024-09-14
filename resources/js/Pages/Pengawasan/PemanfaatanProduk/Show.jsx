@@ -98,15 +98,15 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
         }
 
         if (
-            tertibKesesuaianFungsi &&
-            tertibKesesuaianLokasi &&
-            tertibRencanaUmurKonstruksi &&
-            tertibKapasitasBeban &&
-            tertibPemeliharaanBangunan &&
-            tertibProgramPemeliharaan &&
-            tertibPengawasan
+            tertibKesesuaianFungsi !== null &&
+            tertibKesesuaianLokasi !== null &&
+            tertibRencanaUmurKonstruksi !== null &&
+            tertibKapasitasBeban !== null &&
+            tertibPemeliharaanBangunan !== null &&
+            tertibProgramPemeliharaan !== null &&
+            tertibPengawasan !== null
         ) {
-            return router.get(`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/rekomendasi/create`);
+            return router.get(`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/rekomendasi`);
         }
 
         return setIsModalVerificationOpened(true);

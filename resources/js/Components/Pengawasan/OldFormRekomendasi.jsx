@@ -2,30 +2,29 @@ import React from "react";
 import { Link, useForm } from "@inertiajs/react";
 
 import Card from "../Card";
-import ModalSuccess from "../ModalSuccess";
 import ModalError from "../ModalError";
-
 import { LiaSpinnerSolid } from "react-icons/lia";
 
-export default ({ tertibPengawasan, url }) => {
-    const { data, setData, post, processing } = useForm({
-        rekomendasi: '',
-        keterangan: '',
+export default ({ rekomendasiPengawasan, pengawasan, link }) => {
+    const { rekomendasi, keterangan, tanggalTemuan } = rekomendasiPengawasan;
+
+    const { data, setData, post, processing, reset } = useForm({
+        rekomendasi: rekomendasi ? rekomendasi : '',
+        keterangan: keterangan ? keterangan : '',
+        tanggalTemuan: tanggalTemuan ? tanggalTemuan : '',
     });
 
-    const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
-    const [ isModalSuccessOpen, setIsModalSuccessOpen ] = React.useState(false);
+    const [isModalErrorOpened, setIsModalErrorOpened] = React.useState(false);
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(data, url);
-        post(`/admin/pengawasan/${url}/rekomendasi`, {
+        post(`/admin/pengawasan/${link}/rekomendasi`, {
             onSuccess: () => {
-                setIsModalSuccessOpen(true);
+                reset();
             },
             onError: (errors) => {
+                setIsModalErrorOpened(true);
                 console.log(errors);
-                setIsModalErrorOpen(true);
             }
         });
     }
@@ -33,9 +32,9 @@ export default ({ tertibPengawasan, url }) => {
     return (
         <>
             <div className="my-5">
-                <div className="mb-3">
+                <div className="mb-2.5">
                     <h4 className="font-medium text-lg text-slate-800 leading-6" id="rekomendasi">Rekomendasi Hasil</h4>
-                    <h5 className="font-light text-xs text-slate-500">{tertibPengawasan}</h5>
+                    <h5 className="font-light text-xs text-slate-500">{pengawasan}</h5>
                 </div>
                 <Card className="w-full h-fit">
                     <Card.Body className="p-5">
@@ -57,10 +56,19 @@ export default ({ tertibPengawasan, url }) => {
                                         className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                                     />
                                 </div>
+                                <div>
+                                    <label htmlFor="tanggalTemuan" className="block mb-2 text-xs font-medium text-slate-800">Tanggal Temuan</label>
+                                    <input
+                                        type="date" name="tanggalTemuan" id="tanggalTemuan"
+                                        value={data.tanggalTemuan} onChange={e => setData('tanggalTemuan', e.target.value)}
+                                        className="px-3 py-2 block w-1/2 rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                                    />
+                                </div>
                             </div>
                             <div className="col-span-3 flex justify-end items-center gap-x-2.5">
+                                {/* <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-2.5">Kembali</button> */}
                                 <Link
-                                    href={`/admin/pengawasan/${url}`}
+                                    href={`/admin/pengawasan/${link}`}
                                     className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-2.5"
                                 >
                                     Kembali
@@ -74,33 +82,13 @@ export default ({ tertibPengawasan, url }) => {
                     </Card.Body>
                 </Card>
             </div>
-            <ModalSuccess
-                isVisible={isModalSuccessOpen}
-                onClose={() => setIsModalSuccessOpen(false)}
-            >
-                <div className="text-center my-2.5">
-                    <div className="font-medium text-slate-700">Berhasil!</div>
-                    <div className="font-light text-xs text-slate-500 mb-2">
-                        Rekomendasi berhasil ditambahkan.
-                    </div>
-                </div>
-                <div className="w-full">
-                    <button
-                        type="button"
-                        className="w-full bg-slate-100 text-slate-700 font-medium text-xs rounded py-2 px-2.5"
-                        onClick={() => setIsModalSuccessOpen(false)}
-                    >
-                        Tutup
-                    </button>
-                </div>
-            </ModalSuccess>
             <ModalError
-                isVisible={isModalErrorOpen}
-                onClose={() => setIsModalErrorOpen(false)}
+                isVisible={isModalErrorOpened}
+                onClose={() => setIsModalErrorOpened(false)}
             >
                 <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
                 <div className="font-light text-xs text-slate-500 mb-2">
-                    Gagal menambahkan rekomendasi. Silakan periksa kembali informasi yang diisi.
+                    Gagal menyimpan rekomendasi. Silakan periksa kembali informasi yang diisi.
                 </div>
             </ModalError>
         </>

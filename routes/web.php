@@ -146,7 +146,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                         Route::post('/', 'store');
 
                         Route::get('/rekomendasi', 'recommendation');
-                        Route::get('/simak', 'showSimak');
+                        Route::get('/simak', 'print');
+                        // Route::get('/simak', 'showSimak');
                     });
 
                     // Pengawasan Insidental
@@ -157,6 +158,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                         Route::post('/', 'store');
 
                         Route::get('/rekomendasi', 'recommendation');
+                        Route::get('/simak', 'print');
                     });
                 });
             });

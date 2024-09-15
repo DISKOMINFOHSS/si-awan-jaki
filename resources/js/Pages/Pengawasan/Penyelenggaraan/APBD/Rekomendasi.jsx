@@ -32,7 +32,7 @@ const PengawasanPenyelenggaraanAPBDRekomendasi = ({ data }) => {
                 </div>
                 <div className="flex items-center gap-x-2">
                     <a
-                        href={pengawasan.rekomendasi ? `/admin/pengawasan/pemanfaatan-produk/penyelenggaraan/APBD/${pengawasan.jenisPengawasan.toLowerCase()}/${pengawasan.id}/simak` : '#'}
+                        href={pengawasan.rekomendasi ? `/admin/pengawasan/penyelenggaraan/APBD/${pengawasan.jenisPengawasan.toLowerCase()}/${pengawasan.id}/simak` : '#'}
                         target="_blank"
                         className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white whitespace-nowrap"
                     >

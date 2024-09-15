@@ -74,4 +74,19 @@ class PengawasanInsidentalController extends Controller
             ],
         ]);
     }
+
+    public function print(string $id)
+    {
+        $pengawasan = $this->pengawasanService->getPengawasanById($id);
+        $proyekId = $pengawasan->proyekKonstruksi->id;
+
+        // $pengawasan['daftar_lingkup_pengawasan'] = $this->pengawasanRutinService->getDaftarLingkupPengawasan($id, $proyekId);
+        $pengawasan['rekomendasi'] = $this->pengawasanService->getRekomendasiPengawasanByPengawasanId($id);
+
+        return Inertia::render('Pengawasan/Penyelenggaraan/APBD/Insidental/Simak', [
+            'data' => [
+                'pengawasan' => new PengawasanInsidentalAPBDResource($pengawasan),
+            ],
+        ]);
+    }
 }

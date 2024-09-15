@@ -73,12 +73,27 @@ class PengawasanRutinController extends Controller
         ]);
     }
 
-    public function showSimak(string $id)
+    // public function showSimak(string $id)
+    // {
+    //     $pengawasan = $this->pengawasanService->getPengawasanById($id);
+    //     $proyekId = $pengawasan->proyekKonstruksi->id;
+
+    //     $pengawasan['daftar_lingkup_pengawasan'] = $this->pengawasanRutinService->getDaftarLingkupPengawasan($id, $proyekId);
+
+    //     return Inertia::render('Pengawasan/Penyelenggaraan/APBD/Rutin/Simak', [
+    //         'data' => [
+    //             'pengawasan' => new PengawasanPenyelenggaraanAPBDResource($pengawasan),
+    //         ],
+    //     ]);
+    // }
+
+    public function print(string $id)
     {
         $pengawasan = $this->pengawasanService->getPengawasanById($id);
         $proyekId = $pengawasan->proyekKonstruksi->id;
 
         $pengawasan['daftar_lingkup_pengawasan'] = $this->pengawasanRutinService->getDaftarLingkupPengawasan($id, $proyekId);
+        $pengawasan['rekomendasi'] = $this->pengawasanService->getRekomendasiPengawasanByPengawasanId($id);
 
         return Inertia::render('Pengawasan/Penyelenggaraan/APBD/Rutin/Simak', [
             'data' => [

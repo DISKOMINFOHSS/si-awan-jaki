@@ -86,7 +86,21 @@ export default ({ daftarPengawasan }) => {
                                         <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibKapasitasBeban)}</td>
                                         <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPemeliharaanBangunan)}</td>
                                         <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibProgramPemeliharaan)}</td>
-                                        <td className="px-4 py-5 text-center"></td>
+                                        <td className="px-4 py-5 text-center">
+                                            <div className="flex justify-end gap-x-2">
+                                                <Link
+                                                    href={`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}`}
+                                                    className="flex items-center gap-x-1 rounded border border-slate-200 text-slate-500 px-2.5 py-1.5 hover:bg-slate-200"
+                                                >
+                                                    Lihat
+                                                </Link>
+                                                {/* <button
+                                                    className="flex items-center gap-x-1 rounded border border-slate-200 text-slate-500 px-2.5 py-1.5 hover:bg-slate-200"
+                                                >
+                                                    Rekomendasi
+                                                </button> */}
+                                            </div>
+                                        </td>
                                     </tr>
                                 ))
                             }

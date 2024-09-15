@@ -28,6 +28,7 @@ class PengawasanInsidentalController extends Controller
         // $proyekId = $pengawasan->proyekKonstruksi->id;
 
         $pengawasan['daftar_lingkup_pengawasan'] = $this->pengawasanInsidentalService->getDaftarLingkupPengawasan($id);
+        $pengawasan['rekomendasi'] = $this->pengawasanService->getRekomendasiPengawasanByPengawasanId($id);
 
         return Inertia::render('Pengawasan/Penyelenggaraan/APBD/Insidental/Show', [
             'data' => [
@@ -65,6 +66,7 @@ class PengawasanInsidentalController extends Controller
     public function recommendation(string $id)
     {
         $pengawasan = $this->pengawasanService->getPengawasanById($id);
+        $pengawasan['rekomendasi'] = $this->pengawasanService->getRekomendasiPengawasanByPengawasanId($id);
 
         return Inertia::render('Pengawasan/Penyelenggaraan/APBD/Rekomendasi', [
             'data' => [

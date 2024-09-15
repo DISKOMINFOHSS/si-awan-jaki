@@ -35,6 +35,7 @@ class PengawasanInsidentalAPBDResource extends JsonResource
             'tertibPemenuhanStandarLingkungan'   => $this->tertib_pemenuhan_standar_lingkungan,
             'tertibPengawasan'                   => $this->tertib_pengawasan,
             'catatan'                            => $this->catatan,
+            'rekomendasi'                        => $this->rekomendasi,
             'createdBy'                          => $this->createdBy->nama,
             'verifiedAt'                         => $this->verified_at ? $this->verified_at : null,
             'verifiedBy'                         => $this->verifiedBy->nama,

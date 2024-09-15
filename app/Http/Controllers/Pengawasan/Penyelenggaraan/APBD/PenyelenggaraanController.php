@@ -116,4 +116,28 @@ class PenyelenggaraanController extends Controller
 
         return redirect("/admin/pengawasan/penyelenggaraan/APBD");
     }
+
+    public function recommend(string $id, Request $request)
+    {
+        if (!$this->pengawasanService->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'rekomendasi'   => 'required',
+            'keterangan'    => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanService->addRekomendasiPengawasan(
+            $id,
+            [
+                'rekomendasi'    => $validatedData['rekomendasi'],
+                'keterangan'     => $validatedData['keterangan'],
+                'created_by'     => $userId,
+            ]
+        );
+
+        return back();
+    }
 }

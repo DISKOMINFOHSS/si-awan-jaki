@@ -98,7 +98,6 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
                                 href={`/admin/pendataan/proyek-konstruksi/${proyekKonstruksi.id}`}
                                 target="_blank"
                                 className="flex items-center gap-x-3 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
-                                onClick={() => handleRekomendasiClick()}
                             >
                                 <LiaInfoCircleSolid size={16} />
                                 <span>Informasi Proyek</span>
@@ -106,6 +105,7 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
                             <button
                                 type="button"
                                 className="flex items-center gap-x-3 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => handleRekomendasiClick()}
                             >
                                 <LiaListAltSolid size={16} />
                                 <span>Rekomendasi</span>

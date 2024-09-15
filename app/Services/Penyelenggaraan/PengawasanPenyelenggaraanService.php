@@ -5,6 +5,7 @@ namespace App\Services\Penyelenggaraan;
 use App\Models\Penyelenggaraan\PengawasanPenyelenggaraan;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Facades\DB;
 
 class PengawasanPenyelenggaraanService
 {
@@ -98,5 +99,27 @@ class PengawasanPenyelenggaraanService
     {
         $pengawasan = PengawasanPenyelenggaraan::find($id);
         $pengawasan->delete();
+    }
+
+    public function addRekomendasiPengawasan(string $pengawasanId, array $data)
+    {
+        DB::table('rekomendasi_pengawasan_penyelenggaraan')->updateOrInsert(
+            [
+                'pengawasan_id' => $pengawasanId,
+            ],
+            [
+                'rekomendasi' => $data['rekomendasi'],
+                'keterangan'  => $data['keterangan'],
+                'created_by'  => $data['created_by'],
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ]
+        );
+    }
+
+    public function getRekomendasiPengawasanByPengawasanId(string $pengawasanId)
+    {
+        return DB::table('rekomendasi_pengawasan_penyelenggaraan')->where('pengawasan_id', $pengawasanId)
+            ->first();
     }
 }

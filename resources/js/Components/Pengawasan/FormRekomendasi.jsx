@@ -21,6 +21,7 @@ export default ({ tertibPengawasan, rekomendasi, url }) => {
         e.preventDefault();
         console.log(data, url);
         post(`/admin/pengawasan/${url}/rekomendasi`, {
+            preserveScroll: true,
             onSuccess: () => {
                 setIsModalSuccessOpen(true);
             },
@@ -60,12 +61,14 @@ export default ({ tertibPengawasan, rekomendasi, url }) => {
                                 </div>
                             </div>
                             <div className="col-span-3 flex justify-end items-center gap-x-2.5">
-                                <Link
+                                {/* <Link
                                     href={`/admin/pengawasan/${url}`}
                                     className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-2.5"
+                                    as="button"
+                                    type="button"
                                 >
                                     Kembali
-                                </Link>
+                                </Link> */}
                                 <button type="submit" disabled={processing} className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-2.5">
                                     { processing && <LiaSpinnerSolid className="animate-spin" /> }
                                     Simpan

@@ -53,7 +53,7 @@ const PengawasanPenyelenggaraanAPBDRekomendasi = ({ data }) => {
             <FormRekomendasi
                 tertibPengawasan="Pengawasan Tertib Penyelenggaraan Jasa Konstruksi"
                 rekomendasi={getDefaultData(pengawasan.rekomendasi, {})}
-                url={`penyelenggaraan/APBD/${pengawasan.id}/rekomendasi`}
+                url={`penyelenggaraan/APBD/${pengawasan.id}`}
             />
         </>
     );

@@ -135,6 +135,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                         Route::delete('/{id}', 'destroy');
 
                         Route::post('/{id}/verification', 'verify');
+                        Route::post('/{id}/rekomendasi', 'recommend');
                     });
 
                     // Pengawasan Rutin

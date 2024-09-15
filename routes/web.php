@@ -114,13 +114,11 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/{id}', 'show');
                     Route::delete('/{id}', 'destroy');
 
-                    Route::post('/{id}/verification', 'storeVerification');
-
-                    Route::get('/{id}/laporan', 'showLaporan');
+                    Route::post('/{id}/verification', 'verify');
+                    Route::get('/{id}/simak', 'print');
 
                     Route::get('/{id}/rekomendasi', 'showRekomendasi');
                     Route::post('/{id}/rekomendasi', 'storeRekomendasi');
-                    // Route::get('/{id}/rekomendasi/create', 'createRekomendasi');
 
                     Route::post('/{id}/{lingkup_id}', 'storePemeriksaan');
 

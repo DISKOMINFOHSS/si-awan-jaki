@@ -15,6 +15,7 @@ import {
     LiaFolderSolid,
     LiaPrintSolid,
 } from "react-icons/lia";
+import getDefaultData from "../../../Utils/getDefaultData";
 
 const PengawasanPemanfaatanProdukRekomendasi = ({ data }) => {
     console.log(data);
@@ -36,10 +37,9 @@ const PengawasanPemanfaatanProdukRekomendasi = ({ data }) => {
                 </div>
                 <div className="flex items-center gap-x-2">
                     <a
-                        href={`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/simak`}
+                        href={pengawasan.rekomendasi ? `/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/simak` : '#'}
                         target="_blank"
                         className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
-                        disabled={!pengawasan.rekomendasi}
                     >
                         <LiaPrintSolid size={18} />
                         <span>Cetak PDF</span>
@@ -82,7 +82,7 @@ const PengawasanPemanfaatanProdukRekomendasi = ({ data }) => {
             </div>
             <FormRekomendasi
                 tertibPengawasan="Pengawasan Tertib Pemanfaatan Produk Jasa Konstruksi"
-                rekomendasi={pengawasan.rekomendasi}
+                rekomendasi={getDefaultData(pengawasan.rekomendasi, {})}
                 url={`pemanfaatan-produk/${pengawasan.id}`}
             />
         </>

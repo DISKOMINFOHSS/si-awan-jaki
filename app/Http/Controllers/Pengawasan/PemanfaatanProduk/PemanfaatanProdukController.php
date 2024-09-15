@@ -108,7 +108,7 @@ class PemanfaatanProdukController extends Controller
         return redirect("/admin/pengawasan/pemanfaatan-produk/$id");
     }
 
-    public function storeVerification(string $id, Request $request)
+    public function verify(string $id, Request $request)
     {
         if (!$this->pengawasanService->checkPengawasanExists($id)) {
             return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
@@ -178,14 +178,15 @@ class PemanfaatanProdukController extends Controller
         return back();
     }
 
-    public function showLaporan(string $id)
+    public function print(string $id)
     {
         $daftarLingkupPengawasan = $this->pengawasanService->getDaftarLingkupPengawasan($id);
         $pengawasan = $this->pengawasanService->getPengawasanById($id);
 
         $pengawasan['daftarPemeriksaan'] = $daftarLingkupPengawasan;
+        $pengawasan['rekomendasi'] = $this->pengawasanService->getRekomendasiPengawasanByPengawasanId($pengawasan->id);
 
-        return Inertia::render('Pengawasan/PemanfaatanProduk/Laporan', [
+        return Inertia::render('Pengawasan/PemanfaatanProduk/Simak', [
             'data' => [
                 'pengawasan' => new PengawasanPemanfaatanProdukResource($pengawasan),
             ],

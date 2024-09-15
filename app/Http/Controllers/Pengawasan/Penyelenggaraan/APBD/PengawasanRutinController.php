@@ -60,6 +60,17 @@ class PengawasanRutinController extends Controller
         return redirect("/admin/pengawasan/penyelenggaraan/APBD/rutin/$id");
     }
 
+    public function recommendation(string $id)
+    {
+        $pengawasan = $this->pengawasanService->getPengawasanById($id);
+
+        return Inertia::render('Pengawasan/Penyelenggaraan/APBD/Rekomendasi', [
+            'data' => [
+                'pengawasan' => new PengawasanPenyelenggaraanAPBDResource($pengawasan),
+            ],
+        ]);
+    }
+
     public function showSimak(string $id)
     {
         $pengawasan = $this->pengawasanService->getPengawasanById($id);

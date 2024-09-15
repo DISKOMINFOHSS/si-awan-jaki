@@ -20,7 +20,7 @@ class PengawasanPenyelenggaraanAPBDResource extends JsonResource
             'jenisPengawasan'                    => $this->jenis_pengawasan,
             'tanggalPengawasan'                  => $this->tanggal_pengawasan,
             'proyekKonstruksi'                   => $this->whenLoaded('proyekKonstruksi'),
-            'daftarLingkupPengawasan'            => $this->daftar_lingkup_pengawasan->transform(
+            'daftarLingkupPengawasan'            => $this->daftar_lingkup_pengawasan ? $this->daftar_lingkup_pengawasan->transform(
                 function ($lingkupPengawasan)
                 {
                     $caraPemeriksaan = $lingkupPengawasan->cara_pemeriksaan;
@@ -60,7 +60,7 @@ class PengawasanPenyelenggaraanAPBDResource extends JsonResource
                         ),
                     ];
                 }
-            ),
+            ) : null,
             'tertibProsesPemilihanPenyediaJasa'  => $this->tertib_proses_pemilihan_penyedia_jasa,
             'tertibPenerapanStandarKontrak'      => $this->tertib_penerapan_standar_kontrak,
             'tertibPenggunaanTKK'                => $this->tertib_penggunaan_tkk,

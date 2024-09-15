@@ -49,7 +49,6 @@ class PengawasanInsidentalController extends Controller
         ]);
         $userId = auth()->user()->id;
 
-        // dd($request->all());
         $this->pengawasanInsidentalService->addPemeriksaanPengawasan(
             $id,
             $validatedData['indikatorId'],
@@ -61,5 +60,16 @@ class PengawasanInsidentalController extends Controller
         );
 
         return back();
+    }
+
+    public function recommendation(string $id)
+    {
+        $pengawasan = $this->pengawasanService->getPengawasanById($id);
+
+        return Inertia::render('Pengawasan/Penyelenggaraan/APBD/Rekomendasi', [
+            'data' => [
+                'pengawasan' => new PengawasanInsidentalAPBDResource($pengawasan),
+            ],
+        ]);
     }
 }

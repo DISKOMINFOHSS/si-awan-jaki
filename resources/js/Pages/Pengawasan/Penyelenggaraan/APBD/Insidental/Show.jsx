@@ -1,4 +1,5 @@
 import React from "react";
+import { router } from "@inertiajs/react";
 
 import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
@@ -42,7 +43,7 @@ const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
 
     function handleRekomendasiClick() {
         if (tertibPengawasan !== null) {
-            return router.get(`/admin/pengawasan/penyelenggaraan/APBD/rutin/${pengawasan.id}/rekomendasi`);
+            return router.get(`/admin/pengawasan/penyelenggaraan/APBD/insidental/${pengawasan.id}/rekomendasi`);
         }
 
         return setIsModalVerificationOpen(true);

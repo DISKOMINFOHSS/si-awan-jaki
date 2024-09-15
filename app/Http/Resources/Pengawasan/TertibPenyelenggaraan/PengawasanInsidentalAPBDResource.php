@@ -20,7 +20,7 @@ class PengawasanInsidentalAPBDResource extends JsonResource
             'jenisPengawasan'                    => $this->jenis_pengawasan,
             'tanggalPengawasan'                  => $this->tanggal_pengawasan,
             'proyekKonstruksi'                   => $this->whenLoaded('proyekKonstruksi'),
-            'daftarLingkupPengawasan'            => LingkupPengawasanInsidentalAPBDResource::collection($this->daftar_lingkup_pengawasan),
+            'daftarLingkupPengawasan'            => LingkupPengawasanInsidentalAPBDResource::collection($this->whenHas('daftar_lingkup_pengawasan')),
             'tertibProsesPemilihanPenyediaJasa'  => $this->tertib_proses_pemilihan_penyedia_jasa,
             'tertibPenerapanStandarKontrak'      => $this->tertib_penerapan_standar_kontrak,
             'tertibPenggunaanTKK'                => $this->tertib_penggunaan_tkk,

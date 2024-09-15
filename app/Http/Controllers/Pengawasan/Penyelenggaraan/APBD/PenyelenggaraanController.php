@@ -105,4 +105,15 @@ class PenyelenggaraanController extends Controller
 
         return redirect("/admin/pengawasan/penyelenggaraan/APBD/$jenisPengawasan/$id");
     }
+
+    public function destroy(string $id)
+    {
+        if (!$this->pengawasanService->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $this->pengawasanService->deletePengawasan($id);
+
+        return redirect("/admin/pengawasan/penyelenggaraan/APBD");
+    }
 }

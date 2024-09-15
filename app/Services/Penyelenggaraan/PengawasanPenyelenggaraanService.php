@@ -93,4 +93,10 @@ class PengawasanPenyelenggaraanService
 
         return $pengawasan;
     }
+
+    public function deletePengawasan(string $id)
+    {
+        $pengawasan = PengawasanPenyelenggaraan::find($id);
+        $pengawasan->delete();
+    }
 }

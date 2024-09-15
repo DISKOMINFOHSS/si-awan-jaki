@@ -4,6 +4,7 @@ namespace App\Http\Resources\Pengawasan;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class PengawasanPenyelenggaraanAPBDResource extends JsonResource
 {
@@ -30,7 +31,20 @@ class PengawasanPenyelenggaraanAPBDResource extends JsonResource
                         'id'                => $lingkupPengawasan->id,
                         'lingkupPengawasan' => $lingkupPengawasan->lingkupPengawasan,
                         'indikator'         => $lingkupPengawasan->indikator,
-                        'suratPernyataan'   => $lingkupPengawasan->suratPernyataan,
+                        // 'suratPernyataan'   => $lingkupPengawasan->suratPernyataan,
+                        'suratPernyataan'   => $lingkupPengawasan->suratPernyataan->transform(
+                            function ($suratPernyataan)
+                            {
+                                return [
+                                    'kategoriId'        => $suratPernyataan->id,
+                                    'kategori'          => $suratPernyataan->kategori,
+                                    'suratPernyataanId' => $suratPernyataan->surat_pernyataan_id,
+                                    'fileId'            => $suratPernyataan->fileId,
+                                    'fileName'          => $suratPernyataan->fileName,
+                                    'filePath'          => $suratPernyataan->filePath ? Storage::url($suratPernyataan->filePath) : null,
+                                ];
+                            }
+                        ),
                         'dokumen'           => $lingkupPengawasan->dokumen,
                         'kesimpulan'        => $kesimpulan,
                         'daftarPemeriksaan' => array_map(

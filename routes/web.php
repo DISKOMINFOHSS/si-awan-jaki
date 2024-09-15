@@ -132,6 +132,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     ->group(function () {
                         Route::get('/', 'index');
                         Route::post('/', 'store');
+                        Route::delete('/{id}', 'destroy');
 
                         Route::post('/{id}/verification', 'verify');
 

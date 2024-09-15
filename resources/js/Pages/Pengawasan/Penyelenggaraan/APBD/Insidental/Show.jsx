@@ -3,25 +3,33 @@ import React from "react";
 import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
 import Dropdown from "../../../../../Components/Dropdown";
+import ModalDelete from "../../../../../Components/ModalDelete";
+
+import FormVerifikasiPengawasan from "../../../../../Components/Proyek/FormVerifikasiPengawasan";
 import DaftarLingkupPengawasanInsidental from "../../../../../Components/Proyek/APBD/DaftarLingkupPengawasanInsidental";
 import { InformasiProyekKonstruksi, InformasiTertibPengawasan, InformasiUmumPengawasan } from "../../../../../Components/Proyek/InformasiPengawasan";
 
 import useToggleWithClickOutside from "../../../../../Hooks/useToggleWithClickOutside";
-import { getTertibStatusBadge } from "../../../../../Utils/getStatusBadge";
 
 import {
     LiaHomeSolid,
+    LiaListAltSolid,
     LiaEllipsisHSolid,
     LiaInfoCircleSolid,
-    LiaListAltSolid
+    LiaCheckCircleSolid,
+    LiaTrashAltSolid,
+    LiaPrintSolid
 } from "react-icons/lia";
-import Card from "../../../../../Components/Card";
-import FormVerifikasiPengawasan from "../../../../../Components/Proyek/FormVerifikasiPengawasan";
 
 const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
     console.log(data);
     const { pengawasan } = data;
-    const { proyekKonstruksi, daftarLingkupPengawasan } = pengawasan;
+    const {
+        proyekKonstruksi,
+        daftarLingkupPengawasan,
+        rekomendasi,
+        tertibPengawasan
+    } = pengawasan;
 
     const [
         moreDropdownRef,
@@ -30,6 +38,15 @@ const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
     ] = useToggleWithClickOutside(false);
 
     const [ isModalVerificationOpen, setIsModalVerificationOpen ] = React.useState(false);
+    const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
+
+    function handleRekomendasiClick() {
+        if (tertibPengawasan !== null) {
+            return router.get(`/admin/pengawasan/penyelenggaraan/APBD/rutin/${pengawasan.id}/rekomendasi`);
+        }
+
+        return setIsModalVerificationOpen(true);
+    }
 
     return (
         <>
@@ -45,14 +62,26 @@ const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
                     <h1 className="font-medium text-base text-slate-800 leading-tight">{proyekKonstruksi.namaPaket}</h1>
                 </div>
                 <div className="flex items-center gap-x-2.5">
-                    <button
-                        type="button"
-                        className="w-fit whitespace-nowrap flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
-                        onClick={() => setIsModalVerificationOpen(true)}
-                    >
-                        <LiaListAltSolid size={18} />
-                        <span>Verifikasi Pengawasan</span>
-                    </button>
+                    {
+                        rekomendasi ? (
+                            <a
+                                href={`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/simak`}
+                                target="_blank"
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white whitespace-nowrap"
+                            >
+                                <LiaPrintSolid size={16} />
+                                <span>Cetak PDF</span>
+                            </a>
+                        ) : (
+                            <button
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white whitespace-nowrap"
+                                onClick={() => handleRekomendasiClick()}
+                            >
+                                <LiaListAltSolid size={18} />
+                                <span>Buat Rekomendasi</span>
+                            </button>
+                        )
+                    }
                     <Dropdown ref={moreDropdownRef}>
                         <Dropdown.Toggle
                             onClick={toggleMoreDropdown}
@@ -70,15 +99,31 @@ const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
                                 className="flex items-center gap-x-3 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
                             >
                                 <LiaInfoCircleSolid size={16} />
-                                <span>Informasi Proyek Konstruksi</span>
+                                <span>Informasi Proyek</span>
                             </a>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-3 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => handleRekomendasiClick()}
+                            >
+                                <LiaListAltSolid size={16} />
+                                <span>Rekomendasi</span>
+                            </button>
                             <button
                                 type="button"
                                 className="flex items-center gap-x-3 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
                                 onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpen(true)}}
                             >
-                                <LiaListAltSolid size={16} />
+                                <LiaCheckCircleSolid size={16} />
                                 <span>Verifikasi Pengawasan</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left text-red-500 hover:bg-slate-100 hover:text-red-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalDeleteOpen(true)}}
+                            >
+                                <LiaTrashAltSolid size={16} />
+                                <span>Hapus Pengawasan</span>
                             </button>
                         </Dropdown.Menu>
                     </Dropdown>
@@ -100,6 +145,17 @@ const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
                 onClose={() => setIsModalVerificationOpen(false)}
                 pengawasan={pengawasan}
             />
+            <ModalDelete
+                isVisible={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+                url={`/admin/pengawasan/penyelenggaraan/APBD`}
+                id={pengawasan.id}
+            >
+                <div className="font-medium text-sm text-slate-700 mb-1">Apakah Anda yakin ingin menghapus pengawasan ini?</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Data yang telah dihapus tidak dapat dikembalikan.
+                </div>
+            </ModalDelete>
         </>
     );
 }

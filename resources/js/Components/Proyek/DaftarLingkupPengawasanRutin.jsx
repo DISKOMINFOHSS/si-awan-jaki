@@ -1,6 +1,8 @@
 import React from "react";
 import FormPemeriksaanRutin from "./APBD/FormPemeriksaanRutin";
 
+import { LiaFileAlt } from "react-icons/lia";
+
 export default ({
     pengawasanId,
     daftarLingkupPengawasan,
@@ -33,6 +35,23 @@ export default ({
                             <p className="font-light text-slate-500 text-justify">
                                 {lingkupPengawasan.dokumen}
                             </p>
+                            <div className="mt-2 space-y-2">
+                                {
+                                    lingkupPengawasan.suratPernyataan.map(
+                                        (surat) => surat.fileId && (
+                                            <a key={surat.kategori} target="_blank" href={surat.filePath} className="flex gap-x-2 items-start group cursor-pointer">
+                                                <div className="bg-blue-100 text-blue-600 rounded p-2">
+                                                    <LiaFileAlt size={18} />
+                                                </div>
+                                                <div className="group-hover:text-blue-600 group-hover:underline">
+                                                    <div className="line-clamp-2">Surat Pernyataan</div>
+                                                    <div className="text-justify font-light text-slate-500 line-clamp-2">{surat.kategori}</div>
+                                                </div>
+                                            </a>
+                                        )
+                                    )
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className="col-span-2">

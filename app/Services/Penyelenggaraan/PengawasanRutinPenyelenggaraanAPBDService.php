@@ -31,12 +31,16 @@ class PengawasanRutinPenyelenggaraanAPBDService
                         {
                             $join->on('master_kategori_surat_pernyataan_pengawasan_penyelenggaraan.id', '=', 'surat_pernyataan.kategori_surat_pernyataan_id')
                                 ->where('surat_pernyataan.proyek_konstruksi_id', $proyekId);
-                        }
-                    )->select(
+                        })
+                    ->leftJoin('files', 'files.id', 'surat_pernyataan.surat_pernyataan_id')
+                    ->select(
                         'surat_pernyataan.id',
                         'lingkup_id',
                         'kategori',
-                        'surat_pernyataan.surat_pernyataan_id'
+                        'surat_pernyataan.surat_pernyataan_id',
+                        'files.id as fileId',
+                        'files.path as filePath',
+                        'files.name as fileName',
                     );
                 }
             ]

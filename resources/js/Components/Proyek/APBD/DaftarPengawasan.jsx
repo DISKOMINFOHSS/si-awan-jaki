@@ -8,6 +8,13 @@ import { LiaSearchSolid } from "react-icons/lia";
 import { getTertibStatusBadge } from "../../../Utils/getStatusBadge";
 
 export default ({ daftarPengawasan }) => {
+    const [keyword, setKeyword] = React.useState('');
+    const handleKeywordChange = (event) => setKeyword(event.target.value);
+
+    const filteredDaftarPengawasan = keyword ? daftarPengawasan.filter(({ proyekKonstruksi }) => {
+        return proyekKonstruksi.namaPaket.toLowerCase().includes(keyword.toLowerCase()) || proyekKonstruksi.penyediaJasa.toLowerCase().includes(keyword.toLowerCase());
+    }) : daftarPengawasan;
+
     return (
         <Card className="w-full">
             <Card.Header className="space-y-4">
@@ -24,7 +31,6 @@ export default ({ daftarPengawasan }) => {
                             className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                         >
                             <option>2024</option>
-                            <option>2023</option>
                         </select>
                     </div>
                     <div className="relative mx-2">
@@ -32,7 +38,7 @@ export default ({ daftarPengawasan }) => {
                             <LiaSearchSolid size={18} className="text-slate-500 -scale-x-100" />
                         </div>
                         <input
-                            type="search" name="search" placeholder="Cari..."
+                            type="search" name="search" placeholder="Cari..." value={keyword} onChange={handleKeywordChange}
                             className="border border-slate-200 rounded py-2 pl-8 block w-56 text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs"
                         />
                     </div>
@@ -70,7 +76,7 @@ export default ({ daftarPengawasan }) => {
                         </thead>
                         <tbody className="text-slate-700">
                             {
-                                daftarPengawasan.map((pengawasan, i) => (
+                                filteredDaftarPengawasan.map((pengawasan, i) => (
                                     <tr key={pengawasan.id} className="border-b border-slate-100 hover:bg-slate-100">
                                         <td className="px-4 py-5 text-center">{i + 1}</td>
                                         <td className="px-4 py-5">

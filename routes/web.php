@@ -258,13 +258,14 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             // Pengawasan Insidental
             Route::name('insidental.')->prefix('/insidental')
             ->group(function () {
-                Route::redirect('/', "/admin/jenis-pengawasan/insidental/" . date('Y') . '/tertib-penyelenggaraan');
+                Route::redirect('/', "/admin/jenis-pengawasan/insidental/" . date('Y') . '/tertib-usaha');
 
                 Route::controller(App\Http\Controllers\JenisPengawasan\Insidental\PengawasanInsidentalController::class)
                 ->group(function () {
                     // Route::get('/{tahun}', 'index');
                     // Route::get('/{tahun}/{file_name}', 'show');
 
+                    Route::get('/{tahun}/tertib-usaha', 'usaha');
                     Route::get('/{tahun}/tertib-penyelenggaraan', 'penyelenggaraan');
                     Route::get('/{tahun}/tertib-pemanfaatan-produk', 'pemanfaatan');
                 });

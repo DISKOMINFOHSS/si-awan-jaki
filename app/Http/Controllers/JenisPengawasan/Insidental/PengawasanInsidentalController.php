@@ -28,10 +28,20 @@ class PengawasanInsidentalController extends Controller
         $this->rekapTertibPemanfaatanProdukService = $rekapTertibPemanfaatanProdukService;
     }
 
-    // public function usaha(string $tahun)
-    // {
-    //     return Inertia::render('JenisPengawasan/Insidental/TertibUsaha/Index')
-    // }
+    public function usaha(string $tahun)
+    {
+        $tertibPenyelenggaraan = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPenyelenggaraanService->getPengawasanCount($tahun, 'Insidental'));
+        $tertibPemanfaatanProduk = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPemanfaatanProdukService->getPengawasanCount($tahun, 'Insidental'));
+
+        return Inertia::render('JenisPengawasan/Insidental/TertibUsaha/Index', [
+            'data' => [
+                'totalTertibPengawasan'       => [
+                    'tertibPenyelenggaraan'     => $tertibPenyelenggaraan,
+                    'tertibPemanfaatanProduk'   => $tertibPemanfaatanProduk,
+                ],
+            ],
+        ]);
+    }
 
     public function penyelenggaraan(string $tahun)
     {

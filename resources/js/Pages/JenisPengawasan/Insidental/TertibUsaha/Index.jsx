@@ -10,8 +10,22 @@ import { getTertibStatusBadge } from "../../../../Utils/getStatusBadge";
 
 const JenisPengawasanInsidentalTertibUsahaIndex = ({ data }) => {
     console.log(data);
-    const { totalTertibPengawasan } = data;
-    const { tertibPenyelenggaraan, tertibPemanfaatanProduk } = totalTertibPengawasan;
+    const { daftarTertibUsaha, totalTertibPengawasan } = data;
+
+    const {
+        daftarPengawasanBUJKLingkup2,
+        daftarPengawasanBUJKLingkup3,
+        daftarPengawasanBUJKLingkup4,
+        daftarPengawasanBUJKLingkup5,
+    } = daftarTertibUsaha;
+
+    const { tertibUsaha, tertibPenyelenggaraan, tertibPemanfaatanProduk } = totalTertibPengawasan;
+    const {
+        tertibBUJKLingkup2,
+        tertibBUJKLingkup3,
+        tertibBUJKLingkup4,
+        tertibBUJKLingkup5,
+    } = tertibUsaha;
 
     return (
         <>
@@ -25,12 +39,26 @@ const JenisPengawasanInsidentalTertibUsahaIndex = ({ data }) => {
                 <Card className="h-fit">
                     <Card.Body className="p-4 text-xs text-slate-800 text-center">
                         <div className="uppercase text-slate-500 tracking-wide">Pengawasan Tertib Usaha <br /> Jasa Konstruksi</div>
-                        <div className="text-2xl font-medium mt-1 mb-2">100</div>
+                        <div className="text-2xl font-medium mt-1 mb-2">
+                        {
+                            getDefaultData(tertibBUJKLingkup2.totalTertib, 0) + getDefaultData(tertibBUJKLingkup2.totalBelumTertib, 0) +
+                            getDefaultData(tertibBUJKLingkup3.totalTertib, 0) + getDefaultData(tertibBUJKLingkup3.totalBelumTertib, 0) +
+                            getDefaultData(tertibBUJKLingkup4.totalTertib, 0) + getDefaultData(tertibBUJKLingkup4.totalBelumTertib, 0) +
+                            getDefaultData(tertibBUJKLingkup5.totalTertib, 0) + getDefaultData(tertibBUJKLingkup5.totalBelumTertib, 0)
+                        }
+                        </div>
                         <div className="flex justify-center item-center gap-x-2.5">
                             <div className="text-right">
                                 <div className="font-light text-slate-500 flex justify-end items-center gap-x-1.5">
                                     <span className="bg-green-400 rounded-full w-1.5 h-1.5 inline-block"></span>
-                                    <span>0</span>
+                                    <span>
+                                    {
+                                        getDefaultData(tertibBUJKLingkup2.totalTertib, 0) +
+                                        getDefaultData(tertibBUJKLingkup3.totalTertib, 0) +
+                                        getDefaultData(tertibBUJKLingkup4.totalTertib, 0) +
+                                        getDefaultData(tertibBUJKLingkup5.totalTertib, 0)
+                                    }
+                                    </span>
                                     <span className="font-normal text-slate-700">Tertib</span>
                                 </div>
                             </div>
@@ -38,7 +66,14 @@ const JenisPengawasanInsidentalTertibUsahaIndex = ({ data }) => {
                             <div className="text-left">
                                 <div className="font-light text-slate-500 flex items-center gap-x-1.5">
                                     <span className="bg-red-400 rounded-full w-1.5 h-1.5 inline-block"></span>
-                                    <span>0</span>
+                                    <span>
+                                    {
+                                        getDefaultData(tertibBUJKLingkup2.totalBelumTertib, 0) +
+                                        getDefaultData(tertibBUJKLingkup3.totalBelumTertib, 0) +
+                                        getDefaultData(tertibBUJKLingkup4.totalBelumTertib, 0) +
+                                        getDefaultData(tertibBUJKLingkup5.totalBelumTertib, 0)
+                                    }
+                                    </span>
                                     <span className="font-normal text-slate-700">Belum Tertib</span>
                                 </div>
                             </div>
@@ -114,7 +149,7 @@ const JenisPengawasanInsidentalTertibUsahaIndex = ({ data }) => {
                     </Link>
                 </div>
                 <div className="my-5 space-y-5">
-                    <div className="grid grid-cols-3 gap-5">
+                    <div className="grid grid-cols-3 gap-x-5 gap-y-10">
                         <div className="space-y-2.5 text-justify text-slate-800">
                             <div>
                                 {/* <h4 className="font-light text-xs text-slate-500">Lingkup Pengawasan</h4> */}
@@ -135,6 +170,48 @@ const JenisPengawasanInsidentalTertibUsahaIndex = ({ data }) => {
                                         </div>
                                     </div>
                                 </Card.Header>
+                                <Card.Body>
+                                    <div className="relative overflow-x-auto">
+                                        <table className="w-full text-xs">
+                                            <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 uppercase">
+                                                <tr className="border-b border-slate-200">
+                                                    <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">#</th>
+                                                    <th scope="col" rowSpan="2" className="p-4 font-medium min-w-60 border-r border-slate-200">Nama Badan Usaha</th>
+                                                    <th scope="col" rowSpan="2" className="p-4 font-medium min-w-32 border-r border-slate-200">Tanggal Pengawasan</th>
+                                                    <th scope="col" colSpan="4" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Kesesuaian Kegiatan Konstruksi</th>
+                                                </tr>
+                                                <tr className="border-b border-slate-200">
+                                                    <th scope="col" className="px-4 pt-2 pb-4 font-medium min-w-24 border-r border-slate-200">Jenis</th>
+                                                    <th scope="col" className="px-4 pt-2 pb-4 font-medium min-w-24 border-r border-slate-200">Sifat</th>
+                                                    <th scope="col" className="px-4 pt-2 pb-4 font-medium min-w-24 border-r border-slate-200">Klasifikasi</th>
+                                                    <th scope="col" className="px-4 pt-2 pb-4 font-medium min-w-24 border-r border-slate-200 ">Layanan</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="text-slate-700">
+                                            {
+                                                daftarPengawasanBUJKLingkup2.map((pengawasan, i) => (
+                                                <tr key={pengawasan.id} className="border-b border-slate-100 hover:bg-slate-50">
+                                                    <td className="px-4 py-5 text-center">{i + 1}</td>
+                                                    <td className="px-4 py-5">
+                                                        <div>
+                                                            <Link href={`/admin/pengawasan/usaha/2/${pengawasan.id}`} className="uppercase hover:text-blue-600 hover:underline">
+                                                                {pengawasan.usaha.nama}
+                                                            </Link>
+                                                            <div className="font-light text-slate-500">NIB: {pengawasan.usaha.nib ? pengawasan.usaha.nib : "-"}</div>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-5 text-center">{formatDateToIndonesia(new Date(pengawasan.tanggalPengawasan))}</td>
+                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibJenisUsaha)}</td>
+                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibSifatUsaha)}</td>
+                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibKlasifikasiUsaha)}</td>
+                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibLayananUsaha)}</td>
+                                                </tr>
+                                                ))
+                                            }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </Card.Body>
                             </Card>
                         </div>
                     </div>
@@ -158,6 +235,45 @@ const JenisPengawasanInsidentalTertibUsahaIndex = ({ data }) => {
                                         </div>
                                     </div>
                                 </Card.Header>
+                                <Card.Body>
+                                    <div className="relative overflow-x-auto">
+                                        <table className="w-full text-xs">
+                                            <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 uppercase">
+                                                <tr className="border-b border-slate-200">
+                                                    <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">#</th>
+                                                    <th scope="col" rowSpan="2" className="p-4 font-medium min-w-60 border-r border-slate-200">Nama Badan Usaha</th>
+                                                    <th scope="col" rowSpan="2" className="p-4 font-medium min-w-32 border-r border-slate-200">Tanggal Pengawasan</th>
+                                                    <th scope="col" colSpan="2" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Kesesuaian Kegiatan Usaha Jasa Konstruksi dan Segmentasi Pasar Jasa Konstruksi</th>
+                                                    <th rowSpan="2"></th>
+                                                </tr>
+                                                <tr className="border-b border-slate-200">
+                                                    <th scope="col" className="px-4 pt-2 pb-4 font-medium min-w-24 border-r border-slate-200">Bentuk</th>
+                                                    <th scope="col" className="px-4 pt-2 pb-4 font-medium min-w-24 border-r border-slate-200">Kualifikasi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="text-slate-700">
+                                                {
+                                                    daftarPengawasanBUJKLingkup3.map((pengawasan, i) => (
+                                                        <tr key={pengawasan.id} className="border-b border-slate-100 hover:bg-slate-50">
+                                                            <td className="px-4 py-5 text-center">{i + 1}</td>
+                                                            <td className="px-4 py-5">
+                                                                <div>
+                                                                    <Link href={`/admin/pengawasan/usaha/3/${pengawasan.id}`} className="uppercase hover:text-blue-600 hover:underline">
+                                                                        {pengawasan.usaha.nama}
+                                                                    </Link>
+                                                                    <div className="font-light text-slate-500">NIB: {pengawasan.usaha.nib ? pengawasan.usaha.nib : "-"}</div>
+                                                                </div>
+                                                            </td>
+                                                            <td className="px-4 py-5 text-center">{formatDateToIndonesia(new Date(pengawasan.tanggalPengawasan))}</td>
+                                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibBentukUsaha)}</td>
+                                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibKualifikasiUsaha)}</td>
+                                                        </tr>
+                                                    ))
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </Card.Body>
                             </Card>
                         </div>
                     </div>
@@ -184,6 +300,44 @@ const JenisPengawasanInsidentalTertibUsahaIndex = ({ data }) => {
                                         </div>
                                     </div>
                                 </Card.Header>
+                                <Card.Body>
+                                    <div className="relative overflow-x-auto">
+                                        <table className="w-full text-xs">
+                                            <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase">
+                                                <tr className="border-b border-slate-200">
+                                                    <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">#</th>
+                                                    <th scope="col" rowSpan="2" className="p-4 font-medium min-w-60 border-r border-slate-200">Nama Badan Usaha</th>
+                                                    <th scope="col" rowSpan="2" className="p-4 font-medium min-w-32 border-r border-slate-200">Tanggal Pengawasan</th>
+                                                    <th scope="col" colSpan="2" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200 ">Pemenuhan Persyaratan Usaha</th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col" className="px-4 pt-2 pb-4 font-medium min-w-24 border-r border-slate-200">SBU</th>
+                                                    <th scope="col" className="px-4 pt-2 pb-4 font-medium min-w-24 border-r border-slate-200">NIB</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="text-slate-700">
+                                                {
+                                                    daftarPengawasanBUJKLingkup4.map((pengawasan, i) => (
+                                                        <tr key={pengawasan.id} className="border-b border-slate-100 hover:bg-slate-50">
+                                                            <td className="px-4 py-5 text-center">{i + 1}</td>
+                                                            <td className="px-4 py-5">
+                                                                <div>
+                                                                    <Link href={`/admin/pengawasan/usaha/4/bujk/${pengawasan.id}/${pengawasan.jenisPengawasan.toLowerCase()}`} className="uppercase hover:text-blue-600 hover:underline">
+                                                                        {pengawasan.usaha.nama}
+                                                                    </Link>
+                                                                    <div className="font-light text-slate-500">NIB: {pengawasan.usaha.nib ? pengawasan.usaha.nib : "-"}</div>
+                                                                </div>
+                                                            </td>
+                                                            <td className="px-4 py-5 text-center">{formatDateToIndonesia(new Date(pengawasan.tanggalPengawasan))}</td>
+                                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPersyaratanSBU)}</td>
+                                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPersyaratanNIB)}</td>
+                                                        </tr>
+                                                    ))
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </Card.Body>
                             </Card>
                         </div>
                     </div>
@@ -214,6 +368,39 @@ const JenisPengawasanInsidentalTertibUsahaIndex = ({ data }) => {
                                         </div>
                                     </div>
                                 </Card.Header>
+                                <Card.Body>
+                                    <div className="relative overflow-x-auto">
+                                        <table className="w-full text-xs">
+                                            <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 uppercase">
+                                                <tr className="border-b border-slate-200">
+                                                    <th scope="col" className="p-4 font-medium border-r border-slate-200">#</th>
+                                                    <th scope="col" className="p-4 font-medium min-w-60 border-r border-slate-200">Nama Badan Usaha</th>
+                                                    <th scope="col" className="p-4 font-medium min-w-32 border-r border-slate-200">Tanggal Pengawasan</th>
+                                                    <th scope="col" className="p-4 font-medium border-r border-slate-200">Pelaksanaan Pengembangan Usaha Berkelanjutan</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="text-slate-700">
+                                                {
+                                                    daftarPengawasanBUJKLingkup5.map((pengawasan, i) => (
+                                                        <tr key={pengawasan.id} className="border-b border-slate-100 hover:bg-slate-50">
+                                                            <td className="px-4 py-5 text-center">{i + 1}</td>
+                                                            <td className="px-4 py-5">
+                                                                <div>
+                                                                    <Link href={`/admin/pengawasan/usaha/5/${pengawasan.id}`} className="uppercase hover:text-blue-600 hover:underline">
+                                                                        {pengawasan.usaha.nama}
+                                                                    </Link>
+                                                                    <div className="font-light text-slate-500">NIB: {pengawasan.usaha.nib ? pengawasan.usaha.nib : "-"}</div>
+                                                                </div>
+                                                            </td>
+                                                            <td className="px-4 py-5 text-center">{formatDateToIndonesia(new Date(pengawasan.tanggalPengawasan))}</td>
+                                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPengembanganUsaha)}</td>
+                                                        </tr>
+                                                    ))
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </Card.Body>
                             </Card>
                         </div>
                     </div>

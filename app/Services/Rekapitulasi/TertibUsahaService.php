@@ -3,6 +3,10 @@
 namespace App\Services\Rekapitulasi;
 
 use App\Models\Usaha\PengawasanBUJKRutin;
+use App\Models\Usaha\PengawasanBUJKLingkup2;
+use App\Models\Usaha\PengawasanBUJKLingkup3;
+use App\Models\Usaha\PengawasanBUJKLingkup4;
+use App\Models\Usaha\PengawasanBUJKLingkup5;
 use App\Models\Usaha\Usaha;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
@@ -143,6 +147,94 @@ class TertibUsahaService
             ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
             ->groupBy('tertib_pengawasan')
             ->where('tahun', $tahun)
+            ->get();
+    }
+
+    // Lingkup 2
+    public function getDaftarPengawasanBUJKLingkup2ByJenisPengawasan(string $tahun, string $jenisPengawasan)
+    {
+        return PengawasanBUJKLingkup2::with(['usaha:id,nama,nib'])
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->where('jenis_pengawasan', $jenisPengawasan)
+            ->orderBy('tanggal_pengawasan', 'desc')
+            ->get();
+    }
+
+    public function getPengawasanBUJKLingkup2Count(string $tahun, string $jenisPengawasan)
+    {
+        return DB::table('pengawasan_bujk_lingkup_2')
+            ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
+            ->where('jenis_pengawasan', $jenisPengawasan)
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->whereNotNull('tertib_pengawasan')
+            ->whereNull('deleted_at')
+            ->groupBy('tertib_pengawasan')
+            ->get();
+    }
+
+    // Lingkup 3
+    public function getDaftarPengawasanBUJKLingkup3ByJenisPengawasan(string $tahun, string $jenisPengawasan)
+    {
+        return PengawasanBUJKLingkup3::with(['usaha:id,nama,nib'])
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->where('jenis_pengawasan', $jenisPengawasan)
+            ->orderBy('tanggal_pengawasan', 'desc')
+            ->get();
+    }
+
+    public function getPengawasanBUJKLingkup3Count(string $tahun, string $jenisPengawasan)
+    {
+        return DB::table('pengawasan_bujk_lingkup_3')
+            ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
+            ->where('jenis_pengawasan', $jenisPengawasan)
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->whereNotNull('tertib_pengawasan')
+            ->whereNull('deleted_at')
+            ->groupBy('tertib_pengawasan')
+            ->get();
+    }
+
+    // Lingkup 4
+    public function getDaftarPengawasanBUJKLingkup4ByJenisPengawasan(string $tahun, string $jenisPengawasan)
+    {
+        return PengawasanBUJKLingkup4::with(['usaha:id,nama,nib'])
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->where('jenis_pengawasan', $jenisPengawasan)
+            ->orderBy('tanggal_pengawasan', 'desc')
+            ->get();
+    }
+
+    public function getPengawasanBUJKLingkup4Count(string $tahun, string $jenisPengawasan)
+    {
+        return DB::table('pengawasan_bujk_lingkup_4')
+            ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
+            ->where('jenis_pengawasan', $jenisPengawasan)
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->whereNotNull('tertib_pengawasan')
+            ->whereNull('deleted_at')
+            ->groupBy('tertib_pengawasan')
+            ->get();
+    }
+
+    // Lingkup 5
+    public function getDaftarPengawasanBUJKLingkup5ByJenisPengawasan(string $tahun, string $jenisPengawasan)
+    {
+        return PengawasanBUJKLingkup5::with(['usaha:id,nama,nib'])
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->where('jenis_pengawasan', $jenisPengawasan)
+            ->orderBy('tanggal_pengawasan', 'desc')
+            ->get();
+    }
+
+    public function getPengawasanBUJKLingkup5Count(string $tahun, string $jenisPengawasan)
+    {
+        return DB::table('pengawasan_bujk_lingkup_5')
+            ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
+            ->where('jenis_pengawasan', $jenisPengawasan)
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->whereNotNull('tertib_pengawasan')
+            ->whereNull('deleted_at')
+            ->groupBy('tertib_pengawasan')
             ->get();
     }
 }

@@ -6,6 +6,8 @@ class RekapitulasiHelper
 {
     public static function getTotalTertibPengawasan($data)
     {
+        $result = [];
+
         foreach($data as $d)
         {
             switch ($d->tertib_pengawasan)

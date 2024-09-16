@@ -189,11 +189,11 @@ class TertibPenyelenggaraanService
             ->get();
     }
 
-    public function getPengawasanCount(string $tahun)
+    public function getPengawasanCount(string $tahun, string $jenisPengawasan)
     {
         return DB::table('pengawasan_penyelenggaraan_konstruksi')
             ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
-            ->where('jenis_pengawasan', 'Rutin')
+            ->where('jenis_pengawasan', $jenisPengawasan)
             ->whereYear('tanggal_pengawasan', $tahun)
             ->whereNotNull('tertib_pengawasan')
             ->whereNull('deleted_at')

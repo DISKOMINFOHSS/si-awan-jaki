@@ -254,6 +254,20 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/{tahun}/{file_name}', 'show');
                 });
             });
+
+            // Pengawasan Insidental
+            Route::name('insidental.')->prefix('/insidental')
+            ->group(function () {
+                Route::redirect('/', "/admin/jenis-pengawasan/insidental/" . date('Y') . '/tertib-penyelenggaraan');
+
+                Route::controller(App\Http\Controllers\JenisPengawasan\Insidental\PengawasanInsidentalController::class)
+                ->group(function () {
+                    // Route::get('/{tahun}', 'index');
+                    // Route::get('/{tahun}/{file_name}', 'show');
+
+                    Route::get('/{tahun}/tertib-penyelenggaraan', 'penyelenggaraan');
+                });
+            });
         });
 
         // Rekapitulasi

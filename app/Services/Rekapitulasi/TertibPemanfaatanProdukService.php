@@ -126,4 +126,16 @@ class TertibPemanfaatanProdukService
             ->groupBy('tertib_pengawasan')
             ->get();
     }
+
+    public function getPengawasanCount(string $tahun, string $jenisPengawasan)
+    {
+        return DB::table('pengawasan_pemanfaatan_produk')
+            ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
+            ->where('jenis_pengawasan', $jenisPengawasan)
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->whereNotNull('tertib_pengawasan')
+            ->whereNull('deleted_at')
+            ->groupBy('tertib_pengawasan')
+            ->get();
+    }
 }

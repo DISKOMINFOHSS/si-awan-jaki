@@ -137,6 +137,25 @@ class TertibPenyelenggaraanService
          ->get();
     }
 
+    public function getDaftarPengawasanByJenisPengawasan(string $tahun, string $jenisPengawasan)
+    {
+        return PengawasanPenyelenggaraan::withWhereHas(
+            'proyekKonstruksi', function ($query)
+            {
+                $query->leftJoin('usaha', 'proyek_konstruksi.penyedia_jasa_id', 'usaha.id')
+                      ->select(
+                        'proyek_konstruksi.id as id',
+                        'proyek_konstruksi.nama_paket as namaPaket',
+                        'proyek_konstruksi.nomor_kontrak as nomorKontrak',
+                        'usaha.nama as penyediaJasa'
+                    );
+            }
+        )->where('jenis_pengawasan', $jenisPengawasan)
+         ->whereYear('tanggal_pengawasan', $tahun)
+         ->orderBy('tanggal_pengawasan', 'desc')
+         ->get();
+    }
+
     public function getDaftarPengawasanRutinOrderByNamaPaket(string $tahun)
     {
         return PengawasanPenyelenggaraan::withWhereHas(
@@ -159,6 +178,18 @@ class TertibPenyelenggaraanService
     }
 
     public function getPengawasanRutinCount(string $tahun)
+    {
+        return DB::table('pengawasan_penyelenggaraan_konstruksi')
+            ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
+            ->where('jenis_pengawasan', 'Rutin')
+            ->whereYear('tanggal_pengawasan', $tahun)
+            ->whereNotNull('tertib_pengawasan')
+            ->whereNull('deleted_at')
+            ->groupBy('tertib_pengawasan')
+            ->get();
+    }
+
+    public function getPengawasanCount(string $tahun)
     {
         return DB::table('pengawasan_penyelenggaraan_konstruksi')
             ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')

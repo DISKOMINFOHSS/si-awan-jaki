@@ -127,7 +127,7 @@ export default ({ isOpened }) => {
                     text="Pengawasan Rutin"
                 />
                 <Sidebar.Item
-                    href="#"
+                    href="/admin/jenis-pengawasan/insidental"
                     icon={<LiaExclamationTriangleSolid size={20} />}
                     text="Pengawasan Insidental"
                 />

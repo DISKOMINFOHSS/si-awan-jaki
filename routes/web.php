@@ -266,6 +266,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     // Route::get('/{tahun}/{file_name}', 'show');
 
                     Route::get('/{tahun}/tertib-penyelenggaraan', 'penyelenggaraan');
+                    Route::get('/{tahun}/tertib-pemanfaatan-produk', 'pemanfaatan');
                 });
             });
         });

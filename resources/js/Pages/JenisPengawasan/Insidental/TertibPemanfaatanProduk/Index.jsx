@@ -8,14 +8,9 @@ import getDefaultData from "../../../../Utils/getDefaultData";
 import { formatDateToIndonesia } from "../../../../Utils/formatDate";
 import { getTertibStatusBadge } from "../../../../Utils/getStatusBadge";
 
-const JenisPengawasanInsidentalTertibPenyelenggaraanIndex = ({ data }) => {
+const JenisPengawasanInsidentalTertibPemanfaatanProdukIndex = ({ data }) => {
     console.log(data);
-
-    const {
-        daftarTertibPenyelenggaraan,
-        totalTertibPengawasan,
-    } = data;
-
+    const { daftarTertibPemanfaatanProduk, totalTertibPengawasan } = data;
     const { tertibPenyelenggaraan, tertibPemanfaatanProduk } = totalTertibPengawasan;
 
     return (
@@ -106,14 +101,14 @@ const JenisPengawasanInsidentalTertibPenyelenggaraanIndex = ({ data }) => {
                         <span>Tertib Usaha</span>
                     </Link>
                     <Link
-                        href="#"
-                        className="flex items-center gap-x-1 px-1 py-2.5 whitespace-nowrap border-b-2 border-blue-600 text-blue-600"
+                        href="/admin/jenis-pengawasan/insidental/2024/tertib-penyelenggaraan"
+                        className="flex items-center gap-x-1 px-1 py-2.5 whitespace-nowrap"
                     >
                         <span>Tertib Penyelenggaraan</span>
                     </Link>
                     <Link
-                        href="/admin/jenis-pengawasan/insidental/2024/tertib-pemanfaatan-produk"
-                        className="flex items-center gap-x-1 px-1 py-2.5 whitespace-nowrap"
+                        href="#"
+                        className="flex items-center gap-x-1 px-1 py-2.5 whitespace-nowrap border-b-2 border-blue-600 text-blue-600"
                     >
                         <span>Tertib Pemanfaatan Produk</span>
                     </Link>
@@ -123,8 +118,8 @@ const JenisPengawasanInsidentalTertibPenyelenggaraanIndex = ({ data }) => {
                         <Card.Header className="space-y-4">
                             <div className="flex justify-between items-center">
                                 <div>
-                                    <h3 className="font-medium text-sm text-slate-700">Proyek Konstruksi</h3>
-                                    <h4 className="font-light text-xs text-slate-500">Pengawasan Tertib Penyelenggaraan Jasa Konstruksi</h4>
+                                    <h3 className="font-medium text-sm text-slate-700">Bangunan Konstruksi</h3>
+                                    <h4 className="font-light text-xs text-slate-500">Pengawasan Tertib Pemanfaatan Produk Jasa Konstruksi</h4>
                                 </div>
                             </div>
                         </Card.Header>
@@ -134,58 +129,41 @@ const JenisPengawasanInsidentalTertibPenyelenggaraanIndex = ({ data }) => {
                                     <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase">
                                         <tr className="border-b border-slate-200">
                                             <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">#</th>
-                                            <th scope="col" rowSpan="2" className="p-4 font-medium min-w-96 border-r border-slate-200">Kegiatan Konstruksi<br />(Nama Paket)</th>
-                                            <th scope="col" rowSpan="2" className="p-4 font-medium min-w-48 border-r border-slate-200">Nama Penyedia Jasa</th>
-                                            <th scope="col" rowSpan="2" className="p-4 font-medium min-w-40 border-r border-slate-200">Tanggal Pengawasan</th>
-                                            <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">Proses Pemilihan Penyedia Jasa</th>
-                                            <th scope="col" colSpan="3" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Pengawasan terhadap Kontrak Kerja Konstruksi</th>
-                                            <th scope="col" colSpan="3" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Pengawasan terhadap Penerapan Standar Keamanan, Keselamatan, Kesehatan, dan Keberlanjutan Konstruksi</th>
-                                            <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">Penerapan Sistem Manajemen Mutu Konstruksi</th>
-                                            <th scope="col" colSpan="3" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Pengelolaan dan Penggunaan Material, Peralatan, dan Teknologi Konstruksi</th>
-                                            <th scope="col" colSpan="1" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200 min-w-48">Pengelolaan dan Pemanfaatan Sumber Material Konstruksi</th>
-                                            <th rowSpan="2"></th>
+                                            <th scope="col" rowSpan="2" className="p-4 font-medium min-w-60">Nama Bangunan Konstruksi</th>
+                                            <th scope="col" rowSpan="2" className="p-4 font-medium min-w-48 border-r border-slate-200">Tanggal<br />Pengawasan</th>
+                                            <th scope="col" colSpan="2" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Fungsi Peruntukannya</th>
+                                            <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">Rencana Umur Konstruksi</th>
+                                            <th scope="col" rowSpan="2" className="p-4 font-medium border-r border-slate-200">Kapasitas dan Beban</th>
+                                            <th scope="col" colSpan="2" className="px-4 pt-4 pb-2 font-medium border-r border-slate-200">Pemeliharaan Produk Konstruksi</th>
                                         </tr>
-                                        <tr>
-                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Penerapan Standar Kontrak</th>
-                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200 min-w-44">Penggunaan Tenaga Kerja Konstruksi Bersertifikat</th>
-                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200 min-w-48">Pemberian Pekerjaan Utama dan/atau Penunjang kepada Subpenyedia Jasa</th>
-                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Ketersediaan Dokumen Standar K4</th>
-                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Penerapan SMKK</th>
-                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Kegiatan Antisipasi Kecelakaan Kerja</th>
-                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200 min-w-48">Pemenuhan Penyediaan Peralatan dalam Pelaksanaan Proyek Konstruksi</th>
-                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200 min-w-40">Penggunaan Material Standar (SNI dan Standar Lain)</th>
-                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200 min-w-40">Penggunaan PDN untuk Teknologi dan MPK</th>
-                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Pemenuhan terhadap Standar Teknis Lingkungan</th>
+                                        <tr className="border-b border-slate-200">
+                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Kesesuaian Fungsi</th>
+                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Kesesuaian Lokasi</th>
+                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Pemeliharaan Bangunan</th>
+                                            <th scope="col" className="px-4 pt-2 pb-4 font-medium border-r border-slate-200">Program Pemeliharaan</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-slate-700">
                                         {
-                                            daftarTertibPenyelenggaraan.map((pengawasan, i) => (
+                                            daftarTertibPemanfaatanProduk.map((pengawasan, i) => (
                                                 <tr key={pengawasan.id} className="border-b border-slate-100 hover:bg-slate-100">
                                                     <td className="px-4 py-5 text-center">{i + 1}</td>
                                                     <td className="px-4 py-5">
                                                         <div>
-                                                            <Link href={`/admin/pengawasan/penyelenggaraan/APBD/${pengawasan.jenisPengawasan.toLowerCase()}/${pengawasan.id}`} className="hover:text-blue-600 hover:underline">
-                                                                {pengawasan.proyekKonstruksi.namaPaket}
+                                                            <Link href={`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}`} className="uppercase hover:text-blue-600 hover:underline">
+                                                                {pengawasan.bangunan.nama}
                                                             </Link>
-                                                            <div className="font-light text-slate-500 capitalize">{`Nomor Kontrak: ${pengawasan.proyekKonstruksi.nomorKontrak}`}</div>
+                                                            <div className="font-light text-slate-500 capitalize">{`${pengawasan.bangunan.desaKelurahan.toLowerCase()}, ${pengawasan.bangunan.kecamatan.toLowerCase()}`}</div>
                                                         </div>
                                                     </td>
-                                                    <td className="px-4 py-5 text-center">{pengawasan.proyekKonstruksi.penyediaJasa ? pengawasan.proyekKonstruksi.penyediaJasa : ''}</td>
                                                     <td className="px-4 py-5 text-center">{formatDateToIndonesia(pengawasan.tanggalPengawasan)}</td>
-                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibProsesPemilihanPenyediaJasa)}</td>
-                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPenerapanStandarKontrak)}</td>
-                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPenggunaanTKK)}</td>
-                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPemberianPekerjaan)}</td>
-                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibKetersediaanDokumenStandarK4)}</td>
-                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPenerapanSMKK)}</td>
-                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibAntisipasiKecelakaan)}</td>
-                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPenerapanManajemenMutu)}</td>
-                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPemenuhanPenyediaanMPTK)}</td>
-                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPenggunaanMPTK)}</td>
-                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPenggunaanPDN)}</td>
-                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPemenuhanStandarLingkungan)}</td>
-                                                    <td></td>
+                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibKesesuaianFungsi)}</td>
+                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibKesesuaianLokasi)}</td>
+                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibRencanaUmurKonstruksi)}</td>
+                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibKapasitasBeban)}</td>
+                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPemeliharaanBangunan)}</td>
+                                                    <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibProgramPemeliharaan)}</td>
+                                                    <td className="px-4 py-5 text-center"></td>
                                                 </tr>
                                             ))
                                         }
@@ -200,6 +178,6 @@ const JenisPengawasanInsidentalTertibPenyelenggaraanIndex = ({ data }) => {
     );
 }
 
-JenisPengawasanInsidentalTertibPenyelenggaraanIndex.layout = page => <Layout children={page} />;
+JenisPengawasanInsidentalTertibPemanfaatanProdukIndex.layout = page => <Layout children={page} />;
 
-export default JenisPengawasanInsidentalTertibPenyelenggaraanIndex;
+export default JenisPengawasanInsidentalTertibPemanfaatanProdukIndex;

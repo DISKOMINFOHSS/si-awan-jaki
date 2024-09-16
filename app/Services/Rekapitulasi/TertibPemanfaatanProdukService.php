@@ -91,6 +91,28 @@ class TertibPemanfaatanProdukService
                ->get();
     }
 
+    public function getDaftarPengawasanByJenisPengawasan(string $tahun, string $jenisPengawasan)
+    {
+        return PengawasanPemanfaatanProduk::with([
+            'bangunan' => function (Builder $query)
+            {
+                $query->select(
+                    'id',
+                    'nama',
+                    'nomor_kontrak_pembangunan as nomorKontrak',
+                    'mulai_pembangunan as tanggalMulaiBangun',
+                    'selesai_pembangunan as tanggalSelesaiBangun',
+                    'tanggal_pemanfaatan as tanggalPemanfaatan',
+                    'umur_konstruksi as umurKonstruksi',
+                    'desa_kelurahan as desaKelurahan',
+                    'kecamatan',
+                );
+            }])->where('jenis_pengawasan', $jenisPengawasan)
+               ->whereYear('tanggal_pengawasan', $tahun)
+               ->orderBy('tanggal_pengawasan', 'desc')
+               ->get();
+    }
+
     public function getDaftarPengawasanRutinOrderByBangunanNama(string $tahun)
     {
         return PengawasanPemanfaatanProduk::with([

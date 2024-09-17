@@ -82,6 +82,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                 Route::post('/{id}/pengguna-jasa', 'storePenggunaJasa');
                 Route::post('/{id}/penyedia-jasa', 'storePenyediaJasa');
+                Route::post('/{id}/konsultan-pengawas', 'storeKonsultanPengawas');
 
                 Route::post('/{id}/surat-pernyataan', 'storeSuratPernyataan');
             });

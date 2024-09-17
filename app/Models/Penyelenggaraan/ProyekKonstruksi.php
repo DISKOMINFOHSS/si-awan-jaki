@@ -58,6 +58,11 @@ class ProyekKonstruksi extends Model
         return $this->belongsTo(PenggunaJasa::class, 'pengguna_jasa_id');
     }
 
+    public function konsultanPengawas(): BelongsTo
+    {
+        return $this->belongsTo(Usaha::class, 'konsultan_pengawas_id');
+    }
+
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');

@@ -106,7 +106,21 @@ class PendataanProyekService
                         'files.name as fileName',
                     )->orderBy('usaha.nama');
             },
-            'penggunaJasa'
+            'penggunaJasa',
+            'konsultanPengawas' => function (Builder $query)
+            {
+                $query->leftJoin('files', 'files.id', 'usaha.dokumen_nib')
+                      ->select(
+                        'usaha.id',
+                        'usaha.nama',
+                        'usaha.nib',
+                        'usaha.pjbu',
+                        'usaha.alamat',
+                        'files.id as fileId',
+                        'files.path as filePath',
+                        'files.name as fileName',
+                    )->orderBy('usaha.nama');
+            },
         ])->where('id', $id)->first();
     }
 
@@ -187,6 +201,23 @@ class PendataanProyekService
         $proyek->save();
 
         return $proyek->id;
+    }
+
+    // Konsultan Pengawas
+    public function getKonsultanPengawasIdById(string $id)
+    {
+        return ProyekKonstruksi::find($id)->konsultan_pengawas_id;
+    }
+
+    public function addKonsultanPengawasToProyekKonstruksi(string $id, array $data)
+    {
+        $proyekKonstruksi = ProyekKonstruksi::find($id);
+        $proyekKonstruksi->konsultan_pengawas_id = $data['konsultan_pengawas_id'];
+        $proyekKonstruksi->nama_paket_pengawasan = $data['nama_paket_pengawasan'];
+
+        $proyekKonstruksi->save();
+
+        return $proyekKonstruksi;
     }
 
     // Surat Pernyataan

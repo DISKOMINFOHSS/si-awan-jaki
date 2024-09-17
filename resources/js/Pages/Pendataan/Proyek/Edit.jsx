@@ -5,6 +5,7 @@ import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import {
     FormInformasi,
+    FormKonsultanPengawas,
     FormPenggunaJasa,
     FormPenyediaJasa
 } from "../../../Components/Proyek/FormEditKegiatan";
@@ -63,7 +64,7 @@ const PendataanProyekEdit = ({ data }) => {
                     />
                 </div>
             </div>
-            <div className="grid grid-cols-4 gap-4 pt-5">
+            <div className="grid grid-cols-4 gap-4 py-5 border-b border-slate-200">
                 <div className="mt-1">
                     <h3 className="font-medium text-slate-800">Pengguna Jasa</h3>
                     <h4 className="font-light text-xs text-slate-500">Silakan lengkapi informasi terkait</h4>
@@ -72,6 +73,20 @@ const PendataanProyekEdit = ({ data }) => {
                     <FormPenggunaJasa
                         proyekId={proyekKonstruksi.id}
                         penggunaJasa={proyekKonstruksi.penggunaJasa ? proyekKonstruksi.penggunaJasa : ''}
+                    />
+                </div>
+            </div>
+            <div className="grid grid-cols-4 gap-4 pt-5">
+                <div className="mt-1">
+                    <h3 className="font-medium text-slate-800">Konsultan Pengawas</h3>
+                    <h4 className="font-light text-xs text-slate-500">Silakan lengkapi informasi terkait</h4>
+                </div>
+                <div className="col-span-3">
+                    <FormKonsultanPengawas
+                        proyekId={proyekKonstruksi.id}
+                        selectedUsaha={proyekKonstruksi.konsultanPengawas ? proyekKonstruksi.konsultanPengawas : ''}
+                        daftarUsaha={daftarUsaha}
+                        namaPaket={proyekKonstruksi.namaPaketPengawasan}
                     />
                 </div>
             </div>

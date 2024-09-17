@@ -248,6 +248,84 @@ class ProyekController extends Controller
         return back();
     }
 
+    public function storeKonsultanPengawas(string $id, Request $request)
+    {
+        if (!$this->proyekService->checkProyekKonstruksiExists($id))
+        {
+            return back()->withErrors(['message' => 'Proyek Konstruksi tidak ditemukan.']);
+        }
+
+        $userId = auth()->user()->id;
+        $konsultanPengawasId = '';
+
+        if ($request->filled('usahaId'))
+        {
+            if (!$this->usahaService->checkUsahaExists($request->input('usahaId')))
+            {
+                return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
+            }
+            $konsultanPengawasId = $request->input('usahaId');
+        } else
+        {
+            $validatedData = $request->validate([
+                'usaha'      => 'required',
+                'nib'        => 'required',
+                'dokumenNIB' => 'nullable|file|max:2048',
+                'pjbu'       => 'required',
+            ]);
+
+            $dokumenNIB = $validatedData['dokumenNIB'] ? $this->fileService->addFile([
+                'file'       => $validatedData['dokumenNIB'],
+                'path'       => 'public/files/usaha/nib',
+                'created_by' => $userId,
+            ]) : null;
+
+            $konsultanPengawasId = $this->usahaService->addUsaha([
+                'nama'           => $validatedData['usaha'],
+                'nib'            => $validatedData['nib'],
+                'dokumen_nib'    => $dokumenNIB,
+                'pjbu'           => $validatedData['pjbu'],
+                'alamat'         => $request->input('alamat'),
+                'jenis_usaha_id' => $this->usahaService->getJenisUsahaByJenisUsaha('Badan Usaha Jasa Konstruksi')->id,
+                'created_by'     => $userId,
+            ]);
+        }
+
+        $oldKonsultanPengawasId = $this->proyekService->getKonsultanPengawasIdById($id);
+        $proyekKonstruksi  = $this->proyekService->addKonsultanPengawasToProyekKonstruksi($id, [
+            'konsultan_pengawas_id' => $konsultanPengawasId,
+            'nama_paket_pengawasan' => $request->input('namaPaket'),
+        ]);
+
+        if ($oldKonsultanPengawasId !== $konsultanPengawasId)
+        {
+            $paketPekerjaan = $oldKonsultanPengawasId ?
+                $this->bujkService->getPaketPekerjaanByNamaPaketAndUsahaId($proyekKonstruksi->nama_paket_pengawasan, $oldKonsultanPengawasId)
+                : null;
+
+            if (!$paketPekerjaan)
+            {
+                $this->bujkService->addPaketPekerjaan([
+                    'nama_paket'           => $proyekKonstruksi->nama_paket_pengawasan,
+                    'tahun_anggaran'       => $proyekKonstruksi->tahun_anggaran,
+                    'jenis_usaha'          => 'Jasa Konsultansi Konstruksi',
+                    'sifat_usaha'          => '-',
+                    'subklasifikasi_usaha' => '-',
+                    'layanan_usaha'        => '-',
+                    'bentuk_usaha'         => '-',
+                    'kualifikasi_usaha'    => '-',
+                    'usaha_id'             => $konsultanPengawasId,
+                    'created_by'           => $userId,
+                ]);
+            } else
+            {
+                $this->bujkService->updateUsahaIdFromPaketPekerjaan($paketPekerjaan->id, $konsultanPengawasId);
+            }
+        }
+
+        return back();
+    }
+
     public function storeSuratPernyataan(string $id, Request $request)
     {
         if (!$this->proyekService->checkProyekKonstruksiExists($id))

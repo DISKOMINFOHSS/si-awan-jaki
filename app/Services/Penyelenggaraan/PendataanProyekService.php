@@ -52,6 +52,7 @@ class PendataanProyekService
         return ProyekKonstruksi::with([
             'penyediaJasa:id,nama',
             'penggunaJasa:id,nama,instansi',
+            'konsultanPengawas:id,nama',
         ])->select(
                 'id',
                 'nama_paket as namaPaket',
@@ -62,6 +63,7 @@ class PendataanProyekService
                 'selesai_pelaksanaan as tanggalSelesaiPelaksanaan',
                 'penyedia_jasa_id',
                 'pengguna_jasa_id',
+                'konsultan_pengawas_id',
             )
           ->where('tahun_anggaran', $tahun)
           ->where('sumber_dana', 'APBD')

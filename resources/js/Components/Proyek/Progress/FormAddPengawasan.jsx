@@ -22,7 +22,7 @@ export default ({
         tanggalMulai: '',
         tanggalSelesai: '',
         penyediaJasa: '',
-        penggunaJasa: '',
+        konsultanPengawas: '',
     });
 
     function handleProyekKonstruksiSelect(proyekKonstruksi) {
@@ -33,7 +33,7 @@ export default ({
             tanggalMulaiPelaksanaan,
             tanggalSelesaiPelaksanaan,
             penyediaJasa,
-            penggunaJasa,
+            konsultanPengawas,
         } = proyekKonstruksi;
 
         setIsSelectProyekKonstruksiVisible(false);
@@ -45,7 +45,7 @@ export default ({
             tanggalMulai: tanggalMulaiPelaksanaan,
             tanggalSelesai: tanggalSelesaiPelaksanaan,
             penyediaJasa: penyediaJasa,
-            penggunaJasa: penggunaJasa,
+            konsultanPengawas: konsultanPengawas,
         });
     }
 
@@ -58,7 +58,7 @@ export default ({
         <>
             <Modal isVisible={isVisible} className="w-full max-w-xl h-fit mt-10">
                 <Modal.Header onClose={onClose}>
-                    <div className="text-center mb-7">
+                    <div className="text-center mb-5">
                         <h1 className="font-medium text-slate-800">Tambah Pengawasan</h1>
                         <h2 className="text-xs text-slate-500 font-light">Pengawasan Progress Proyek Konstruksi</h2>
                     </div>
@@ -119,10 +119,10 @@ export default ({
                             />
                         </div>
                         <div className="col-span-3">
-                            <label htmlFor="penggunaJasa" className="block mb-2 text-xs font-medium text-slate-800">Konsultan Pengawas</label>
+                            <label htmlFor="konsultanPengawas" className="block mb-2 text-xs font-medium text-slate-800">Konsultan Pengawas</label>
                             <input
-                                type="text" name="penggunaJasa" id="penggunaJasa"
-                                value={data.penggunaJasa} disabled
+                                type="text" name="konsultanPengawas" id="konsultanPengawas"
+                                value={data.konsultanPengawas} disabled
                                 className="px-3 py-2 block w-full rounded-md bg-slate-50 border-slate-200 text-slate-500 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                             />
                         </div>

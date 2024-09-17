@@ -174,7 +174,7 @@ const JenisPengawasanProgressIndex = ({ data }) => {
                     tanggalMulaiPelaksanaan,
                     tanggalSelesaiPelaksanaan,
                     penyedia_jasa,
-                    pengguna_jasa
+                    konsultan_pengawas,
                 }) => ({
                     id: id,
                     namaPaket: namaPaket,
@@ -183,7 +183,7 @@ const JenisPengawasanProgressIndex = ({ data }) => {
                     tanggalMulaiPelaksanaan: tanggalMulaiPelaksanaan,
                     tanggalSelesaiPelaksanaan: tanggalSelesaiPelaksanaan,
                     penyediaJasa: penyedia_jasa ? penyedia_jasa.nama : '',
-                    penggunaJasa: pengguna_jasa ? (pengguna_jasa.instansi ? pengguna_jasa.instansi : '') : '',
+                    konsultanPengawas: konsultan_pengawas ? konsultan_pengawas.nama : '',
                 }))}
             />
         </>

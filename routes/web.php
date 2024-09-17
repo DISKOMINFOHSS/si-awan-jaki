@@ -270,6 +270,20 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/{tahun}/tertib-pemanfaatan-produk', 'pemanfaatan');
                 });
             });
+
+            // Pengawasan Progress
+            Route::name('progress.')->prefix('/progress')
+            ->group(function () {
+                Route::redirect('/', "/admin/jenis-pengawasan/progress/" . date('Y'));
+
+                Route::controller(App\Http\Controllers\JenisPengawasan\Progress\PengawasanProgressController::class)
+                ->group(function () {
+                    Route::get('/{tahun}', 'index');
+                    // Route::get('/{tahun}/{file_name}', 'show');
+                });
+            });
+
+
         });
 
         // Rekapitulasi

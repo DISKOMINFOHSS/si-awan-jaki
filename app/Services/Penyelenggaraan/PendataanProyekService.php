@@ -47,6 +47,28 @@ class PendataanProyekService
           ->get();
     }
 
+    public function getDaftarProyekKonstruksiByTahunAnggaran(string $tahun): EloquentCollection
+    {
+        return ProyekKonstruksi::with([
+            'penyediaJasa:id,nama',
+            'penggunaJasa:id,nama,instansi',
+        ])->select(
+                'id',
+                'nama_paket as namaPaket',
+                'tahun_anggaran as tahunAnggaran',
+                'nomor_kontrak as nomorKontrak',
+                'nilai_kontrak as nilaiKontrak',
+                'mulai_pelaksanaan as tanggalMulaiPelaksanaan',
+                'selesai_pelaksanaan as tanggalSelesaiPelaksanaan',
+                'penyedia_jasa_id',
+                'pengguna_jasa_id',
+            )
+          ->where('tahun_anggaran', $tahun)
+          ->where('sumber_dana', 'APBD')
+          ->orderBy('nama_paket')
+          ->get();
+    }
+
     public function getDaftarProyekKonstruksiBySumberDana(string $sumberDana): EloquentCollection
     {
         return ProyekKonstruksi::with([

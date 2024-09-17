@@ -132,7 +132,7 @@ export default ({ isOpened }) => {
                     text="Pengawasan Insidental"
                 />
                 <Sidebar.Item
-                    href="#"
+                    href="/admin/jenis-pengawasan/progress"
                     icon={<LiaChartBar size={20} />}
                     text="Pengawasan Progres"
                 />

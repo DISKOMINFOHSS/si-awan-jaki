@@ -8,11 +8,13 @@ import Tabs from "../../../Components/Tabs";
 import {
     Informasi,
     InformasiPenyediaJasa,
-    InformasiPenggunaJasa
+    InformasiPenggunaJasa,
+    InformasiKonsultanPengawas
 } from "../../../Components/Proyek/Informasi";
 
 import { LiaHomeSolid, LiaEditSolid } from "react-icons/lia";
 import DaftarSuratPernyataan from "../../../Components/Proyek/DaftarSuratPernyataan";
+import getDefaultData from "../../../Utils/getDefaultData";
 
 const PendataanProyekShow = ({ data }) => {
     console.log(data);
@@ -21,7 +23,6 @@ const PendataanProyekShow = ({ data }) => {
     const tabList = [
         { label: 'Informasi Proyek Konstruksi' },
         { label: 'Dokumen Bukti Dukung' },
-        { label: 'Pengawasan' },
     ];
 
     return (
@@ -52,14 +53,16 @@ const PendataanProyekShow = ({ data }) => {
                         <div className="col-span-2">
                             <Informasi proyekKonstruksi={proyekKonstruksi} />
                         </div>
-                        <InformasiPenyediaJasa penyediaJasa={proyekKonstruksi.penyediaJasa ? proyekKonstruksi.penyediaJasa : ''} />
+                        <div className="space-y-4">
+                            <InformasiPenyediaJasa penyediaJasa={proyekKonstruksi.penyediaJasa ? proyekKonstruksi.penyediaJasa : ''} />
+                            <InformasiKonsultanPengawas konsultanPengawas={getDefaultData(proyekKonstruksi.konsultanPengawas)} namaPaket={proyekKonstruksi.namaPaketPengawasan} />
+                        </div>
                         <InformasiPenggunaJasa penggunaJasa={proyekKonstruksi.penggunaJasa ? proyekKonstruksi.penggunaJasa : ''} />
                     </div>
                 </Tabs.Tab>
                 <Tabs.Tab>
                     <DaftarSuratPernyataan proyekKonstruksi={proyekKonstruksi}/>
                 </Tabs.Tab>
-                <Tabs.Tab></Tabs.Tab>
             </Tabs>
         </>
     );

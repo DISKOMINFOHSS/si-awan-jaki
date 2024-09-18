@@ -1,8 +1,10 @@
 import React from "react";
+import 'leaflet/dist/leaflet.css';
 
 import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import Card from "../../../Components/Card";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
 import { formatDateToIndonesia } from "../../../Utils/formatDate";
 import formatCurrencyToIDR from "../../../Utils/formatCurrencyToIDR";
@@ -13,6 +15,9 @@ const JenisPengawasanProgressShow = ({ data }) => {
     console.log(data);
     const { pengawasan } = data;
     const { proyekKonstruksi } = pengawasan;
+
+    const mapRef = React.useRef(null);
+    const [ latitude, longitude ] = [ -2.7830879640919464, 115.26951102304774 ];
 
     return (
         <>
@@ -28,7 +33,35 @@ const JenisPengawasanProgressShow = ({ data }) => {
                 </div>
             </div>
             <div className="grid grid-cols-5 gap-4">
-                <div className="col-span-2"></div>
+                <div className="col-span-2 space-y-4">
+                    <Card className="h-ft">
+                        <Card.Body className="p-4 text-xs">
+                            <MapContainer center={[latitude, longitude]} zoom={13} scrollWheelZoom={false} ref={mapRef}
+                                style={{height: "16rem", width: "100%"}}
+                            >
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                <Marker position={[latitude, longitude]}></Marker>
+                            </MapContainer>
+                        </Card.Body>
+                    </Card>
+                    <Card>
+                        <Card.Body className="p-4 text-xs">
+                            <div className="grid grid-cols-2 gap-x-4 ">
+                                <div>
+                                    <div className="font-medium">Latitude</div>
+                                    <div className="font-light text-slate-500">{latitude}</div>
+                                </div>
+                                <div>
+                                    <div className="font-medium">Longitude</div>
+                                    <div className="font-light text-slate-500">{longitude}</div>
+                                </div>
+                            </div>
+                        </Card.Body>
+                    </Card>
+                </div>
                 <div className="col-span-3 space-y-4">
                     <Card className="h-fit w-full">
                         <Card.Body className="p-4 text-xs">

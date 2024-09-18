@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ProyekKonstruksi extends Model
 {
@@ -71,5 +72,10 @@ class ProyekKonstruksi extends Model
     public function pengawasan(): HasMany
     {
         return $this->hasMany(PengawasanPenyelenggaraan::class, 'proyek_konstruksi_id');
+    }
+
+    public function pengawasanProgress(): HasOne
+    {
+        return $this->hasOne(PengawasanProgress::class, 'proyek_konstruksi_id');
     }
 }

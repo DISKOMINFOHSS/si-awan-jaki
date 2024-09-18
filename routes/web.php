@@ -277,10 +277,12 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             ->group(function () {
                 Route::redirect('/', "/admin/jenis-pengawasan/progress/" . date('Y'));
 
-                Route::controller(App\Http\Controllers\JenisPengawasan\Progress\PengawasanProgressController::class)
+                Route::prefix('/{tahun}')
+                ->controller(App\Http\Controllers\JenisPengawasan\Progress\PengawasanProgressController::class)
                 ->group(function () {
-                    Route::get('/{tahun}', 'index');
-                    // Route::get('/{tahun}/{file_name}', 'show');
+                    Route::get('/', 'index');
+                    Route::post('/', 'store');
+                    Route::get('/{id}', 'show');
                 });
             });
 

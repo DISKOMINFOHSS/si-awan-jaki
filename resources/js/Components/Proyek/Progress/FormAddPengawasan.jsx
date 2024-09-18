@@ -52,6 +52,16 @@ export default ({
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
+        post(`/admin/jenis-pengawasan/progress/2024`, {
+            onSuccess: () => {
+                onClose();
+                reset();
+            },
+            onError: (errors) => {
+                console.log(errors);
+                setIsModalErrorOpen(true);
+            },
+        })
     }
 
     return (
@@ -60,7 +70,7 @@ export default ({
                 <Modal.Header onClose={onClose}>
                     <div className="text-center mb-5">
                         <h1 className="font-medium text-slate-800">Tambah Pengawasan</h1>
-                        <h2 className="text-xs text-slate-500 font-light">Pengawasan Progress Proyek Konstruksi</h2>
+                        <h2 className="text-xs text-slate-500 font-light">Pengawasan Progress Proyek Konstruksi di Kab. HSS</h2>
                     </div>
                 </Modal.Header>
                 <Modal.Body>

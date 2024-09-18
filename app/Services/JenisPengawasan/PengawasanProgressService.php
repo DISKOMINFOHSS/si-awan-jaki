@@ -19,9 +19,13 @@ class PengawasanProgressService
 
     public function getPengawasanById(string $id, string $tahun)
     {
-        return PengawasanProgress::with(['proyekKonstruksi'])
-            ->where('tahun_pengawasan', $tahun)
-            ->where('id', $id)
-            ->firstOrFail();
+        return PengawasanProgress::with([
+            'proyekKonstruksi',
+            'proyekKonstruksi.penyediaJasa',
+            'proyekKonstruksi.penggunaJasa',
+            'proyekKonstruksi.konsultanPengawas',
+        ])->where('tahun_pengawasan', $tahun)
+          ->where('id', $id)
+          ->firstOrFail();
     }
 }

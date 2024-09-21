@@ -8,7 +8,7 @@ import Breadcrumb from "../../../Components/Breadcrumb";
 import Dropdown from "../../../Components/Dropdown";
 import Card from "../../../Components/Card";
 import Tabs from "../../../Components/Tabs";
-import FormAddTargetRealisasiFisik from "../../../Components/Proyek/Progress/FormAddTargetRealisasiFisik";
+import DaftarRealisasiFisik from "../../../Components/Proyek/Progress/DaftarRealisasiFisik";
 
 import { formatDateToIndonesia } from "../../../Utils/formatDate";
 import formatCurrencyToIDR from "../../../Utils/formatCurrencyToIDR";
@@ -18,7 +18,6 @@ import {
     LiaEllipsisVSolid,
     LiaHomeSolid,
     LiaInfoCircleSolid,
-    LiaPlusCircleSolid,
 } from "react-icons/lia";
 
 const JenisPengawasanProgressShow = ({ data }) => {
@@ -27,7 +26,7 @@ const JenisPengawasanProgressShow = ({ data }) => {
     const tahun = url.split('/')[4];
 
     const { pengawasan } = data;
-    const { proyekKonstruksi } = pengawasan;
+    const { proyekKonstruksi, realisasiFisik } = pengawasan;
 
     const [
         moreDropdownRef,
@@ -39,11 +38,9 @@ const JenisPengawasanProgressShow = ({ data }) => {
     const [ latitude, longitude ] = [ -2.7830879640919464, 115.26951102304774 ];
 
     const tabList = [
-        { label: 'Progress Pekerjaan' },
-        { label: 'Pembiayaan' },
+        { label: 'Realisasi Fisik' },
+        { label: 'Realisasi Keuangan' },
     ];
-
-    const [ isModalProgressOpen, setIsModalProgressOpen ] = React.useState(false);
 
     return (
         <>
@@ -186,7 +183,7 @@ const JenisPengawasanProgressShow = ({ data }) => {
                                 <div className="font-medium">Program</div>
                                 <div className="font-light text-slate-500 uppercase">Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota</div>
                             </div>
-                            <div className="grid grid-cols-2 gap-x-4 py-3 border-b border-slate-200">
+                            <div className="grid grid-cols-2 gap-x-4 pt-3">
                                 <div>
                                     <div className="font-medium">Kegiatan</div>
                                     <div className="font-light text-slate-500 uppercase">perencanaan penganggaran dan evaluasi kinerja perangkat daerah</div>
@@ -196,65 +193,20 @@ const JenisPengawasanProgressShow = ({ data }) => {
                                     <div className="font-light text-slate-500 uppercase">penyusunan dokumen perencanaan perangkat daerah</div>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-x-4 pt-3">
-                                <div>
-                                    <div className="font-medium">Realisasi Keuangan</div>
-                                    <div className="font-light text-slate-500">-</div>
-                                </div>
-                                <div>
-                                    <div className="font-medium">Realisasi Fisik</div>
-                                    <div className="font-light text-slate-500">-</div>
-                                </div>
-                            </div>
                         </Card.Body>
                     </Card>
                 </div>
             </div>
             <Tabs tabList={tabList}>
                 <Tabs.Tab>
-                    <Card>
-                        <Card.Header className="space-y-4">
-                            <div className="flex justify-between items-center">
-                                <div>
-                                    <h3 className="font-medium text-sm text-slate-700">Progress Pekerjaan</h3>
-                                    <h4 className="font-light text-xs text-slate-500">Pengawasan Progress Proyek Konstruksi</h4>
-                                </div>
-                                <div className="flex items-center gap-x-2">
-                                    <button
-                                        onClick={() => setIsModalProgressOpen(true)}
-                                        className="w-full flex justify-center items-center space-x-1 text-white bg-blue-600 hover:bg-blue-800 rounded text-[11px] tracking-wide px-2.5 py-2 shadow-sm"
-                                    >
-                                        <LiaPlusCircleSolid size={16}/>
-                                        <span>Tambah</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </Card.Header>
-                        <Card.Body>
-                            <div className="relative overflow-x-auto">
-                                <table className="w-full text-xs">
-                                    <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 uppercase">
-                                        <tr className="border-b border-slate-200">
-                                            <th scope="col" className="p-4 font-medium border-r border-slate-200">Tanggal</th>
-                                            <th scope="col" className="p-4 font-medium border-r border-slate-200">Target</th>
-                                            <th scope="col" className="p-4 font-medium border-r border-slate-200">Realisasi</th>
-                                            <th scope="col" className="p-4 font-medium border-r border-slate-200">Foto Lapangan</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </Card.Body>
-                    </Card>
+                    <DaftarRealisasiFisik
+                        realisasiFisik={realisasiFisik}
+                        tahun={tahun}
+                        pengawasanId={pengawasan.id}
+                    />
                 </Tabs.Tab>
-                <Tabs.Tab>Pembiayaan</Tabs.Tab>
+                <Tabs.Tab>Daftar Realisasi Keuangan</Tabs.Tab>
             </Tabs>
-            <FormAddTargetRealisasiFisik
-                isVisible={isModalProgressOpen}
-                onClose={() => setIsModalProgressOpen(false)}
-                tahun={tahun}
-                pengawasanId={pengawasan.id}
-            />
         </>
     );
 }

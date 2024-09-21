@@ -50,11 +50,39 @@ class PengawasanProgressController extends Controller
     public function show(string $tahun, string $id)
     {
         $pengawasan = $this->pengawasanService->getPengawasanById($id, $tahun);
+        $pengawasan['realisasi_fisik'] = $this->pengawasanService->getDaftarRealisasiFisik($id);
 
         return Inertia::render('JenisPengawasan/Progress/Show', [
             'data' => [
                 'pengawasan' => new PengawasanProgressResource($pengawasan),
             ],
         ]);
+    }
+
+    public function target(string $tahun, string $id, Request $request)
+    {
+        if (!$this->pengawasanService->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'targetRealisasi.*.tanggal' => 'required|date',
+            'targetRealisasi.*.target'  => 'required|decimal:0,2',
+        ]);
+        $userId = auth()->user()->id;
+
+        foreach ($request->input('targetRealisasi') as $target)
+        {
+            $this->pengawasanService->addTargetRealisasiFisik(
+                $id,
+                [
+                    'tanggal'    => $target['tanggal'],
+                    'target'     => $target['target'],
+                    'created_by' => $userId,
+                ],
+            );
+        }
+
+        return redirect("/admin/jenis-pengawasan/progress/$tahun/$id");
     }
 }

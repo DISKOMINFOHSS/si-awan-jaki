@@ -46,4 +46,8 @@ class PengawasanProgress extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function realisasiFisik(): HasMany
+    {
+        return $this->hasMany(RealisasiFisikPengawasanProgress::class, 'pengawasan_id');
+    }
 }

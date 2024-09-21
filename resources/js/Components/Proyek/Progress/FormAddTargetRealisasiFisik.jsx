@@ -107,22 +107,22 @@ export default ({
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
-        // router.post(
-        //     `/admin/jenis-pengawasan/progress/${tahun}/${pengawasanId}/target`,
-        //     { targetProgress: data },
-        //     {
-        //         preserveScroll: true,
-        //         onSuccess: () => {
-        //             onClose();
-        //             setProcessing(false);
-        //         },
-        //         onError: () => {
-        //             onClose();
-        //             setProcessing(false);
-        //             setIsModalErrorOpen(true);
-        //         },
-        //     }
-        // );
+        router.post(
+            `/admin/jenis-pengawasan/progress/${tahun}/${pengawasanId}/target-fisik`,
+            { targetRealisasi: data },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    onClose();
+                    setProcessing(false);
+                },
+                onError: () => {
+                    onClose();
+                    setProcessing(false);
+                    setIsModalErrorOpen(true);
+                },
+            }
+        );
     }
 
     return (

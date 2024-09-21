@@ -20,6 +20,7 @@ class PengawasanProgressResource extends JsonResource
             'proyekKonstruksi' => new ProyekKonstruksiResource($this->whenLoaded('proyekKonstruksi')),
             'tahunPengawasan'  => $this->tahun_pengawasan,
             'status'           => $this->status,
+            'realisasi_fisik'  => $this->whenHas('realisasi_fisik'),
         ];
     }
 }

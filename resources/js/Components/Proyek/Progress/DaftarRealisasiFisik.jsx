@@ -5,6 +5,8 @@ import FormAddTargetRealisasiFisik from "./FormAddTargetRealisasiFisik";
 import { formatDateToIndonesia } from "../../../Utils/formatDate";
 
 import { LiaPlusCircleSolid, LiaCalendarDaySolid, LiaEditSolid } from "react-icons/lia";
+import FormAddRealisasiFisik from "./FormAddRealisasiFisik";
+import ModalError from "../../ModalError";
 
 function getRealisasiFisikProgressBar(target, realisasi) {
     if (realisasi === null) return;
@@ -39,6 +41,21 @@ function getRealisasiFisikProgressBar(target, realisasi) {
 
 export default ({ realisasiFisik, tahun, pengawasanId }) => {
     const [ isModalTargetRealisasiFisikOpen, setIsModalTargetRealisasiFisikOpen ] = React.useState(false);
+    const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
+
+    const [ isModalRealisasiFisikOpen, setIsModalRealisasiFisikOpen ] = React.useState(false);
+    const [ selectedRealisasi, setSelectedRealisasi ] = React.useState({});
+
+    function handleRealisasiButtonClick(realisasi, i) {
+        if ((i+1 === realisasiFisik.length || realisasiFisik[i+1].realisasi !== null) && realisasi.realisasi === null) {
+            setSelectedRealisasi(realisasi);
+            setIsModalRealisasiFisikOpen(true);
+        } else if (i+1 === realisasiFisik.length) {
+            return;
+        } else {
+            setIsModalErrorOpen(true);
+        }
+    }
 
     return (
         <>
@@ -95,6 +112,7 @@ export default ({ realisasiFisik, tahun, pengawasanId }) => {
                                                     <button
                                                         type="button"
                                                         className="flex items-center rounded border border-slate-200 text-slate-700 w-8 aspect-square justify-center hover:bg-slate-200"
+                                                        onClick={() => handleRealisasiButtonClick(realisasi, i)}
                                                     >
                                                         <LiaEditSolid size={18} />
                                                     </button>
@@ -114,6 +132,22 @@ export default ({ realisasiFisik, tahun, pengawasanId }) => {
                 tahun={tahun}
                 pengawasanId={pengawasanId}
             />
+            <FormAddRealisasiFisik
+                isVisible={isModalRealisasiFisikOpen}
+                onClose={() => setIsModalRealisasiFisikOpen(false)}
+                realisasiFisik={selectedRealisasi}
+                tahun={tahun}
+                pengawasanId={pengawasanId}
+            />
+            <ModalError
+                isVisible={isModalErrorOpen}
+                onClose={() => setIsModalErrorOpen(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Realisasi sebelumnya belum diisi. Silakan isi realisasi sebelumnya terlebih dahulu.
+                </div>
+            </ModalError>
         </>
     );
 }

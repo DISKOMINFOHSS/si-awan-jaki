@@ -4,6 +4,7 @@ namespace App\Services\JenisPengawasan;
 
 use App\Models\Penyelenggaraan\PengawasanProgress;
 use App\Models\Penyelenggaraan\RealisasiFisikPengawasanProgress;
+use Illuminate\Support\Facades\DB;
 
 class PengawasanProgressService
 {
@@ -23,6 +24,16 @@ class PengawasanProgressService
         return PengawasanProgress::where('id', $id)->exists();
     }
 
+    public function getDaftarPengawasanByTahun(string $tahun)
+    {
+        return PengawasanProgress::with([
+            'proyekKonstruksi',
+            'proyekKonstruksi.penyediaJasa',
+            'proyekKonstruksi.konsultanPengawas',
+        ])->where('tahun_pengawasan', $tahun)
+          ->get();
+    }
+
     public function getPengawasanById(string $id, string $tahun)
     {
         return PengawasanProgress::with([
@@ -33,6 +44,15 @@ class PengawasanProgressService
         ])->where('tahun_pengawasan', $tahun)
           ->where('id', $id)
           ->firstOrFail();
+    }
+
+    public function getPengawasanCount(string $tahun)
+    {
+        return DB::table('pengawasan_progress_proyek_konstruksi')
+            ->selectRaw('count(id) as total_pengawasan, status')
+            ->groupBy('status')
+            ->where('tahun_pengawasan', $tahun)
+            ->get();
     }
 
     public function addTargetRealisasiFisik(string $pengawasanId, array $data)

@@ -46,6 +46,15 @@ function getAktifStatusBadge (isAktif) {
     }
 }
 
+function getProgressStatusBadge(status) {
+    switch(status) {
+        case "Dalam Proses":
+            return <Badge bg="blue">Dalam Proses</Badge>;
+        case "Selesai":
+            return <Badge bg="green">Selesai</Badge>;
+    }
+}
+
 function getTertibStatusBadgePDF (isTertib) {
     switch(isTertib) {
         case true:
@@ -88,6 +97,7 @@ export {
     getAktifStatusBadge,
     getSesuaiStatusBadge,
     getTertibStatusBadge,
+    getProgressStatusBadge,
     getTertibStatusBadgePDF,
     getTertibStatusBadgeRekapitulasiPDF,
     getStatusBadgePDF,

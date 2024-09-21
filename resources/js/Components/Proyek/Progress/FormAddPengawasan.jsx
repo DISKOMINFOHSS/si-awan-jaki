@@ -10,7 +10,8 @@ import { LiaAngleDownSolid, LiaSpinnerSolid } from "react-icons/lia";
 export default ({
     isVisible,
     onClose,
-    daftarProyekKonstruksi
+    daftarProyekKonstruksi,
+    tahun,
 }) => {
     const [ isSelectProyekKonstruksiVisible, setIsSelectProyekKonstruksiVisible ] = React.useState(false);
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
@@ -52,7 +53,7 @@ export default ({
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
-        post(`/admin/jenis-pengawasan/progress/2024`, {
+        post(`/admin/jenis-pengawasan/progress/${tahun}`, {
             onSuccess: () => {
                 onClose();
                 reset();

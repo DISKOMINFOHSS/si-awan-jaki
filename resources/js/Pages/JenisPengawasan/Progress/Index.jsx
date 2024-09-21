@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 
 import Layout from "../../../Components/Layout";
 import Card from "../../../Components/Card";
@@ -7,10 +7,20 @@ import Badge from "../../../Components/Badge";
 
 import { LiaSearchSolid, LiaPlusSolid } from "react-icons/lia";
 import FormAddPengawasan from "../../../Components/Proyek/Progress/FormAddPengawasan";
+import DaftarPengawasan from "../../../Components/Proyek/Progress/DaftarPengawasan";
+
+import getDefaultData from "../../../Utils/getDefaultData";
 
 const JenisPengawasanProgressIndex = ({ data }) => {
+    const { url } = usePage();
+    const tahun = url.split('/')[4];
+
     console.log(data);
-    const { daftarProyekKonstruksi } = data;
+    const {
+        daftarProyekKonstruksi,
+        daftarPengawasan,
+        totalPengawasan,
+    } = data;
 
     const [ isModalPengawasanOpen, setIsModalPengawasanOpen ] = React.useState(false);
 
@@ -35,7 +45,7 @@ const JenisPengawasanProgressIndex = ({ data }) => {
                 <Card className="w-full">
                     <Card.Body className="p-5 grid grid-cols-5 gap-x-5">
                         <div className="flex items-center gap-x-2.5">
-                            <div className="font-medium text-3xl text-slate-800">24</div>
+                            <div className="font-medium text-3xl text-slate-800">{daftarPengawasan.length}</div>
                             <div className="font-light text-xs text-slate-500 leading-tight">Total<br />Pengawasan</div>
                         </div>
                         <div className="col-span-4 space-y-2.5">
@@ -43,27 +53,28 @@ const JenisPengawasanProgressIndex = ({ data }) => {
                                 <div>
                                     <div className="font-light text-slate-500 flex justify-start items-center gap-x-2.5">
                                         <span className="bg-blue-600 rounded-full w-1.5 h-1.5 inline-block"></span>
-                                        <span className="font-normal text-slate-700">Dalam Proses Pengerjaan ( 10 )</span>
+                                        <span className="font-normal text-slate-700">Dalam Proses Pengerjaan ( {getDefaultData(totalPengawasan.dalamProses, '0')} )</span>
                                     </div>
                                 </div>
                                 <div>
                                     <div className="font-light text-slate-500 flex justify-start items-center gap-x-2.5">
                                         <span className="bg-green-400 rounded-full w-1.5 h-1.5 inline-block"></span>
-                                        <span className="font-normal text-slate-700">Selesai ( 14 )</span>
+                                        <span className="font-normal text-slate-700">Selesai ( {getDefaultData(totalPengawasan.selesai, '0')} )</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="w-full bg-slate-200 rounded-full h-2.5 flex items-center">
-                                <div className={`bg-blue-600 h-2.5 rounded-full rounded-r w-[${Math.floor(10/24*100)}%]`}></div>
+                                <div className={`bg-blue-600 h-2.5 rounded-full rounded-r w-[${Math.ceil((totalPengawasan.dalamProses / daftarPengawasan.length) / 10)*100}%]`}></div>
+                                {/* <div className={`bg-blue-600 h-2.5 rounded-full rounded-r w-[100%]`}></div> */}
                                 {/* <div className={`bg-green-400 h-2.5 rounded-full rounded-l w-[${Math.floor(14/24*100)}%]`}></div> */}
-                                <div className={`bg-green-400 h-2.5 rounded-full rounded-l w-[${60}%]`}></div>
+                                <div className={`bg-green-400 h-2.5 rounded-full rounded-l w-[${Math.ceil((totalPengawasan.selesai / daftarPengawasan.length) / 10)*100}%]`}></div>
                             </div>
                         </div>
                     </Card.Body>
                 </Card>
             </div>
             <div>
-                <Card>
+                {/* <Card>
                     <Card.Header className="space-y-4">
                         <div className="flex justify-between items-center">
                             <div>
@@ -161,11 +172,16 @@ const JenisPengawasanProgressIndex = ({ data }) => {
                             </table>
                         </div>
                     </Card.Body>
-                </Card>
+                </Card> */}
+                <DaftarPengawasan
+                    tahun={tahun}
+                    daftarPengawasan={daftarPengawasan}
+                />
             </div>
             <FormAddPengawasan
                 isVisible={isModalPengawasanOpen}
                 onClose={() => setIsModalPengawasanOpen(false)}
+                tahun={tahun}
                 daftarProyekKonstruksi={daftarProyekKonstruksi.map(({
                     id,
                     namaPaket,

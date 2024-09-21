@@ -25,10 +25,28 @@ class PengawasanProgressController extends Controller
     public function index(string $tahun)
     {
         $daftarProyekKonstruksi = $this->proyekService->getDaftarProyekKonstruksiByTahunAnggaran($tahun);
+        $daftarPengawasan = $this->pengawasanService->getDaftarPengawasanByTahun($tahun);
+        $totalPengawasanByStatus = $this->pengawasanService->getPengawasanCount($tahun);
+
+        $totalPengawasan = [];
+        foreach ($totalPengawasanByStatus as $total)
+        {
+            switch ($total->status)
+            {
+                case "Dalam Proses":
+                    $totalPengawasan['dalamProses'] = $total->total_pengawasan;
+                    break;
+                case "Selesai":
+                    $totalPengawasan['selesai'] = $total->total_pengawasan;
+                    break;
+            }
+        }
 
         return Inertia::render('JenisPengawasan/Progress/Index', [
             'data' => [
                 'daftarProyekKonstruksi' => $daftarProyekKonstruksi,
+                'daftarPengawasan'       => PengawasanProgressResource::collection($daftarPengawasan),
+                'totalPengawasan'        => $totalPengawasan,
             ],
         ]);
     }

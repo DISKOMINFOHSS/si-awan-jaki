@@ -21,8 +21,9 @@ class PengawasanProgressResource extends JsonResource
             'proyekKonstruksi' => new ProyekKonstruksiResource($this->whenLoaded('proyekKonstruksi')),
             'tahunPengawasan'  => $this->tahun_pengawasan,
             'status'           => $this->status,
-            'realisasiFisik'   => $this->realisasi_fisik ?
-                RealisasiFisikPengawasanProgressResource::collection($this->realisasi_fisik) : null,
+            // 'realisasiFisik'   => $this->realisasi_fisik ?
+            //     RealisasiFisikPengawasanProgressResource::collection($this->realisasi_fisik) : null,
+            'realisasiFisik'   => RealisasiFisikPengawasanProgressResource::collection($this->whenLoaded('realisasiFisik')),
         ];
     }
 }

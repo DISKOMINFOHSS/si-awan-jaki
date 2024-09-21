@@ -52,6 +52,8 @@ function getProgressStatusBadge(status) {
             return <Badge bg="blue">Dalam Proses</Badge>;
         case "Selesai":
             return <Badge bg="green">Selesai</Badge>;
+        case "Terlambat":
+            return <Badge bg="red">Terlambat</Badge>;
     }
 }
 

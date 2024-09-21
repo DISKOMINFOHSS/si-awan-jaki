@@ -7,6 +7,7 @@ import { formatDateToIndonesia } from "../../../Utils/formatDate";
 
 import { LiaSearchSolid } from "react-icons/lia";
 import { getProgressStatusBadge } from "../../../Utils/getStatusBadge";
+import { getRealisasiFisikProgressBar } from "../../../Utils/getProgressBar";
 
 export default ({ tahun, daftarPengawasan }) => {
     const [keyword, setKeyword] = React.useState('');
@@ -62,7 +63,7 @@ export default ({ tahun, daftarPengawasan }) => {
                         </thead>
                         <tbody className="text-slate-700">
                             {
-                                filteredDaftarPengawasan.map(({ id, proyekKonstruksi, status }, i) => (
+                                filteredDaftarPengawasan.map(({ id, proyekKonstruksi, realisasiFisik, status }, i) => (
                                     <tr key={id} className="border-b border-slate-100 hover:bg-slate-100">
                                         <td className="px-4 py-5 text-center">{i + 1}</td>
                                         <td className="px-4 py-5">
@@ -79,7 +80,7 @@ export default ({ tahun, daftarPengawasan }) => {
                                             {formatDateToIndonesia(proyekKonstruksi.tanggalMulaiPelaksanaan)} s.d {formatDateToIndonesia(proyekKonstruksi.tanggalSelesaiPelaksanaan)}
                                         </td>
                                         <td className="px-4 py-5 text-center">{getProgressStatusBadge(status)}</td>
-                                        <td className="px-4 py-5 text-center"></td>
+                                        <td className="px-4 py-5 text-center">{realisasiFisik[0] && getRealisasiFisikProgressBar(realisasiFisik[0].target, realisasiFisik[0].realisasi)}</td>
                                     </tr>
                                 ))
                             }

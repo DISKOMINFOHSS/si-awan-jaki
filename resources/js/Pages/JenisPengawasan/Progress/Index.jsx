@@ -58,16 +58,22 @@ const JenisPengawasanProgressIndex = ({ data }) => {
                                 </div>
                                 <div>
                                     <div className="font-light text-slate-500 flex justify-start items-center gap-x-2.5">
+                                        <span className="bg-red-400 rounded-full w-1.5 h-1.5 inline-block"></span>
+                                        <span className="font-normal text-slate-700">Terlambat ( {getDefaultData(totalPengawasan.terlambat, '0')} )</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="font-light text-slate-500 flex justify-start items-center gap-x-2.5">
                                         <span className="bg-green-400 rounded-full w-1.5 h-1.5 inline-block"></span>
                                         <span className="font-normal text-slate-700">Selesai ( {getDefaultData(totalPengawasan.selesai, '0')} )</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="w-full bg-slate-200 rounded-full h-2.5 flex items-center">
-                                <div className={`bg-blue-600 h-2.5 rounded-full rounded-r w-[${Math.ceil((totalPengawasan.dalamProses / daftarPengawasan.length) / 10)*100}%]`}></div>
-                                {/* <div className={`bg-blue-600 h-2.5 rounded-full rounded-r w-[100%]`}></div> */}
+                                <div className={`bg-blue-600 h-2.5 rounded-full rounded-r w-[${Math.ceil((totalPengawasan.dalamProses / daftarPengawasan.length * 100) / 10)*10}%]`}></div>
+                                <div className={`bg-red-600 h-2.5 w-[${Math.ceil((totalPengawasan.terlambat / daftarPengawasan.length * 100) / 10)*10}%]`}></div>
                                 {/* <div className={`bg-green-400 h-2.5 rounded-full rounded-l w-[${Math.floor(14/24*100)}%]`}></div> */}
-                                <div className={`bg-green-400 h-2.5 rounded-full rounded-l w-[${Math.ceil((totalPengawasan.selesai / daftarPengawasan.length) / 10)*100}%]`}></div>
+                                <div className={`bg-green-400 h-2.5 rounded-full rounded-l w-[${Math.ceil((totalPengawasan.selesai / daftarPengawasan.length * 100) / 10)*10}%]`}></div>
                             </div>
                         </div>
                     </Card.Body>

@@ -2,42 +2,13 @@ import React from "react";
 import Card from "../../Card";
 
 import FormAddTargetRealisasiFisik from "./FormAddTargetRealisasiFisik";
-import { formatDateToIndonesia } from "../../../Utils/formatDate";
-
-import { LiaPlusCircleSolid, LiaCalendarDaySolid, LiaEditSolid } from "react-icons/lia";
 import FormAddRealisasiFisik from "./FormAddRealisasiFisik";
 import ModalError from "../../ModalError";
 
-function getRealisasiFisikProgressBar(target, realisasi) {
-    if (realisasi === null) return;
+import { getRealisasiFisikProgressBar } from "../../../Utils/getProgressBar";
+import { formatDateToIndonesia } from "../../../Utils/formatDate";
 
-    if (realisasi === 100) {
-        return (
-            <div className="space-y-2">
-                <span className="text-blue-400">{realisasi}%</span>
-                <div className="w-full bg-slate-200 rounded-full h-2.5 flex items-center">
-                    <div className={`bg-green-500 h-2.5 rounded-full w-[100}%]`}></div>
-                </div>
-            </div>
-        );
-    }
-
-    return realisasi >= target ? (
-        <div className="space-y-2">
-            <span className="text-blue-500">{realisasi}%</span>
-            <div className="w-full bg-slate-200 rounded-full h-2.5 flex items-center">
-                <div className={`bg-blue-500 h-2.5 rounded-full w-[${Math.ceil(realisasi / 10)*10}%]`}></div>
-            </div>
-        </div>
-    ) : (
-        <div className="space-y-2">
-            <span className="text-red-500">{realisasi}%</span>
-            <div className="w-full bg-slate-200 rounded-full h-2.5 flex items-center">
-                <div className={`bg-red-500 h-2.5 rounded-full w-[${Math.ceil(realisasi / 10)*10}%]`}></div>
-            </div>
-        </div>
-    );
-}
+import { LiaPlusCircleSolid, LiaCalendarDaySolid, LiaEditSolid } from "react-icons/lia";
 
 export default ({ realisasiFisik, tahun, pengawasanId }) => {
     const [ isModalTargetRealisasiFisikOpen, setIsModalTargetRealisasiFisikOpen ] = React.useState(false);
@@ -50,7 +21,7 @@ export default ({ realisasiFisik, tahun, pengawasanId }) => {
         if ((i+1 === realisasiFisik.length || realisasiFisik[i+1].realisasi !== null) && realisasi.realisasi === null) {
             setSelectedRealisasi(realisasi);
             setIsModalRealisasiFisikOpen(true);
-        } else if (i+1 === realisasiFisik.length) {
+        } else if (i+1 === realisasiFisik.length || realisasiFisik[i+1].realisasi !== null) {
             return;
         } else {
             setIsModalErrorOpen(true);

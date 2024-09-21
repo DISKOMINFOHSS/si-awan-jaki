@@ -46,9 +46,9 @@ const InputTarget = ({
             <td className="px-1.5 py-3 w-full">
                 <div className="flex items-center justify-center gap-x-1.5">
                     <input
-                        type="text" name={`target-${values.id}`} id={`target-${values.id}`} placeholder="50.00"
+                        type="number" name={`target-${values.id}`} id={`target-${values.id}`} placeholder="50.00"
                         value={values.target} onChange={handleInputChange}
-                        className="px-3 py-2 block w-16 rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                        className="px-3 py-2 block w-[84px] rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                     />
                     <span>%</span>
                 </div>

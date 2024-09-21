@@ -27,6 +27,8 @@ class RealisasiFisikPengawasanProgress extends Model
 
     protected $casts = [
         'foto_lapangan' => 'array',
+        'target'        => 'decimal:2',
+        'realisasi'     => 'decimal:2',
     ];
 
     public function pengawasan(): BelongsTo

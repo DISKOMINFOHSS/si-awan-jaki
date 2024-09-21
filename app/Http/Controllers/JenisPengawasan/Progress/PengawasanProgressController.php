@@ -39,6 +39,9 @@ class PengawasanProgressController extends Controller
                 case "Selesai":
                     $totalPengawasan['selesai'] = $total->total_pengawasan;
                     break;
+                case "Terlambat":
+                    $totalPengawasan['terlambat'] = $total->total_pengawasan;
+                    break;
             }
         }
 
@@ -111,12 +114,12 @@ class PengawasanProgressController extends Controller
         }
 
         $validatedData = $request->validate([
-            'realisasi'      => 'required|decimal:0,2',
+            'realisasi'      => 'required|decimal:0,2|max_digits:100',
             'fotoLapangan.*' => 'required|image|max:1280',
         ]);
         $userId = auth()->user()->id;
 
-        $this->pengawasanService->addRealisasiFisik(
+        $realisasi = $this->pengawasanService->addRealisasiFisik(
             $id,
             $pengawasan_id,
             [
@@ -124,6 +127,16 @@ class PengawasanProgressController extends Controller
                 'foto_lapangan' => $request->file('fotoLapangan'),
             ],
         );
+
+        if ($validatedData['realisasi'] == 100) {
+            $status = 'Selesai';
+        } elseif ($validatedData['realisasi'] >= $realisasi->target) {
+            $status = 'Dalam Proses';
+        } else {
+            $status = 'Terlambat';
+        }
+
+        $this->pengawasanService->updatePengawasanStatus($pengawasan_id, $status);
 
         return redirect("/admin/jenis-pengawasan/progress/$tahun/$pengawasan_id");
     }

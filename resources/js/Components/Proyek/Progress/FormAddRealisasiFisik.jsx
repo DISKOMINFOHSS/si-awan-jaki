@@ -80,8 +80,8 @@ export default ({
                             <label htmlFor="target" className="block mb-2 text-xs font-medium text-slate-800">Target Realisasi</label>
                             <div className="flex items-center gap-x-1.5 text-xs">
                                 <input
-                                    type="text" name="target" id="target" placeholder="50.00" value={realisasiFisik.target} disabled
-                                    className="px-3 py-2 block w-16 rounded-md bg-slate-50 border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                                    type="number" name="target" id="target" placeholder="50.00" value={realisasiFisik.target} disabled
+                                    className="px-3 py-2 block w-24 rounded-md bg-slate-50 border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                                 />
                                 <span>%</span>
                             </div>
@@ -90,9 +90,9 @@ export default ({
                             <label htmlFor="realisasi" className="block mb-2 text-xs font-medium text-slate-800">Realisasi Fisik <span className="text-red-400">*</span></label>
                             <div className="flex items-center gap-x-1.5 text-xs">
                                 <input
-                                    type="text" name="realisasi" id="realisasi" placeholder="50.00"
-                                    value={data.realisasi} onChange={e => setData('realisasi', e.target.value)}
-                                    className="px-3 py-2 block w-16 rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                                    type="number" name="realisasi" id="realisasi" placeholder="50.00"
+                                    value={data.realisasi} onChange={e => setData('realisasi', e.target.value)} min={0} max={100}
+                                    className="px-3 py-2 block w-24 rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                                 />
                                 <span>%</span>
                             </div>

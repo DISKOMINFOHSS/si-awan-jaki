@@ -4,6 +4,7 @@ namespace App\Services\JenisPengawasan;
 
 use App\Models\Penyelenggaraan\PengawasanProgress;
 use App\Models\Penyelenggaraan\RealisasiFisikPengawasanProgress;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class PengawasanProgressService
@@ -30,6 +31,10 @@ class PengawasanProgressService
             'proyekKonstruksi',
             'proyekKonstruksi.penyediaJasa',
             'proyekKonstruksi.konsultanPengawas',
+            'realisasiFisik' => function (Builder $query)
+            {
+                $query->whereNotNull('realisasi')->orderBy('tanggal', 'desc');
+            }
         ])->where('tahun_pengawasan', $tahun)
           ->get();
     }
@@ -41,6 +46,10 @@ class PengawasanProgressService
             'proyekKonstruksi.penyediaJasa',
             'proyekKonstruksi.penggunaJasa',
             'proyekKonstruksi.konsultanPengawas',
+            'realisasiFisik' => function (Builder $query)
+            {
+                $query->orderBy('tanggal', 'desc');
+            }
         ])->where('tahun_pengawasan', $tahun)
           ->where('id', $id)
           ->firstOrFail();
@@ -53,6 +62,13 @@ class PengawasanProgressService
             ->groupBy('status')
             ->where('tahun_pengawasan', $tahun)
             ->get();
+    }
+
+    public function updatePengawasanStatus(string $id, string $status)
+    {
+        $pengawasan = PengawasanProgress::find($id);
+        $pengawasan->status = $status;
+        $pengawasan->save();
     }
 
     public function addTargetRealisasiFisik(string $pengawasanId, array $data)

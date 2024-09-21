@@ -50,4 +50,27 @@ class PengawasanProgressService
         return RealisasiFisikPengawasanProgress::where('pengawasan_id', $pengawasanId)
             ->orderBy('tanggal', 'desc')->get();
     }
+
+    public function addRealisasiFisik(string $id, string $pengawasanId, array $data)
+    {
+        $fotoLapangan = [];
+
+        foreach ($data['foto_lapangan'] as $foto)
+        {
+            array_push($fotoLapangan, [
+                'name' => $foto->getClientOriginalName(),
+                'path' => $foto->storeAs('public/files/foto-lapangan', $foto->hashName()),
+            ]);
+        }
+
+        $realisasi = RealisasiFisikPengawasanProgress::where('id', $id)
+            ->where('pengawasan_id', $pengawasanId)->first();
+
+        $realisasi->realisasi = $data['realisasi'];
+        $realisasi->foto_lapangan = $fotoLapangan;
+
+        $realisasi->save();
+
+        return $realisasi;
+    }
 }

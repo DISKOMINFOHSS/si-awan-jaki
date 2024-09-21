@@ -85,4 +85,28 @@ class PengawasanProgressController extends Controller
 
         return redirect("/admin/jenis-pengawasan/progress/$tahun/$id");
     }
+
+    public function realisasi(string $tahun, string $pengawasan_id, string $id, Request $request)
+    {
+        if (!$this->pengawasanService->checkPengawasanExists($pengawasan_id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'realisasi'      => 'required|decimal:0,2',
+            'fotoLapangan.*' => 'required|image|max:1280',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanService->addRealisasiFisik(
+            $id,
+            $pengawasan_id,
+            [
+                'realisasi'     => $validatedData['realisasi'],
+                'foto_lapangan' => $request->file('fotoLapangan'),
+            ],
+        );
+
+        return redirect("/admin/jenis-pengawasan/progress/$tahun/$pengawasan_id");
+    }
 }

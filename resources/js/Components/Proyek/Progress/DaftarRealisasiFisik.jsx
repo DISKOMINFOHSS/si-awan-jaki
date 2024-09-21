@@ -13,7 +13,7 @@ function getRealisasiFisikProgressBar(target, realisasi) {
 
     if (realisasi === 100) {
         return (
-            <div className="flex items-center gap-x-2">
+            <div className="space-y-2">
                 <span className="text-blue-400">{realisasi}%</span>
                 <div className="w-full bg-slate-200 rounded-full h-2.5 flex items-center">
                     <div className={`bg-green-500 h-2.5 rounded-full w-[100}%]`}></div>
@@ -23,17 +23,17 @@ function getRealisasiFisikProgressBar(target, realisasi) {
     }
 
     return realisasi >= target ? (
-        <div className="flex items-center gap-x-2">
+        <div className="space-y-2">
             <span className="text-blue-500">{realisasi}%</span>
             <div className="w-full bg-slate-200 rounded-full h-2.5 flex items-center">
-                <div className={`bg-blue-500 h-2.5 rounded-full w-[${Math.ceil(realisasi / 5)*5}%]`}></div>
+                <div className={`bg-blue-500 h-2.5 rounded-full w-[${Math.ceil(realisasi / 10)*10}%]`}></div>
             </div>
         </div>
     ) : (
-        <div className="flex items-center gap-x-2">
+        <div className="space-y-2">
             <span className="text-red-500">{realisasi}%</span>
             <div className="w-full bg-slate-200 rounded-full h-2.5 flex items-center">
-                <div className={`bg-red-500 h-2.5 rounded-full w-[${Math.ceil(realisasi / 5)*5}%]`}></div>
+                <div className={`bg-red-500 h-2.5 rounded-full w-[${Math.ceil(realisasi / 10)*10}%]`}></div>
             </div>
         </div>
     );
@@ -106,7 +106,21 @@ export default ({ realisasiFisik, tahun, pengawasanId }) => {
                                             </td>
                                             <td className="px-4 py-5 text-center">{realisasi.target} %</td>
                                             <td className="px-4 py-5 text-center">{getRealisasiFisikProgressBar(realisasi.target, realisasi.realisasi)}</td>
-                                            <td className="px-4 py-5 text-center"></td>
+                                            <td className="px-4 py-5 text-center">
+                                                {
+                                                    realisasi.fotoLapangan && (
+                                                        <div className="grid grid-cols-2 gap-4 justify-items-center">
+                                                            {
+                                                                realisasi.fotoLapangan.map(({ fileName, filePath }) => (
+                                                                    <div key={fileName} className="w-full max-w-32 p-1 border border-slate-200 rounded">
+                                                                        <img src={filePath} alt={fileName} className="w-full aspect-video object-cover" />
+                                                                    </div>
+                                                                ))
+                                                            }
+                                                        </div>
+                                                    )
+                                                }
+                                            </td>
                                             <td className="px-4 py-5">
                                                 <div className="flex justify-end gap-x-2">
                                                     <button

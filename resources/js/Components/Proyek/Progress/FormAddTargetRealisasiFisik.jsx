@@ -108,7 +108,7 @@ export default ({
         e.preventDefault();
         console.log(data);
         router.post(
-            `/admin/jenis-pengawasan/progress/${tahun}/${pengawasanId}/target-fisik`,
+            `/admin/jenis-pengawasan/progress/${tahun}/${pengawasanId}/realisasi-fisik`,
             { targetRealisasi: data },
             {
                 preserveScroll: true,

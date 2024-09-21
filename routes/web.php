@@ -284,7 +284,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::post('/', 'store');
                     Route::get('/{id}', 'show');
 
-                    Route::post('/{id}/target-fisik', 'target');
+                    Route::post('/{id}/realisasi-fisik', 'target');
+                    Route::post('/{pengawasan_id}/realisasi-fisik/{id}', 'realisasi');
                 });
             });
 

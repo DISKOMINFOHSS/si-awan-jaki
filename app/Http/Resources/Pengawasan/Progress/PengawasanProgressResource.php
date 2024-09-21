@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Resources\Pengawasan;
+namespace App\Http\Resources\Pengawasan\Progress;
 
 use App\Http\Resources\Pendataan\ProyekKonstruksiResource;
+use App\Http\Resources\Pengawasan\Progress\RealisasiFisikPengawasanProgressResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,7 +21,7 @@ class PengawasanProgressResource extends JsonResource
             'proyekKonstruksi' => new ProyekKonstruksiResource($this->whenLoaded('proyekKonstruksi')),
             'tahunPengawasan'  => $this->tahun_pengawasan,
             'status'           => $this->status,
-            'realisasi_fisik'  => $this->whenHas('realisasi_fisik'),
+            'realisasiFisik'   => RealisasiFisikPengawasanProgressResource::collection($this->whenHas('realisasi_fisik')),
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\JenisPengawasan\Progress;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Pengawasan\PengawasanProgressResource;
+use App\Http\Resources\Pengawasan\Progress\PengawasanProgressResource;
 use App\Services\Penyelenggaraan\PendataanProyekService;
 use App\Services\JenisPengawasan\PengawasanProgressService;
 use Illuminate\Http\Request;

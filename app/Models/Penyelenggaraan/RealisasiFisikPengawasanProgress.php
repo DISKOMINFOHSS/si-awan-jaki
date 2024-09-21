@@ -25,6 +25,10 @@ class RealisasiFisikPengawasanProgress extends Model
         'created_by'
     ];
 
+    protected $casts = [
+        'foto_lapangan' => 'array',
+    ];
+
     public function pengawasan(): BelongsTo
     {
         return $this->belongsTo(PengawasanProgress::class, 'pengawasan_id');

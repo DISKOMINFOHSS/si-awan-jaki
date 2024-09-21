@@ -1,4 +1,5 @@
 import React from "react";
+import { usePage } from "@inertiajs/react";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -7,7 +8,7 @@ import Breadcrumb from "../../../Components/Breadcrumb";
 import Dropdown from "../../../Components/Dropdown";
 import Card from "../../../Components/Card";
 import Tabs from "../../../Components/Tabs";
-import FormAddTargetProgress from "../../../Components/Proyek/Progress/FormAddTargetProgres";
+import FormAddTargetRealisasiFisik from "../../../Components/Proyek/Progress/FormAddTargetRealisasiFisik";
 
 import { formatDateToIndonesia } from "../../../Utils/formatDate";
 import formatCurrencyToIDR from "../../../Utils/formatCurrencyToIDR";
@@ -22,6 +23,9 @@ import {
 
 const JenisPengawasanProgressShow = ({ data }) => {
     console.log(data);
+    const { url } = usePage();
+    const tahun = url.split('/')[4];
+
     const { pengawasan } = data;
     const { proyekKonstruksi } = pengawasan;
 
@@ -245,9 +249,11 @@ const JenisPengawasanProgressShow = ({ data }) => {
                 </Tabs.Tab>
                 <Tabs.Tab>Pembiayaan</Tabs.Tab>
             </Tabs>
-            <FormAddTargetProgress
+            <FormAddTargetRealisasiFisik
                 isVisible={isModalProgressOpen}
                 onClose={() => setIsModalProgressOpen(false)}
+                tahun={tahun}
+                pengawasanId={pengawasan.id}
             />
         </>
     );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 
 import Layout from "../../../../Components/Layout";
 import Card from "../../../../Components/Card";
@@ -7,8 +7,12 @@ import Card from "../../../../Components/Card";
 import getDefaultData from "../../../../Utils/getDefaultData";
 import { formatDateToIndonesia } from "../../../../Utils/formatDate";
 import { getTertibStatusBadge } from "../../../../Utils/getStatusBadge";
+import { LiaPrintSolid } from "react-icons/lia";
 
 const JenisPengawasanInsidentalTertibUsahaIndex = ({ data }) => {
+    const { url } = usePage();
+    const tahun = url.split('/')[4];
+
     console.log(data);
     const { daftarTertibUsaha, totalTertibPengawasan } = data;
 
@@ -33,6 +37,16 @@ const JenisPengawasanInsidentalTertibUsahaIndex = ({ data }) => {
                 <div>
                     <h1 className="font-medium text-xl text-slate-800">Pengawasan Insidental - Tahun 2024</h1>
                     <h2 className="font-light text-xs text-slate-500">Pengawasan Penyelenggaraan Jasa Konstruksi berdasarkan PERMEN PUPR Nomor 1 Tahun 2023</h2>
+                </div>
+                <div>
+                    <a
+                        target="_blank"
+                        href={`/admin/jenis-pengawasan/progress/${tahun}/rekapitulasi-pengawasan-insidental-${tahun}.pdf`}
+                        className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white whitespace-nowrap"
+                    >
+                        <LiaPrintSolid size={16} />
+                        <span>Cetak PDF</span>
+                    </a>
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 my-4">

@@ -123,4 +123,46 @@ class PengawasanInsidentalController extends Controller
             ],
         ]);
     }
+
+    public function rekapitulasi(string $tahun, string $file_name)
+    {
+        $daftarPengawasanLingkup2 = $this->rekapTertibUsahaService->getDaftarPengawasanBUJKLingkup2ByJenisPengawasan($tahun, 'Insidental');
+        $daftarPengawasanLingkup3 = $this->rekapTertibUsahaService->getDaftarPengawasanBUJKLingkup3ByJenisPengawasan($tahun, 'Insidental');
+        $daftarPengawasanLingkup4 = $this->rekapTertibUsahaService->getDaftarPengawasanBUJKLingkup4ByJenisPengawasan($tahun, 'Insidental');
+        $daftarPengawasanLingkup5 = $this->rekapTertibUsahaService->getDaftarPengawasanBUJKLingkup5ByJenisPengawasan($tahun, 'Insidental');
+
+        $daftarTertibPenyelenggaraan = $this->rekapTertibPenyelenggaraanService->getDaftarPengawasanByJenisPengawasan($tahun, 'Insidental');
+        $daftarTertibPemanfaatan = $this->rekapTertibPemanfaatanProdukService->getDaftarPengawasanByJenisPengawasan($tahun, 'Insidental');
+
+        $tertibBUJKLingkup2 = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getPengawasanBUJKLingkup2Count($tahun, 'Insidental'));
+        $tertibBUJKLingkup3 = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getPengawasanBUJKLingkup3Count($tahun, 'Insidental'));
+        $tertibBUJKLingkup4 = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getPengawasanBUJKLingkup4Count($tahun, 'Insidental'));
+        $tertibBUJKLingkup5 = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getPengawasanBUJKLingkup5Count($tahun, 'Insidental'));
+
+        $tertibPenyelenggaraan = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPenyelenggaraanService->getPengawasanCount($tahun, 'Insidental'));
+        $tertibPemanfaatanProduk = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPemanfaatanProdukService->getPengawasanCount($tahun, 'Insidental'));
+
+        return Inertia::render('JenisPengawasan/Insidental/Rekapitulasi', [
+            'data' => [
+                'daftarTertibUsaha'             => [
+                    'daftarPengawasanBUJKLingkup2' => PengawasanBUJKResource::collection($daftarPengawasanLingkup2),
+                    'daftarPengawasanBUJKLingkup3' => PengawasanBUJKResource::collection($daftarPengawasanLingkup3),
+                    'daftarPengawasanBUJKLingkup4' => PengawasanBUJKResource::collection($daftarPengawasanLingkup4),
+                    'daftarPengawasanBUJKLingkup5' => PengawasanBUJKResource::collection($daftarPengawasanLingkup5),
+                ],
+                'daftarTertibPenyelenggaraan'   => PengawasanPenyelenggaraanAPBDResource::collection($daftarTertibPenyelenggaraan),
+                'daftarTertibPemanfaatanProduk' => PengawasanPemanfaatanProdukResource::collection($daftarTertibPemanfaatan),
+                'totalTertibPengawasan'         => [
+                    'tertibUsaha'             => [
+                        'tertibBUJKLingkup2'  => $tertibBUJKLingkup2,
+                        'tertibBUJKLingkup3'  => $tertibBUJKLingkup3,
+                        'tertibBUJKLingkup4'  => $tertibBUJKLingkup4,
+                        'tertibBUJKLingkup5'  => $tertibBUJKLingkup5,
+                    ],
+                    'tertibPenyelenggaraan'   => $tertibPenyelenggaraan,
+                    'tertibPemanfaatanProduk' => $tertibPemanfaatanProduk,
+                ],
+            ],
+        ]);
+    }
 }

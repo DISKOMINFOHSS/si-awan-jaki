@@ -16,7 +16,13 @@ const JenisPengawasanInsidentalTertibPenyelenggaraanIndex = ({ data }) => {
         totalTertibPengawasan,
     } = data;
 
-    const { tertibPenyelenggaraan, tertibPemanfaatanProduk } = totalTertibPengawasan;
+    const { tertibUsaha, tertibPenyelenggaraan, tertibPemanfaatanProduk } = totalTertibPengawasan;
+    const {
+        tertibBUJKLingkup2,
+        tertibBUJKLingkup3,
+        tertibBUJKLingkup4,
+        tertibBUJKLingkup5,
+    } = tertibUsaha;
 
     return (
         <>
@@ -30,12 +36,26 @@ const JenisPengawasanInsidentalTertibPenyelenggaraanIndex = ({ data }) => {
                 <Card className="h-fit">
                     <Card.Body className="p-4 text-xs text-slate-800 text-center">
                         <div className="uppercase text-slate-500 tracking-wide">Pengawasan Tertib Usaha <br /> Jasa Konstruksi</div>
-                        <div className="text-2xl font-medium mt-1 mb-2">100</div>
+                        <div className="text-2xl font-medium mt-1 mb-2">
+                        {
+                            getDefaultData(tertibBUJKLingkup2.totalTertib, 0) + getDefaultData(tertibBUJKLingkup2.totalBelumTertib, 0) +
+                            getDefaultData(tertibBUJKLingkup3.totalTertib, 0) + getDefaultData(tertibBUJKLingkup3.totalBelumTertib, 0) +
+                            getDefaultData(tertibBUJKLingkup4.totalTertib, 0) + getDefaultData(tertibBUJKLingkup4.totalBelumTertib, 0) +
+                            getDefaultData(tertibBUJKLingkup5.totalTertib, 0) + getDefaultData(tertibBUJKLingkup5.totalBelumTertib, 0)
+                        }
+                        </div>
                         <div className="flex justify-center item-center gap-x-2.5">
                             <div className="text-right">
                                 <div className="font-light text-slate-500 flex justify-end items-center gap-x-1.5">
                                     <span className="bg-green-400 rounded-full w-1.5 h-1.5 inline-block"></span>
-                                    <span>0</span>
+                                    <span>
+                                    {
+                                        getDefaultData(tertibBUJKLingkup2.totalTertib, 0) +
+                                        getDefaultData(tertibBUJKLingkup3.totalTertib, 0) +
+                                        getDefaultData(tertibBUJKLingkup4.totalTertib, 0) +
+                                        getDefaultData(tertibBUJKLingkup5.totalTertib, 0)
+                                    }
+                                    </span>
                                     <span className="font-normal text-slate-700">Tertib</span>
                                 </div>
                             </div>
@@ -43,7 +63,14 @@ const JenisPengawasanInsidentalTertibPenyelenggaraanIndex = ({ data }) => {
                             <div className="text-left">
                                 <div className="font-light text-slate-500 flex items-center gap-x-1.5">
                                     <span className="bg-red-400 rounded-full w-1.5 h-1.5 inline-block"></span>
-                                    <span>0</span>
+                                    <span>
+                                    {
+                                        getDefaultData(tertibBUJKLingkup2.totalBelumTertib, 0) +
+                                        getDefaultData(tertibBUJKLingkup3.totalBelumTertib, 0) +
+                                        getDefaultData(tertibBUJKLingkup4.totalBelumTertib, 0) +
+                                        getDefaultData(tertibBUJKLingkup5.totalBelumTertib, 0)
+                                    }
+                                    </span>
                                     <span className="font-normal text-slate-700">Belum Tertib</span>
                                 </div>
                             </div>

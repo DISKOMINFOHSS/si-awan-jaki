@@ -70,6 +70,11 @@ class PengawasanInsidentalController extends Controller
     {
         $daftarTertibPenyelenggaraan = $this->rekapTertibPenyelenggaraanService->getDaftarPengawasanByJenisPengawasan($tahun, 'Insidental');
 
+        $tertibBUJKLingkup2 = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getPengawasanBUJKLingkup2Count($tahun, 'Insidental'));
+        $tertibBUJKLingkup3 = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getPengawasanBUJKLingkup3Count($tahun, 'Insidental'));
+        $tertibBUJKLingkup4 = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getPengawasanBUJKLingkup4Count($tahun, 'Insidental'));
+        $tertibBUJKLingkup5 = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getPengawasanBUJKLingkup5Count($tahun, 'Insidental'));
+
         $tertibPenyelenggaraan = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPenyelenggaraanService->getPengawasanCount($tahun, 'Insidental'));
         $tertibPemanfaatanProduk = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPemanfaatanProdukService->getPengawasanCount($tahun, 'Insidental'));
 
@@ -77,6 +82,12 @@ class PengawasanInsidentalController extends Controller
             'data' => [
                 'daftarTertibPenyelenggaraan' => PengawasanPenyelenggaraanAPBDResource::collection($daftarTertibPenyelenggaraan),
                 'totalTertibPengawasan'       => [
+                    'tertibUsaha'               => [
+                        'tertibBUJKLingkup2'    => $tertibBUJKLingkup2,
+                        'tertibBUJKLingkup3'    => $tertibBUJKLingkup3,
+                        'tertibBUJKLingkup4'    => $tertibBUJKLingkup4,
+                        'tertibBUJKLingkup5'    => $tertibBUJKLingkup5,
+                    ],
                     'tertibPenyelenggaraan'     => $tertibPenyelenggaraan,
                     'tertibPemanfaatanProduk'   => $tertibPemanfaatanProduk,
                 ],
@@ -88,6 +99,11 @@ class PengawasanInsidentalController extends Controller
     {
         $daftarTertibPemanfaatan = $this->rekapTertibPemanfaatanProdukService->getDaftarPengawasanByJenisPengawasan($tahun, 'Insidental');
 
+        $tertibBUJKLingkup2 = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getPengawasanBUJKLingkup2Count($tahun, 'Insidental'));
+        $tertibBUJKLingkup3 = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getPengawasanBUJKLingkup3Count($tahun, 'Insidental'));
+        $tertibBUJKLingkup4 = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getPengawasanBUJKLingkup4Count($tahun, 'Insidental'));
+        $tertibBUJKLingkup5 = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getPengawasanBUJKLingkup5Count($tahun, 'Insidental'));
+
         $tertibPenyelenggaraan = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPenyelenggaraanService->getPengawasanCount($tahun, 'Insidental'));
         $tertibPemanfaatanProduk = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPemanfaatanProdukService->getPengawasanCount($tahun, 'Insidental'));
 
@@ -95,6 +111,12 @@ class PengawasanInsidentalController extends Controller
             'data' => [
                 'daftarTertibPemanfaatanProduk' => PengawasanPemanfaatanProdukResource::collection($daftarTertibPemanfaatan),
                 'totalTertibPengawasan'         => [
+                    'tertibUsaha'               => [
+                        'tertibBUJKLingkup2'    => $tertibBUJKLingkup2,
+                        'tertibBUJKLingkup3'    => $tertibBUJKLingkup3,
+                        'tertibBUJKLingkup4'    => $tertibBUJKLingkup4,
+                        'tertibBUJKLingkup5'    => $tertibBUJKLingkup5,
+                    ],
                     'tertibPenyelenggaraan'        => $tertibPenyelenggaraan,
                     'tertibPemanfaatanProduk'      => $tertibPemanfaatanProduk,
                 ],

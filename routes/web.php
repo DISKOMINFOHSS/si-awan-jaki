@@ -260,6 +260,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             Route::name('insidental.')->prefix('/insidental')
             ->group(function () {
                 Route::redirect('/', "/admin/jenis-pengawasan/insidental/" . date('Y') . '/tertib-usaha');
+                Route::redirect('/{tahun}', "/admin/jenis-pengawasan/insidental/" . date('Y') . '/tertib-usaha');
 
                 Route::controller(App\Http\Controllers\JenisPengawasan\Insidental\PengawasanInsidentalController::class)
                 ->group(function () {

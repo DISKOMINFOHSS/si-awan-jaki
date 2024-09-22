@@ -64,6 +64,11 @@ class PengawasanProgressService
             ->get();
     }
 
+    public function getTotalPengawasanCount(string $tahun)
+    {
+        return PengawasanProgress::where('tahun_pengawasan', $tahun)->count();
+    }
+
     public function updatePengawasanStatus(string $id, string $status)
     {
         $pengawasan = PengawasanProgress::find($id);

@@ -237,4 +237,21 @@ class TertibUsahaService
             ->groupBy('tertib_pengawasan')
             ->get();
     }
+
+    public function getTotalPengawasanCount(string $tahun, string $jenisPengawasan)
+    {
+        $totalPengawasanLingkup2 = PengawasanBUJKLingkup2::whereYear('tanggal_pengawasan', $tahun)
+            ->where('jenis_pengawasan', $jenisPengawasan)->whereNotNull('tertib_pengawasan')->count();
+
+        $totalPengawasanLingkup3 = PengawasanBUJKLingkup3::whereYear('tanggal_pengawasan', $tahun)
+            ->where('jenis_pengawasan', $jenisPengawasan)->whereNotNull('tertib_pengawasan')->count();
+
+        $totalPengawasanLingkup4 = PengawasanBUJKLingkup4::whereYear('tanggal_pengawasan', $tahun)
+            ->where('jenis_pengawasan', $jenisPengawasan)->whereNotNull('tertib_pengawasan')->count();
+
+        $totalPengawasanLingkup5 = PengawasanBUJKLingkup5::whereYear('tanggal_pengawasan', $tahun)
+            ->where('jenis_pengawasan', $jenisPengawasan)->whereNotNull('tertib_pengawasan')->count();
+
+        return $totalPengawasanLingkup2 + $totalPengawasanLingkup3 + $totalPengawasanLingkup4 + $totalPengawasanLingkup5;
+    }
 }

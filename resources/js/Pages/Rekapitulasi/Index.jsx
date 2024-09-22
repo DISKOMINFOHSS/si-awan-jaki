@@ -11,21 +11,27 @@ const RekapitulasiIndex = ({ data }) => {
     const tahun = url.split('/')[3];
 
     console.log(data);
-    const { tertibUsaha, tertibPenyelenggaraan, tertibPemanfaatanProduk } = data;
+    const {
+        totalPengawasanInsidental,
+        totalPengawasanProgress,
+        tertibUsaha,
+        tertibPenyelenggaraan,
+        tertibPemanfaatanProduk
+    } = data;
 
     return (
         <>
             <div className="flex justify-between items-center mb-4">
                 <div>
-                    <h1 className="font-medium text-xl text-slate-800">Laporan Pengawasan Tahun 2024</h1>
+                    <h1 className="font-medium text-xl text-slate-800">Laporan Pengawasan - Tahun 2024</h1>
                     <h2 className="font-light text-xs text-slate-500">Rekapitulasi Laporan Pengawasan Penyelenggaraan Jasa Konstruksi di Kab. Hulu Sungai Selatan</h2>
                 </div>
             </div>
             <div className="grid grid-cols-3 gap-5">
-                <div className="space-y-4">
+                {/* <div className="space-y-4"> */}
                     <Card className="h-fit">
-                        <Card.Body className="p-4 text-xs text-slate-800">
-                            <div className="flex items-center justify-between gap-x-2.5">
+                        <Card.Body className="p-4 text-xs text-slate-800 group hover:bg-slate-100">
+                            <Link href={`/admin/jenis-pengawasan/rutin/${tahun}`} className="flex items-center justify-between gap-x-2.5">
                                 <div className="bg-blue-100 text-blue-600 rounded p-2">
                                     <LiaCalendarDaySolid size={20} />
                                 </div>
@@ -34,43 +40,48 @@ const RekapitulasiIndex = ({ data }) => {
                                     <div className="font-medium text-base leading-tight">16</div>
                                     <div className="line-clamp-1 text-slate-500">Total Pengawasan Rutin</div>
                                 </div>
-                            </div>
+                            </Link>
                         </Card.Body>
                     </Card>
                     <Card className="h-fit">
-                        <Card.Body className="p-4 text-xs text-slate-800">
-                            <div className="flex items-center justify-between gap-x-2.5">
+                        <Card.Body className="p-4 text-xs text-slate-800 group hover:bg-slate-100">
+                            <Link href={`/admin/jenis-pengawasan/insidental/${tahun}`} className="flex items-center justify-between gap-x-2.5">
                                 <div className="bg-blue-100 text-blue-600 rounded p-2">
                                     <LiaExclamationTriangleSolid size={20} />
                                 </div>
                                 <div className="text-end">
                                     <div className="font-light text-slate-500 text-[11px]">Pengawasan</div>
-                                    <div className="font-medium text-base leading-tight">16</div>
+                                    <div className="font-medium text-base leading-tight">{totalPengawasanInsidental}</div>
                                     <div className="line-clamp-1 text-slate-500">Total Pengawasan Insidental</div>
                                 </div>
-                            </div>
+                            </Link>
                         </Card.Body>
                     </Card>
                     <Card className="h-fit">
-                        <Card.Body className="p-4 text-xs text-slate-800">
-                            <div className="flex items-center justify-between gap-x-2.5">
+                        <Card.Body className="p-4 text-xs text-slate-800 group hover:bg-slate-100">
+                            <Link href={`/admin/jenis-pengawasan/progress/${tahun}`} className="flex items-center justify-between gap-x-2.5">
                                 <div className="bg-blue-100 text-blue-600 rounded p-2">
                                     <LiaChartBar size={20} />
                                 </div>
                                 <div className="text-end">
                                     <div className="font-light text-slate-500 text-[11px]">Pengawasan</div>
-                                    <div className="font-medium text-base leading-tight">16</div>
+                                    <div className="font-medium text-base leading-tight">{totalPengawasanProgress}</div>
                                     <div className="line-clamp-1 text-slate-500">Total Pengawasan Progres</div>
                                 </div>
-                            </div>
+                            </Link>
                         </Card.Body>
                     </Card>
+                {/* </div> */}
+                <div className="col-span-3 grid grid-cols-3 gap-5">
+                <div className="mt-1">
+                    <h3 className="font-medium text-slate-800">Rekapitulasi Tahunan</h3>
+                    <h4 className="font-light text-xs text-slate-500">Pengawasan Penyelenggaraan Jasa Konstruksi</h4>
                 </div>
                 <div className="col-span-2 space-y-4">
                     <Card className="h-fit">
                         <Card.Body className="p-4">
                             <div className="text-sm text-slate-800 font-medium mb-4 hover:text-blue-600 hover:underline">
-                                <Link href="/admin/rekapitulasi/2024/tertib-usaha">
+                                <Link href={`/admin/rekapitulasi/${tahun}/tertib-usaha`}>
                                     Tertib Usaha Jasa Konstruksi
                                 </Link>
                             </div>
@@ -236,6 +247,7 @@ const RekapitulasiIndex = ({ data }) => {
                             </div>
                         </Card.Body>
                     </Card>
+                    </div>
                 </div>
             </div>
         </>

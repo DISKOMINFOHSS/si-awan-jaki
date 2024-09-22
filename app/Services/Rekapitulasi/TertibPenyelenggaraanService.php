@@ -200,4 +200,12 @@ class TertibPenyelenggaraanService
             ->groupBy('tertib_pengawasan')
             ->get();
     }
+
+    public function getTotalPengawasanCount(string $tahun, string $jenisPengawasan)
+    {
+        return PengawasanPenyelenggaraan::whereYear('tanggal_pengawasan', $tahun)
+            ->where('jenis_pengawasan', $jenisPengawasan)
+            ->whereNotNull('tertib_pengawasan')
+            ->count();
+    }
 }

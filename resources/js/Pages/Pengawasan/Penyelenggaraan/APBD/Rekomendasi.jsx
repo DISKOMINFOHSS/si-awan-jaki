@@ -2,15 +2,17 @@ import React from "react";
 
 import Layout from "../../../../Components/Layout";
 import Breadcrumb from "../../../../Components/Breadcrumb";
+import Card from "../../../../Components/Card";
+import FormRekomendasi from "../../../../Components/Pengawasan/FormRekomendasi";
+import { InformasiProyekKonstruksi, InformasiTertibPengawasan, InformasiUmumPengawasan } from "../../../../Components/Proyek/InformasiPengawasan";
+
+import { getTertibStatusBadge } from "../../../../Utils/getStatusBadge";
+import getDefaultData from "../../../../Utils/getDefaultData";
 
 import {
     LiaHomeSolid,
-    LiaFolderSolid,
     LiaPrintSolid,
 } from "react-icons/lia";
-import { InformasiProyekKonstruksi, InformasiTertibPengawasan, InformasiUmumPengawasan } from "../../../../Components/Proyek/InformasiPengawasan";
-import FormRekomendasi from "../../../../Components/Pengawasan/FormRekomendasi";
-import getDefaultData from "../../../../Utils/getDefaultData";
 
 const PengawasanPenyelenggaraanAPBDRekomendasi = ({ data }) => {
     console.log(data);
@@ -45,6 +47,15 @@ const PengawasanPenyelenggaraanAPBDRekomendasi = ({ data }) => {
                 <InformasiProyekKonstruksi proyekKonstruksi={proyekKonstruksi} />
                 <div className="space-y-4">
                     <InformasiUmumPengawasan pengawasan={pengawasan} />
+                    <Card className="h-fit">
+                        <Card.Body className="p-4 text-xs grid grid-cols-2 gap-4 items-center">
+                            <div>
+                                <div className="text-slate-800">Hasil Pengawasan</div>
+                                <div className="font-light text-[11px] text-slate-500">Kesimpulan Verifikasi Pengawasan</div>
+                            </div>
+                            <div className="font-light">{getTertibStatusBadge(pengawasan.tertibPengawasan)}</div>
+                        </Card.Body>
+                    </Card>
                 </div>
                 <div className="col-span-2">
                     <InformasiTertibPengawasan pengawasan={pengawasan} />

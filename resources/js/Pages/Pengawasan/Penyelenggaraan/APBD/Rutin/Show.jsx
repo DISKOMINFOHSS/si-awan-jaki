@@ -21,6 +21,8 @@ import {
     LiaTrashAltSolid,
     LiaPrintSolid
 } from "react-icons/lia";
+import Card from "../../../../../Components/Card";
+import { getTertibStatusBadge } from "../../../../../Utils/getStatusBadge";
 
 const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
     console.log(data);
@@ -132,7 +134,18 @@ const PengawasanRutinPenyelenggaraanAPDBShow = ({ data }) => {
             </div>
             <div className="grid grid-cols-2 gap-4 w-full mt-4">
                 <InformasiProyekKonstruksi proyekKonstruksi={proyekKonstruksi} />
-                <InformasiUmumPengawasan pengawasan={pengawasan} />
+                <div className="space-y-4">
+                    <InformasiUmumPengawasan pengawasan={pengawasan} />
+                    <Card className="h-fit">
+                        <Card.Body className="p-4 text-xs grid grid-cols-2 gap-4 items-center">
+                            <div>
+                                <div className="text-slate-800">Hasil Pengawasan</div>
+                                <div className="font-light text-[11px] text-slate-500">Kesimpulan Verifikasi Pengawasan</div>
+                            </div>
+                            <div className="font-light">{getTertibStatusBadge(pengawasan.tertibPengawasan)}</div>
+                        </Card.Body>
+                    </Card>
+                </div>
                 <div className="col-span-2">
                     <InformasiTertibPengawasan pengawasan={pengawasan} />
                 </div>

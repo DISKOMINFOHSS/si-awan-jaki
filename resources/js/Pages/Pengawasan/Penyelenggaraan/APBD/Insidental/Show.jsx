@@ -4,6 +4,7 @@ import { router } from "@inertiajs/react";
 import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
 import Dropdown from "../../../../../Components/Dropdown";
+import Card from "../../../../../Components/Card";
 import ModalDelete from "../../../../../Components/ModalDelete";
 
 import FormVerifikasiPengawasan from "../../../../../Components/Proyek/FormVerifikasiPengawasan";
@@ -11,6 +12,7 @@ import DaftarLingkupPengawasanInsidental from "../../../../../Components/Proyek/
 import { InformasiProyekKonstruksi, InformasiTertibPengawasan, InformasiUmumPengawasan } from "../../../../../Components/Proyek/InformasiPengawasan";
 
 import useToggleWithClickOutside from "../../../../../Hooks/useToggleWithClickOutside";
+import { getTertibStatusBadge } from "../../../../../Utils/getStatusBadge";
 
 import {
     LiaHomeSolid,
@@ -132,7 +134,18 @@ const PengawasanInsidentalPenyelenggaraanAPBDShow = ({ data }) => {
             </div>
             <div className="grid grid-cols-2 gap-4 w-full my-4">
                 <InformasiProyekKonstruksi proyekKonstruksi={proyekKonstruksi} />
-                <InformasiUmumPengawasan pengawasan={pengawasan} />
+                <div className="space-y-4">
+                    <InformasiUmumPengawasan pengawasan={pengawasan} />
+                    <Card className="h-fit">
+                        <Card.Body className="p-4 text-xs grid grid-cols-2 gap-4 items-center">
+                            <div>
+                                <div className="text-slate-800">Hasil Pengawasan</div>
+                                <div className="font-light text-[11px] text-slate-500">Kesimpulan Verifikasi Pengawasan</div>
+                            </div>
+                            <div className="font-light">{getTertibStatusBadge(pengawasan.tertibPengawasan)}</div>
+                        </Card.Body>
+                    </Card>
+                </div>
                 <div className="col-span-2">
                     <InformasiTertibPengawasan pengawasan={pengawasan} />
                 </div>

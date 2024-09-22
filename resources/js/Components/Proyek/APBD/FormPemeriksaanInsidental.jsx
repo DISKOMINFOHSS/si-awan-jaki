@@ -8,6 +8,7 @@ import {
 } from "react-icons/lia";
 import ModalError from "../../ModalError";
 import ModalSuccess from "../../ModalSuccess";
+import { daftarDokumen } from "../../../Utils/daftarDokumenPengawasanInsidentalTertibPenyelengaraan";
 
 const KesimpulanPemeriksaan = ({
     indikatorId,
@@ -187,11 +188,10 @@ export default ({
                             <span className="text-justify">{namaIndikator}</span>
                         </div>
                     </div>
-                    {/* <div>
+                    <div>
                         <h4 className="font-medium text-slate-800">Dokumen yang diperiksa</h4>
-                        <p className="font-light text-slate-500 text-justify">
-                        </p>
-                    </div> */}
+                        { id[1] ? daftarDokumen[id[0]][id[1]] : daftarDokumen[id] }
+                    </div>
                 </div>
                 <div className="col-span-3">
                     <Card>

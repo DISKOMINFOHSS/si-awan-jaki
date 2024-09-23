@@ -19,6 +19,7 @@ import {
     LiaHomeSolid,
     LiaInfoCircleSolid,
 } from "react-icons/lia";
+import DaftarRealisasiKeuangan from "../../../Components/Proyek/Progress/DaftarRealisasiKeuangan";
 
 const JenisPengawasanProgressShow = ({ data }) => {
     console.log(data);
@@ -205,7 +206,13 @@ const JenisPengawasanProgressShow = ({ data }) => {
                         pengawasanId={pengawasan.id}
                     />
                 </Tabs.Tab>
-                <Tabs.Tab>Daftar Realisasi Keuangan</Tabs.Tab>
+                <Tabs.Tab>
+                    <DaftarRealisasiKeuangan
+                        realisasiKeuangan={[]}
+                        tahun={tahun}
+                        pengawasanId={pengawasan.id}
+                    />
+                </Tabs.Tab>
             </Tabs>
         </>
     );

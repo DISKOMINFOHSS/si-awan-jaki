@@ -26,7 +26,8 @@ Route::redirect('/', '/admin/dashboard');
 
 Route::middleware(['auth'])->name('admin.')->prefix('admin')
     ->group(function () {
-        Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
+        // Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
+        Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'dashboard'])->name('dashboard');
 
         Route::name('pendataan.')->prefix('pendataan')->group(function () {
             // Pendataan Usaha

@@ -165,6 +165,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             });
 
             Route::name('usaha.')->prefix('/usaha')->group(function() {
+                Route::redirect('/rantai-pasok', '/admin/pengawasan/usaha/1');
+
                 Route::name('1.')->prefix('/1')
                 ->controller(App\Http\Controllers\Pengawasan\Usaha\UsahaRantaiPasokController::class)
                 ->group(function () {
@@ -230,6 +232,12 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                     Route::post('/{id}/verification', 'verify');
                     Route::post('/{id}/{pemeriksaan_id}', 'storePemeriksaan');
+                });
+
+                Route::name('bujk.')->prefix('/bujk')
+                ->controller(App\Http\Controllers\Pengawasan\Usaha\BUJKController::class)
+                ->group(function () {
+                    Route::get('/', 'index');
                 });
 
                 Route::controller(App\Http\Controllers\Pengawasan\Usaha\UsahaController::class)

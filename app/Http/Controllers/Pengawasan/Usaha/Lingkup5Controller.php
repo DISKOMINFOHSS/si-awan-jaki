@@ -63,7 +63,8 @@ class Lingkup5Controller extends Controller
         {
             $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJK(
                 $validatedData['usahaId'],
-                DateTimeHelper::getHalfYearDateRange($validatedData['tanggal'])
+                // DateTimeHelper::getHalfYearDateRange($validatedData['tanggal'])
+                DateTimeHelper::getYearDateRange($validatedData['tanggal'])
             );
 
             if ($pengawasanRutin->pengawasan_lingkup_5) {
@@ -117,7 +118,8 @@ class Lingkup5Controller extends Controller
         if ($pengawasan->jenis_pengawasan === "Rutin")
         {
             $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJKByLingkup5Id($pengawasan->id);
-            $range = DateTimeHelper::getHalfYearDateRange($validatedData['tanggal']);
+            // $range = DateTimeHelper::getHalfYearDateRange($validatedData['tanggal']);
+            $range = DateTimeHelper::getYearDateRange($validatedData['tanggal']);
 
             if ($pengawasanRutin->start !== $range['start'] || $pengawasanRutin->end !== $range['end'])
             {

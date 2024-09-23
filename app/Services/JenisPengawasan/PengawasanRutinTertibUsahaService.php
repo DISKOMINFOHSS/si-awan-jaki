@@ -21,6 +21,11 @@ class PengawasanRutinTertibUsahaService
         return $pengawasanRutin->id;
     }
 
+    public function getPengawasanRutinBUJKById(string $id)
+    {
+        return PengawasanBUJKRutin::findOrFail($id);
+    }
+
     public function getPengawasanRutinBUJK(string $usahaId, array $dateRange)
     {
         return PengawasanBUJKRutin::firstOrCreate([

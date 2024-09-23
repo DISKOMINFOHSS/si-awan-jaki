@@ -45,7 +45,10 @@ export default ({
                 onClose();
                 reset();
             },
-            onError: () => setIsModalErrorOpened(true),
+            onError: () => {
+                onClose();
+                setIsModalErrorOpened(true);
+            }
         });
     }
 

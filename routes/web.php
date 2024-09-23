@@ -238,6 +238,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->controller(App\Http\Controllers\Pengawasan\Usaha\BUJKController::class)
                 ->group(function () {
                     Route::get('/', 'index');
+                    Route::post('/rutin', 'store');
+                    Route::get('/rutin/{id}', 'show');
                 });
 
                 Route::controller(App\Http\Controllers\Pengawasan\Usaha\UsahaController::class)

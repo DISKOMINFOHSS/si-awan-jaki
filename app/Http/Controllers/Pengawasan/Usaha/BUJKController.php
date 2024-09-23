@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Helpers\DateTimeHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Pengawasan\TertibUsaha\PengawasanBUJKResource;
+use App\Http\Resources\Pengawasan\TertibUsaha\PengawasanRutinBUJKResource;
 use App\Services\JenisPengawasan\PengawasanRutinTertibUsahaService;
 use App\Services\Usaha\PendataanBUJKService;
 use App\Services\Usaha\PengawasanUsahaService;
@@ -107,7 +108,7 @@ class BUJKController extends Controller
 
         return Inertia::render('Pengawasan/Usaha/BUJK/Show', [
             'data' => [
-                'pengawasan' => $pengawasanRutin,
+                'pengawasan' => new PengawasanRutinBUJKResource($pengawasanRutin),
             ],
         ]);
     }

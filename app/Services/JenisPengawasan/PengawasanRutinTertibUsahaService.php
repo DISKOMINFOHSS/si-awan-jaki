@@ -31,7 +31,6 @@ class PengawasanRutinTertibUsahaService
             ->select(
                 'pengawasan_bujk_rutin.*',
                 'pengawasan_bujk_lingkup_2.tertib_jenis_usaha',
-                'pengawasan_bujk_lingkup_2.tertib_jenis_usaha',
                 'pengawasan_bujk_lingkup_2.tertib_sifat_usaha',
                 'pengawasan_bujk_lingkup_2.tertib_klasifikasi_usaha',
                 'pengawasan_bujk_lingkup_2.tertib_layanan_usaha',
@@ -46,7 +45,30 @@ class PengawasanRutinTertibUsahaService
 
     public function getPengawasanRutinBUJKById(string $id)
     {
-        return PengawasanBUJKRutin::findOrFail($id);
+        return PengawasanBUJKRutin::with('usaha:id,nama,nib,pjbu,alamat')
+            ->leftJoin('pengawasan_bujk_lingkup_2', 'pengawasan_bujk_rutin.pengawasan_lingkup_2', 'pengawasan_bujk_lingkup_2.id')
+            ->leftJoin('pengawasan_bujk_lingkup_3', 'pengawasan_bujk_rutin.pengawasan_lingkup_3', 'pengawasan_bujk_lingkup_3.id')
+            ->leftJoin('pengawasan_bujk_lingkup_4', 'pengawasan_bujk_rutin.pengawasan_lingkup_4', 'pengawasan_bujk_lingkup_4.id')
+            ->leftJoin('pengawasan_bujk_lingkup_5', 'pengawasan_bujk_rutin.pengawasan_lingkup_5', 'pengawasan_bujk_lingkup_5.id')
+            ->select(
+                'pengawasan_bujk_rutin.*',
+                'pengawasan_bujk_lingkup_2.id as pengawasan_lingkup_2_id',
+                'pengawasan_bujk_lingkup_2.status_izin_usaha',
+                'pengawasan_bujk_lingkup_2.status_verifikasi_nib',
+                'pengawasan_bujk_lingkup_2.tertib_jenis_usaha',
+                'pengawasan_bujk_lingkup_2.tertib_jenis_usaha',
+                'pengawasan_bujk_lingkup_2.tertib_sifat_usaha',
+                'pengawasan_bujk_lingkup_2.tertib_klasifikasi_usaha',
+                'pengawasan_bujk_lingkup_2.tertib_layanan_usaha',
+                'pengawasan_bujk_lingkup_3.id as pengawasan_lingkup_3_id',
+                'pengawasan_bujk_lingkup_3.tertib_bentuk_usaha',
+                'pengawasan_bujk_lingkup_3.tertib_kualifikasi_usaha',
+                'pengawasan_bujk_lingkup_4.id as pengawasan_lingkup_4_id',
+                'pengawasan_bujk_lingkup_4.tertib_persyaratan_sbu',
+                'pengawasan_bujk_lingkup_4.tertib_persyaratan_nib',
+                'pengawasan_bujk_lingkup_5.id as pengawasan_lingkup_5_id',
+                'pengawasan_bujk_lingkup_5.tertib_pengembangan_usaha',
+            )->findOrFail($id);
     }
 
     public function getPengawasanRutinBUJK(string $usahaId, array $dateRange)

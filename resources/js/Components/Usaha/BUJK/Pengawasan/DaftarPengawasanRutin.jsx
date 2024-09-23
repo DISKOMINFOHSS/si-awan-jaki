@@ -1,8 +1,13 @@
 import React from "react";
+import { Link } from "@inertiajs/react";
 
 import Card from "../../../Card";
-import { LiaSearchSolid, LiaPlusSolid } from "react-icons/lia";
 import FormAddPengawasanRutin from "./FormAddPengawasanRutin";
+
+import { getTertibStatusBadge } from "../../../../Utils/getStatusBadge";
+import { formatDateToIndonesia } from "../../../../Utils/formatDate";
+
+import { LiaSearchSolid, LiaPlusSolid } from "react-icons/lia";
 
 export default ({ daftarUsaha, daftarPengawasan }) => {
     const [isModalPengawasanOpen, setIsModalPengawasanOpen] = React.useState(false);
@@ -73,6 +78,34 @@ export default ({ daftarUsaha, daftarPengawasan }) => {
 
                                 </tr>
                             </thead>
+                            <tbody className="text-slate-700">
+                                {
+                                    daftarPengawasan.map((pengawasan, i) => (
+                                        <tr key={i} className="border-b border-slate-100 hover:bg-slate-100">
+                                            <td className="px-4 py-5 text-center">{i + 1}</td>
+                                            <td className="px-4 py-5">
+                                                <div>
+                                                    <Link href={`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.id}`} className="uppercase hover:text-blue-600 hover:underline">
+                                                        {pengawasan.usaha.nama}
+                                                    </Link>
+                                                    <div className="font-light text-slate-500">{`NIB: ${pengawasan.usaha.nib}`}</div>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-5 text-center">{pengawasan.usaha.pjbu}</td>
+                                            <td className="px-4 py-5 text-center">{formatDateToIndonesia(pengawasan.tanggalPengawasan)}</td>
+                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibJenisUsaha)}</td>
+                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibSifatUsaha)}</td>
+                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibKlasifikasiUsaha)}</td>
+                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibLayananUsaha)}</td>
+                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibBentukUsaha)}</td>
+                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibKualifikasiUsaha)}</td>
+                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPersyaratanSBU)}</td>
+                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPersyaratanNIB)}</td>
+                                            <td className="px-4 py-5 text-center">{getTertibStatusBadge(pengawasan.tertibPengembanganUsaha)}</td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
                         </table>
                     </div>
                 </Card.Body>

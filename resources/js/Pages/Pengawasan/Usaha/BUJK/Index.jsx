@@ -11,7 +11,7 @@ import DaftarPengawasanRutin from "../../../../Components/Usaha/BUJK/Pengawasan/
 
 const PengawasanBUJKIndex = ({ data }) => {
     console.log(data);
-    const { daftarUsaha, daftarLingkupPengawasan } = data;
+    const { daftarUsaha, daftarPengawasanRutin, daftarLingkupPengawasan } = data;
 
     const tabList = [
         { label: 'Pengawasan Rutin' },
@@ -34,7 +34,7 @@ const PengawasanBUJKIndex = ({ data }) => {
             <Tabs tabList={tabList}>
                 <Tabs.Tab>
                     <DaftarPengawasanRutin
-                        daftarPengawasan={[]}
+                        daftarPengawasan={daftarPengawasanRutin}
                         daftarUsaha={daftarUsaha}
                     />
                 </Tabs.Tab>

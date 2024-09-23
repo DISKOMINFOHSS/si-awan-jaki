@@ -28,7 +28,7 @@ class PengawasanBUJKResource extends JsonResource
             'tertibPersyaratanSBU'      => $this->whenHas('tertib_persyaratan_sbu'),
             'tertibPersyaratanNIB'      => $this->whenHas('tertib_persyaratan_nib'),
             'tertibPengembanganUsaha'   => $this->whenHas('tertib_pengembangan_usaha'),
-            'tertibPengawasan'          => $this->tertib_pengawasan,
+            'tertibPengawasan'          => $this->whenHas('tertib_pengawasan'),
         ];
     }
 }

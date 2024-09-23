@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pengawasan\Usaha;
 use Inertia\Inertia;
 use App\Helpers\DateTimeHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Pengawasan\TertibUsaha\PengawasanBUJKResource;
 use App\Services\JenisPengawasan\PengawasanRutinTertibUsahaService;
 use App\Services\Usaha\PendataanBUJKService;
 use App\Services\Usaha\PengawasanUsahaService;
@@ -40,13 +41,16 @@ class BUJKController extends Controller
 
     public function index()
     {
-        $daftarLingkup = $this->pengawasanService->getDaftarLingkupPengawasan();
+        $daftarLingkupPengawasan = $this->pengawasanService->getDaftarLingkupPengawasan();
         $daftarUsaha = $this->bujkService->getDaftarBUJK();
+
+        $daftarPengawasanRutin = $this->pengawasanRutinService->getDaftarPengawasanRutinBUJK(date('Y'));
 
         return Inertia::render('Pengawasan/Usaha/BUJK/Index', [
             'data' => [
                 'daftarUsaha'             => $daftarUsaha,
-                'daftarLingkupPengawasan' => $daftarLingkup,
+                'daftarPengawasanRutin'   => PengawasanBUJKResource::collection($daftarPengawasanRutin),
+                'daftarLingkupPengawasan' => $daftarLingkupPengawasan,
             ],
         ]);
     }

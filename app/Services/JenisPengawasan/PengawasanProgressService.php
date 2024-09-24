@@ -58,6 +58,7 @@ class PengawasanProgressService
                     'pengawasan_id',
                     'tanggal',
                     'jumlah_pembayaran as jumlahPembayaran',
+                    'tanggal_dibayar as tanggalDibayar',
                     'realisasi',
                     'url',
                     'catatan',

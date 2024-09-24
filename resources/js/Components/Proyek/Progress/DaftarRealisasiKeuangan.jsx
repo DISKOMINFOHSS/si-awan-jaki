@@ -1,14 +1,20 @@
 import React from "react";
 import Card from "../../Card";
 
-import { LiaPlusCircleSolid, LiaCalendarDaySolid, LiaEditSolid } from "react-icons/lia";
+import { LiaPlusCircleSolid, LiaCalendarDaySolid, LiaEditSolid, LiaLinkSolid } from "react-icons/lia";
 import ModalError from "../../ModalError";
 import FormAddTargetRealisasiKeuangan from "./FormAddTargetRealisasiKeuangan";
 import formatCurrencyToIDR from "../../../Utils/formatCurrencyToIDR";
 import { formatDateToIndonesia } from "../../../Utils/formatDate";
 import FormAddRealisasiKeuangan from "./FormAddRealisasiKeuangan";
+import { getRealisasiKeuanganProgressBar } from "../../../Utils/getProgressBar";
 
-export default ({ realisasiKeuangan, tahun, pengawasanId }) => {
+export default ({
+    realisasiKeuangan,
+    tahun,
+    pengawasanId,
+    nilaiKontrak,
+}) => {
     const [ isModalTargetRealisasiKeuanganOpen, setIsModalTargetRealisasiKeuanganOpen ] = React.useState(false);
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
 
@@ -52,8 +58,8 @@ export default ({ realisasiKeuangan, tahun, pengawasanId }) => {
                             <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 uppercase">
                                 <tr className="border-b border-slate-200">
                                     <th scope="col" className="p-4 font-medium border-r border-slate-200 w-48">Tanggal</th>
-                                    <th scope="col" className="p-4 font-medium border-r border-slate-200">Jumlah Pembayaran</th>
-                                    <th scope="col" className="p-4 font-medium border-r border-slate-200 min-w-40">Tanggal Dibayar</th>
+                                    <th scope="col" className="p-4 font-medium border-r border-slate-200 min-w-52">Jumlah <br />Pembayaran</th>
+                                    <th scope="col" className="p-4 font-medium border-r border-slate-200 w-48">Tanggal Dibayar</th>
                                     <th scope="col" className="p-4 font-medium border-r border-slate-200 min-w-40">Realisasi /<br /> Jumlah Dibayar</th>
                                     <th></th>
                                 </tr>
@@ -74,10 +80,48 @@ export default ({ realisasiKeuangan, tahun, pengawasanId }) => {
                                                 </div>
                                             </td>
                                             <td className="px-4 py-5 text-center">{formatCurrencyToIDR(realisasi.jumlahPembayaran)}</td>
-                                            <td className="px-4 py-5 text-center"></td>
-                                            <td className="px-4 py-5 text-center"></td>
+                                            <td className="px-4 py-5">
+                                                {
+                                                    realisasi.tanggalDibayar && (
+                                                        <div className="flex items-center gap-x-2">
+                                                            <div className="bg-blue-100 text-blue-600 w-8 aspect-square rounded flex items-center justify-center text-sm">
+                                                                <LiaCalendarDaySolid size={18} />
+                                                            </div>
+                                                            <div className="text-xs text-slate-700">
+                                                                <div className="font-light text-slate-500">Tanggal</div>
+                                                                <div>{formatDateToIndonesia(realisasi.tanggalDibayar)}</div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }
+                                            </td>
+                                            <td className="px-4 py-5 text-center">
+                                                {
+                                                    realisasi.realisasi && getRealisasiKeuanganProgressBar(i, realisasiKeuangan, nilaiKontrak)
+                                                }
+                                            </td>
                                             <td className="px-4 py-5">
                                                 <div className="flex justify-end gap-x-2">
+                                                    {
+                                                        realisasi.url ? (
+                                                            <a
+                                                                href={realisasi.url}
+                                                                target="_blank"
+                                                                className="flex items-center rounded border border-slate-200 text-blue-500 px-2 gap-x-1 w-fit justify-center hover:bg-slate-200 whitespace-nowrap"
+                                                            >
+                                                                <LiaLinkSolid size={18} />
+                                                                <span>Link</span>
+                                                            </a>
+                                                        ) : (
+                                                            <a
+                                                                href="#"
+                                                                className="flex items-center rounded border border-slate-200 text-slate-700 px-2 gap-x-1 w-fit justify-center hover:bg-slate-200 whitespace-nowrap"
+                                                            >
+                                                                <LiaLinkSolid size={18} />
+                                                                <span>Link</span>
+                                                            </a>
+                                                        )
+                                                    }
                                                     <button
                                                         type="button"
                                                         className="flex items-center rounded border border-slate-200 text-slate-700 w-8 aspect-square justify-center hover:bg-slate-200"

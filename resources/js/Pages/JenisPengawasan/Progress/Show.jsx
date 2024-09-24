@@ -211,6 +211,7 @@ const JenisPengawasanProgressShow = ({ data }) => {
                         realisasiKeuangan={realisasiKeuangan}
                         tahun={tahun}
                         pengawasanId={pengawasan.id}
+                        nilaiKontrak={proyekKonstruksi.nilaiKontrak}
                     />
                 </Tabs.Tab>
             </Tabs>

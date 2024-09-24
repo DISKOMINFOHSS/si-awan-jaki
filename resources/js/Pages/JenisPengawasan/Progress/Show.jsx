@@ -27,7 +27,7 @@ const JenisPengawasanProgressShow = ({ data }) => {
     const tahun = url.split('/')[4];
 
     const { pengawasan } = data;
-    const { proyekKonstruksi, realisasiFisik } = pengawasan;
+    const { proyekKonstruksi, realisasiFisik, realisasiKeuangan } = pengawasan;
 
     const [
         moreDropdownRef,
@@ -208,7 +208,7 @@ const JenisPengawasanProgressShow = ({ data }) => {
                 </Tabs.Tab>
                 <Tabs.Tab>
                     <DaftarRealisasiKeuangan
-                        realisasiKeuangan={[]}
+                        realisasiKeuangan={realisasiKeuangan}
                         tahun={tahun}
                         pengawasanId={pengawasan.id}
                     />

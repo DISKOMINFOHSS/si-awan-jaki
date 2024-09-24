@@ -4,6 +4,8 @@ import Card from "../../Card";
 import { LiaPlusCircleSolid, LiaCalendarDaySolid, LiaEditSolid } from "react-icons/lia";
 import ModalError from "../../ModalError";
 import FormAddTargetRealisasiKeuangan from "./FormAddTargetRealisasiKeuangan";
+import formatCurrencyToIDR from "../../../Utils/formatCurrencyToIDR";
+import { formatDateToIndonesia } from "../../../Utils/formatDate";
 
 export default ({ realisasiKeuangan, tahun, pengawasanId }) => {
     const [ isModalTargetRealisasiKeuanganOpen, setIsModalTargetRealisasiKeuanganOpen ] = React.useState(false);
@@ -11,6 +13,17 @@ export default ({ realisasiKeuangan, tahun, pengawasanId }) => {
 
     const [ isModalRealisasiKeuanganOpen, setIsModalRealisasiKeuanganOpen ] = React.useState(false);
     const [ selectedRealisasi, setSelectedRealisasi ] = React.useState({});
+
+    function handleRealisasiButtonClick(realisasi, i) {
+        if ((i+1 === realisasiKeuangan.length || realisasiKeuangan[i+1].realisasi !== null) && realisasi.realisasi === null) {
+            setSelectedRealisasi(realisasi);
+            setIsModalRealisasiKeuanganOpen(true);
+        } else if (i+1 === realisasiKeuangan.length || realisasiKeuangan[i+1].realisasi !== null) {
+            return;
+        } else {
+            setIsModalErrorOpen(true);
+        }
+    }
 
     return (
         <>
@@ -45,7 +58,37 @@ export default ({ realisasiKeuangan, tahun, pengawasanId }) => {
                                 </tr>
                             </thead>
                             <tbody className="text-slate-700">
-
+                                {
+                                    realisasiKeuangan.map((realisasi, i) => (
+                                        <tr key={realisasi.id} className="border-b border-slate-100 hover:bg-slate-50">
+                                            <td className="px-4 py-5 w-52">
+                                                <div className="flex items-center gap-x-2">
+                                                    <div className="bg-blue-100 text-blue-600 w-8 aspect-square rounded flex items-center justify-center text-sm">
+                                                        <LiaCalendarDaySolid size={18} />
+                                                    </div>
+                                                    <div className="text-xs text-slate-700">
+                                                        <div className="font-light text-slate-500">Tanggal</div>
+                                                        <div>{formatDateToIndonesia(realisasi.tanggal)}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-5 text-center">{formatCurrencyToIDR(realisasi.jumlahPembayaran)}</td>
+                                            <td className="px-4 py-5 text-center"></td>
+                                            <td className="px-4 py-5 text-center"></td>
+                                            <td className="px-4 py-5">
+                                                <div className="flex justify-end gap-x-2">
+                                                    <button
+                                                        type="button"
+                                                        className="flex items-center rounded border border-slate-200 text-slate-700 w-8 aspect-square justify-center hover:bg-slate-200"
+                                                        onClick={() => handleRealisasiButtonClick(realisasi, i)}
+                                                    >
+                                                        <LiaEditSolid size={18} />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
                             </tbody>
                         </table>
                     </div>

@@ -25,19 +25,19 @@ export default ({
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
-        // post(`/admin/jenis-pengawasan/progress/${tahun}/${pengawasanId}/realisasi-fisik/${realisasiFisik.id}`, {
-        //     preserveScroll: true,
-        //     onSuccess: () => {
-        //         reset();
-        //         onClose();
-        //     },
-        //     onError: (errors) => {
-        //         console.log(errors);
-        //         onClose();
-        //         setErrorMessage(errors.message);
-        //         setIsModalErrorOpen(true);
-        //     },
-        // });
+        post(`/admin/jenis-pengawasan/progress/${tahun}/${pengawasanId}/realisasi-keuangan/${realisasiKeuangan.id}`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+                onClose();
+            },
+            onError: (errors) => {
+                console.log(errors);
+                onClose();
+                setErrorMessage(errors.message);
+                setIsModalErrorOpen(true);
+            },
+        });
     }
 
     return (

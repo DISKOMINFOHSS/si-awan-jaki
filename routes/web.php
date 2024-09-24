@@ -300,6 +300,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::post('/{pengawasan_id}/realisasi-fisik/{id}', 'realisasi');
 
                     Route::post('/{id}/realisasi-keuangan', 'termin');
+                    Route::post('/{pengawasan_id}/realisasi-keuangan/{id}', 'pembayaran');
                 });
             });
 

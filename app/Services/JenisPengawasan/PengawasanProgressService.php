@@ -90,6 +90,7 @@ class PengawasanProgressService
         $pengawasan->save();
     }
 
+    // Realisasi Fisik
     public function addTargetRealisasiFisik(string $pengawasanId, array $data)
     {
         RealisasiFisikPengawasanProgress::create([
@@ -129,6 +130,7 @@ class PengawasanProgressService
             ->orderBy('tanggal', 'desc')->get();
     }
 
+    // Realisasi Keuangan
     public function addTargetRealisasiKeuangan(string $pengawasanId, array $data)
     {
         RealisasiKeuanganPengawasanProgress::create([
@@ -139,9 +141,28 @@ class PengawasanProgressService
         ]);
     }
 
+    public function addRealisasiKeuangan(string $id, string $pengawasanId, array $data)
+    {
+        $realisasi = RealisasiKeuanganPengawasanProgress::where('id', $id)
+            ->where('pengawasan_id', $pengawasanId)->first();
+
+        $realisasi->tanggal_dibayar = $data['tanggal_dibayar'];
+        $realisasi->realisasi = $data['realisasi'];
+        $realisasi->url = $data['url'];
+        $realisasi->save();
+
+        return $realisasi;
+    }
+
     // public function getDaftarRealisasiKeuangan(string $pengawasanId)
     // {
     //     return RealisasiKeuanganPengawasanProgress::where('pengawasan_id', $pengawasanId)
     //         ->orderBy('tanggal', 'desc')->get();
     // }
+
+    public function getJumlahRealisasiKeuanganByPengawasanId(string $pengawasanId)
+    {
+        return DB::table('realisasi_keuangan_pengawasan_progress')->where('pengawasan_id', $pengawasanId)
+            ->sum('realisasi');
+    }
 }

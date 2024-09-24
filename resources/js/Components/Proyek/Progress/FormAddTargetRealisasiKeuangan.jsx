@@ -1,4 +1,5 @@
 import React from "react";
+import { router } from "@inertiajs/react";
 
 import Modal from "../../Modal";
 import ModalError from "../../ModalError";
@@ -43,20 +44,12 @@ const InputTarget = ({
                 </div>
             </td>
             <td className="px-1.5 py-3 w-full">
-                {/* <div className="flex items-center justify-center gap-x-1.5">
-                    <input
-                        type="text" name={`jumlahPembayaran-${values.id}`} id={`jumlahPembayaran-${values.id}`} placeholder="50.00"
-                        value={values.jumlahPembayaran} onChange={handleInputChange}
-                        className="px-3 py-2 block w-[84px] rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-                    />
-                    <span>%</span>
-                </div> */}
                 <div className="relative w-full">
                     <div className="pointer-events-none absolute inset-y-0 left-2.5 flex items-center text-xs text-slate-500 font-light">Rp</div>
                     <input
                         type="text" name={`jumlahPembayaran-${values.id}`} id={`jumlahPembayaran-${values.id}`} placeholder="10000000"
                         value={values.jumlahPembayaran} onChange={handleInputChange}
-                        className="border border-slate-200 rounded-md py-2.5 pl-8 block w-full text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                        className="border border-slate-200 rounded-md py-2 pl-8 block w-full text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs"
                     />
                 </div>
             </td>
@@ -98,6 +91,7 @@ export default ({
     ]);
 
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
+    const [ errorMessage, setErrorMessage ] = React.useState('');
 
     function handleAddInputTarget() {
         setData([ ...data, { id: +new Date(), tanggal: '', jumlahPembayaran: '' } ]);
@@ -114,22 +108,24 @@ export default ({
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
-        // router.post(
-        //     `/admin/jenis-pengawasan/progress/${tahun}/${pengawasanId}/realisasi-keunagan`,
-        //     { targetRealisasi: data },
-        //     {
-        //         preserveScroll: true,
-        //         onSuccess: () => {
-        //             onClose();
-        //             setProcessing(false);
-        //         },
-        //         onError: () => {
-        //             onClose();
-        //             setProcessing(false);
-        //             setIsModalErrorOpen(true);
-        //         },
-        //     }
-        // );
+        router.post(
+            `/admin/jenis-pengawasan/progress/${tahun}/${pengawasanId}/realisasi-keuangan`,
+            { targetRealisasi: data },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    onClose();
+                    setProcessing(false);
+                },
+                onError: (error) => {
+                    onClose();
+                    setProcessing(false);
+                    console.log(error);
+                    setErrorMessage(error.message);
+                    setIsModalErrorOpen(true);
+                },
+            }
+        );
     }
 
     return (
@@ -186,7 +182,7 @@ export default ({
             >
                 <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
                 <div className="font-light text-xs text-slate-500 mb-2">
-                    Gagal menambahkan target realisasi keaungan. Silakan periksa kembali informasi yang diisi.
+                    Gagal menambahkan target realisasi keaungan. {errorMessage} Silakan periksa kembali informasi yang diisi.
                 </div>
             </ModalError>
         </>

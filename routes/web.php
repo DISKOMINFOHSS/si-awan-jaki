@@ -298,6 +298,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                     Route::post('/{id}/realisasi-fisik', 'target');
                     Route::post('/{pengawasan_id}/realisasi-fisik/{id}', 'realisasi');
+
+                    Route::post('/{id}/realisasi-keuangan', 'termin');
                 });
             });
 

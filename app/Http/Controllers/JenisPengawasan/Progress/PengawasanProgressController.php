@@ -139,4 +139,42 @@ class PengawasanProgressController extends Controller
 
         return redirect("/admin/jenis-pengawasan/progress/$tahun/$pengawasan_id");
     }
+
+    public function termin(string $tahun, string $id, Request $request)
+    {
+        if (!$this->pengawasanService->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'targetRealisasi.*.tanggal'          => 'required|date',
+            'targetRealisasi.*.jumlahPembayaran' => 'required|decimal:0,2',
+        ]);
+        $userId = auth()->user()->id;
+
+        $jumlahPembayaran = 0;
+        $pengawasan = $this->pengawasanService->getPengawasanById($id, $tahun);
+        foreach ($request->input('targetRealisasi') as $target)
+        {
+            $jumlahPembayaran += $target['jumlahPembayaran'];
+        }
+
+        if ($jumlahPembayaran > $pengawasan->proyekKonstruksi->nilai_kontrak) {
+            return back()->withErrors(['message' => 'Jumlah semua pembayaran melebihi nilai kontrak.']);
+        }
+
+        foreach ($request->input('targetRealisasi') as $target)
+        {
+            $this->pengawasanService->addTargetRealisasiKeuangan(
+                $id,
+                [
+                    'tanggal'           => $target['tanggal'],
+                    'jumlah_pembayaran' => $target['jumlahPembayaran'],
+                    'created_by'        => $userId,
+                ],
+            );
+        }
+
+        return redirect("/admin/jenis-pengawasan/progress/$tahun/$id");
+    }
 }

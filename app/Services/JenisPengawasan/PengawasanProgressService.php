@@ -131,7 +131,7 @@ class PengawasanProgressService
 
     public function addTargetRealisasiKeuangan(string $pengawasanId, array $data)
     {
-        RealisasiKeuanganPengawasanProgess::create([
+        RealisasiKeuanganPengawasanProgress::create([
             'pengawasan_id'     => $pengawasanId,
             'tanggal'           => $data['tanggal'],
             'jumlah_pembayaran' => $data['jumlah_pembayaran'],

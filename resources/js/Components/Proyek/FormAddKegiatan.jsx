@@ -2,14 +2,13 @@ import React from "react";
 import { useForm } from "@inertiajs/react";
 
 import Card from "../Card";
-import SelectUsaha from "../Usaha/SelectUsaha";
+import SelectPaketPekerjaan from "./APBD/SelectPaketPekerjaan";
 import ModalError from "../../Components/ModalError";
+
+import { getDaftarPaketPekerjaan } from "../../Utils/apiEmonev";
 
 import {
     LiaSpinnerSolid,
-    LiaCloudUploadAltSolid,
-    LiaFileAlt,
-    LiaTimesSolid,
 } from "react-icons/lia";
 
 function FormInformasi() {
@@ -24,6 +23,33 @@ function FormInformasi() {
         nilaiKontrak: '',
         nilaiPagu: '',
     });
+
+    const [ isSelectPaketPekerjaanVisible, setIsSelectPaketPekerjaanVisible ] = React.useState(false);
+    React.useEffect(() => {
+        const timeoutId = setTimeout(() => setIsSelectPaketPekerjaanVisible(false), 1000);
+        return () => clearTimeout(timeoutId);
+    }, [data.namaPaket]);
+
+    const [ daftarPaketPekerjaan, setDaftarPaketPekerjaan ] = React.useState([]);
+    React.useEffect(() => {
+        getDaftarPaketPekerjaan(data.tahunAnggaran).then(({ data }) => {
+            setDaftarPaketPekerjaan(data);
+          });
+    }, [data.tahunAnggaran]);
+
+    function handlePaketPekerjaanSelect(paketPekerjaan) {
+        console.log(paketPekerjaan);
+        const { id, paket, pagu, pagu_kontrak, tgl_kontrak } = paketPekerjaan;
+        setIsSelectPaketPekerjaanVisible(false);
+        setData({
+            ...data,
+            emonevId: id,
+            namaPaket: paket,
+            tanggalKontrak: tgl_kontrak,
+            nilaiKontrak: pagu_kontrak,
+            nilaiPagu: pagu,
+        });
+    }
 
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
 
@@ -44,12 +70,23 @@ function FormInformasi() {
             <Card className="w-full">
                 <Card.Body className="p-4">
                     <form method="post" onSubmit={handleSubmit} className="grid grid-cols-3 gap-6 mb-2">
-                        <div className="col-span-3">
-                            <label htmlFor="nama" className="block mb-2 text-xs font-medium text-slate-800">Nama Paket Pekerjaan <span className="text-red-400">*</span></label>
-                            <input
+                        <div className="relative col-span-3">
+                            <label htmlFor="namaPaket" className="block mb-2 text-xs font-medium text-slate-800">Nama Paket Pekerjaan <span className="text-red-400">*</span></label>
+                            {/* <input
                                 type="text" name="namaPaket" id="namaPaket" placeholder="cth. Peningkatan Struktur Jalan Tanah Habang Kec. Simpur (Peningkatan Jalan Wilayah Perkotaan)"
-                                value={data.namaPaket} onChange={e => setData('namaPaket', e.target.value)}
+                                value={data.namaPaket} onChange={e => setData('namaPaket', e.target.value)} onClick={() => setIsSelectPaketPekerjaanVisible(!isSelectPaketPekerjaanVisible)}
                                 className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                            /> */}
+                            <textarea
+                                name="namaPaket" id="namaPaket" rows="2" placeholder="cth. Peningkatan Struktur Jalan Tanah Habang Kec. Simpur (Peningkatan Jalan Wilayah Perkotaan)"
+                                value={data.namaPaket} onChange={e => setData('namaPaket', e.target.value)} onClick={() => setIsSelectPaketPekerjaanVisible(!isSelectPaketPekerjaanVisible)}
+                                className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                            />
+                            <SelectPaketPekerjaan
+                                isVisible={isSelectPaketPekerjaanVisible}
+                                onSelect={handlePaketPekerjaanSelect}
+                                daftarPaketPekerjaan={daftarPaketPekerjaan}
+                                tahunAnggaran={data.tahunAnggaran}
                             />
                         </div>
                         <div className="col-span-1">
@@ -343,122 +380,5 @@ function FormInformasi() {
 //     );
 // }
 
-// function FormPenggunaJasa() {
-//     const { data, setData, post, processing, reset } = useForm({
-//         nama: '',
-//         pelakuPengadaan: 'KPA',
-//         nip: '',
-//         jabatan: '',
-//         sk: '',
-//         instansi: '',
-//         alamat: '',
-//     });
-
-//     function handleSubmit(e) {
-//         e.preventDefault();
-//         console.log(data);
-//     }
-
-//     return (
-//         <>
-//             <Card className="w-full">
-//                 <Card.Body className="p-4">
-//                     <form
-//                         method="post"
-//                         className="grid grid-cols-6 gap-5 mb-2"
-//                         onSubmit={handleSubmit}
-//                     >
-//                         <div className="col-span-4 space-y-2">
-//                             <label htmlFor="nama">
-//                                 <div className="font-medium text-xs text-slate-800">Nama Pengguna Jasa <span className="text-red-400">*</span></div>
-//                                 <div className="font-light text-[11px] text-slate-500">Kuasa Pengguna Anggaran / Pejabat Pembuat Komitmen / Perwakilan</div>
-//                             </label>
-//                             <input
-//                                 type="text" name="nama" id="nama" placeholder="cth. John Doe"
-//                                 value={data.nama} onChange={e => setData('nama', e.target.value)}
-//                                 className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-//                             />
-//                         </div>
-//                         <div className="col-span-2 space-y-2">
-//                             <label htmlFor="pelakuPengadaan">
-//                                 <div className="font-medium text-xs text-slate-800">Pelaku Pengadaan <span className="text-red-400">*</span></div>
-//                                 <div className="font-light text-[11px] text-slate-500">Pilih Pengguna Jasa</div>
-//                             </label>
-//                             <select
-//                                 name="pelakuPengadaan" id="pelakuPengadaan" value={data.pelakuPengadaan} onChange={e => setData('pelakuPengadaan', e.target.value)}
-//                                 className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-//                             >
-//                                 <option value="KPA">Kuasa Pengguna Anggaran</option>
-//                                 <option value="PPK">Pejabat Pembuat Komitmen</option>
-//                                 <option value="Perwakilan">Perwakilan Masyarakat, Swasta, atau Badan Usaha</option>
-//                             </select>
-//                         </div>
-//                         <div className="col-span-2">
-//                             <label htmlFor="nip" className="block mb-2 text-xs font-medium text-slate-800">NIP <span className="font-light text-[11px] text-slate-500">diisi untuk ASN</span></label>
-//                             <input
-//                                 type="text" name="nip" id="nip" placeholder="cth. 19990101 202001 1 001"
-//                                 value={data.nip} onChange={e => setData('nip', e.target.value)}
-//                                 className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-//                             />
-//                         </div>
-//                         <div className="col-span-4">
-//                             <label htmlFor="jabatan" className="block mb-2 text-xs font-medium text-slate-800">Jabatan</label>
-//                             <input
-//                                 type="text" name="jabatan" id="jabatan" placeholder="cth. Pengelola Sarana dan Prasarana Kantor"
-//                                 value={data.jabatan} onChange={e => setData('jabatan', e.target.value)}
-//                                 className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-//                             />
-//                         </div>
-//                         <div className="col-span-6 space-y-2">
-//                             <label htmlFor="sk">
-//                                 <div className="font-medium text-xs text-slate-800">Dasar Pengangkatan SK Lembaga</div>
-//                                 <div className="font-light text-[11px] text-slate-500">Isi dengan Nomor dan Judul SK</div>
-//                             </label>
-//                             <textarea
-//                                 name="sk" id="sk" rows="2" placeholder="cth. Keputusan Kepala Dinas Nomor 23 Tahun 2023 tentang"
-//                                 value={data.sk} onChange={e => setData('sk', e.target.value)}
-//                                 className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-//                             />
-//                         </div>
-//                         <div className="col-span-3">
-//                             <label htmlFor="instansi" className="block mb-2 text-xs font-medium text-slate-800">Instansi</label>
-//                             <input
-//                                 type="text" name="instansi" id="instansi" placeholder="cth. Dinas Pekerjaan Umum dan Tata Ruang"
-//                                 value={data.instansi} onChange={e => setData('instansi', e.target.value)}
-//                                 className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-//                             />
-//                         </div>
-//                         <div className="col-span-3">
-//                             <label htmlFor="alamat" className="block mb-2 text-xs font-medium text-slate-800">Alamat Kantor</label>
-//                             <textarea
-//                                 name="alamat" id="alamat" rows="2" placeholder="cth. Jalan Aluh Idut No 66 A Kandangan"
-//                                 value={data.alamat} onChange={e => setData('alamat', e.target.value)}
-//                                 className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-//                             />
-//                         </div>
-//                         <div className="col-span-6 flex items-center justify-end gap-x-2 5">
-//                             <button
-//                                 type="button"
-//                                 className="flex justify-center items-center gap-x-1 bg-white font-medium text-xs text-slate-700 rounded py-2.5 px-3 hover:bg-slate-100 border border-slate-200"
-//                                 onClick={() => reset()}
-//                             >
-//                                 Hapus
-//                             </button>
-//                             <button
-//                                 // onClick={() => handleInformasiSubmit()}
-//                                 type="submit"
-//                                 className="flex justify-center items-center gap-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2.5 px-3 hover:bg-blue-800"
-//                                 disabled={processing}
-//                             >
-//                                 { processing && <LiaSpinnerSolid className="animate-spin" />}
-//                                 Simpan
-//                             </button>
-//                         </div>
-//                     </form>
-//                 </Card.Body>
-//             </Card>
-//         </>
-//     )
-// }
 
 export { FormInformasi };

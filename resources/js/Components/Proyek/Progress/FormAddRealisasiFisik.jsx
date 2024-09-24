@@ -39,7 +39,6 @@ export default ({
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(`/admin/jenis-pengawasan/progress/${tahun}/${pengawasanId}/realisasi-fisik/${realisasiFisik.id}`);
         post(`/admin/jenis-pengawasan/progress/${tahun}/${pengawasanId}/realisasi-fisik/${realisasiFisik.id}`, {
             preserveScroll: true,
             onSuccess: () => {

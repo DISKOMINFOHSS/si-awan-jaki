@@ -6,6 +6,7 @@ import ModalError from "../../ModalError";
 import FormAddTargetRealisasiKeuangan from "./FormAddTargetRealisasiKeuangan";
 import formatCurrencyToIDR from "../../../Utils/formatCurrencyToIDR";
 import { formatDateToIndonesia } from "../../../Utils/formatDate";
+import FormAddRealisasiKeuangan from "./FormAddRealisasiKeuangan";
 
 export default ({ realisasiKeuangan, tahun, pengawasanId }) => {
     const [ isModalTargetRealisasiKeuanganOpen, setIsModalTargetRealisasiKeuanganOpen ] = React.useState(false);
@@ -97,6 +98,13 @@ export default ({ realisasiKeuangan, tahun, pengawasanId }) => {
             <FormAddTargetRealisasiKeuangan
                 isVisible={isModalTargetRealisasiKeuanganOpen}
                 onClose={() => setIsModalTargetRealisasiKeuanganOpen(false)}
+                tahun={tahun}
+                pengawasanId={pengawasanId}
+            />
+            <FormAddRealisasiKeuangan
+                isVisible={isModalRealisasiKeuanganOpen}
+                onClose={() => setIsModalRealisasiKeuanganOpen(false)}
+                realisasiKeuangan={selectedRealisasi}
                 tahun={tahun}
                 pengawasanId={pengawasanId}
             />

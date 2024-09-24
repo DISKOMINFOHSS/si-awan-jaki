@@ -50,4 +50,9 @@ class PengawasanProgress extends Model
     {
         return $this->hasMany(RealisasiFisikPengawasanProgress::class, 'pengawasan_id');
     }
+
+    public function realisasiKeuangan(): HasMany
+    {
+        return $this->hasMany(RealisasiKeuanganPengawasanProgress::class, 'pengawasan_id');
+    }
 }

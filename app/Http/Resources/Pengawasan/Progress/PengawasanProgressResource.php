@@ -17,13 +17,14 @@ class PengawasanProgressResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'               => $this->id,
-            'proyekKonstruksi' => new ProyekKonstruksiResource($this->whenLoaded('proyekKonstruksi')),
-            'tahunPengawasan'  => $this->tahun_pengawasan,
-            'status'           => $this->status,
+            'id'                => $this->id,
+            'proyekKonstruksi'  => new ProyekKonstruksiResource($this->whenLoaded('proyekKonstruksi')),
+            'tahunPengawasan'   => $this->tahun_pengawasan,
+            'status'            => $this->status,
             // 'realisasiFisik'   => $this->realisasi_fisik ?
             //     RealisasiFisikPengawasanProgressResource::collection($this->realisasi_fisik) : null,
-            'realisasiFisik'   => RealisasiFisikPengawasanProgressResource::collection($this->whenLoaded('realisasiFisik')),
+            'realisasiFisik'    => RealisasiFisikPengawasanProgressResource::collection($this->whenLoaded('realisasiFisik')),
+            'realisasiKeuangan' => $this->whenLoaded('realisasiKeuangan'),
         ];
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Models\Penyelenggaraan;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RealisasiKeuanganPengawasanProgress extends Model
 {
@@ -25,8 +27,8 @@ class RealisasiKeuanganPengawasanProgress extends Model
     ];
 
     protected $casts = [
-        'jumlah_pembayaran' => 'decimal:2',
-        'realisasi'         => 'decimal:2',
+        'jumlahPembayaran' => 'decimal:2',
+        'realisasi'        => 'decimal:2',
     ];
 
     public function pengawasan(): BelongsTo

@@ -4,6 +4,7 @@ namespace App\Services\JenisPengawasan;
 
 use App\Models\Penyelenggaraan\PengawasanProgress;
 use App\Models\Penyelenggaraan\RealisasiFisikPengawasanProgress;
+use App\Models\Penyelenggaraan\RealisasiKeuanganPengawasanProgress;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
@@ -49,6 +50,19 @@ class PengawasanProgressService
             'realisasiFisik' => function (Builder $query)
             {
                 $query->orderBy('tanggal', 'desc');
+            },
+            'realisasiKeuangan' => function (Builder $query)
+            {
+                $query->select(
+                    'id',
+                    'pengawasan_id',
+                    'tanggal',
+                    'jumlah_pembayaran as jumlahPembayaran',
+                    'realisasi',
+                    'url',
+                    'catatan',
+                    'verified_by',
+                )->orderBy('tanggal', 'desc');
             }
         ])->where('tahun_pengawasan', $tahun)
           ->where('id', $id)
@@ -86,12 +100,6 @@ class PengawasanProgressService
         ]);
     }
 
-    public function getDaftarRealisasiFisik(string $pengawasanId)
-    {
-        return RealisasiFisikPengawasanProgress::where('pengawasan_id', $pengawasanId)
-            ->orderBy('tanggal', 'desc')->get();
-    }
-
     public function addRealisasiFisik(string $id, string $pengawasanId, array $data)
     {
         $fotoLapangan = [];
@@ -114,4 +122,26 @@ class PengawasanProgressService
 
         return $realisasi;
     }
+
+    public function getDaftarRealisasiFisik(string $pengawasanId)
+    {
+        return RealisasiFisikPengawasanProgress::where('pengawasan_id', $pengawasanId)
+            ->orderBy('tanggal', 'desc')->get();
+    }
+
+    public function addTargetRealisasiKeuangan(string $pengawasanId, array $data)
+    {
+        RealisasiKeuanganPengawasanProgess::create([
+            'pengawasan_id'     => $pengawasanId,
+            'tanggal'           => $data['tanggal'],
+            'jumlah_pembayaran' => $data['jumlah_pembayaran'],
+            'created_by'        => $data['created_by'],
+        ]);
+    }
+
+    // public function getDaftarRealisasiKeuangan(string $pengawasanId)
+    // {
+    //     return RealisasiKeuanganPengawasanProgress::where('pengawasan_id', $pengawasanId)
+    //         ->orderBy('tanggal', 'desc')->get();
+    // }
 }

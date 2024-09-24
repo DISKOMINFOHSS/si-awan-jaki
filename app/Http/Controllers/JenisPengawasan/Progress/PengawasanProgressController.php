@@ -71,7 +71,6 @@ class PengawasanProgressController extends Controller
     public function show(string $tahun, string $id)
     {
         $pengawasan = $this->pengawasanService->getPengawasanById($id, $tahun);
-        $pengawasan['realisasi_fisik'] = $this->pengawasanService->getDaftarRealisasiFisik($id);
 
         return Inertia::render('JenisPengawasan/Progress/Show', [
             'data' => [

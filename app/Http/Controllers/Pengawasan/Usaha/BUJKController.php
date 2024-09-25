@@ -106,7 +106,18 @@ class BUJKController extends Controller
     {
         $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJKById($id);
 
-        return Inertia::render('Pengawasan/Usaha/BUJK/Show', [
+        return Inertia::render('Pengawasan/Usaha/BUJK/Rutin/Show', [
+            'data' => [
+                'pengawasan' => new PengawasanRutinBUJKResource($pengawasanRutin),
+            ],
+        ]);
+    }
+
+    public function recommendation(string $id)
+    {
+        $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJKById($id);
+
+        return Inertia::render('Pengawasan/Usaha/BUJK/Rutin/Rekomendasi', [
             'data' => [
                 'pengawasan' => new PengawasanRutinBUJKResource($pengawasanRutin),
             ],

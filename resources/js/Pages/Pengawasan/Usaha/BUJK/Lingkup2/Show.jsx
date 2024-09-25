@@ -22,10 +22,12 @@ import {
     LiaInfoCircleSolid,
     LiaEditSolid,
     LiaTrashAltSolid,
+    LiaCheckCircleSolid,
 } from "react-icons/lia";
 import FormVerifikasiPengawasanLingkup2 from "../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup2";
 import FormEditPengawasanKegiatan from "../../../../../Components/Usaha/BUJK/FormEditPengawasanKegiatan";
 import ModalDelete from "../../../../../Components/ModalDelete";
+import { Link } from "@inertiajs/react";
 
 const PengawasanBUJKLingkup2Show = ({ data }) => {
     console.log(data);
@@ -57,14 +59,26 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                     <h2 className="text-xs text-slate-600">{lingkupPengawasan.lingkupPengawasan}</h2>
                 </div>
                 <div className="flex items-center gap-x-2">
-                    <button
-                        type="button"
-                        className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
-                        onClick={() => setIsModalVerificationOpened(true)}
-                    >
-                        <LiaListAltSolid size={18} />
-                        <span>Verifikasi Pengawasan</span>
-                    </button>
+                    {
+                        pengawasan.tertibPengawasan ? (
+                            <Link
+                                href={`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.pengawasanRutinId}`}
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                            >
+                                <LiaListAltSolid size={18} />
+                                <span>Rekomendasi</span>
+                            </Link>
+                        ) : (
+                            <button
+                                type="button"
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                                onClick={() => setIsModalVerificationOpened(true)}
+                            >
+                                <LiaCheckCircleSolid size={18} />
+                                <span>Verifikasi Pengawasan</span>
+                            </button>
+                        )
+                    }
                     <Dropdown ref={moreDropdownRef}>
                     <Dropdown.Toggle
                             onClick={toggleMoreDropdown}
@@ -95,9 +109,17 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                             <button
                                 type="button"
                                 className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
-                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpened(true)}}
+
                             >
                                 <LiaListAltSolid size={16} />
+                                <span>Rekomendasi</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpened(true)}}
+                            >
+                                <LiaCheckCircleSolid size={16} />
                                 <span>Verifikasi Pengawasan</span>
                             </button>
                             <button
@@ -108,12 +130,6 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                                 <LiaTrashAltSolid size={16} />
                                 <span>Hapus Pengawasan</span>
                             </button>
-                            {/* <button
-                                type="button"
-                                className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
-                            >
-                                Buat Rekomendasi
-                            </button> */}
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
@@ -125,7 +141,7 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                         <Card.Header className="flex justify-between items-center">
                             <div>
                                 <h3 className="font-medium text-slate-700 leading-tight">Sertifikat Badan Usaha (SBU)</h3>
-                                <h4 className="font-light text-slate-500 text-[11px]">Daftar Sertifikat Standar Badan Usaha Jasa Konstruksi</h4>
+                                {/* <h4 className="font-light text-slate-500 text-[11px]">Daftar Sertifikat Standar Badan Usaha Jasa Konstruksi</h4> */}
                             </div>
                         </Card.Header>
                         <Card.Body className="p-4">

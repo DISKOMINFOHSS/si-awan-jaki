@@ -116,7 +116,7 @@ export default ({ isVisible, onClose, proyekKonstruksi }) => {
                         <div>
                             <label htmlFor="penyediaJasa" className="block mb-2 text-xs font-medium text-slate-800">Nama Penyedia Jasa</label>
                             <input
-                                type="text" name="penyediaJasa" id="penyediaJasa" value={proyekKonstruksi.penyediaJasa.nama} disabled
+                                type="text" name="penyediaJasa" id="penyediaJasa" value={proyekKonstruksi.penyediaJasa ? proyekKonstruksi.penyediaJasa.nama : '-'} disabled
                                 className="px-3 py-2 block w-full rounded-md bg-slate-50 border-slate-200 text-slate-500 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
                             />
                         </div>

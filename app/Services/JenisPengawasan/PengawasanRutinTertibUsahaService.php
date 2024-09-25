@@ -60,14 +60,18 @@ class PengawasanRutinTertibUsahaService
                 'pengawasan_bujk_lingkup_2.tertib_sifat_usaha',
                 'pengawasan_bujk_lingkup_2.tertib_klasifikasi_usaha',
                 'pengawasan_bujk_lingkup_2.tertib_layanan_usaha',
+                'pengawasan_bujk_lingkup_2.tertib_pengawasan as tertib_pengawasan_lingkup_2',
                 'pengawasan_bujk_lingkup_3.id as pengawasan_lingkup_3_id',
                 'pengawasan_bujk_lingkup_3.tertib_bentuk_usaha',
                 'pengawasan_bujk_lingkup_3.tertib_kualifikasi_usaha',
+                'pengawasan_bujk_lingkup_3.tertib_pengawasan as tertib_pengawasan_lingkup_3',
                 'pengawasan_bujk_lingkup_4.id as pengawasan_lingkup_4_id',
                 'pengawasan_bujk_lingkup_4.tertib_persyaratan_sbu',
                 'pengawasan_bujk_lingkup_4.tertib_persyaratan_nib',
+                'pengawasan_bujk_lingkup_4.tertib_pengawasan as tertib_pengawasan_lingkup_4',
                 'pengawasan_bujk_lingkup_5.id as pengawasan_lingkup_5_id',
                 'pengawasan_bujk_lingkup_5.tertib_pengembangan_usaha',
+                'pengawasan_bujk_lingkup_5.tertib_pengawasan as tertib_pengawasan_lingkup_5',
             )->findOrFail($id);
     }
 

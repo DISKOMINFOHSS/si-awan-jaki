@@ -1,18 +1,19 @@
 import React from "react";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
-import Layout from "../../../../Components/Layout";
-import Breadcrumb from "../../../../Components/Breadcrumb";
-import Card from "../../../../Components/Card";
-import Dropdown from "../../../../Components/Dropdown";
+import Layout from "../../../../../Components/Layout";
+import Breadcrumb from "../../../../../Components/Breadcrumb";
+import Card from "../../../../../Components/Card";
+import Dropdown from "../../../../../Components/Dropdown";
 import {
     InformasiTertibPengawasanLingkup2,
     InformasiTertibPengawasanLingkup3,
     InformasiTertibPengawasanLingkup4,
     InformasiTertibPengawasanLingkup5,
-} from "../../../../Components/Usaha/BUJK/InformasiPengawasan";
+} from "../../../../../Components/Usaha/BUJK/InformasiPengawasan";
 
-import useToggleWithClickOutside from "../../../../Hooks/useToggleWithClickOutside";
+import useToggleWithClickOutside from "../../../../../Hooks/useToggleWithClickOutside";
+import { formatDateToIndonesia } from "../../../../../Utils/formatDate";
 
 import {
     LiaHomeSolid,
@@ -35,6 +36,10 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
         toggleMoreDropdown
     ] = useToggleWithClickOutside(false);
 
+    function handleRekomendasiClick() {
+        router.get(`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.id}/rekomendasi`);
+    }
+
     return (
         <>
             <Breadcrumb>
@@ -52,7 +57,7 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
                 <div className="flex items-center gap-x-2.5">
                     <button
                         className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white whitespace-nowrap"
-                        // onClick={() => handleRekomendasiClick()}
+                        onClick={handleRekomendasiClick}
                     >
                         <LiaListAltSolid size={18} />
                         <span>Buat Rekomendasi</span>
@@ -79,7 +84,7 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
                             <button
                                 type="button"
                                 className="flex items-center gap-x-3 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
-                                // onClick={() => handleRekomendasiClick()}
+                                onClick={handleRekomendasiClick}
                             >
                                 <LiaListAltSolid size={16} />
                                 <span>Rekomendasi</span>
@@ -114,7 +119,7 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
                     </Card>
                     <Card className="h-fit">
                         <Card.Body className="p-4 text-xs">
-                            <div className="grid grid-cols-2 text-xs pb-3 border-b border-slate-200">
+                            <div className="grid grid-cols-2 gap-x-4 text-xs pb-3 border-b border-slate-200">
                                 <div>
                                     <div className="font-medium text-slate-800">Status</div>
                                     <div className="font-light text-[11px] text-slate-500">Perizinan Berusaha</div>
@@ -136,7 +141,7 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="pt-3 grid grid-cols-2 text-xs">
+                            <div className="pt-3 grid grid-cols-2 gap-x-4 text-xs">
                                 <div>
                                     <div className="font-medium text-slate-800">Nomor NIB</div>
                                     <div className="font-light text-[11px] text-slate-500">Status Verifikasi sesuai OSS</div>
@@ -160,11 +165,25 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
                             </div>
                         </Card.Body>
                     </Card>
+                    <Card className="h-fit w-full">
+                        <Card.Body className="p-4 text-xs">
+                            <div className="grid grid-cols-2 gap-x-4">
+                                <div>
+                                    <div className="font-medium">Jenis Pengawasan</div>
+                                    <div className="font-light text-slate-500">Pengawasan  {pengawasan.jenisPengawasan}</div>
+                                </div>
+                                <div>
+                                    <div className="font-medium">Tanggal Pengawasan</div>
+                                    <div className="font-light text-slate-500">{formatDateToIndonesia(pengawasan.tanggalPengawasan)}</div>
+                                </div>
+                            </div>
+                        </Card.Body>
+                    </Card>
                 </div>
                 <div className="space-y-4">
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         <div className="flex items-start gap-x-2">
-                            <div className="rounded bg-blue-100 text-blue-500 h-9 w-9 flex items-center justify-center aspect-square text-center group-hover:bg-blue-200">{1}</div>
+                            {/* <div className="rounded-full bg-blue-100 text-blue-500 h-9 w-9 flex items-center justify-center aspect-square text-center group-hover:bg-blue-200">{1}</div> */}
                             <div className="leading-5">
                                 <h4 className="font-light text-slate-500 text-xs">Lingkup Pengawasan</h4>
                                 <Link href={`/admin/pengawasan/usaha/2/${pengawasan.lingkup2Id}`} className="text-sm text-slate-700 hover:text-blue-600 hover:underline">Kesesuaian Kegiatan Konstruksi</Link>
@@ -172,9 +191,9 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
                         </div>
                         <InformasiTertibPengawasanLingkup2 pengawasan={pengawasan} />
                     </div>
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         <div className="flex items-start gap-x-2">
-                            <div className="rounded bg-blue-100 text-blue-500 h-9 w-9 flex items-center justify-center aspect-square text-center group-hover:bg-blue-200">{2}</div>
+                            {/* <div className="rounded-full bg-blue-100 text-blue-500 h-9 w-9 flex items-center justify-center aspect-square text-center group-hover:bg-blue-200">{2}</div> */}
                             <div className="leading-5">
                                 <h4 className="font-light text-slate-500 text-xs">Lingkup Pengawasan</h4>
                                 <Link href={`/admin/pengawasan/usaha/3/${pengawasan.lingkup3Id}`} className="text-sm text-slate-700 hover:text-blue-600 hover:underline">Kesesuaian Kegiatan Konstruksi dan Segmentasi Pasar</Link>
@@ -182,9 +201,9 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
                         </div>
                         <InformasiTertibPengawasanLingkup3 pengawasan={pengawasan} />
                     </div>
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         <div className="flex items-start gap-x-2">
-                            <div className="rounded bg-blue-100 text-blue-500 h-9 w-9 flex items-center justify-center aspect-square text-center group-hover:bg-blue-200">{3}</div>
+                            {/* <div className="rounded-full bg-blue-100 text-blue-500 h-9 w-9 flex items-center justify-center aspect-square text-center group-hover:bg-blue-200">{3}</div> */}
                             <div className="leading-5">
                                 <h4 className="font-light text-slate-500 text-xs">Lingkup Pengawasan</h4>
                                 <Link href={`/admin/pengawasan/usaha/4/bujk/${pengawasan.lingkup4Id}/rutin`} className="text-sm text-slate-700 hover:text-blue-600 hover:underline">Pemenuhan Persyaratan Usaha</Link>
@@ -192,9 +211,9 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
                         </div>
                         <InformasiTertibPengawasanLingkup4 pengawasan={pengawasan} />
                     </div>
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         <div className="flex items-start gap-x-2">
-                            <div className="rounded bg-blue-100 text-blue-500 h-9 w-9 flex items-center justify-center aspect-square text-center group-hover:bg-blue-200">{4}</div>
+                            {/* <div className="rounded-full bg-blue-100 text-blue-500 h-9 w-9 flex items-center justify-center aspect-square text-center group-hover:bg-blue-200">{4}</div> */}
                             <div className="leading-5">
                                 <h4 className="font-light text-slate-500 text-xs">Lingkup Pengawasan</h4>
                                 <Link href={`/admin/pengawasan/usaha/5/${pengawasan.lingkup5Id}`} className="text-sm text-slate-700 hover:text-blue-600 hover:underline">Pengembangan Usaha Berkelanjutan</Link>

@@ -241,6 +241,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/', 'index');
                     Route::post('/rutin', 'store');
                     Route::get('/rutin/{id}', 'show');
+                    Route::get('/rutin/{id}/rekomendasi', 'recommendation');
                 });
 
                 Route::controller(App\Http\Controllers\Pengawasan\Usaha\UsahaController::class)

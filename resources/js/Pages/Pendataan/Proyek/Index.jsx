@@ -18,6 +18,13 @@ const PendataanProyekIndex = ({ data }) => {
     console.log(data);
     const { daftarProyek } = data;
 
+    const [keyword, setKeyword] = React.useState('');
+    const handleKeywordChange = (event) => setKeyword(event.target.value);
+
+    const filteredDaftarProyekKonstruksi = keyword ? daftarProyek.filter(({ namaPaket }) => {
+        return namaPaket.toLowerCase().includes(keyword.toLowerCase());
+    }) : daftarProyek;
+
     return (
         <>
             <div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-200">
@@ -35,7 +42,7 @@ const PendataanProyekIndex = ({ data }) => {
                         <LiaSearchSolid size={18} className="text-slate-500 -scale-x-100" />
                     </div>
                     <input
-                        name="search" placeholder="Cari..."
+                        name="search" placeholder="Cari..." value={keyword} onChange={handleKeywordChange}
                         className="border border-slate-200 rounded-md py-2.5 pl-9 block w-full text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs"
                     />
                 </div>
@@ -64,7 +71,7 @@ const PendataanProyekIndex = ({ data }) => {
                         <table className="w-full text-xs">
                             <tbody>
                                 {
-                                    daftarProyek.map((proyek) => (
+                                    filteredDaftarProyekKonstruksi.map((proyek) => (
                                         <tr key={proyek.id} className="border-b border-slate-100 hover:bg-slate-50">
                                             <td className="p-4">
                                                 <div>

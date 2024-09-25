@@ -15,6 +15,7 @@ class PengawasanProgressService
         $pengawasan = PengawasanProgress::create([
             'proyek_konstruksi_id' => $data['proyek_konstruksi_id'],
             'tahun_pengawasan'     => $data['tahun_pengawasan'],
+            'status'               => 'Dalam Proses',
             'created_by'           => $data['created_by'],
         ]);
 
@@ -37,6 +38,7 @@ class PengawasanProgressService
                 $query->whereNotNull('realisasi')->orderBy('tanggal', 'desc');
             }
         ])->where('tahun_pengawasan', $tahun)
+          ->orderBy('created_at', 'desc')
           ->get();
     }
 

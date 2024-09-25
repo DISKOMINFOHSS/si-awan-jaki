@@ -105,6 +105,7 @@ class BUJKController extends Controller
     public function show(string $id)
     {
         $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJKById($id);
+        $pengawasanRutin['rekomendasi'] = $this->pengawasanRutinService->getRekomendasiPengawasanRutinBUJKByPengawasanId($id);
 
         return Inertia::render('Pengawasan/Usaha/BUJK/Rutin/Show', [
             'data' => [
@@ -116,11 +117,36 @@ class BUJKController extends Controller
     public function recommendation(string $id)
     {
         $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJKById($id);
+        $pengawasanRutin['rekomendasi'] = $this->pengawasanRutinService->getRekomendasiPengawasanRutinBUJKByPengawasanId($id);
 
         return Inertia::render('Pengawasan/Usaha/BUJK/Rutin/Rekomendasi', [
             'data' => [
                 'pengawasan' => new PengawasanRutinBUJKResource($pengawasanRutin),
             ],
         ]);
+    }
+
+    public function recommend(string $id, Request $request)
+    {
+        if (!$this->pengawasanRutinService->checkPengawasanRutinBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'rekomendasi'   => 'required',
+            'keterangan'    => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanRutinService->addRekomendasiPengawasanRutinBUJK(
+            $id,
+            [
+                'rekomendasi'    => $validatedData['rekomendasi'],
+                'keterangan'     => $validatedData['keterangan'],
+                'created_by'     => $userId,
+            ]
+        );
+
+        return back();
     }
 }

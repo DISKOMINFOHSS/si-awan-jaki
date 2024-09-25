@@ -39,6 +39,7 @@ class PengawasanRutinBUJKResource extends JsonResource
             'tertibPengembanganUsaha'  => $this->whenHas('tertib_pengembangan_usaha'),
             'tertibPengawasanLingkup5' => $this->whenHas('tertib_pengawasan_lingkup_5'),
             'tertibPengawasan'         => $this->whenHas('tertib_pengawasan'),
+            'rekomendasi'              => $this->whenHas('rekomendasi')
         ];
     }
 }

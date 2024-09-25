@@ -21,6 +21,11 @@ class PengawasanRutinTertibUsahaService
         return $pengawasanRutin->id;
     }
 
+    public function checkPengawasanRutinBUJKExists(string $id)
+    {
+        return PengawasanBUJKRutin::where('id', $id)->exists();
+    }
+
     public function getDaftarPengawasanRutinBUJK(string $tahun)
     {
         return PengawasanBUJKRutin::with('usaha:id,nama,nib,pjbu')
@@ -107,5 +112,28 @@ class PengawasanRutinTertibUsahaService
     public function getPengawasanRutinBUJKByLingkup5Id(string $pengawasanLingkup5Id)
     {
         return PengawasanBUJKRutin::where('pengawasan_lingkup_5', $pengawasanLingkup5Id)->first();
+    }
+
+    public function addRekomendasiPengawasanRutinBUJK(string $pengawasanId, array $data)
+    {
+        DB::table('rekomendasi_pengawasan_rutin_bujk')->updateOrInsert(
+            [
+                'pengawasan_id' => $pengawasanId,
+            ],
+            [
+                'rekomendasi' => $data['rekomendasi'],
+                'keterangan'  => $data['keterangan'],
+                'created_by'  => $data['created_by'],
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ]
+        );
+    }
+
+    public function getRekomendasiPengawasanRutinBUJKByPengawasanId(string $pengawasanId)
+    {
+        return DB::table('rekomendasi_pengawasan_rutin_bujk')
+            ->where('pengawasan_id', $pengawasanId)
+            ->first();
     }
 }

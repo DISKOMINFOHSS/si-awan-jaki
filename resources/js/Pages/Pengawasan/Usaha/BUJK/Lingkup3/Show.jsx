@@ -1,4 +1,5 @@
 import React from "react";
+import { router } from "@inertiajs/react";
 
 import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
@@ -28,7 +29,6 @@ import {
     LiaTrashAltSolid,
     LiaCheckCircleSolid,
 } from "react-icons/lia";
-import { Link } from "@inertiajs/react";
 
 const PengawasanBUJKLingkup3Show = ({ data }) => {
     console.log(data);

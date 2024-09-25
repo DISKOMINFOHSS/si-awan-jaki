@@ -23,6 +23,7 @@ import {
     LiaPrintSolid
 } from "react-icons/lia";
 import ModalError from "../../../../../Components/ModalError";
+import { getTertibStatusBadge } from "../../../../../Utils/getStatusBadge";
 
 const PengawasanRutinBUJKIndex = ({ data }) => {
     console.log(data);
@@ -33,6 +34,7 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
         tertibPengawasanLingkup3,
         tertibPengawasanLingkup4,
         tertibPengawasanLingkup5,
+        rekomendasi,
     } = pengawasan;
 
     const [
@@ -43,12 +45,19 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
 
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
 
+    const tertibPengawasan = (
+        tertibPengawasanLingkup2 === null ||
+        tertibPengawasanLingkup3 === null ||
+        tertibPengawasanLingkup4 === null ||
+        tertibPengawasanLingkup5 === null
+    ) ? null : (tertibPengawasanLingkup2 && tertibPengawasanLingkup3 && tertibPengawasanLingkup4 && tertibPengawasanLingkup5) === 1;
+
     function handleRekomendasiClick() {
         if (
             tertibPengawasanLingkup2 !== null &&
             tertibPengawasanLingkup3 !== null &&
             tertibPengawasanLingkup4 !== null &&
-            tertibPengawasanLingkup5
+            tertibPengawasanLingkup5 !== null
         ) {
             router.get(`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.id}/rekomendasi`);
         }
@@ -61,7 +70,7 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
             <Breadcrumb>
                 <Breadcrumb.Item href="/admin/dashboard"><LiaHomeSolid size={14} /></Breadcrumb.Item>
                 <Breadcrumb.Item href="#">...</Breadcrumb.Item>
-                <Breadcrumb.Item href="/admin/pengawasan/usaha/bujk">Badan Usaha Jasa Konstruksi</Breadcrumb.Item>
+                <Breadcrumb.Item href="/admin/pengawasan/usaha/bujk">Daftar Pengawasan BUJK</Breadcrumb.Item>
                 <Breadcrumb.Item active>{usaha.nama}</Breadcrumb.Item>
             </Breadcrumb>
             <div className="flex justify-between items-center mt-2 mb-4">
@@ -71,13 +80,27 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
                     <h2 className="text-xs text-slate-600">Pengawasan Tertib Usaha Jasa Konstruksi secara Rutin</h2>
                 </div>
                 <div className="flex items-center gap-x-2.5">
-                    <button
-                        className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white whitespace-nowrap"
-                        onClick={handleRekomendasiClick}
-                    >
-                        <LiaListAltSolid size={18} />
-                        <span>Buat Rekomendasi</span>
-                    </button>
+                    {
+                        rekomendasi ? (
+                            <a
+                                href={`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.id}/simak`}
+                                target="_blank"
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white whitespace-nowrap"
+                            >
+                                <LiaPrintSolid size={16} />
+                                <span>Cetak PDF</span>
+                            </a>
+                        ) : (
+
+                            <button
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white whitespace-nowrap"
+                                onClick={handleRekomendasiClick}
+                            >
+                                <LiaListAltSolid size={18} />
+                                <span>Buat Rekomendasi</span>
+                            </button>
+                        )
+                    }
                     <Dropdown ref={moreDropdownRef}>
                         <Dropdown.Toggle
                             onClick={toggleMoreDropdown}
@@ -183,15 +206,22 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
                     </Card>
                     <Card className="h-fit w-full">
                         <Card.Body className="p-4 text-xs">
-                            <div className="grid grid-cols-2 gap-x-4">
+                            <div className="grid grid-cols-2 gap-x-4 pb-3 border-b border-slate-200">
                                 <div>
                                     <div className="font-medium">Jenis Pengawasan</div>
-                                    <div className="font-light text-slate-500">Pengawasan  {pengawasan.jenisPengawasan}</div>
+                                    <div className="font-light text-slate-500">{pengawasan.jenisPengawasan}</div>
                                 </div>
                                 <div>
                                     <div className="font-medium">Tanggal Pengawasan</div>
                                     <div className="font-light text-slate-500">{formatDateToIndonesia(pengawasan.tanggalPengawasan)}</div>
                                 </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-x-4 items-center pt-3">
+                                <div>
+                                    <div className="text-slate-800">Hasil Pengawasan</div>
+                                    <div className="font-light text-[11px] text-slate-500">Kesimpulan Verifikasi Pengawasan</div>
+                                </div>
+                                <div className="font-light">{getTertibStatusBadge(tertibPengawasan)}</div>
                             </div>
                         </Card.Body>
                     </Card>

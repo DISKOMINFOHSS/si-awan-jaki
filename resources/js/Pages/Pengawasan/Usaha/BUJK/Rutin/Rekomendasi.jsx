@@ -15,6 +15,8 @@ import {
 
 import { formatDateToIndonesia } from "../../../../../Utils/formatDate";
 import { LiaHomeSolid, LiaPrintSolid } from "react-icons/lia";
+import { getTertibStatusBadge } from "../../../../../Utils/getStatusBadge";
+import getDefaultData from "../../../../../Utils/getDefaultData";
 
 const PengawasanRutinBUJKRekomendasi = ({ data }) => {
     console.log(data);
@@ -29,14 +31,21 @@ const PengawasanRutinBUJKRekomendasi = ({ data }) => {
 
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
 
+    const tertibPengawasan = (
+        tertibPengawasanLingkup2 === null ||
+        tertibPengawasanLingkup3 === null ||
+        tertibPengawasanLingkup4 === null ||
+        tertibPengawasanLingkup5 === null
+    ) ? null : (tertibPengawasanLingkup2 && tertibPengawasanLingkup3 && tertibPengawasanLingkup4 && tertibPengawasanLingkup5) === 1;
+
     React.useEffect(() => {
         if (
             tertibPengawasanLingkup2 === null ||
             tertibPengawasanLingkup3 === null ||
             tertibPengawasanLingkup4 === null ||
-            tertibPengawasanLingkup5
+            tertibPengawasanLingkup5 === null
         ) {
-            setIsModalErrorOpen(true);
+            return setIsModalErrorOpen(true);
         }
     }, []);
 
@@ -139,15 +148,22 @@ const PengawasanRutinBUJKRekomendasi = ({ data }) => {
                     </Card>
                     <Card className="h-fit w-full">
                         <Card.Body className="p-4 text-xs">
-                            <div className="grid grid-cols-2 gap-x-4">
+                            <div className="grid grid-cols-2 gap-x-4 pb-3 border-b border-slate-200">
                                 <div>
                                     <div className="font-medium">Jenis Pengawasan</div>
-                                    <div className="font-light text-slate-500">Pengawasan {pengawasan.jenisPengawasan}</div>
+                                    <div className="font-light text-slate-500">{pengawasan.jenisPengawasan}</div>
                                 </div>
                                 <div>
                                     <div className="font-medium">Tanggal Pengawasan</div>
                                     <div className="font-light text-slate-500">{formatDateToIndonesia(pengawasan.tanggalPengawasan)}</div>
                                 </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-x-4 items-center pt-3">
+                                <div>
+                                    <div className="text-slate-800">Hasil Pengawasan</div>
+                                    <div className="font-light text-[11px] text-slate-500">Kesimpulan Verifikasi Pengawasan</div>
+                                </div>
+                                <div className="font-light">{getTertibStatusBadge(tertibPengawasan)}</div>
                             </div>
                         </Card.Body>
                     </Card>
@@ -197,8 +213,8 @@ const PengawasanRutinBUJKRekomendasi = ({ data }) => {
             </div>
             <FormRekomendasi
                 tertibPengawasan="Pengawasan Tertib Usaha Jasa Konstruksi"
-                rekomendasi={{}}
-                url={`/usaha/bujk/rutin/${pengawasan.id}`}
+                rekomendasi={getDefaultData(pengawasan.rekomendasi, {})}
+                url={`usaha/bujk/rutin/${pengawasan.id}`}
             />
             <ModalError
                 isVisible={isModalErrorOpen}

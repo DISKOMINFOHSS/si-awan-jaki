@@ -81,7 +81,7 @@ class BUJKController extends Controller
             'created_by'            => $userId,
         ]);
 
-        return redirect("/admin/pendataan/usaha/bujk/$id");
+        return back();
     }
 
     public function updateSertifikat(string $id, string $sertifikat_id, Request $request)

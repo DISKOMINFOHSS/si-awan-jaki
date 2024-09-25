@@ -49,8 +49,7 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
             case "Rutin":
                 return router.get(`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.pengawasanRutinId}/rekomendasi`);
             case "Insidental":
-                console.log(pengawasan);
-                break;
+                return router.get(`/admin/pengawasan/usaha/${lingkupPengawasan.id}/${pengawasan.id}/rekomendasi`);
         }
     }
 
@@ -166,7 +165,7 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                                                     <LiaFileAlt size={18} />
                                                 </div>
                                                 <a href={filePath} target="_blank" className="group-hover:text-blue-600 group-hover:underline">
-                                                    <div className="font-medium">Sertifikat {usaha.nama}</div>
+                                                    <div className="font-medium">SBU {usaha.nama}</div>
                                                     <div className="font-light text-slate-500">{fileName}</div>
                                                 </a>
                                             </div>

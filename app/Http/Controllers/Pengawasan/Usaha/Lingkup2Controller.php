@@ -268,4 +268,22 @@ class Lingkup2Controller extends Controller
 
         return redirect("/admin/pengawasan/usaha/2/$id");
     }
+
+    public function recommendation(string $id)
+    {
+        $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(2);
+        $pengawasan = $this->pengawasanLingkup2Service->getPengawasanBUJKById($id);
+
+        if ($pengawasan->jenis_pengawasan === 'Rutin') {
+            $pengawasanRutinId = $this->pengawasanRutinService->getPengawasanRutinBUJKByLingkup2Id($pengawasan->id)->id;
+            return redirect("/admin/pengawasan/usaha/bujk/rutin/$pengawasanRutinId/rekomendasi");
+        }
+
+        return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup2/Rekomendasi', [
+            'data' => [
+                'lingkupPengawasan' => $lingkupPengawasan,
+                'pengawasan'        => new PengawasanBUJKLingkup2Resource($pengawasan),
+            ],
+        ]);
+    }
 }

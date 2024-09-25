@@ -149,4 +149,12 @@ class BUJKController extends Controller
 
         return back();
     }
+
+    // public function print(string $id)
+    // {
+    //     $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJKById($id);
+    //     $pengawasanRutin['rekomendasi'] = $this->pengawasanRutinService->getRekomendasiPengawasanRutinBUJKByPengawasanId($id);
+
+
+    // }
 }

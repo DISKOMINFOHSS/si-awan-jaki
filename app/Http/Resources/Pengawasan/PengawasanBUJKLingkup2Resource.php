@@ -28,7 +28,7 @@ class PengawasanBUJKLingkup2Resource extends JsonResource
                 'nib'                 => $usaha->nib,
                 'pjbu'                => $usaha->pjbu,
                 'alamat'              => $usaha->alamat,
-                'sertifikatStandar'   => $usaha->sertifikat_standar->transform(
+                'sertifikatStandar'   => $usaha->sertifikat_standar ? $usaha->sertifikat_standar->transform(
                     function ($sertifikat)
                     {
                         return [
@@ -39,7 +39,7 @@ class PengawasanBUJKLingkup2Resource extends JsonResource
                             'status'   => $sertifikat->status,
                         ];
                     }
-                ),
+                ) : null,
                 'daftarPaketPekerjaan' => $usaha->daftar_paket_pekerjaan,
             ],
             'statusIzinUsaha'          => $this->status_izin_usaha,

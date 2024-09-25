@@ -15,6 +15,8 @@ import {
 } from "react-icons/lia";
 import classNames from "classnames";
 import getDefaultData from "../../Utils/getDefaultData";
+import SelectPaketPekerjaan from "./APBD/SelectPaketPekerjaan";
+import { getDaftarPaketPekerjaan } from "../../Utils/apiEmonev";
 
 function FormInformasi({ proyekKonstruksi }) {
     const {
@@ -27,6 +29,7 @@ function FormInformasi({ proyekKonstruksi }) {
         tahunAnggaran,
         nilaiKontrak,
         nilaiPagu,
+        emonevId,
     } = proyekKonstruksi;
 
     const { data, setData, put, processing, reset } = useForm({
@@ -39,7 +42,35 @@ function FormInformasi({ proyekKonstruksi }) {
         tahunAnggaran: getDefaultData(tahunAnggaran, '2024'),
         nilaiKontrak: getDefaultData(nilaiKontrak),
         nilaiPagu: getDefaultData(nilaiPagu),
+        emonevId: getDefaultData(emonevId),
     });
+
+    const [ isSelectPaketPekerjaanVisible, setIsSelectPaketPekerjaanVisible ] = React.useState(false);
+    React.useEffect(() => {
+        const timeoutId = setTimeout(() => setIsSelectPaketPekerjaanVisible(false), 1000);
+        return () => clearTimeout(timeoutId);
+    }, [data.namaPaket]);
+
+    const [ daftarPaketPekerjaan, setDaftarPaketPekerjaan ] = React.useState([]);
+    React.useEffect(() => {
+        getDaftarPaketPekerjaan(data.tahunAnggaran).then(({ data }) => {
+            setDaftarPaketPekerjaan(data);
+          });
+    }, [data.tahunAnggaran]);
+
+    function handlePaketPekerjaanSelect(paketPekerjaan) {
+        console.log(paketPekerjaan);
+        const { id, paket, pagu, pagu_kontrak, tgl_kontrak } = paketPekerjaan;
+        setIsSelectPaketPekerjaanVisible(false);
+        setData({
+            ...data,
+            emonevId: id,
+            namaPaket: paket,
+            tanggalKontrak: tgl_kontrak,
+            nilaiKontrak: pagu_kontrak,
+            nilaiPagu: pagu,
+        });
+    }
 
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
     const [ isModalSuccessOpen, setIsModalSuccessOpen ] = React.useState(false);
@@ -63,12 +94,23 @@ function FormInformasi({ proyekKonstruksi }) {
             <Card className="w-full">
                 <Card.Body className="p-4">
                     <form method="post" onSubmit={handleSubmit} className="grid grid-cols-3 gap-6 mb-2">
-                        <div className="col-span-3">
+                        <div className="relative col-span-3">
                             <label htmlFor="nama" className="block mb-2 text-xs font-medium text-slate-800">Nama Paket Pekerjaan <span className="text-red-400">*</span></label>
-                            <input
+                            {/* <input
                                 type="text" name="namaPaket" id="namaPaket" placeholder="cth. Peningkatan Struktur Jalan Tanah Habang Kec. Simpur (Peningkatan Jalan Wilayah Perkotaan)"
                                 value={data.namaPaket} onChange={e => setData('namaPaket', e.target.value)}
                                 className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                            /> */}
+                            <textarea
+                                name="namaPaket" id="namaPaket" rows="2" placeholder="cth. Peningkatan Struktur Jalan Tanah Habang Kec. Simpur (Peningkatan Jalan Wilayah Perkotaan)"
+                                value={data.namaPaket} onChange={e => setData('namaPaket', e.target.value)} onClick={() => setIsSelectPaketPekerjaanVisible(!isSelectPaketPekerjaanVisible)}
+                                className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
+                            />
+                            <SelectPaketPekerjaan
+                                isVisible={isSelectPaketPekerjaanVisible}
+                                onSelect={handlePaketPekerjaanSelect}
+                                daftarPaketPekerjaan={daftarPaketPekerjaan}
+                                tahunAnggaran={data.tahunAnggaran}
                             />
                         </div>
                         <div className="col-span-1">

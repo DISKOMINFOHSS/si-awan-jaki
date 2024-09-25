@@ -26,6 +26,7 @@ class ProyekKonstruksiResource extends JsonResource
             'tanggalKontrak'            => $this->tanggal_kontrak,
             'tanggalMulaiPelaksanaan'   => $this->mulai_pelaksanaan,
             'tanggalSelesaiPelaksanaan' => $this->selesai_pelaksanaan,
+            'emonevId'                  => $this->emonev_id,
             'penyediaJasa'              => $this->whenLoaded('penyediaJasa'),
             'penggunaJasa'              => $this->whenLoaded('penggunaJasa'),
             'konsultanPengawas'         => $this->whenLoaded('konsultanPengawas'),

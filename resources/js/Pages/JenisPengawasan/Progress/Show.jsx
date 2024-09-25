@@ -155,21 +155,21 @@ const JenisPengawasanProgressShow = ({ data }) => {
                             <div className="grid grid-cols-3 gap-x-4 pb-3 border-b border-slate-200">
                                 <div>
                                     <div className="font-medium">Penyedia Jasa</div>
-                                    <div className="font-light text-slate-500">{proyekKonstruksi.penyediaJasa.nama}</div>
+                                    <div className="font-light text-slate-500">{proyekKonstruksi.penyediaJasa ? proyekKonstruksi.penyediaJasa.nama : '-'}</div>
                                 </div>
                                 <div className="col-span-2">
                                     <div className="font-medium">Alamat</div>
-                                    <div className="font-light text-slate-500">{proyekKonstruksi.penyediaJasa.alamat}</div>
+                                    <div className="font-light text-slate-500">{proyekKonstruksi.penyediaJasa ? proyekKonstruksi.penyediaJasa.alamat : '-'}</div>
                                 </div>
                             </div>
                             <div className="grid grid-cols-3 gap-x-4 py-3 border-b border-slate-200">
                                 <div>
                                     <div className="font-medium">Pengguna Jasa</div>
-                                    <div className="font-light text-slate-500">{proyekKonstruksi.penggunaJasa.nama}</div>
+                                    <div className="font-light text-slate-500">{proyekKonstruksi.penggunaJasa ? proyekKonstruksi.penggunaJasa.nama : '-'}</div>
                                 </div>
                                 <div className="col-span-2">
                                     <div className="font-medium">Instansi</div>
-                                    <div className="font-light text-slate-500">{proyekKonstruksi.penggunaJasa.instansi}</div>
+                                    <div className="font-light text-slate-500">{proyekKonstruksi.penggunaJasa ? proyekKonstruksi.penggunaJasa.instansi : '-'}</div>
                                 </div>
                             </div>
                             <div className="pt-3">

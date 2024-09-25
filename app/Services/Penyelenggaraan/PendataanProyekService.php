@@ -24,6 +24,7 @@ class PendataanProyekService
             'tanggal_kontrak'     => $data['tanggal_kontrak'],
             'mulai_pelaksanaan'   => $data['mulai_pelaksanaan'],
             'selesai_pelaksanaan' => $data['selesai_pelaksanaan'],
+            'emonev_id'           => $data['emonev_id'],
             'created_by'          => $data['created_by'],
         ]);
 
@@ -139,6 +140,7 @@ class PendataanProyekService
         $proyekKonstruksi->tanggal_kontrak = $data['tanggal_kontrak'];
         $proyekKonstruksi->mulai_pelaksanaan = $data['mulai_pelaksanaan'];
         $proyekKonstruksi->selesai_pelaksanaan = $data['selesai_pelaksanaan'];
+        $proyekKonstruksi->emonev_id = $data['emonev_id'];
 
         $proyekKonstruksi->save();
 

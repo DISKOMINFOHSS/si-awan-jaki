@@ -56,8 +56,8 @@ class ProyekController extends Controller
             'tanggalSelesai' => 'nullable|date|after_or_equal:tanggalMulai',
             'tanggalKontrak' => 'nullable|date',
             'tahunAnggaran'  => 'nullable|digits:4',
-            'nilaiKontrak'   => 'nullable|decimal:0,2',
-            'nilaiPagu'      => 'nullable|decimal:0,2',
+            'nilaiKontrak'   => 'nullable|decimal:0,4',
+            'nilaiPagu'      => 'nullable|decimal:0,4',
         ]);
         $userId = auth()->user()->id;
 
@@ -71,6 +71,7 @@ class ProyekController extends Controller
             'tanggal_kontrak'     => $validatedData['tanggalKontrak'],
             'mulai_pelaksanaan'   => $validatedData['tanggalMulai'],
             'selesai_pelaksanaan' => $validatedData['tanggalSelesai'],
+            'emonev_id'           => $request->input('emonevId'),
             'created_by'          => $userId,
         ]);
 
@@ -116,8 +117,8 @@ class ProyekController extends Controller
             'tanggalSelesai' => 'nullable|date|after_or_equal:tanggalMulai',
             'tanggalKontrak' => 'nullable|date',
             'tahunAnggaran'  => 'nullable|digits:4',
-            'nilaiKontrak'   => 'nullable|decimal:0,2',
-            'nilaiPagu'      => 'nullable|decimal:0,2',
+            'nilaiKontrak'   => 'nullable|decimal:0,4',
+            'nilaiPagu'      => 'nullable|decimal:0,4',
         ]);
 
         $this->proyekService->updateProyekKonstruksi(
@@ -132,6 +133,7 @@ class ProyekController extends Controller
             'tanggal_kontrak'     => $validatedData['tanggalKontrak'],
             'mulai_pelaksanaan'   => $validatedData['tanggalMulai'],
             'selesai_pelaksanaan' => $validatedData['tanggalSelesai'],
+            'emonev_id'           => $request->input('emonevId'),
         ]);
 
         return back();

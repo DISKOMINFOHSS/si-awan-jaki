@@ -286,4 +286,28 @@ class Lingkup2Controller extends Controller
             ],
         ]);
     }
+
+    public function recommend(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup2Service->checkPengawasanBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'rekomendasi'   => 'required',
+            'keterangan'    => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup2Service->addRekomendasiPengawasanInsidental(
+            $id,
+            [
+                'rekomendasi'    => $validatedData['rekomendasi'],
+                'keterangan'     => $validatedData['keterangan'],
+                'created_by'     => $userId,
+            ],
+        );
+
+        return back();
+    }
 }

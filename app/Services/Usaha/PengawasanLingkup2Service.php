@@ -4,6 +4,7 @@ namespace App\Services\Usaha;
 
 use App\Models\Usaha\KesesuaianKegiatanLingkup2;
 use App\Models\Usaha\PengawasanBUJKLingkup2;
+use App\Models\Usaha\RekomendasiPengawasanInsidentalBUJK;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
@@ -156,5 +157,18 @@ class PengawasanLingkup2Service
     {
         $kesesuaianKegiatan = KesesuaianKegiatanLingkup2::find($id);
         $kesesuaianKegiatan->delete();
+    }
+
+    public function addRekomendasiPengawasanInsidental(string $id, array $data)
+    {
+        $pengawasan = PengawasanBUJKLingkup2::find($id);
+
+        $rekomendasi = new RekomendasiPengawasanInsidentalBUJK;
+
+        $rekomendasi->rekomendasi = $data['rekomendasi'];
+        $rekomendasi->keterangan = $data['keterangan'];
+        $rekomendasi->created_by = $data['created_by'];
+
+        $pengawasan->rekomendasi()->save($rekomendasi);
     }
 }

@@ -189,6 +189,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::delete('/{id}/paket-pekerjaan/{kesesuaian_id}', 'destroyKesesuaianKegiatan');
 
                     Route::get('/{id}/rekomendasi', 'recommendation');
+                    Route::post('/{id}/rekomendasi', 'recommend');
                 });
 
                 Route::name('3.')->prefix('/3')

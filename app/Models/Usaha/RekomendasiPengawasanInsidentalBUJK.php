@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RekomendasiPengawasanInsidentalBUJK extends Model
 {
-    use SoftDeles;
+    use SoftDeletes;
 
     protected $table = 'rekomendasi_pengawasan_insidental_bujk';
 

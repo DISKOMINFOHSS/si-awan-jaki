@@ -10,6 +10,7 @@ import {
 } from "../../../../../Components/Usaha/BUJK/InformasiPengawasan";
 
 import { LiaHomeSolid, LiaPrintSolid } from "react-icons/lia";
+import getDefaultData from "../../../../../Utils/getDefaultData";
 
 const RekomendasiPengawasanBUJKLingkup2 = ({ data }) => {
     console.log(data);
@@ -56,7 +57,7 @@ const RekomendasiPengawasanBUJKLingkup2 = ({ data }) => {
             </div>
             <FormRekomendasi
                 tertibPengawasan="Pengawasan Tertib Usaha Jasa Konstruksi"
-                rekomendasi={{}}
+                rekomendasi={getDefaultData(pengawasan.rekomendasi, {})}
                 url={`usaha/${lingkupPengawasan.id}/${pengawasan.id}`}
             />
         </>

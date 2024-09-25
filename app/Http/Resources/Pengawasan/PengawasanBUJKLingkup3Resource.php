@@ -21,6 +21,7 @@ class PengawasanBUJKLingkup3Resource extends JsonResource
             'id'                      => $this->id,
             'jenisPengawasan'         => $this->jenis_pengawasan,
             'tanggalPengawasan'       => $this->tanggal_pengawasan,
+            'pengawasanRutinId'       => $this->whenHas('pengawasan_rutin_id'),
             'usaha'                   => [
                 'id'                  => $usaha->id,
                 'nama'                => $usaha->nama,

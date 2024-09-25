@@ -97,6 +97,10 @@ class Lingkup5Controller extends Controller
         $pengawasan['usaha']['daftarLaporan'] = $this->bujkService
             ->getDaftarLaporanBUJKByTahun($pengawasan->usaha->id, Carbon::createFromFormat('Y-m-d', $pengawasan->tanggal_pengawasan)->year);
 
+        if ($pengawasan->jenis_pengawasan === 'Rutin') {
+            $pengawasan['pengawasan_rutin_id'] = $this->pengawasanRutinService->getPengawasanRutinBUJKByLingkup5Id($pengawasan->id)->id;
+        }
+
         return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup5/Show', [
             'data' => [
                 'lingkupPengawasan' => $lingkupPengawasan,

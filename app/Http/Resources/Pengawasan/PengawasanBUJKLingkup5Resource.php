@@ -18,6 +18,7 @@ class PengawasanBUJKLingkup5Resource extends JsonResource
             'id'                      => $this->id,
             'jenisPengawasan'         => $this->jenis_pengawasan,
             'tanggalPengawasan'       => $this->tanggal_pengawasan,
+            'pengawasanRutinId'       => $this->whenHas('pengawasan_rutin_id'),
             'usaha'                   => $this->whenLoaded('usaha'),
             'daftarPemeriksaan'       => $this->daftar_pemeriksaan->transform(function ($pemeriksaan)
             {

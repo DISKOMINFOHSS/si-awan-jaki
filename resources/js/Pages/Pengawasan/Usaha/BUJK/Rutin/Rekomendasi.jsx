@@ -1,9 +1,11 @@
 import React from "react";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
 import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
 import Card from "../../../../../Components/Card";
+import ModalError from "../../../../../Components/ModalError";
+import FormRekomendasi from "../../../../../Components/Pengawasan/FormRekomendasi";
 import {
     InformasiTertibPengawasanLingkup2,
     InformasiTertibPengawasanLingkup3,
@@ -11,14 +13,32 @@ import {
     InformasiTertibPengawasanLingkup5,
 } from "../../../../../Components/Usaha/BUJK/InformasiPengawasan";
 
-import { LiaHomeSolid, LiaPrintSolid } from "react-icons/lia";
-import FormRekomendasi from "../../../../../Components/Pengawasan/FormRekomendasi";
 import { formatDateToIndonesia } from "../../../../../Utils/formatDate";
+import { LiaHomeSolid, LiaPrintSolid } from "react-icons/lia";
 
 const PengawasanRutinBUJKRekomendasi = ({ data }) => {
     console.log(data);
     const { pengawasan } = data;
-    const { usaha } = pengawasan;
+    const {
+        usaha,
+        tertibPengawasanLingkup2,
+        tertibPengawasanLingkup3,
+        tertibPengawasanLingkup4,
+        tertibPengawasanLingkup5,
+    } = pengawasan;
+
+    const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
+
+    React.useEffect(() => {
+        if (
+            tertibPengawasanLingkup2 === null ||
+            tertibPengawasanLingkup3 === null ||
+            tertibPengawasanLingkup4 === null ||
+            tertibPengawasanLingkup5
+        ) {
+            setIsModalErrorOpen(true);
+        }
+    }, []);
 
     return (
         <>
@@ -30,8 +50,9 @@ const PengawasanRutinBUJKRekomendasi = ({ data }) => {
             </Breadcrumb>
             <div className="flex justify-between items-center mt-2 mb-4">
                 <div>
-                    <h3 className="font-light text-xs text-slate-500">Pengawasan Tertib Usaha Jasa Konstruksi secara Rutin</h3>
+                    <h3 className="font-light text-xs text-slate-500">Pengawasan Penyelenggaraan Jasa Konstruksi</h3>
                     <h1 className="font-medium text-xl text-slate-800 uppercase">{usaha.nama}</h1>
+                    <h2 className="text-xs text-slate-600">Pengawasan Tertib Usaha Jasa Konstruksi secara Rutin</h2>
                 </div>
                 <div className="flex items-center gap-x-2">
                     <a
@@ -179,6 +200,15 @@ const PengawasanRutinBUJKRekomendasi = ({ data }) => {
                 rekomendasi={{}}
                 url={`/usaha/bujk/rutin/${pengawasan.id}`}
             />
+            <ModalError
+                isVisible={isModalErrorOpen}
+                onClose={() => {router.get(`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.id}`)}}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Terdapat lingkup pengawasan yang masih belum diverifikasi. Silakan periksa kembali.
+                </div>
+            </ModalError>
         </>
     );
 }

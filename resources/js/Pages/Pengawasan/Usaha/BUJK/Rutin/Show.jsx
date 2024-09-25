@@ -20,15 +20,20 @@ import {
     LiaListAltSolid,
     LiaEllipsisHSolid,
     LiaInfoCircleSolid,
-    LiaCheckCircleSolid,
-    LiaTrashAltSolid,
     LiaPrintSolid
 } from "react-icons/lia";
+import ModalError from "../../../../../Components/ModalError";
 
 const PengawasanRutinBUJKIndex = ({ data }) => {
     console.log(data);
     const { pengawasan } = data;
-    const { usaha } = pengawasan;
+    const {
+        usaha,
+        tertibPengawasanLingkup2,
+        tertibPengawasanLingkup3,
+        tertibPengawasanLingkup4,
+        tertibPengawasanLingkup5,
+    } = pengawasan;
 
     const [
         moreDropdownRef,
@@ -36,8 +41,19 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
         toggleMoreDropdown
     ] = useToggleWithClickOutside(false);
 
+    const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
+
     function handleRekomendasiClick() {
-        router.get(`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.id}/rekomendasi`);
+        if (
+            tertibPengawasanLingkup2 !== null &&
+            tertibPengawasanLingkup3 !== null &&
+            tertibPengawasanLingkup4 !== null &&
+            tertibPengawasanLingkup5
+        ) {
+            router.get(`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.id}/rekomendasi`);
+        }
+
+        return setIsModalErrorOpen(true);
     }
 
     return (
@@ -180,7 +196,7 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
                         </Card.Body>
                     </Card>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-5">
                     <div className="space-y-2">
                         <div className="flex items-start gap-x-2">
                             {/* <div className="rounded-full bg-blue-100 text-blue-500 h-9 w-9 flex items-center justify-center aspect-square text-center group-hover:bg-blue-200">{1}</div> */}
@@ -223,6 +239,15 @@ const PengawasanRutinBUJKIndex = ({ data }) => {
                     </div>
                 </div>
             </div>
+            <ModalError
+                isVisible={isModalErrorOpen}
+                onClose={() => setIsModalErrorOpen(false)}
+            >
+                <div className="font-medium text-slate-700 mb-1">Uh Oh!</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Terdapat lingkup pengawasan yang masih belum diverifikasi. Silakan periksa kembali.
+                </div>
+            </ModalError>
         </>
     );
 }

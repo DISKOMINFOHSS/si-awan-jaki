@@ -98,6 +98,10 @@ class Lingkup3Controller extends Controller
         $pengawasan['usaha']['sertifikat_standar'] = $this->bujkService->getDaftarSertifikatStandarBUJKAktif($pengawasan->usaha->id);
         $pengawasan['usaha']['daftar_paket_pekerjaan'] = $this->bujkService->getDaftarPaketPekerjaanByUsahaId($pengawasan->usaha->id);
 
+        if ($pengawasan->jenis_pengawasan === 'Rutin') {
+            $pengawasan['pengawasan_rutin_id'] = $this->pengawasanRutinService->getPengawasanRutinBUJKByLingkup3Id($pengawasan->id)->id;
+        }
+
         return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup3/Show', [
             'data' => [
                 'lingkupPengawasan' => $lingkupPengawasan,

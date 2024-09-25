@@ -27,7 +27,7 @@ import {
 import FormVerifikasiPengawasanLingkup2 from "../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup2";
 import FormEditPengawasanKegiatan from "../../../../../Components/Usaha/BUJK/FormEditPengawasanKegiatan";
 import ModalDelete from "../../../../../Components/ModalDelete";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
 const PengawasanBUJKLingkup2Show = ({ data }) => {
     console.log(data);
@@ -44,6 +44,16 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
     const [isModalVerificationOpened, setIsModalVerificationOpened] = React.useState(false);
     const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
 
+    function handleRekomendasiClick() {
+        switch (pengawasan.jenisPengawasan) {
+            case "Rutin":
+                return router.get(`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.pengawasanRutinId}/rekomendasi`);
+            case "Insidental":
+                console.log(pengawasan);
+                break;
+        }
+    }
+
     return (
         <>
             <Breadcrumb>
@@ -52,7 +62,7 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                 <Breadcrumb.Item href={`/admin/pengawasan/usaha/${lingkupPengawasan.id}`}>{`${lingkupPengawasan.id}. ${lingkupPengawasan.label}`}</Breadcrumb.Item>
                 <Breadcrumb.Item active>{usaha.nama}</Breadcrumb.Item>
             </Breadcrumb>
-            <div className="flex justify-between items-start mt-2 mb-4">
+            <div className="flex justify-between items-center mt-2 mb-4">
                 <div>
                     <h3 className="font-light text-xs text-slate-500">Pengawasan Tertib Usaha Jasa Konstruksi</h3>
                     <h1 className="font-medium text-xl text-slate-800 uppercase">{usaha.nama}</h1>
@@ -61,13 +71,15 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                 <div className="flex items-center gap-x-2">
                     {
                         pengawasan.tertibPengawasan ? (
-                            <Link
-                                href={`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.pengawasanRutinId}`}
+                            <button
+                                type="button"
                                 className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                                onClick={() => handleRekomendasiClick()}
                             >
+
                                 <LiaListAltSolid size={18} />
                                 <span>Rekomendasi</span>
-                            </Link>
+                            </button>
                         ) : (
                             <button
                                 type="button"
@@ -80,7 +92,7 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                         )
                     }
                     <Dropdown ref={moreDropdownRef}>
-                    <Dropdown.Toggle
+                        <Dropdown.Toggle
                             onClick={toggleMoreDropdown}
                             className="w-fit min-h-10 flex justify-center items-center space-x-1 text-slate-500 border border-slate-200 rounded text-xs tracking-wide p-2.5 shadow-sm"
                         >
@@ -109,7 +121,7 @@ const PengawasanBUJKLingkup2Show = ({ data }) => {
                             <button
                                 type="button"
                                 className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
-
+                                onClick={() => {toggleMoreDropdown(), handleRekomendasiClick()}}
                             >
                                 <LiaListAltSolid size={16} />
                                 <span>Rekomendasi</span>

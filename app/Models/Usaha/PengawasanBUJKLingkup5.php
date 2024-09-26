@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PengawasanBUJKLingkup5 extends Model
@@ -45,5 +46,10 @@ class PengawasanBUJKLingkup5 extends Model
     public function verifiedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'verified_by')->withDefault();
+    }
+
+    public function rekomendasi(): MorphOne
+    {
+        return $this->morphOne(RekomendasiPengawasanInsidentalBUJK::class, 'pengawasan');
     }
 }

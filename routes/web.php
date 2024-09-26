@@ -238,6 +238,10 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::delete('/{id}', 'destroy');
 
                     Route::post('/{id}/verification', 'verify');
+
+                    Route::get('/{id}/rekomendasi', 'recommendation');
+                    Route::post('/{id}/rekomendasi', 'recommend');
+
                     Route::post('/{id}/{pemeriksaan_id}', 'storePemeriksaan');
                 });
 

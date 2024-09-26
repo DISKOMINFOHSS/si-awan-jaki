@@ -4,6 +4,7 @@ namespace App\Services\Usaha;
 
 use App\Models\Usaha\PemeriksaanPengembanganUsahaLingkup5;
 use App\Models\Usaha\PengawasanBUJKLingkup5;
+use App\Models\Usaha\RekomendasiPengawasanInsidentalBUJK;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Query\JoinClause;
@@ -120,5 +121,18 @@ class PengawasanLingkup5Service
         $pemeriksaan->save();
 
         return $pemeriksaan->id;
+    }
+
+    public function addRekomendasiPengawasanInsidental(string $id, array $data)
+    {
+        $pengawasan = PengawasanBUJKLingkup5::find($id);
+
+        $rekomendasi = new RekomendasiPengawasanInsidentalBUJK;
+
+        $rekomendasi->rekomendasi = $data['rekomendasi'];
+        $rekomendasi->keterangan = $data['keterangan'];
+        $rekomendasi->created_by = $data['created_by'];
+
+        $pengawasan->rekomendasi()->save($rekomendasi);
     }
 }

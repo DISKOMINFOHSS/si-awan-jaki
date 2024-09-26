@@ -205,6 +205,9 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                     Route::post('/{id}/paket-pekerjaan', 'storeKesesuaianKegiatan');
                     Route::delete('/{id}/paket-pekerjaan/{kesesuaian_id}', 'destroyKesesuaianKegiatan');
+
+                    Route::get('/{id}/rekomendasi', 'recommendation');
+                    Route::post('/{id}/rekomendasi', 'recommend');
                 });
 
                 Route::name('4.')->prefix('/4')

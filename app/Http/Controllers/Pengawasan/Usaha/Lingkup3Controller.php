@@ -260,4 +260,46 @@ class Lingkup3Controller extends Controller
 
         return redirect("/admin/pengawasan/usaha/3/$id");
     }
+
+    public function recommendation(string $id)
+    {
+        $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(3);
+        $pengawasan = $this->pengawasanLingkup3Service->getPengawasanBUJKById($id);
+
+        if ($pengawasan->jenis_pengawasan === 'Rutin') {
+            $pengawasanRutinId = $this->pengawasanRutinService->getPengawasanRutinBUJKByLingkup3Id($pengawasan->id)->id;
+            return redirect("/admin/pengawasan/usaha/bujk/rutin/$pengawasanRutinId/rekomendasi");
+        }
+
+        return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup3/Rekomendasi', [
+            'data' => [
+                'lingkupPengawasan' => $lingkupPengawasan,
+                'pengawasan'        => new PengawasanBUJKLingkup3Resource($pengawasan),
+            ],
+        ]);
+    }
+
+    public function recommend(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup3Service->checkPengawasanBUJKExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'rekomendasi'   => 'required',
+            'keterangan'    => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup3Service->addRekomendasiPengawasanInsidental(
+            $id,
+            [
+                'rekomendasi'    => $validatedData['rekomendasi'],
+                'keterangan'     => $validatedData['keterangan'],
+                'created_by'     => $userId,
+            ],
+        );
+
+        return back();
+    }
 }

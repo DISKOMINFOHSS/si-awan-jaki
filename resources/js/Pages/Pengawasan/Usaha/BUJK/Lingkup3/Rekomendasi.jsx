@@ -1,18 +1,20 @@
 import React from "react";
+
 import Layout from "../../../../../Components/Layout";
 import Breadcrumb from "../../../../../Components/Breadcrumb";
 import FormRekomendasi from "../../../../../Components/Pengawasan/FormRekomendasi";
 import {
     InformasiTambahanPengawasan,
-    InformasiTertibPengawasanLingkup2,
+    InformasiTertibPengawasanLingkup3,
     InformasiUmumPengawasan,
     InformasiUsaha
 } from "../../../../../Components/Usaha/BUJK/InformasiPengawasan";
 
-import { LiaHomeSolid, LiaPrintSolid } from "react-icons/lia";
 import getDefaultData from "../../../../../Utils/getDefaultData";
 
-const RekomendasiPengawasanBUJKLingkup2 = ({ data }) => {
+import { LiaHomeSolid, LiaPrintSolid } from "react-icons/lia";
+
+const RekomendasiPengawasanBUJKLingkup3 = ({ data }) => {
     console.log(data);
     const { lingkupPengawasan, pengawasan } = data;
     const { usaha } = pengawasan;
@@ -52,7 +54,7 @@ const RekomendasiPengawasanBUJKLingkup2 = ({ data }) => {
                 </div>
                 <div className="space-y-4">
                     <InformasiUmumPengawasan pengawasan={pengawasan} />
-                    <InformasiTertibPengawasanLingkup2 pengawasan={pengawasan} />
+                    <InformasiTertibPengawasanLingkup3 pengawasan={pengawasan} />
                 </div>
             </div>
             <FormRekomendasi
@@ -64,6 +66,7 @@ const RekomendasiPengawasanBUJKLingkup2 = ({ data }) => {
     );
 }
 
-RekomendasiPengawasanBUJKLingkup2.layout = page => <Layout children={page} />;
+RekomendasiPengawasanBUJKLingkup3.layout = page => <Layout children={page} />;
 
-export default RekomendasiPengawasanBUJKLingkup2;
+export default RekomendasiPengawasanBUJKLingkup3;
+

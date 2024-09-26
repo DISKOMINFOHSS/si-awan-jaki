@@ -50,8 +50,7 @@ const PengawasanBUJKLingkup3Show = ({ data }) => {
             case "Rutin":
                 return router.get(`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.pengawasanRutinId}/rekomendasi`);
             case "Insidental":
-                console.log(pengawasan);
-                break;
+                return router.get(`/admin/pengawasan/usaha/${lingkupPengawasan.id}/${pengawasan.id}/rekomendasi`);
         }
     }
 

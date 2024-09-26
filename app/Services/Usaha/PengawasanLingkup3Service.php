@@ -4,6 +4,7 @@ namespace App\Services\Usaha;
 
 use App\Models\Usaha\KesesuaianKegiatanLingkup3;
 use App\Models\Usaha\PengawasanBUJKLingkup3;
+use App\Models\Usaha\RekomendasiPengawasanInsidentalBUJK;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
@@ -146,5 +147,18 @@ class PengawasanLingkup3Service
     {
         $kesesuaianKegiatan = KesesuaianKegiatanLingkup3::find($id);
         $kesesuaianKegiatan->delete();
+    }
+
+    public function addRekomendasiPengawasanInsidental(string $id, array $data)
+    {
+        $pengawasan = PengawasanBUJKLingkup3::find($id);
+
+        $rekomendasi = new RekomendasiPengawasanInsidentalBUJK;
+
+        $rekomendasi->rekomendasi = $data['rekomendasi'];
+        $rekomendasi->keterangan = $data['keterangan'];
+        $rekomendasi->created_by = $data['created_by'];
+
+        $pengawasan->rekomendasi()->save($rekomendasi);
     }
 }

@@ -211,21 +211,33 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 });
 
                 Route::name('4.')->prefix('/4')
-                ->controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup4Controller::class)
                 ->group(function () {
 
-                    // Route::get('/{jenis_usaha}', 'index')->name('index');
-                    Route::post('/', 'store');
-                    Route::put('/{id}', 'update');
-                    Route::delete('/{id}', 'destroy');
-
-                    Route::name('bujk.')->prefix('/bujk')
+                    Route::controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup4Controller::class)
                     ->group(function () {
-                        Route::get('/', 'indexBUJK');
-                        Route::get('/{id}/rutin', 'showPengawasanRutinBUJK');
-                        Route::post('/{id}/verification', 'verifyPengawasanRutinBUJK');
+                        // Route::get('/{jenis_usaha}', 'index')->name('index');
+                        Route::post('/', 'store');
+                        Route::put('/{id}', 'update');
+                        Route::delete('/{id}', 'destroy');
+
+                        // Route::prefix('/bujk')
+                        // ->group(function () {
+                            Route::get('/bujk', 'indexBUJK');
+                            Route::get('/bujk/{id}/rutin', 'showPengawasanRutinBUJK');
+                            Route::post('/bujk/{id}/verification', 'verifyPengawasanBUJK');
+
+                            // Route::get('/{id}/rekomendasi', 'recommendationPengawasanBUJK');
+                            // Route::post('/{id}/rekomendasi', 'recommend');
+                        // });
                     });
 
+                    Route::name('bujk.')->prefix('/bujk')
+                    ->controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup4\BUJKController::class)
+                    ->group(function () {
+                        Route::get('/{id}/insidental', 'insidental');
+                        // Route::get('/{id}/rekomendasi', 'recommendation');
+                        // Route::post('/{id}/rekomendasi', 'recommend');
+                    });
                 });
 
                 Route::name('5.')->prefix('/5')

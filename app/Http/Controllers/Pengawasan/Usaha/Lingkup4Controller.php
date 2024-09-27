@@ -58,7 +58,7 @@ class Lingkup4Controller extends Controller
 
         if ($jenisUsaha->jenisUsaha === "Badan Usaha Jasa Konstruksi")
         {
-            if ($validatedData['jenis' === 'Rutin'])
+            if ($validatedData['jenis'] === 'Rutin')
             {
                 $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJK(
                     $validatedData['usahaId'],
@@ -195,7 +195,7 @@ class Lingkup4Controller extends Controller
         ]);
     }
 
-    public function verifyPengawasanRutinBUJK(string $id, Request $request)
+    public function verifyPengawasanBUJK(string $id, Request $request)
     {
         if (!$this->pengawasanLingkup4Service->checkPengawasanBUJKExists($id)) {
             return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
@@ -219,6 +219,7 @@ class Lingkup4Controller extends Controller
             'verified_by'            => $userId,
         ]);
 
-        return redirect("/admin/pengawasan/usaha/4/bujk/$id/rutin");
+        // return redirect("/admin/pengawasan/usaha/4/bujk/$id/rutin");
+        return back();
     }
 }

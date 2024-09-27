@@ -4,35 +4,40 @@ import { router } from "@inertiajs/react";
 import Layout from "../../../../../../Components/Layout";
 import Breadcrumb from "../../../../../../Components/Breadcrumb";
 import Card from "../../../../../../Components/Card";
-import Dropdown from "../../../../../../Components/Dropdown";
 import ModalDelete from "../../../../../../Components/ModalDelete";
-
 import FormDokumenNIB from "../../../../../../Components/Usaha/FormDokumenNIB";
-import FormSertifikatStandar from "../../../../../../Components/Usaha/BUJK/FormSertifikatStandar";
 import FormVerifikasiPengawasanLingkup4 from "../../../../../../Components/Usaha/BUJK/FormVerifikasiPengawasanLingkup4";
 import FormEditPengawasan from "../../../../../../Components/Usaha/BUJK/FormEditPengawasan";
-import { InformasiTertibPengawasanLingkup4, InformasiUmumPengawasan } from "../../../../../../Components/Usaha/BUJK/InformasiPengawasan";
+import {
+    InformasiTertibPengawasanLingkup4,
+    InformasiUmumPengawasan,
+} from "../../../../../../Components/Usaha/BUJK/InformasiPengawasan";
 
 import useToggleWithClickOutside from "../../../../../../Hooks/useToggleWithClickOutside";
 
 import {
     LiaHomeSolid,
-    LiaListAltSolid,
-    LiaEllipsisHSolid,
-    LiaInfoCircleSolid,
     LiaFileAlt,
     LiaCloudUploadAltSolid,
-    LiaSearchSolid,
-    LiaPlusCircleSolid,
-    LiaEditSolid,
-    LiaTrashAltSolid,
+    LiaListAltSolid,
     LiaCheckCircleSolid,
+    LiaTrashAltSolid,
+    LiaEditSolid,
+    LiaInfoCircleSolid,
+    LiaEllipsisHSolid,
 } from "react-icons/lia";
+import Dropdown from "../../../../../../Components/Dropdown";
 
-const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
+const PengawasanInsidentalBUJKLingkup4Show = ({ data }) => {
     console.log(data);
     const { lingkupPengawasan, pengawasan } = data;
     const { usaha } = pengawasan;
+
+    const [ isModalNIBOpen, setIsModalNIBOpen ] = React.useState(false);
+
+    const [ isModalEditOpen, setIsModalEditOpen ] = React.useState(false);
+    const [ isModalVerificationOpen, setIsModalVerificationOpen ] = React.useState(false);
+    const [ isModalDeletePengawasanOpen, setIsModalDeletePengawasanOpen ] = React.useState(false);
 
     const [
         moreDropdownRef,
@@ -40,25 +45,12 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
         toggleMoreDropdown
     ] = useToggleWithClickOutside(false);
 
-    const [ isModalNIBOpen, setIsModalNIBOpen ] = React.useState(false);
-
-    const [ isModalSBUOpen, setIsModalSBUOpen ] = React.useState(false);
-    const [ selectedSertifikat, setSelectedSertifikat ] = React.useState({});
-
-    const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
-    const [ selectedSertifikatId, setSelectedSertifikatId ] = React.useState('');
-
-    const [ isModalEditOpen, setIsModalEditOpen ] = React.useState(false);
-    const [ isModalVerificationOpened, setIsModalVerificationOpened ] = React.useState(false);
-    const [ isModalDeletePengawasanOpen, setIsModalDeletePengawasanOpen ] = React.useState(false);
-
     function handleRekomendasiClick() {
         switch (pengawasan.jenisPengawasan) {
             case "Rutin":
                 return router.get(`/admin/pengawasan/usaha/bujk/rutin/${pengawasan.pengawasanRutinId}/rekomendasi`);
             case "Insidental":
-                console.log(pengawasan);
-                break;
+                return router.get(`/admin/pengawasan/usaha/${lingkupPengawasan.id}/bujk/${pengawasan.id}/rekomendasi`);
         }
     }
 
@@ -92,7 +84,7 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                             <button
                                 type="button"
                                 className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
-                                onClick={() => setIsModalVerificationOpened(true)}
+                                onClick={() => setIsModalVerificationOpen(true)}
                             >
                                 <LiaCheckCircleSolid size={18} />
                                 <span>Verifikasi Pengawasan</span>
@@ -100,7 +92,7 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                         )
                     }
                     <Dropdown ref={moreDropdownRef}>
-                        <Dropdown.Toggle
+                    <Dropdown.Toggle
                             onClick={toggleMoreDropdown}
                             className="w-fit min-h-10 flex justify-center items-center space-x-1 text-slate-500 border border-slate-200 rounded text-xs tracking-wide p-2.5 shadow-sm"
                         >
@@ -137,7 +129,7 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                             <button
                                 type="button"
                                 className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
-                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpened(true)}}
+                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpen(true)}}
                             >
                                 <LiaCheckCircleSolid size={16} />
                                 <span>Verifikasi Pengawasan</span>
@@ -222,100 +214,14 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                     <InformasiTertibPengawasanLingkup4 pengawasan={pengawasan} />
                 </div>
             </div>
-            <div className="my-4">
-                <Card className="w-full h-fit">
-                    <Card.Header className="flex justify-between items-center">
-                        <div>
-                            <h3 className="font-medium text-slate-700 leading-tight">Sertifikat Badan Usaha (SBU)</h3>
-                            {/* <h4 className="font-light text-slate-500 text-[11px]">Daftar Sertifikat Standar Badan Usaha Jasa Konstruksi</h4> */}
-                        </div>
-                        <div className="flex items-center gap-x-2">
-                            <div className="relative mx-2">
-                                <div className="pointer-events-none absolute inset-y-0 left-2 flex items-center">
-                                    <LiaSearchSolid size={18} className="text-slate-500 -scale-x-100" />
-                                </div>
-                                <input type="search" name="search" placeholder="Cari..."
-                                className="border border-slate-200 rounded py-2 pl-8 block w-56 text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs" />
-                            </div>
-                            <button
-                                className="w-full flex justify-center items-center space-x-1 text-white bg-blue-600 hover:bg-blue-800 rounded text-[11px] tracking-wide px-2.5 py-2 shadow-sm"
-                                onClick={() => {setSelectedSertifikat({}), setIsModalSBUOpen(true)}}
-                            >
-                                <LiaPlusCircleSolid size={16}/>
-                                <span>Tambah</span>
-                            </button>
-                        </div>
-                    </Card.Header>
-                    <Card.Body>
-                        <div className="relative overflow-x-auto">
-                            <table className="w-full text-xs">
-                                <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase">
-                                    <tr>
-                                        <th scope="col" className="p-4 font-medium border-r border-slate-200">#</th>
-                                        <th scope="col" className="p-4 font-medium min-w-72 border-r border-slate-200">Nomor Sertifikat Standar</th>
-                                        <th scope="col" className="p-4 font-medium min-w-44 border-r border-slate-200">Jenis Usaha</th>
-                                        <th scope="col" className="p-4 font-medium min-w-72 border-r border-slate-200">Subklasifikasi Usaha</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-slate-700">
-                                {
-                                    usaha.daftarSertifikatStandar.map((sertifikat, i) => (
-                                        <tr key={sertifikat.id} className="border-b border-slate-100 hover:bg-slate-50">
-                                            <td className="px-4 py-5 text-center">{i + 1}</td>
-                                            <td className="px-4 py-5">
-                                                <div>
-                                                    <div>Sertifikat Badan Usaha (SBU) Konstruksi</div>
-                                                    <div className="font-light text-slate-500">Nomor Sertifikat: {sertifikat.nomorSertifikat}</div>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-5 text-center">{sertifikat.jenisUsaha}</td>
-                                            <td className="px-4 py-5 font-light">{sertifikat.subklasifikasi}</td>
-                                            <td className="px-4 py-5 text-center">
-                                                <div className="flex gap-x-2">
-                                                    <button
-                                                        type="button"
-                                                        className="rounded border border-slate-200 text-slate-500 p-2 hover:bg-slate-200"
-                                                        onClick={() => {setSelectedSertifikat(sertifikat), setIsModalSBUOpen(true)}}
-                                                    >
-                                                        <LiaEditSolid size={18} />
-                                                    </button>
-                                                    <button
-                                                        className="rounded border border-slate-200 text-red-500 p-2 hover:bg-slate-200"
-                                                        onClick={() => {setSelectedSertifikatId(sertifikat.id), setIsModalDeleteOpen(true)}}
-                                                    >
-                                                        <LiaTrashAltSolid size={18} />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))
-                                }
-                                </tbody>
-                            </table>
-                        </div>
-                    </Card.Body>
-                </Card>
-            </div>
             <FormDokumenNIB
                 isVisible={isModalNIBOpen}
                 onClose={() => setIsModalNIBOpen(false)}
                 usaha={usaha}
             />
-            <FormSertifikatStandar
-                isVisible={isModalSBUOpen}
-                onClose={() => setIsModalSBUOpen(false)}
-                usaha={{
-                    id: usaha.id,
-                    nama: usaha.nama,
-                    nib: usaha.nib,
-                    pjbu: usaha.pjbu
-                }}
-                sertifikatStandar={selectedSertifikat}
-            />
             <FormVerifikasiPengawasanLingkup4
-                isVisible={isModalVerificationOpened}
-                onClose={() => setIsModalVerificationOpened(false)}
+                isVisible={isModalVerificationOpen}
+                onClose={() => setIsModalVerificationOpen(false)}
                 lingkupPengawasan={lingkupPengawasan}
                 pengawasan={pengawasan}
             />
@@ -336,21 +242,10 @@ const PengawasanRutinBUJKLingkup4Show = ({ data }) => {
                     Data yang telah dihapus tidak dapat dikembalikan.
                 </div>
             </ModalDelete>
-            <ModalDelete
-                isVisible={isModalDeleteOpen}
-                onClose={() => setIsModalDeleteOpen(false)}
-                url={`/admin/pendataan/usaha/bujk/${usaha.id}/sbu`}
-                id={selectedSertifikatId}
-            >
-                <div className="font-medium text-sm text-slate-700 mb-1">Apakah Anda yakin ingin menghapus Dokumen SBU ini?</div>
-                <div className="font-light text-xs text-slate-500 mb-3">
-                    Data yang telah dihapus tidak dapat dikembalikan.
-                </div>
-            </ModalDelete>
         </>
-    )
+    );
 }
 
-PengawasanRutinBUJKLingkup4Show.layout = page => <Layout children={page} />;
+PengawasanInsidentalBUJKLingkup4Show.layout = page => <Layout children={page} />;
 
-export default PengawasanRutinBUJKLingkup4Show;
+export default PengawasanInsidentalBUJKLingkup4Show;

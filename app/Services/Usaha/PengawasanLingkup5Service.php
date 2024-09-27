@@ -127,7 +127,7 @@ class PengawasanLingkup5Service
     {
         $pengawasan = PengawasanBUJKLingkup5::find($id);
 
-        $rekomendasi = new RekomendasiPengawasanInsidentalBUJK;
+        $rekomendasi = RekomendasiPengawasanInsidentalBUJK::firstOrNew(['pengawasan_id' => $pengawasan->id]);
 
         $rekomendasi->rekomendasi = $data['rekomendasi'];
         $rekomendasi->keterangan = $data['keterangan'];

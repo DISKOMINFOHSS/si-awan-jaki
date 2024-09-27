@@ -70,7 +70,7 @@ const PengawasanInsidentalBUJKLingkup4Show = ({ data }) => {
                 </div>
                 <div className="flex items-center gap-x-2">
                     {
-                        pengawasan.tertibPengawasan ? (
+                        pengawasan.tertibPengawasan !== null ? (
                             <button
                                 type="button"
                                 className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"

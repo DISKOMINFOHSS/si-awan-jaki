@@ -38,6 +38,7 @@ class PengawasanInsidentalBUJKLingkup4Resource extends JsonResource
             'tertibPersyaratanNIB' => $this->tertib_persyaratan_nib,
             'tertibPengawasan'     => $this->tertib_pengawasan,
             'catatan'              => $this->catatan,
+            'rekomendasi'          => $this->rekomendasi,
             'createdBy'            => $this->createdBy->nama,
             'verifiedAt'           => $this->verified_at ? $this->verified_at : null,
             'verifiedBy'           => $this->verifiedBy->nama,

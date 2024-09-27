@@ -3,6 +3,7 @@
 namespace App\Services\Usaha;
 
 use App\Models\Usaha\PengawasanBUJKLingkup4;
+use App\Models\Usaha\RekomendasiPengawasanInsidentalBUJK;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
@@ -84,5 +85,18 @@ class PengawasanLingkup4Service
         $pengawasan->verified_at = now();
 
         $pengawasan->save();
+    }
+
+    public function addRekomendasiPengawasanInsidentalBUJK(string $id, array $data)
+    {
+        $pengawasan = PengawasanBUJKLingkup4::find($id);
+
+        $rekomendasi = RekomendasiPengawasanInsidentalBUJK::firstOrNew(['pengawasan_id' => $pengawasan->id]);
+
+        $rekomendasi->rekomendasi = $data['rekomendasi'];
+        $rekomendasi->keterangan = $data['keterangan'];
+        $rekomendasi->created_by = $data['created_by'];
+
+        $pengawasan->rekomendasi()->save($rekomendasi);
     }
 }

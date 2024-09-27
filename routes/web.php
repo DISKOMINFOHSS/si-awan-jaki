@@ -225,9 +225,6 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                             Route::get('/bujk', 'indexBUJK');
                             Route::get('/bujk/{id}/rutin', 'showPengawasanRutinBUJK');
                             Route::post('/bujk/{id}/verification', 'verifyPengawasanBUJK');
-
-                            // Route::get('/{id}/rekomendasi', 'recommendationPengawasanBUJK');
-                            // Route::post('/{id}/rekomendasi', 'recommend');
                         // });
                     });
 
@@ -235,8 +232,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     ->controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup4\BUJKController::class)
                     ->group(function () {
                         Route::get('/{id}/insidental', 'insidental');
-                        // Route::get('/{id}/rekomendasi', 'recommendation');
-                        // Route::post('/{id}/rekomendasi', 'recommend');
+                        Route::get('/{id}/rekomendasi', 'recommendation');
+                        Route::post('/{id}/rekomendasi', 'recommend');
                     });
                 });
 

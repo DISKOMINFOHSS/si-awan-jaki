@@ -60,9 +60,9 @@ function getProgressStatusBadge(status) {
 function getTertibStatusBadgePDF (isTertib) {
     switch(isTertib) {
         case true:
-            return <Text style={tw("py-1 w-16 rounded-full bg-green-100 text-green-500 text-center text-[9px]")}>Tertib</Text>
+            return <Text style={tw("py-0.5 w-16 rounded-full bg-green-100 text-green-500 text-center text-[8px]")}>Tertib</Text>
         case false:
-            return <Text style={tw("py-1 w-24 rounded-full bg-red-100 text-red-500 text-center text-[9px]")}>Belum Tertib</Text>
+            return <Text style={tw("py-0.5 w-24 rounded-full bg-red-100 text-red-500 text-center text-[8px]")}>Belum Tertib</Text>
     }
 }
 
@@ -89,9 +89,9 @@ function getTertibStatusBadgeRekapitulasiPDF(isTertib) {
 function getStatusBadgePDF (isTrue, label) {
     switch(isTrue) {
         case true:
-            return <Text style={tw("py-1 w-16 rounded-full bg-green-100 text-green-500 text-center text-[9px]")}>{label}</Text>
+            return <Text style={tw("py-0.5 w-16 rounded-full bg-green-100 text-green-500 text-center text-[8px]")}>{label}</Text>
         case false:
-            return <Text style={tw("py-1 w-24 rounded-full bg-red-100 text-red-500 text-center text-[9px]")}>Tidak {label}</Text>
+            return <Text style={tw("py-0.5 w-24 rounded-full bg-red-100 text-red-500 text-center text-[8px]")}>Tidak {label}</Text>
     }
 }
 

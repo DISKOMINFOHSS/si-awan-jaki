@@ -310,4 +310,15 @@ class Lingkup2Controller extends Controller
 
         return back();
     }
+
+    public function print(string $id)
+    {
+        $pengawasan = $this->pengawasanLingkup2Service->getPengawasanBUJKById($id);
+
+        return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup2/Simak', [
+            'data' => [
+                'pengawasan'        => new PengawasanBUJKLingkup2Resource($pengawasan),
+            ],
+        ]);
+    }
 }

@@ -270,4 +270,16 @@ class Lingkup5Controller extends Controller
 
         return back();
     }
+
+    public function print(string $id)
+    {
+        $pengawasan = $this->pengawasanLingkup5Service->getPengawasanBUJKById($id);
+        $pengawasan['daftar_pemeriksaan'] = $this->pengawasanLingkup5Service->getDaftarPemeriksaanPengembanganUsaha($id);
+
+        return Inertia::render('Pengawasan/Usaha/BUJK/Lingkup5/Simak', [
+            'data' => [
+                'pengawasan'        => new PengawasanBUJKLingkup5Resource($pengawasan),
+            ],
+        ]);
+    }
 }

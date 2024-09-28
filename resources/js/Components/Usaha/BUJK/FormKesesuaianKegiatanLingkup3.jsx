@@ -104,7 +104,7 @@ export default ({
                             <button
                                 type="button"
                                 disabled={data.id !== ''}
-                                className="flex justify-between items-center px-3 py-2 w-full rounded-md border border-slate-200 text-slate-600 focus:ring-blue-400 focus:border-blue-400 text-xs cursor-pointer"
+                                className="text-left flex justify-between items-center px-3 py-2 w-full rounded-md border border-slate-200 text-slate-600 focus:ring-blue-400 focus:border-blue-400 text-xs cursor-pointer"
                                 onClick={() => setIsSelectPaketPekerjaanVisible(!isSelectPaketPekerjaanVisible)}
                             >
                                 <span className="text-slate-500">{data.paketPekerjaan}</span>

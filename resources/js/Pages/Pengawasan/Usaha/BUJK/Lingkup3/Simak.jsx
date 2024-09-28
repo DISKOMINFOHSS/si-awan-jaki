@@ -2,11 +2,10 @@ import React from "react";
 import { Font, Document, PDFViewer, Page, View, Text } from "@react-pdf/renderer";
 import { createTw } from "react-pdf-tailwind";
 
-import SimakLingkup2 from "../../../../../Components/PDF/TertibUsaha/SimakLingkup2";
-
 import { inter } from "../../../../../Utils/fonts";
 import { formatDateToIndonesia } from "../../../../../Utils/formatDate";
 import { getTertibStatusBadgePDF } from "../../../../../Utils/getStatusBadge";
+import SimakLingkup3 from "../../../../../Components/PDF/TertibUsaha/SimakLingkup3";
 
 Font.registerHyphenationCallback(word => [word]);
 Font.register({ family: 'Inter', fonts: inter });
@@ -26,7 +25,7 @@ export default ({ data }) => {
 
     return (
         <PDFViewer width="100%" style={tw("min-h-screen")}>
-            <Document title="simak-pengawasan-bujk-lingkup-2">
+            <Document title="simak-pengawasan-pemanfaatan-produk">
                 <Page wrap size="A4" orientation="portait" style={tw("p-10 font-sans relative")}>
                     <View style={tw("font-medium text-center text-[11px] uppercase mb-8")}>
                         <Text>Hasil Pengawasan {pengawasan.jenisPengawasan}</Text>
@@ -67,26 +66,18 @@ export default ({ data }) => {
                         </View>
                         <View>
                             <View style={tw("flex flex-row w-full text-[10px]")}>
-                                <View style={tw("w-[45%] border border-slate-800 p-2")}>
+                                <View style={tw("w-[45%] h-32 border border-slate-800 p-2")}>
                                     <Text style={tw("mb-1 font-medium")}>Lingkup Pengawasan</Text>
-                                    <Text style={tw("text-justify leading-normal")}>Pengawasan terhadap Kesesuaian jenis, sifat, Klasifikasi, dan layanan usaha dengan kegiatan usaha Jasa Konstruksi</Text>
+                                    <Text style={tw("text-justify leading-normal")}>Pengawasan terhadap Kesesuaian bentuk dan Kualifikasi usaha dengan kegiatan usaha Jasa Konstruksi dan segmentasi pasar Jasa Konstruksi</Text>
                                 </View>
-                                <View style={tw("w-[55%] border-y border-r border-slate-800")}>
-                                    <View style={tw("w-full border-b border-slate-800 flex flex-row")}>
-                                        <Text style={tw("w-[50%] border-r border-slate-800 p-2")}>Jenis Usaha</Text>
-                                        <View style={tw("w-[50%] flex justify-center p-2")}>{getTertibStatusBadgePDF(pengawasan.tertibJenisUsaha)}</View>
+                                <View style={tw("w-[55%] h-32 border-y border-r border-slate-800")}>
+                                    <View style={tw("w-full h-[50%] border-b border-slate-800 flex flex-row")}>
+                                        <Text style={tw("w-[50%] border-r border-slate-800 p-2")}>Bentuk Usaha</Text>
+                                        <View style={tw("w-[50%] p-2")}>{getTertibStatusBadgePDF(pengawasan.tertibBentukUsaha)}</View>
                                     </View>
-                                    <View style={tw("w-full border-b border-slate-800 flex flex-row")}>
-                                        <Text style={tw("w-[50%] border-r border-slate-800 p-2")}>Sifat Usaha</Text>
-                                        <View style={tw("w-[50%] flex justify-center p-2")}>{getTertibStatusBadgePDF(pengawasan.tertibSifatUsaha)}</View>
-                                    </View>
-                                    <View style={tw("w-full border-b border-slate-800 flex flex-row")}>
-                                        <Text style={tw("w-[50%] border-r border-slate-800 p-2")}>Klasifikasi Usaha</Text>
-                                        <View style={tw("w-[50%] flex justify-center p-2")}>{getTertibStatusBadgePDF(pengawasan.tertibKlasifikasiUsaha)}</View>
-                                    </View>
-                                    <View style={tw("w-full flex flex-row")}>
-                                        <Text style={tw("w-[50%] border-r border-slate-800 p-2")}>Layanan Usaha</Text>
-                                        <View style={tw("w-[50%] flex justify-center p-2")}>{getTertibStatusBadgePDF(pengawasan.tertibLayananUsaha)}</View>
+                                    <View style={tw("w-full h-[50%] flex flex-row")}>
+                                        <Text style={tw("w-[50%] border-r border-slate-800 p-2")}>Kualifikasi Usaha</Text>
+                                        <View style={tw("w-[50%] p-2")}>{getTertibStatusBadgePDF(pengawasan.tertibKualifikasiUsaha)}</View>
                                     </View>
                                 </View>
                             </View>
@@ -115,7 +106,7 @@ export default ({ data }) => {
                         style={tw("absolute bottom-8 right-0 left-0 text-[9px] text-center")}
                     />
                 </Page>
-                <SimakLingkup2 pengawasan={pengawasan} />
+                <SimakLingkup3 pengawasan={pengawasan} />
             </Document>
         </PDFViewer>
     );

@@ -209,6 +209,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                     Route::get('/{id}/rekomendasi', 'recommendation');
                     Route::post('/{id}/rekomendasi', 'recommend');
+
+                    Route::get('/{id}/simak', 'print');
                 });
 
                 Route::name('4.')->prefix('/4')

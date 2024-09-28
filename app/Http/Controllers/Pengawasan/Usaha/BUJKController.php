@@ -7,6 +7,7 @@ use App\Helpers\DateTimeHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Pengawasan\TertibUsaha\PengawasanBUJKResource;
 use App\Http\Resources\Pengawasan\TertibUsaha\PengawasanRutinBUJKResource;
+use App\Http\Resources\Pengawasan\TertibUsaha\PemeriksaanBUJKLingkup5Resource;
 use App\Services\JenisPengawasan\PengawasanRutinTertibUsahaService;
 use App\Services\Usaha\PendataanBUJKService;
 use App\Services\Usaha\PengawasanUsahaService;
@@ -150,11 +151,24 @@ class BUJKController extends Controller
         return back();
     }
 
-    // public function print(string $id)
-    // {
-    //     $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJKById($id);
-    //     $pengawasanRutin['rekomendasi'] = $this->pengawasanRutinService->getRekomendasiPengawasanRutinBUJKByPengawasanId($id);
+    public function print(string $id)
+    {
+        $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJKById($id);
+        $pengawasanRutin['rekomendasi'] = $this->pengawasanRutinService->getRekomendasiPengawasanRutinBUJKByPengawasanId($id);
 
+        $pengawasanLingkup2 = $this->pengawasanLingkup2Service->getPengawasanBUJKById($pengawasanRutin->pengawasan_lingkup_2_id);
+        $pengawasanLingkup3 = $this->pengawasanLingkup3Service->getPengawasanBUJKById($pengawasanRutin->pengawasan_lingkup_3_id);
+        // $pengawasanLingkup4 = $this->pengawasanLingkup4Service->getPengawasanBUJKById($pengawasanRutin->pengawasan_lingkup_4_id);
+        // $pengawasanLingkup5 = $this->pengawasanLingkup5Service->getPengawasanBUJKById($pengawasanRutin->pengawasan_lingkup_5_id);
+        $pengawasanLingkup5 = $this->pengawasanLingkup5Service->getDaftarPemeriksaanPengembanganUsaha($pengawasanRutin->pengawasan_lingkup_5_id);
 
-    // }
+        return Inertia::render('Pengawasan/Usaha/BUJK/Rutin/Simak', [
+            'data' => [
+                'pengawasan' => new PengawasanRutinBUJKResource($pengawasanRutin),
+                'pengawasanLingkup2' => $pengawasanLingkup2->kesesuaianKegiatan,
+                'pengawasanLingkup3' => $pengawasanLingkup3->kesesuaianKegiatan,
+                'pengawasanLingkup5' => PemeriksaanBUJKLingkup5Resource::collection($pengawasanLingkup5),
+            ],
+        ]);
+    }
 }

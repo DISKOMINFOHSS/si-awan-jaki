@@ -66,6 +66,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->controller(App\Http\Controllers\Pendataan\Usaha\UsahaPerseoranganController::class)
                 ->group(function () {
                     Route::get('/{id}', 'show')->name('show');
+                    Route::post('/{id}/skk', 'sertifikat');
                 });
             });
 

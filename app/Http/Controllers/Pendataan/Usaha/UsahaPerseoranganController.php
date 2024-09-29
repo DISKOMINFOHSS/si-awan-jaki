@@ -40,6 +40,51 @@ class UsahaPerseoranganController extends Controller
 
     public function sertifikat(string $id, Request $request)
     {
+        if (!$this->usahaService->checkUsahaExists($id)) {
+            return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'nomorSertifikat' => 'required',
+            'pemegang'        => 'required',
+            // 'dokumenSKK'      => 'nullable|file|max:2048',
+            'subklasifikasi'  => 'required'
+        ]);
+        $userId = auth()->user()->id;
+
+        $data = [
+            'nomor_sertifikat' => $validatedData['nomorSertifikat'],
+            'pemegang'         => $validatedData['pemegang'],
+            'subklasifikasi'   => $validatedData['subklasifikasi'],
+            'usaha_id'         => $id,
+            'created_by'       => $userId,
+        ];
+
+        if ($request->hasFile('dokumenSKK')) {
+            $request->validate(['dokumenSKK' => 'nullable|file|max:2048']);
+
+            $data['sertifikat_id'] = $this->fileService->addFile([
+                'file'       => $request->file('dokumenSKK'),
+                'path'       => 'public/files/usaha/skk',
+                'created_by' => $userId,
+            ]);
+        } elseif (!$request->filled('dokumenSKK')) {
+            $data['sertifikat_id'] = null;
+        }
+
+        if ($request->filled('id')) {
+            $sertifikat = $this->usahaPerseoranganService->getSertifikatStandarById($request->input('id'));
+
+            if ($request->filled('dokumenSKK') && $sertifikat->sertifikat_id) $data['sertifikat_id'] = $sertifikat->sertifikat_id;
+            $this->usahaPerseoranganService->updateSertifikatStandar($sertifikat->id, $data);
+
+            if (!$request->filled('dokumenSKK') && $sertifikat->sertifikat_id) {
+                $this->fileService->deleteFile($sertifikat->sertifikat_id);
+            }
+        } else {
+            $this->usahaPerseoranganService->addSertifikatStandar($data);
+        }
+
         return back();
     }
 }

@@ -26,7 +26,21 @@ class UsahaPerseoranganResource extends JsonResource
             ]),
             'alamat'     => $this->alamat,
             'jenisUsaha' => $this->whenLoaded('jenisUsaha'),
-            'sertifikatStandar' => $this->sertifikat_standar,
+            // 'sertifikatStandar' => $this->sertifikat_standar,
+            'sertifikatStandar'   => $this->sertifikat_standar->transform(
+                function ($sertifikat)
+                {
+                    return [
+                        'id'              => $sertifikat->id,
+                        'nomorSertifikat' => $sertifikat->nomor_sertifikat,
+                        'subklasifikasi'  => $sertifikat->subklasifikasi,
+                        'status'          => (bool)$sertifikat->status,
+                        'fileId'          => $sertifikat->sertifikat_id,
+                        'fileName'        => $sertifikat->name,
+                        'filePath'        => Storage::url($sertifikat->path),
+                    ];
+                }
+            ),
         ];
     }
 }

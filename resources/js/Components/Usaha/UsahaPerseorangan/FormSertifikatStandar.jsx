@@ -20,13 +20,15 @@ export default ({
     const { data, setData, post, processing, progress, reset } = useForm({
         nomorSertifikat: '',
         dokumenSKK: '',
-        subklasifikasi: ''
+        subklasifikasi: '',
+        pemegang: '',
     });
 
     React.useEffect(() => {
         setData({
             ...data,
             id: sertifikatStandar.id,
+            pemegang: getDefaultData(usaha.nama),
             nomorSertifikat: getDefaultData(sertifikatStandar.nomorSertifikat),
             subklasifikasi: getDefaultData(sertifikatStandar.subklasifikasi),
             dokumenSKK: sertifikatStandar.fileId ? {
@@ -71,7 +73,7 @@ export default ({
                         onSubmit={handleSubmit}
                     >
                         <div className="col-span-3">
-                            <label htmlFor="nama" className="block mb-2 text-xs font-medium text-slate-800">Nama Usaha Orang Perseorangan</label>
+                            <label htmlFor="nama" className="block mb-2 text-xs font-medium text-slate-800">Nama Pemegang Sertifikat</label>
                             <input
                                 type="text" name="nama" id="nama" value={usaha.nama} disabled
                                 className="px-3 py-2 block w-full rounded-md bg-slate-50 border-slate-200 text-slate-500 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"

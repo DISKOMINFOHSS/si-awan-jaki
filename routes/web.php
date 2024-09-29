@@ -236,6 +236,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     ->controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup4\UsahaPerseoranganController::class)
                     ->group(function () {
                         Route::get('/', 'index');
+                        Route::post('/', 'store');
                         // Route::get('/{id}/rekomendasi', 'recommendation');
                         // Route::post('/{id}/rekomendasi', 'recommend');
                     });

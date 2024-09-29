@@ -3,6 +3,7 @@
 namespace App\Services\Usaha;
 
 use App\Models\Usaha\PengawasanBUJKLingkup4;
+use App\Models\Usaha\PengawasanUsahaPerseorangan;
 use App\Models\Usaha\RekomendasiPengawasanInsidentalBUJK;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -98,5 +99,28 @@ class PengawasanLingkup4Service
         $rekomendasi->created_by = $data['created_by'];
 
         $pengawasan->rekomendasi()->save($rekomendasi);
+    }
+
+    public function addPengawasanUsahaPerseorangan(array $data)
+    {
+        $pengawasan = PengawasanUsahaPerseorangan::create([
+            'jenis_pengawasan'      => $data['jenis_pengawasan'],
+            'tanggal_pengawasan'    => $data['tanggal_pengawasan'],
+            'usaha_id'              => $data['usaha_id'],
+            'created_by'            => $data['created_by'],
+        ]);
+
+        return $pengawasan->id;
+    }
+
+    public function getDaftarPengawasanUsahaPerseorangan()
+    {
+        return PengawasanUsahaPerseorangan::with([
+            'usaha' => function (Builder $query)
+            {
+                $query->select('id', 'nama', 'nib');
+            }
+        ])->orderBy('tanggal_pengawasan', 'desc')
+          ->get();
     }
 }

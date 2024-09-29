@@ -38,16 +38,16 @@ export default ({
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
-        // post(`/admin/pengawasan/usaha/${lingkupPengawasan.id}/usaha-perseorangan`, {
-        //     onSuccess: () => {
-        //         onClose();
-        //         reset();
-        //     },
-        //     onError: () => {
-        //         onClose();
-        //         setIsModalErrorOpened(true);
-        //     }
-        // });
+        post(`/admin/pengawasan/usaha/${lingkupPengawasan.id}/usaha-perseorangan`, {
+            onSuccess: () => {
+                onClose();
+                reset();
+            },
+            onError: () => {
+                onClose();
+                setIsModalErrorOpened(true);
+            }
+        });
     }
 
     return (

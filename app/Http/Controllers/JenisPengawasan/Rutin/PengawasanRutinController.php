@@ -103,6 +103,53 @@ class PengawasanRutinController extends Controller
         ]);
     }
 
+    public function penyelenggaraan(string $tahun)
+    {
+        $daftarTertibPenyelenggaraan = $this->rekapTertibPenyelenggaraanService->getDaftarPengawasanByJenisPengawasan($tahun, 'Rutin');
+
+        $daftarTertibUsahaBUJK = $this->rekapTertibUsahaService->getDaftarPengawasanRutinBUJKByTahun($tahun);
+        $tertibBUJK = [
+            'totalTertib'      => 0,
+            'totalBelumTertib' => 0,
+        ];
+        foreach($daftarTertibUsahaBUJK as $tertibUsahaBUJK)
+        {
+            if (
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_2 &&
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_3 &&
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_4 &&
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_5
+            ) {
+                $tertibBUJK['totalTertib'] += 1;
+            } elseif (
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_2 === null ||
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_3 === null ||
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_4 === null ||
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_5 === null
+            ) {
+                continue;
+            } else {
+                $tertibBUJK['totalBelumTertib'] += 1;
+            }
+        }
+
+        $tertibPenyelenggaraan = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPenyelenggaraanService->getPengawasanCount($tahun, 'Rutin'));
+        $tertibPemanfaatanProduk = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPemanfaatanProdukService->getPengawasanCount($tahun, 'Rutin'));
+
+        return Inertia::render('JenisPengawasan/Rutin/TertibPenyelenggaraan/Index', [
+            'data' => [
+                'daftarTertibPenyelenggaraan' => PengawasanPenyelenggaraanAPBDResource::collection($daftarTertibPenyelenggaraan),
+                'totalTertibPengawasan' => [
+                    'tertibUsaha'             => [
+                        'tertibBUJK' => $tertibBUJK,
+                    ],
+                    'tertibPenyelenggaraan'   => $tertibPenyelenggaraan,
+                    'tertibPemanfaatanProduk' => $tertibPemanfaatanProduk,
+                ],
+            ]
+        ]);
+    }
+
     public function show(string $tahun, string $file_name)
     {
         $daftarTertibPenyelenggaraan = $this->rekapTertibPenyelenggaraanService->getDaftarPengawasanRutinOrderByNamaPaket($tahun);

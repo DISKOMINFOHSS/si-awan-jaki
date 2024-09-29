@@ -293,6 +293,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->group(function () {
                     // Route::get('/{tahun}', 'index');
                     Route::get('/{tahun}/tertib-usaha', 'usaha');
+                    Route::get('/{tahun}/tertib-penyelenggaraan', 'penyelenggaraan');
+
                     Route::get('/{tahun}/{file_name}', 'show');
                 });
             });

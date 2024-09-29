@@ -285,11 +285,14 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
             // Pengawasan Rutin
             Route::name('rutin.')->prefix('/rutin')
             ->group(function () {
-                Route::redirect('/', "/admin/jenis-pengawasan/rutin/" . date('Y'));
+                // Route::redirect('/', "/admin/jenis-pengawasan/rutin/" . date('Y'));
+                Route::redirect('/', "/admin/jenis-pengawasan/rutin/" . date('Y') . "/tertib-usaha");
+                Route::redirect('/{tahun}', "/admin/jenis-pengawasan/rutin/" . date('Y') . "/tertib-usaha");
 
                 Route::controller(App\Http\Controllers\JenisPengawasan\Rutin\PengawasanRutinController::class)
                 ->group(function () {
-                    Route::get('/{tahun}', 'index');
+                    // Route::get('/{tahun}', 'index');
+                    Route::get('/{tahun}/tertib-usaha', 'usaha');
                     Route::get('/{tahun}/{file_name}', 'show');
                 });
             });

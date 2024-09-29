@@ -294,6 +294,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     // Route::get('/{tahun}', 'index');
                     Route::get('/{tahun}/tertib-usaha', 'usaha');
                     Route::get('/{tahun}/tertib-penyelenggaraan', 'penyelenggaraan');
+                    Route::get('/{tahun}/tertib-pemanfaatan-produk', 'pemanfaatan');
 
                     Route::get('/{tahun}/{file_name}', 'show');
                 });

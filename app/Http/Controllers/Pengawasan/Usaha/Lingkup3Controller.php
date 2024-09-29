@@ -10,26 +10,38 @@ use App\Http\Resources\Pengawasan\PengawasanBUJKLingkup3Resource;
 use App\Services\JenisPengawasan\PengawasanRutinTertibUsahaService;
 use App\Services\Usaha\PendataanBUJKService;
 use App\Services\Usaha\PengawasanUsahaService;
+use App\Services\Usaha\PengawasanLingkup2Service;
 use App\Services\Usaha\PengawasanLingkup3Service;
+use App\Services\Usaha\PengawasanLingkup4Service;
+use App\Services\Usaha\PengawasanLingkup5Service;
 use Illuminate\Http\Request;
 
 class Lingkup3Controller extends Controller
 {
     protected $bujkService;
     protected $pengawasanService;
+    protected $pengawasanLingkup2Service;
     protected $pengawasanLingkup3Service;
+    protected $pengawasanLingkup4Service;
+    protected $pengawasanLingkup5Service;
     protected $pengawasanRutinService;
 
     public function __construct(
         PendataanBUJKService $bujkService,
         PengawasanUsahaService $pengawasanService,
+        PengawasanLingkup2Service $pengawasanLingkup2Service,
         PengawasanLingkup3Service $pengawasanLingkup3Service,
+        PengawasanLingkup4Service $pengawasanLingkup4Service,
+        PengawasanLingkup5Service $pengawasanLingkup5Service,
         PengawasanRutinTertibUsahaService $pengawasanRutinService,
     )
     {
         $this->bujkService = $bujkService;
         $this->pengawasanService = $pengawasanService;
+        $this->pengawasanLingkup2Service = $pengawasanLingkup2Service;
         $this->pengawasanLingkup3Service = $pengawasanLingkup3Service;
+        $this->pengawasanLingkup4Service = $pengawasanLingkup4Service;
+        $this->pengawasanLingkup5Service = $pengawasanLingkup5Service;
         $this->pengawasanRutinService = $pengawasanRutinService;
     }
 
@@ -60,6 +72,15 @@ class Lingkup3Controller extends Controller
         ]);
         $userId = auth()->user()->id;
 
+        $data = [
+            'jenis_pengawasan'      => $validatedData['jenis'],
+            'tanggal_pengawasan'    => $validatedData['tanggal'],
+            'usaha_id'              => $validatedData['usahaId'],
+            'status_izin_usaha'     => $validatedData['statusIzinUsaha'],
+            'status_verifikasi_nib' => $validatedData['statusNIB'],
+            'created_by'            => $userId,
+        ];
+
         if ($validatedData['jenis'] === 'Rutin')
         {
             $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJK(
@@ -71,20 +92,36 @@ class Lingkup3Controller extends Controller
             if ($pengawasanRutin->pengawasan_lingkup_3) {
                 return back()->withErrors(['message' => 'Pengawasan pada semester ini sudah ada.']);
             }
+
+            if (!$pengawasanRutin->pengawasan_lingkup_2) {
+                $pengawasan['pengawasan_lingkup_2'] = $this->pengawasanLingkup2Service->addPengawasanBUJK($data);
+            }
+
+            if (!$pengawasanRutin->pengawasan_lingkup_4) {
+                $pengawasan['pengawasan_lingkup_4'] = $this->pengawasanLingkup4Service->addPengawasanBUJK($data);
+            }
+
+            if (!$pengawasanRutin->pengawasan_lingkup_5) {
+                $pengawasan['pengawasan_lingkup_5'] = $this->pengawasanLingkup5Service->addPengawasanBUJK($data);
+            }
         }
 
-        $pengawasanId = $this->pengawasanLingkup3Service->addPengawasanBUJK([
-            'jenis_pengawasan'      => $validatedData['jenis'],
-            'tanggal_pengawasan'    => $validatedData['tanggal'],
-            'usaha_id'              => $validatedData['usahaId'],
-            'status_izin_usaha'     => $validatedData['statusIzinUsaha'],
-            'status_verifikasi_nib' => $validatedData['statusNIB'],
-            'created_by'            => $userId,
-        ]);
+        // $pengawasanId = $this->pengawasanLingkup3Service->addPengawasanBUJK([
+        //     'jenis_pengawasan'      => $validatedData['jenis'],
+        //     'tanggal_pengawasan'    => $validatedData['tanggal'],
+        //     'usaha_id'              => $validatedData['usahaId'],
+        //     'status_izin_usaha'     => $validatedData['statusIzinUsaha'],
+        //     'status_verifikasi_nib' => $validatedData['statusNIB'],
+        //     'created_by'            => $userId,
+        // ]);
+        $pengawasanId = $this->pengawasanLingkup3Service->addPengawasanBUJK($data);
 
         if ($validatedData['jenis'] === 'Rutin')
         {
-            $this->pengawasanRutinService->updatePengawasanRutinBUJK($pengawasanRutin->id, ['pengawasan_lingkup_3' => $pengawasanId]);
+            // $this->pengawasanRutinService->updatePengawasanRutinBUJK($pengawasanRutin->id, ['pengawasan_lingkup_3' => $pengawasanId]);
+            $pengawasan['tanggal_pengawasan'] = $validatedData['tanggal'];
+            $pengawasan['pengawasan_lingkup_3'] = $pengawasanId;
+            $this->pengawasanRutinService->updatePengawasanRutinBUJK($pengawasanRutin->id, $pengawasan);
         }
 
         return redirect("/admin/pengawasan/usaha/3/$pengawasanId");

@@ -11,7 +11,10 @@ use App\Services\JenisPengawasan\PengawasanRutinTertibUsahaService;
 use App\Services\Usaha\PendataanBUJKService;
 use App\Services\Usaha\PendataanUsahaService;
 use App\Services\Usaha\PengawasanUsahaService;
+use App\Services\Usaha\PengawasanLingkup2Service;
+use App\Services\Usaha\PengawasanLingkup3Service;
 use App\Services\Usaha\PengawasanLingkup4Service;
+use App\Services\Usaha\PengawasanLingkup5Service;
 use Illuminate\Http\Request;
 
 class Lingkup4Controller extends Controller
@@ -19,21 +22,30 @@ class Lingkup4Controller extends Controller
     protected $usahaService;
     protected $bujkService;
     protected $pengawasanService;
+    protected $pengawasanLingkup2Service;
+    protected $pengawasanLingkup3Service;
     protected $pengawasanLingkup4Service;
+    protected $pengawasanLingkup5Service;
     protected $pengawasanRutinService;
 
     public function __construct(
         PendataanUsahaService $usahaService,
         PendataanBUJKService $bujkService,
         PengawasanUsahaService $pengawasanService,
+        PengawasanLingkup2Service $pengawasanLingkup2Service,
+        PengawasanLingkup3Service $pengawasanLingkup3Service,
         PengawasanLingkup4Service $pengawasanLingkup4Service,
+        PengawasanLingkup5Service $pengawasanLingkup5Service,
         PengawasanRutinTertibUsahaService $pengawasanRutinService,
     )
     {
         $this->usahaService = $usahaService;
         $this->bujkService = $bujkService;
         $this->pengawasanService = $pengawasanService;
+        $this->pengawasanLingkup2Service = $pengawasanLingkup2Service;
+        $this->pengawasanLingkup3Service = $pengawasanLingkup3Service;
         $this->pengawasanLingkup4Service = $pengawasanLingkup4Service;
+        $this->pengawasanLingkup5Service = $pengawasanLingkup5Service;
         $this->pengawasanRutinService = $pengawasanRutinService;
     }
 
@@ -49,15 +61,24 @@ class Lingkup4Controller extends Controller
         $usaha = $this->usahaService->getUsahaById($validatedData['usahaId']);
         $jenisUsaha = $usaha->jenisUsaha;
 
-        $data = [
-            'jenis_pengawasan'    => $validatedData['jenis'],
-            'tanggal_pengawasan'  => $validatedData['tanggal'],
-            'usaha_id'            => $validatedData['usahaId'],
-            'created_by'          => $userId,
-        ];
+        // $data = [
+        //     'jenis_pengawasan'    => $validatedData['jenis'],
+        //     'tanggal_pengawasan'  => $validatedData['tanggal'],
+        //     'usaha_id'            => $validatedData['usahaId'],
+        //     'created_by'          => $userId,
+        // ];
 
         if ($jenisUsaha->jenisUsaha === "Badan Usaha Jasa Konstruksi")
         {
+            $data = [
+                'jenis_pengawasan'      => $validatedData['jenis'],
+                'tanggal_pengawasan'    => $validatedData['tanggal'],
+                'usaha_id'              => $validatedData['usahaId'],
+                'status_izin_usaha'     => "Aktif",
+                'status_verifikasi_nib' => true,
+                'created_by'            => $userId,
+            ];
+
             if ($validatedData['jenis'] === 'Rutin')
             {
                 $pengawasanRutin = $this->pengawasanRutinService->getPengawasanRutinBUJK(
@@ -69,13 +90,28 @@ class Lingkup4Controller extends Controller
                 if ($pengawasanRutin->pengawasan_lingkup_4) {
                     return back()->withErrors(['message' => 'Pengawasan pada semester ini sudah ada.']);
                 }
+
+                if (!$pengawasanRutin->pengawasan_lingkup_2) {
+                    $pengawasan['pengawasan_lingkup_2'] = $this->pengawasanLingkup2Service->addPengawasanBUJK($data);
+                }
+
+                if (!$pengawasanRutin->pengawasan_lingkup_3) {
+                    $pengawasan['pengawasan_lingkup_3'] = $this->pengawasanLingkup3Service->addPengawasanBUJK($data);
+                }
+
+                if (!$pengawasanRutin->pengawasan_lingkup_5) {
+                    $pengawasan['pengawasan_lingkup_5'] = $this->pengawasanLingkup5Service->addPengawasanBUJK($data);
+                }
             }
 
             $pengawasanId = $this->pengawasanLingkup4Service->addPengawasanBUJK($data);
 
             if ($validatedData['jenis'] === 'Rutin')
             {
-                $this->pengawasanRutinService->updatePengawasanRutinBUJK($pengawasanRutin->id, ['pengawasan_lingkup_4' => $pengawasanId]);
+                // $this->pengawasanRutinService->updatePengawasanRutinBUJK($pengawasanRutin->id, ['pengawasan_lingkup_4' => $pengawasanId]);
+                $pengawasan['tanggal_pengawasan'] = $validatedData['tanggal'];
+                $pengawasan['pengawasan_lingkup_4'] = $pengawasanId;
+                $this->pengawasanRutinService->updatePengawasanRutinBUJK($pengawasanRutin->id, $pengawasan);
             }
         }
 

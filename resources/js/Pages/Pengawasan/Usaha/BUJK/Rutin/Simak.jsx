@@ -8,6 +8,7 @@ import { getTertibStatusBadgePDF } from "../../../../../Utils/getStatusBadge";
 import SimakLingkup2 from "../../../../../Components/PDF/TertibUsaha/SimakLingkup2";
 import SimakLingkup3 from "../../../../../Components/PDF/TertibUsaha/SimakLingkup3";
 import SimakLingkup5 from "../../../../../Components/PDF/TertibUsaha/SimakLingkup5";
+import SimakLingkup4BUJKRutin from "../../../../../Components/PDF/TertibUsaha/SimakLingkup4BUJKRutin";
 
 Font.registerHyphenationCallback(word => [word]);
 Font.register({ family: 'Inter', fonts: inter });
@@ -22,7 +23,7 @@ const tw = createTw({
 
 export default ({ data }) => {
     console.log(data);
-    const { pengawasan, pengawasanLingkup2, pengawasanLingkup3, pengawasanLingkup5 } = data;
+    const { pengawasan, pengawasanLingkup2, pengawasanLingkup3, pengawasanLingkup4, pengawasanLingkup5 } = data;
     const { usaha, rekomendasi } = pengawasan;
 
     return (
@@ -178,6 +179,13 @@ export default ({ data }) => {
                         statusVerifikasiNIB: pengawasan.statusVerifikasiNIB,
                         jenisPengawasan: pengawasan.jenisPengawasan,
                         daftarKesesuaianKegiatan: pengawasanLingkup3,
+                    }}
+                />
+                <SimakLingkup4BUJKRutin
+                    pengawasan={{
+                        tanggalPengawasan: pengawasan.tanggalPengawasan,
+                        usaha: usaha,
+                        ...pengawasanLingkup4,
                     }}
                 />
                 <SimakLingkup5

@@ -158,7 +158,8 @@ class BUJKController extends Controller
 
         $pengawasanLingkup2 = $this->pengawasanLingkup2Service->getPengawasanBUJKById($pengawasanRutin->pengawasan_lingkup_2_id);
         $pengawasanLingkup3 = $this->pengawasanLingkup3Service->getPengawasanBUJKById($pengawasanRutin->pengawasan_lingkup_3_id);
-        // $pengawasanLingkup4 = $this->pengawasanLingkup4Service->getPengawasanBUJKById($pengawasanRutin->pengawasan_lingkup_4_id);
+        $pengawasanLingkup4 = $this->pengawasanLingkup4Service->getPengawasanBUJKById($pengawasanRutin->pengawasan_lingkup_4_id);
+        $pengawasanLingkup4['sertifikat_standar'] = $this->bujkService->getDaftarSertifikatStandarBUJKAktif($pengawasanRutin->usaha->id);
         // $pengawasanLingkup5 = $this->pengawasanLingkup5Service->getPengawasanBUJKById($pengawasanRutin->pengawasan_lingkup_5_id);
         $pengawasanLingkup5 = $this->pengawasanLingkup5Service->getDaftarPemeriksaanPengembanganUsaha($pengawasanRutin->pengawasan_lingkup_5_id);
 
@@ -167,6 +168,12 @@ class BUJKController extends Controller
                 'pengawasan' => new PengawasanRutinBUJKResource($pengawasanRutin),
                 'pengawasanLingkup2' => $pengawasanLingkup2->kesesuaianKegiatan,
                 'pengawasanLingkup3' => $pengawasanLingkup3->kesesuaianKegiatan,
+                // 'pengawasanLingkup4' => $pengawasanLingkup4,
+                'pengawasanLingkup4' => [
+                    'tertibPengawasan'  => $pengawasanLingkup4->tertib_pengawasan,
+                    'catatan'           => $pengawasanLingkup4->catatan,
+                    'sertifikatStandar' => $pengawasanLingkup4->sertifikat_standar,
+                ],
                 'pengawasanLingkup5' => PemeriksaanBUJKLingkup5Resource::collection($pengawasanLingkup5),
             ],
         ]);

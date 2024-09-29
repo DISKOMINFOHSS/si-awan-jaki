@@ -24,7 +24,6 @@ export default ({ pengawasan }) => {
         const i = Number(pemeriksaan.id[0]) - 1;
         daftarPengembanganUsaha[i] = [...daftarPengembanganUsaha[i], pemeriksaan];
     });
-    console.log(daftarPengembanganUsaha);
 
     return (
         <Page wrap size="A4" orientation="landscape" style={tw("p-12 font-sans relative")}>

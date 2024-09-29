@@ -232,6 +232,14 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                         // });
                     });
 
+                    Route::name('usaha_perseorangan.')->prefix('/usaha-perseorangan')
+                    ->controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup4\UsahaPerseoranganController::class)
+                    ->group(function () {
+                        Route::get('/', 'index');
+                        // Route::get('/{id}/rekomendasi', 'recommendation');
+                        // Route::post('/{id}/rekomendasi', 'recommend');
+                    });
+
                     Route::name('bujk.')->prefix('/bujk')
                     ->controller(App\Http\Controllers\Pengawasan\Usaha\Lingkup4\BUJKController::class)
                     ->group(function () {

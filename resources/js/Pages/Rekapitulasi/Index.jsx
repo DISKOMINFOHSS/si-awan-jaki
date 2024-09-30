@@ -12,6 +12,7 @@ const RekapitulasiIndex = ({ data }) => {
 
     console.log(data);
     const {
+        totalPengawasanRutin,
         totalPengawasanInsidental,
         totalPengawasanProgress,
         tertibUsaha,
@@ -37,7 +38,16 @@ const RekapitulasiIndex = ({ data }) => {
                                 </div>
                                 <div className="text-end">
                                     <div className="font-light text-slate-500 text-[11px]">Pengawasan</div>
-                                    <div className="font-medium text-base leading-tight">16</div>
+                                    <div className="font-medium text-base leading-tight">
+                                    {
+                                        getDefaultData(totalPengawasanRutin.tertibUsaha.tertibBUJK.totalTertib, 0) +
+                                        getDefaultData(totalPengawasanRutin.tertibUsaha.tertibBUJK.totalBelumTertib, 0) +
+                                        getDefaultData(totalPengawasanRutin.tertibPenyelenggaraan.totalTertib, 0) +
+                                        getDefaultData(totalPengawasanRutin.tertibPenyelenggaraan.totalBelumTertib, 0) +
+                                        getDefaultData(totalPengawasanRutin.tertibPemanfaatanProduk.totalTertib, 0) +
+                                        getDefaultData(totalPengawasanRutin.tertibPemanfaatanProduk.totalBelumTertib, 0)
+                                    }
+                                    </div>
                                     <div className="line-clamp-1 text-slate-500">Total Pengawasan Rutin</div>
                                 </div>
                             </Link>

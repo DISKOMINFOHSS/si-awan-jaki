@@ -42,6 +42,22 @@ class PengawasanProgressService
           ->get();
     }
 
+    public function getDaftarPengawasanByTahunLimit(string $tahun, $limit = 5)
+    {
+        return PengawasanProgress::with([
+            'proyekKonstruksi',
+            'proyekKonstruksi.penyediaJasa',
+            'proyekKonstruksi.konsultanPengawas',
+            'realisasiFisik' => function (Builder $query)
+            {
+                $query->whereNotNull('realisasi')->orderBy('tanggal', 'desc');
+            }
+        ])->where('tahun_pengawasan', $tahun)
+          ->orderBy('created_at', 'desc')
+          ->limit($limit)
+          ->get();
+    }
+
     public function getPengawasanById(string $id, string $tahun)
     {
         return PengawasanProgress::with([

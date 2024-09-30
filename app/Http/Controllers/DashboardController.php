@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Helpers\RekapitulasiHelper;
+use App\Http\Resources\Pengawasan\Progress\PengawasanProgressResource;
 use App\Services\JenisPengawasan\PengawasanProgressService;
 use App\Services\Rekapitulasi\TertibUsahaService;
 use App\Services\Rekapitulasi\TertibPenyelenggaraanService;
@@ -33,6 +34,33 @@ class DashboardController extends Controller
     {
         $tahun = date('Y');
 
+        $daftarTertibUsahaBUJK = $this->rekapTertibUsahaService->getDaftarPengawasanRutinBUJKByTahun($tahun);
+
+        $tertibBUJK = [
+            'totalTertib'      => 0,
+            'totalBelumTertib' => 0,
+        ];
+        foreach($daftarTertibUsahaBUJK as $tertibUsahaBUJK)
+        {
+            if (
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_2 &&
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_3 &&
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_4 &&
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_5
+            ) {
+                $tertibBUJK['totalTertib'] += 1;
+            } elseif (
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_2 === null ||
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_3 === null ||
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_4 === null ||
+                $tertibUsahaBUJK->tertib_pengawasan_lingkup_5 === null
+            ) {
+                continue;
+            } else {
+                $tertibBUJK['totalBelumTertib'] += 1;
+            }
+        }
+
         $totalPengawasanInsidental =
             $this->rekapTertibUsahaService->getTotalPengawasanCount($tahun, 'Insidental') +
             $this->rekapTertibPenyelenggaraanService->getTotalPengawasanCount($tahun, 'Insidental') +
@@ -59,13 +87,18 @@ class DashboardController extends Controller
                     break;
             }
         }
+        $daftarPengawasanProgress = $this->pengawasanProgressService->getDaftarPengawasanByTahunLimit($tahun, 5);
 
         return Inertia::render('Dashboard', [
             'data' => [
                 'totalPengawasanInsidental'  => $totalPengawasanInsidental,
                 'totalPengawasanProgress'    => $pengawasanProgress,
                 'pengawasanProgress'         => $totalPengawasanProgress,
+                'daftarPengawasanProgress'   => PengawasanProgressResource::collection($daftarPengawasanProgress),
                 'totalTertibPengawasanRutin' => [
+                    'tertibUsaha'               => [
+                        'tertibBUJK' => $tertibBUJK,
+                    ],
                     'tertibPenyelenggaraan'     => $tertibPenyelenggaraanRutin,
                     'tertibPemanfaatanProduk'   => $tertibPemanfaatanProdukRutin,
                 ],

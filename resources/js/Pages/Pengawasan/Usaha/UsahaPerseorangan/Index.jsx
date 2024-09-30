@@ -5,10 +5,12 @@ import Layout from "../../../../Components/Layout";
 
 import { LiaHomeSolid, LiaPlusSolid } from "react-icons/lia";
 import FormPengawasan from "../../../../Components/Usaha/UsahaPerseorangan/FormPengawasan";
+import Card from "../../../../Components/Card";
+import DaftarPengawasan from "../../../../Components/Usaha/UsahaPerseorangan/DaftarPengawasan";
 
 const PengawasanUsahaPerseoranganIndex = ({ data }) => {
     console.log(data);
-    const { lingkupPengawasan, daftarUsaha } = data;
+    const { lingkupPengawasan, daftarUsaha, daftarPengawasan } = data;
     const [ isModalPengawasanOpen, setIsModalPengawasanOpen ] = React.useState(false);
 
     const tabList = [
@@ -40,8 +42,18 @@ const PengawasanUsahaPerseoranganIndex = ({ data }) => {
                 </div>
             </div>
             <Tabs tabList={tabList}>
-                <Tabs.Tab>Pengawasan Rutin</Tabs.Tab>
-                <Tabs.Tab>Pengawasan Insidental</Tabs.Tab>
+                <Tabs.Tab>
+                    <DaftarPengawasan
+                        daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Rutin')}
+                        // daftarPengawasan={[]}
+                    />
+                </Tabs.Tab>
+                <Tabs.Tab>
+                    <DaftarPengawasan
+                        daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Insidental')}
+                        // daftarPengawasan={[]}
+                    />
+                </Tabs.Tab>
             </Tabs>
             <FormPengawasan
                 isVisible={isModalPengawasanOpen}

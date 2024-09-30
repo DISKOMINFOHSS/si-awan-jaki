@@ -64,4 +64,9 @@ class Usaha extends Model
     {
         return $this->hasMany(PengawasanBUJKRutin::class, 'usaha_id');
     }
+
+    public function skk(): HasMany
+    {
+        return $this->hasMany(SertifikatStandarUsahaPerseorangan::class, 'usaha_id');
+    }
 }

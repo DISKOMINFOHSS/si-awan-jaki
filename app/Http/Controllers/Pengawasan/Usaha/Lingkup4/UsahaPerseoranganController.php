@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pengawasan\Usaha\Lingkup4;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Pengawasan\TertibUsaha\PengawasanUsahaPerseoranganCollection;
 use App\Http\Resources\Pengawasan\TertibUsaha\PengawasanUsahaPerseoranganResource;
 use App\Services\Usaha\PendataanUsahaService;
 use App\Services\Usaha\PendataanUsahaPerseoranganService;
@@ -34,13 +35,13 @@ class UsahaPerseoranganController extends Controller
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(4);
         $daftarUsaha = $this->usahaService->getDaftarUsahaByJenisUsaha('Usaha Orang Perseorangan');
 
-        $daftarPengawasan = $this->pengawasanLingkup4Service->getDaftarPengawasanUsahaPerseorangan();
+        $daftarPengawasan = $this->pengawasanLingkup4Service->getDaftarPengawasanUsahaPerseoranganWithSKKAktif();
 
         return Inertia::render('Pengawasan/Usaha/UsahaPerseorangan/Index', [
             'data' => [
                 'lingkupPengawasan' => $lingkupPengawasan,
                 'daftarUsaha'       => $daftarUsaha,
-                'daftarPengawasan'  => $daftarPengawasan,
+                'daftarPengawasan' => new PengawasanUsahaPerseoranganCollection($daftarPengawasan),
             ]
         ]);
     }

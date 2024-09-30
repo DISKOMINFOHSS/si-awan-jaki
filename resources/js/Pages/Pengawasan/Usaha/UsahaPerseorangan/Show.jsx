@@ -64,7 +64,7 @@ const PengawasanUsahaPerseoranganShow = ({ data }) => {
                     <h2 className="text-xs text-slate-600">{lingkupPengawasan.lingkupPengawasan}</h2>
                 </div>
                 <div className="flex items-center gap-x-2">
-                    {
+                    {/* {
                         pengawasan.tertibPengawasan ? (
                             <button
                                 type="button"
@@ -76,6 +76,18 @@ const PengawasanUsahaPerseoranganShow = ({ data }) => {
                                 <span>Rekomendasi</span>
                             </button>
                         ) : (
+                            <button
+                                type="button"
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                                onClick={() => setIsModalVerificationOpen(true)}
+                            >
+                                <LiaCheckCircleSolid size={18} />
+                                <span>Verifikasi Pengawasan</span>
+                            </button>
+                        )
+                    } */}
+                    {
+                        !pengawasan.tertibPengawasan && (
                             <button
                                 type="button"
                                 className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
@@ -105,14 +117,14 @@ const PengawasanUsahaPerseoranganShow = ({ data }) => {
                                 <LiaInfoCircleSolid size={16} />
                                 <span>Informasi Usaha</span>
                             </a>
-                            <button
+                            {/* <button
                                 type="button"
                                 className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
                                 onClick={() => {toggleMoreDropdown(), handleRekomendasiClick()}}
                             >
                                 <LiaListAltSolid size={16} />
                                 <span>Rekomendasi</span>
-                            </button>
+                            </button> */}
                             <button
                                 type="button"
                                 className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"

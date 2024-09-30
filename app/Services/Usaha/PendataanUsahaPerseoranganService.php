@@ -2,6 +2,8 @@
 
 namespace App\Services\Usaha;
 
+use App\Models\Usaha\Usaha;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class PendataanUsahaPerseoranganService

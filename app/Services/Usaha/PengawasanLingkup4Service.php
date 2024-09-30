@@ -129,6 +129,21 @@ class PengawasanLingkup4Service
           ->get();
     }
 
+    public function getDaftarPengawasanUsahaPerseoranganWithSKKAktif()
+    {
+        return PengawasanUsahaPerseorangan::with([
+            'usaha' => function (Builder $query)
+            {
+                $query->select('id', 'nama', 'nib', 'alamat');
+            },
+            'usaha.skk' => function (Builder $query)
+            {
+                $query->where('status', true);
+            }
+        ])->orderBy('tanggal_pengawasan', 'desc')
+          ->get();
+    }
+
     public function getPengawasanUsahaPerseoranganById(string $id)
     {
         return PengawasanUsahaPerseorangan::with([

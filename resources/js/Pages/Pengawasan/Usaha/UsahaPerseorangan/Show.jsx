@@ -3,20 +3,41 @@ import React from "react";
 import Layout from "../../../../Components/Layout";
 import Breadcrumb from "../../../../Components/Breadcrumb";
 import Card from "../../../../Components/Card";
+import Dropdown from "../../../../Components/Dropdown";
+import ModalDelete from "../../../../Components/ModalDelete";
 
 import FormDokumenNIB from "../../../../Components/Usaha/FormDokumenNIB";
+import FormSertifikatStandar from "../../../../Components/Usaha/UsahaPerseorangan/FormSertifikatStandar";
 
 import { getTertibStatusBadge } from "../../../../Utils/getStatusBadge";
 import { formatDateToIndonesia } from "../../../../Utils/formatDate";
+import useToggleWithClickOutside from "../../../../Hooks/useToggleWithClickOutside";
 
-import { LiaCloudUploadAltSolid, LiaEditSolid, LiaFileAlt, LiaHomeSolid, LiaPlusCircleSolid, LiaSearchSolid, LiaTrashAltSolid } from "react-icons/lia";
-import FormSertifikatStandar from "../../../../Components/Usaha/UsahaPerseorangan/FormSertifikatStandar";
-import ModalDelete from "../../../../Components/ModalDelete";
+import {
+    LiaCheckCircleSolid,
+    LiaCloudUploadAltSolid,
+    LiaEditSolid,
+    LiaEllipsisHSolid,
+    LiaFileAlt,
+    LiaHomeSolid,
+    LiaInfoCircleSolid,
+    LiaListAltSolid,
+    LiaPlusCircleSolid,
+    LiaSearchSolid,
+    LiaTrashAltSolid
+} from "react-icons/lia";
+import FormVerifikasiPengawasan from "../../../../Components/Usaha/UsahaPerseorangan/FormVerifikasiPengawasan";
 
 const PengawasanUsahaPerseoranganShow = ({ data }) => {
     console.log(data);
     const { lingkupPengawasan, pengawasan } = data;
     const { usaha, daftarSertifikatStandar } = pengawasan;
+
+    const [
+        moreDropdownRef,
+        isMoreDropdownOpened,
+        toggleMoreDropdown
+    ] = useToggleWithClickOutside(false);
 
     const [ isModalNIBOpen, setIsModalNIBOpen ] = React.useState(false);
 
@@ -25,6 +46,8 @@ const PengawasanUsahaPerseoranganShow = ({ data }) => {
 
     const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
     const [ selectedSKKId, setSelectedSKKId ] = React.useState('');
+
+    const [ isModalVerificationOpen, setIsModalVerificationOpen ] = React.useState(false);
 
     return (
         <>
@@ -39,6 +62,75 @@ const PengawasanUsahaPerseoranganShow = ({ data }) => {
                     <h3 className="font-light text-xs text-slate-500">Pengawasan Tertib Usaha Jasa Konstruksi</h3>
                     <h1 className="font-medium text-xl text-slate-800 uppercase">{usaha.nama}</h1>
                     <h2 className="text-xs text-slate-600">{lingkupPengawasan.lingkupPengawasan}</h2>
+                </div>
+                <div className="flex items-center gap-x-2">
+                    {
+                        pengawasan.tertibPengawasan ? (
+                            <button
+                                type="button"
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                                onClick={() => handleRekomendasiClick()}
+                            >
+
+                                <LiaListAltSolid size={18} />
+                                <span>Rekomendasi</span>
+                            </button>
+                        ) : (
+                            <button
+                                type="button"
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                                onClick={() => setIsModalVerificationOpen(true)}
+                            >
+                                <LiaCheckCircleSolid size={18} />
+                                <span>Verifikasi Pengawasan</span>
+                            </button>
+                        )
+                    }
+                    <Dropdown ref={moreDropdownRef}>
+                        <Dropdown.Toggle
+                            onClick={toggleMoreDropdown}
+                            className="w-fit min-h-10 flex justify-center items-center space-x-1 text-slate-500 border border-slate-200 rounded text-xs tracking-wide p-2.5 shadow-sm"
+                        >
+                            <LiaEllipsisHSolid size={16} />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu
+                            isVisible={isMoreDropdownOpened}
+                            className="min-w-full flex flex-col right-0 py-2 space-y-0.5 text-xs text-slate-700"
+                        >
+                            <a
+                                href={`/admin/pendataan/usaha/usaha-perseorangan/${usaha.id}`}
+                                target="_blank"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                            >
+                                <LiaInfoCircleSolid size={16} />
+                                <span>Informasi Usaha</span>
+                            </a>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), handleRekomendasiClick()}}
+                            >
+                                <LiaListAltSolid size={16} />
+                                <span>Rekomendasi</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpen(true)}}
+                            >
+                                <LiaCheckCircleSolid size={16} />
+                                <span>Verifikasi Pengawasan</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left text-red-500 hover:bg-slate-100 hover:text-red-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalDeletePengawasanOpen(true)}}
+                            >
+                                <LiaTrashAltSolid size={16} />
+                                <span>Hapus Pengawasan</span>
+                            </button>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-4">
@@ -229,6 +321,12 @@ const PengawasanUsahaPerseoranganShow = ({ data }) => {
                 onClose={() => setIsModalSKKOpen(false)}
                 usaha={usaha}
                 sertifikatStandar={selectedSKK}
+            />
+            <FormVerifikasiPengawasan
+                isVisible={isModalVerificationOpen}
+                onClose={() => setIsModalVerificationOpen(false)}
+                lingkupPengawasan={lingkupPengawasan}
+                pengawasan={pengawasan}
             />
             <ModalDelete
                 isVisible={isModalDeleteOpen}

@@ -78,6 +78,33 @@ class UsahaPerseoranganController extends Controller
         ]);
     }
 
+    public function verify(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup4Service->checkPengawasanUsahaPerseoranganExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'syaratSKK'        => 'required|boolean',
+            'syaratNIB'        => 'required|boolean',
+            'tertibPengawasan' => 'required|boolean',
+            'catatan'          => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup4Service->verifyPengawasanUsahaPerseorangan(
+            $id,
+        [
+            'tertib_persyaratan_skk' => $validatedData['syaratSKK'],
+            'tertib_persyaratan_nib' => $validatedData['syaratNIB'],
+            'tertib_pengawasan'      => $validatedData['tertibPengawasan'],
+            'catatan'                => $validatedData['catatan'],
+            'verified_by'            => $userId,
+        ]);
+
+        return back();
+    }
+
     // public function destroy(string $id)
     // {
     //     if (!$this->pengawasanLingkup4Service->checkPengawasanUsahaPerseoranganExists($id)) {

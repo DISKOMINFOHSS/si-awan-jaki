@@ -113,6 +113,11 @@ class PengawasanLingkup4Service
         return $pengawasan->id;
     }
 
+    public function checkPengawasanUsahaPerseoranganExists(string $id): bool
+    {
+        return PengawasanUsahaPerseorangan::where('id', $id)->exists();
+    }
+
     public function getDaftarPengawasanUsahaPerseorangan()
     {
         return PengawasanUsahaPerseorangan::with([
@@ -136,5 +141,20 @@ class PengawasanLingkup4Service
                       );
             }
         ])->where('id', $id)->firstOrFail();
+    }
+
+    public function verifyPengawasanUsahaPerseorangan(string $id, array $data)
+    {
+        $pengawasan = PengawasanUsahaPerseorangan::find($id);
+
+        $pengawasan->tertib_persyaratan_skk = $data['tertib_persyaratan_skk'];
+        $pengawasan->tertib_persyaratan_nib = $data['tertib_persyaratan_nib'];
+        $pengawasan->tertib_pengawasan = $data['tertib_pengawasan'];
+        $pengawasan->catatan = $data['catatan'];
+
+        $pengawasan->verified_by = $data['verified_by'];
+        $pengawasan->verified_at = now();
+
+        $pengawasan->save();
     }
 }

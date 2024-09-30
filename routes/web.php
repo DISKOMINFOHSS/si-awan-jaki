@@ -240,6 +240,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                         Route::get('/', 'index');
                         Route::post('/', 'store');
                         Route::get('/{id}', 'show');
+                        Route::post('/{id}/verification', 'verify');
                         // Route::get('/{id}/rekomendasi', 'recommendation');
                         // Route::post('/{id}/rekomendasi', 'recommend');
                     });

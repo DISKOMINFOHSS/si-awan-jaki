@@ -123,4 +123,18 @@ class PengawasanLingkup4Service
         ])->orderBy('tanggal_pengawasan', 'desc')
           ->get();
     }
+
+    public function getPengawasanUsahaPerseoranganById(string $id)
+    {
+        return PengawasanUsahaPerseorangan::with([
+            'usaha' => function (Builder $query)
+            {
+                $query->leftJoin('files', 'files.id', 'usaha.dokumen_nib')
+                      ->select(
+                        'usaha.id', 'usaha.nama', 'usaha.nib', 'usaha.pjbu', 'usaha.alamat',
+                        'usaha.dokumen_nib', 'files.path', 'files.name',
+                      );
+            }
+        ])->where('id', $id)->firstOrFail();
+    }
 }

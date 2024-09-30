@@ -47,7 +47,6 @@ class UsahaPerseoranganController extends Controller
         $validatedData = $request->validate([
             'nomorSertifikat' => 'required',
             'pemegang'        => 'required',
-            // 'dokumenSKK'      => 'nullable|file|max:2048',
             'subklasifikasi'  => 'required'
         ]);
         $userId = auth()->user()->id;
@@ -84,6 +83,24 @@ class UsahaPerseoranganController extends Controller
         } else {
             $this->usahaPerseoranganService->addSertifikatStandar($data);
         }
+
+        return back();
+    }
+
+    public function destroySertifikat(string $id, string $sertifikat_id)
+    {
+        if (!$this->usahaService->checkUsahaExists($id)) {
+            return back()->withErrors(['message' => 'Usaha tidak ditemukan.']);
+        }
+
+        if (!$this->usahaPerseoranganService->checkSertifikatStandarExists($sertifikat_id)) {
+            return back()->withErrors(['message' => 'Sertifikat tidak ditemukan.']);
+        }
+
+        $sertifikat = $this->usahaPerseoranganService->getSertifikatStandarById($sertifikat_id);
+        $this->usahaPerseoranganService->deleteSertifikatStandar($sertifikat->id);
+
+        if ($sertifikat->sertifikat_id) $this->fileService->deleteFile($sertifikat->sertifikat_id);
 
         return back();
     }

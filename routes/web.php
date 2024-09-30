@@ -67,6 +67,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->group(function () {
                     Route::get('/{id}', 'show')->name('show');
                     Route::post('/{id}/skk', 'sertifikat');
+
+                    Route::delete('/{id}/skk/{sertifikat_id}', 'destroySertifikat');
                 });
             });
 
@@ -237,6 +239,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     ->group(function () {
                         Route::get('/', 'index');
                         Route::post('/', 'store');
+                        Route::get('/{id}', 'show');
                         // Route::get('/{id}/rekomendasi', 'recommendation');
                         // Route::post('/{id}/rekomendasi', 'recommend');
                     });

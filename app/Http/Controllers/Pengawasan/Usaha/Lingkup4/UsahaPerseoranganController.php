@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Pengawasan\Usaha\Lingkup4;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Pengawasan\TertibUsaha\PengawasanUsahaPerseoranganResource;
 use App\Services\Usaha\PendataanUsahaService;
+use App\Services\Usaha\PendataanUsahaPerseoranganService;
 use App\Services\Usaha\PengawasanUsahaService;
 use App\Services\Usaha\PengawasanLingkup4Service;
 use Illuminate\Http\Request;
@@ -13,13 +15,16 @@ class UsahaPerseoranganController extends Controller
 {
     protected $usahaService;
     protected $pengawasanService;
+    protected $usahaPerseoranganService;
 
     public function __construct(
         PendataanUsahaService $usahaService,
+        PendataanUsahaPerseoranganService $usahaPerseoranganService,
         PengawasanUsahaService $pengawasanService,
         PengawasanLingkup4Service $pengawasanLingkup4Service,
     ) {
         $this->usahaService = $usahaService;
+        $this->usahaPerseoranganService = $usahaPerseoranganService;
         $this->pengawasanService = $pengawasanService;
         $this->pengawasanLingkup4Service = $pengawasanLingkup4Service;
     }
@@ -58,4 +63,27 @@ class UsahaPerseoranganController extends Controller
 
         return redirect("/admin/pengawasan/usaha/4/usaha-perseorangan/$pengawasanId");
     }
+
+    public function show(string $id)
+    {
+        $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(4);
+        $pengawasan = $this->pengawasanLingkup4Service->getPengawasanUsahaPerseoranganById($id);
+        $pengawasan['sertifikat_standar'] = $this->usahaPerseoranganService->getDaftarSertifikatStandarAktif($pengawasan->usaha->id);
+
+        return Inertia::render('Pengawasan/Usaha/UsahaPerseorangan/Show', [
+            'data' => [
+                'lingkupPengawasan' => $lingkupPengawasan,
+                'pengawasan'        => new PengawasanUsahaPerseoranganResource($pengawasan),
+            ],
+        ]);
+    }
+
+    // public function destroy(string $id)
+    // {
+    //     if (!$this->pengawasanLingkup4Service->checkPengawasanUsahaPerseoranganExists($id)) {
+    //         return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+    //     }
+
+    //     $this->pengawasan
+    // }
 }

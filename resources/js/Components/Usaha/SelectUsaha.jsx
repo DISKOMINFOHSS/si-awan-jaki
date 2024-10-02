@@ -33,7 +33,7 @@ export default ({ isVisible, daftarUsaha, onSelect, jenisUsaha = "Badan Usaha Ja
                             </div>
                             {
                                 jenisUsaha !== "Usaha Orang Perseorangan" &&
-                                <div>
+                                <div className="col-span-2">
                                     <span className="">PJBU : </span>
                                     <span className="group-hover:text-blue-600 text-slate-500">{usaha.pjbu}</span>
                                 </div>

@@ -5,6 +5,7 @@ import Breadcrumb from "../../../../Components/Breadcrumb";
 import Tabs from "../../../../Components/Tabs";
 
 import { LiaHomeSolid, LiaPlusSolid } from "react-icons/lia";
+import FormAddPengawasan from "../../../../Components/Usaha/UsahaRantaiPasok/FormAddPengawasan";
 
 const PengawasanUsahaRantaiPasokIndex = ({ data }) => {
     console.log(data);
@@ -48,6 +49,13 @@ const PengawasanUsahaRantaiPasokIndex = ({ data }) => {
                     Pengawasan Insidental
                 </Tabs.Tab>
             </Tabs>
+            <FormAddPengawasan
+                isVisible={isModalPengawasanOpen}
+                onClose={() => setIsModalPengawasanOpen(false)}
+                lingkupPengawasan={lingkupPengawasan}
+                jenisRantaiPasok={jenisRantaiPasok}
+                daftarUsaha={daftarUsaha}
+            />
         </>
     )
 }

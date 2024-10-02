@@ -31,4 +31,20 @@ class UsahaRantaiPasokController extends Controller
             ],
         ]);
     }
+
+    public function index(string $jenis_rantai_pasok)
+    {
+        $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(1);
+        $jenisRantaiPasok = $this->usahaService->getJenisRantaiPasokBySlug($jenis_rantai_pasok);
+
+        $daftarUsaha = $this->usahaService->getDaftarUsahaRantaiPasokBySlug($jenis_rantai_pasok);
+
+        return Inertia::render('Pengawasan/Usaha/UsahaRantaiPasok/Index', [
+            'data' => [
+                'lingkupPengawasan' => $lingkupPengawasan,
+                'jenisRantaiPasok'  => $jenisRantaiPasok,
+                'daftarUsaha'       => $daftarUsaha,
+            ],
+        ]);
+    }
 }

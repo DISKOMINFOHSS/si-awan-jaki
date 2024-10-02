@@ -175,6 +175,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->controller(App\Http\Controllers\Pengawasan\Usaha\UsahaRantaiPasokController::class)
                 ->group(function () {
                     Route::get('/', 'category');
+
+                    Route::get('/{jenis_rantai_pasok}', 'index');
                 });
 
                 Route::name('2.')->prefix('/2')

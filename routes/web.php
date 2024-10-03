@@ -177,6 +177,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/', 'category');
 
                     Route::get('/{jenis_rantai_pasok}', 'index');
+                    Route::post('/{jenis_rantai_pasok}', 'store');
+                    Route::get('/{jenis_rantai_pasok}/{id}', 'show');
                 });
 
                 Route::name('2.')->prefix('/2')

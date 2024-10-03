@@ -21,10 +21,10 @@ return new class extends Migration
             $table->boolean('keabsahan_perizinan_berusaha')->nullable();
             $table->boolean('kapasitas_terpasang')->nullable();
             $table->boolean('kepemilikan_perizinan_penggunaan')->nullable();
-            $table->boolean('keabsahn_perizinan_penggunaan')->nullable();
+            $table->boolean('keabsahan_perizinan_penggunaan')->nullable();
 
             $table->boolean('tertib_perizinan_berusaha')->nullable();
-            $table->boolean('tertib_perizinan_penggunaan_bahan_baku')->nullable();
+            $table->boolean('tertib_perizinan_penggunaan')->nullable();
             $table->boolean('tertib_pencatatan_simpk')->nullable();
 
             $table->boolean('tertib_pengawasan')->nullable();

@@ -25,7 +25,8 @@ export default ({
         pjbu: '',
         tanggal: '',
         jenis: 'Rutin',
-
+        kepemilikanPerizinanBerusaha: '',
+        keabsahanPerizinanBerusaha: '',
     });
     const handleInputChange = (value) => setData({ ...data, ...value });
 
@@ -44,16 +45,16 @@ export default ({
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
-        // post(`/admin/pengawasan/usaha/${lingkupPengawasan.id}/${jenisRantaiPasok.slug}`, {
-        //     onSuccess: () => {
-        //         onClose();
-        //         reset();
-        //     },
-        //     onError: () => {
-        //         onClose();
-        //         setIsModalErrorOpened(true);
-        //     }
-        // });
+        post(`/admin/pengawasan/usaha/${lingkupPengawasan.id}/${jenisRantaiPasok.slug}`, {
+            onSuccess: () => {
+                onClose();
+                reset();
+            },
+            onError: () => {
+                onClose();
+                setIsModalErrorOpened(true);
+            }
+        });
     }
 
     return (

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pengawasan\Usaha;
 
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Pengawasan\TertibUsaha\PengawasanUsahaRantaiPasokResource;
 use App\Services\Usaha\PendataanUsahaService;
 use App\Services\Usaha\PengawasanUsahaService;
 use App\Services\Usaha\PengawasanLingkup1Service;
@@ -88,10 +89,13 @@ class UsahaRantaiPasokController extends Controller
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(1);
         $jenisRantaiPasok = $this->usahaService->getJenisRantaiPasokBySlug($jenis_rantai_pasok);
 
+        $pengawasan = $this->pengawasanLingkup1Service->getPengawasanById($id);
+
         return Inertia::render('Pengawasan/Usaha/UsahaRantaiPasok/Show', [
             'data' => [
                 'lingkupPengawasan' => $lingkupPengawasan,
                 'jenisRantaiPasok'  => $jenisRantaiPasok,
+                'pengawasan'        => new PengawasanUsahaRantaiPasokResource($pengawasan),
             ],
         ]);
     }

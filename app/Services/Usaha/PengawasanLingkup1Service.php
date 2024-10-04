@@ -18,6 +18,19 @@ class PengawasanLingkup1Service
         return PengawasanUsahaRantaiPasok::where('id', $id)->exists();
     }
 
+    public function getDaftarPengawasanBySlug(string $slug)
+    {
+        return PengawasanUsahaRantaiPasok::withWhereHas('usaha', function ($query) use ($slug) {
+            $query->join('usaha_rantai_pasok', 'usaha.id', 'usaha_rantai_pasok.usaha_id')
+                ->join('master_jenis_usaha_rantai_pasok as rantai_pasok', 'usaha_rantai_pasok.rantai_pasok_id', 'rantai_pasok.id')
+                ->where('rantai_pasok.slug', $slug)
+                ->select(
+                    'usaha.id', 'usaha.nama', 'usaha.nib', 'usaha.pjbu',
+                );
+        })->orderBy('tanggal_pengawasan', 'desc')
+          ->get();
+    }
+
     public function getPengawasanById(string $id)
     {
         return PengawasanUsahaRantaiPasok::with([

@@ -6,10 +6,16 @@ import Tabs from "../../../../Components/Tabs";
 
 import { LiaHomeSolid, LiaPlusSolid } from "react-icons/lia";
 import FormAddPengawasan from "../../../../Components/Usaha/UsahaRantaiPasok/FormAddPengawasan";
+import DaftarPengawasan from "../../../../Components/Usaha/UsahaRantaiPasok/DaftarPengawasan";
 
 const PengawasanUsahaRantaiPasokIndex = ({ data }) => {
     console.log(data);
-    const { lingkupPengawasan, jenisRantaiPasok, daftarUsaha } = data;
+    const {
+        lingkupPengawasan,
+        jenisRantaiPasok,
+        daftarUsaha,
+        daftarPengawasan,
+    } = data;
 
     const [ isModalPengawasanOpen, setIsModalPengawasanOpen ] = React.useState(false);
 
@@ -43,7 +49,10 @@ const PengawasanUsahaRantaiPasokIndex = ({ data }) => {
             </div>
             <Tabs tabList={tabList}>
                 <Tabs.Tab>
-                    Pengawasan Rutin
+                    <DaftarPengawasan
+                        jenisRantaiPasok={jenisRantaiPasok}
+                        daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Rutin')}
+                    />
                 </Tabs.Tab>
                 <Tabs.Tab>
                     Pengawasan Insidental

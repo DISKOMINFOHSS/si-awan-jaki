@@ -43,6 +43,7 @@ class UsahaRantaiPasokController extends Controller
     {
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(1);
         $jenisRantaiPasok = $this->usahaService->getJenisRantaiPasokBySlug($jenis_rantai_pasok);
+        $daftarPengawasan = $this->pengawasanLingkup1Service->getDaftarPengawasanBySlug($jenis_rantai_pasok);
 
         $daftarUsaha = $this->usahaService->getDaftarUsahaRantaiPasokBySlug($jenis_rantai_pasok);
 
@@ -51,6 +52,7 @@ class UsahaRantaiPasokController extends Controller
                 'lingkupPengawasan' => $lingkupPengawasan,
                 'jenisRantaiPasok'  => $jenisRantaiPasok,
                 'daftarUsaha'       => $daftarUsaha,
+                'daftarPengawasan'  => PengawasanUsahaRantaiPasokResource::collection($daftarPengawasan),
             ],
         ]);
     }

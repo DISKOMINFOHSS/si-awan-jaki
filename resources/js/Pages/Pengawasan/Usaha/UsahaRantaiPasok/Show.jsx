@@ -1,13 +1,28 @@
 import React from "react";
+import { router } from "@inertiajs/react";
 
 import Layout from "../../../../Components/Layout";
 import Breadcrumb from "../../../../Components/Breadcrumb";
 import Card from "../../../../Components/Card";
+import Dropdown from "../../../../Components/Dropdown";
 import FormDokumenNIB from "../../../../Components/Usaha/FormDokumenNIB";
 
-import { formatDateToIndonesia } from "../../../../Utils/formatDate";
-import { LiaCloudUploadAltSolid, LiaFileAlt, LiaHomeSolid } from "react-icons/lia";
 import { getTertibStatusBadge } from "../../../../Utils/getStatusBadge";
+import { formatDateToIndonesia } from "../../../../Utils/formatDate";
+
+import {
+    LiaCheckCircleSolid,
+    LiaCloudUploadAltSolid,
+    LiaEditSolid,
+    LiaEllipsisHSolid,
+    LiaFileAlt,
+    LiaHomeSolid,
+    LiaInfoCircleSolid,
+    LiaListAltSolid,
+    LiaTrashAltSolid
+} from "react-icons/lia";
+import useToggleWithClickOutside from "../../../../Hooks/useToggleWithClickOutside";
+import FormVerifikasiPengawasan from "../../../../Components/Usaha/UsahaRantaiPasok/FormVerifikasiPengawasan";
 
 const PengawasanUsahaRantaiPasokShow = ({ data }) => {
     console.log(data);
@@ -19,9 +34,28 @@ const PengawasanUsahaRantaiPasokShow = ({ data }) => {
         kapasitasTerpasang,
         kepemilikanPerizinanPenggunaan,
         keabsahanPerizinanPenggunaan,
+        tertibPerizinanBerusaha,
+        tertibPerizinanPenggunaan,
+        tertibPencatatanSIMPK,
+        tertibPengawasan,
     } = pengawasan;
 
     const [ isModalNIBOpen, setIsModalNIBOpen ] = React.useState(false);
+    const [ isModalVerificationOpen, setIsModalVerificationOpen ] = React.useState(false);
+
+    const [
+        moreDropdownRef,
+        isMoreDropdownOpened,
+        toggleMoreDropdown
+    ] = useToggleWithClickOutside(false);
+
+    function handleRekomendasiClick() {
+        if (tertibPengawasan !== null) {
+            return router.get(`/admin/pengawasan/usaha/${lingkupPengawasan.id}/${jenisRantaiPasok.slug}/${pengawasan.id}/rekomendasi`);
+        }
+
+        return setIsModalVerificationOpen(true);
+    }
 
     return (
         <>
@@ -31,11 +65,75 @@ const PengawasanUsahaRantaiPasokShow = ({ data }) => {
                 <Breadcrumb.Item href={`/admin/pengawasan/usaha/${lingkupPengawasan.id}/${jenisRantaiPasok.slug}`}>{`${jenisRantaiPasok.pelakuUsaha} - ${jenisRantaiPasok.kategoriSumberDaya} Konstruksi`}</Breadcrumb.Item>
                 <Breadcrumb.Item active>{usaha.nama}</Breadcrumb.Item>
             </Breadcrumb>
-            <div className="flex justify-between items-start mt-2 mb-4">
+            <div className="flex justify-between items-center mt-2 mb-4">
                 <div>
                     <h3 className="font-light text-xs text-slate-500">Pengawasan Tertib Usaha Jasa Konstruksi</h3>
                     <h1 className="font-medium text-xl text-slate-800 uppercase">{usaha.nama}</h1>
                     <h2 className="text-xs text-slate-600">{lingkupPengawasan.lingkupPengawasan}</h2>
+                </div>
+                <div className="flex items-center gap-x-2">
+                    <button
+                        type="button"
+                        className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                        onClick={() => handleRekomendasiClick()}
+                    >
+
+                        <LiaListAltSolid size={18} />
+                        <span>Rekomendasi</span>
+                    </button>
+                    <Dropdown ref={moreDropdownRef}>
+                        <Dropdown.Toggle
+                            onClick={toggleMoreDropdown}
+                            className="w-fit min-h-10 flex justify-center items-center space-x-1 text-slate-500 border border-slate-200 rounded text-xs tracking-wide p-2.5 shadow-sm"
+                        >
+                            <LiaEllipsisHSolid size={16} />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu
+                            isVisible={isMoreDropdownOpened}
+                            className="min-w-full flex flex-col right-0 py-2 space-y-0.5 text-xs text-slate-700"
+                        >
+                            <a
+                                href={`/admin/pendataan/usaha/rantai-pasok/${usaha.id}`}
+                                target="_blank"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                            >
+                                <LiaInfoCircleSolid size={16} />
+                                <span>Informasi Usaha</span>
+                            </a>
+                            {/* <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalEditOpen(true)}}
+                            >
+                                <LiaEditSolid size={16} />
+                                <span>Edit Pengawasan</span>
+                            </button> */}
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), handleRekomendasiClick()}}
+                            >
+                                <LiaListAltSolid size={16} />
+                                <span>Rekomendasi</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpen(true)}}
+                            >
+                                <LiaCheckCircleSolid size={16} />
+                                <span>Verifikasi Pengawasan</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left text-red-500 hover:bg-slate-100 hover:text-red-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalDeleteOpen(true)}}
+                            >
+                                <LiaTrashAltSolid size={16} />
+                                <span>Hapus Pengawasan</span>
+                            </button>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-4">
@@ -276,13 +374,13 @@ const PengawasanUsahaRantaiPasokShow = ({ data }) => {
                                     <div>
                                         <div className="font-medium">Perizinan Berusaha</div>
                                     </div>
-                                    <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibPerizinanBerusaha)}</div>
+                                    <div className="font-light text-slate-500">{getTertibStatusBadge(tertibPerizinanBerusaha)}</div>
                                 </div>
                                 <div className="space-y-2">
                                     <div>
                                         <div className="font-medium">Pencatatan dalam SIMPK</div>
                                     </div>
-                                    <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibPerizinanBerusaha)}</div>
+                                    <div className="font-light text-slate-500">{getTertibStatusBadge(tertibPerizinanBerusaha)}</div>
                                 </div>
                             </div>
                             <div className="pt-3">
@@ -290,7 +388,7 @@ const PengawasanUsahaRantaiPasokShow = ({ data }) => {
                                     <div>
                                         <div className="font-medium">Perizinan Penggunaan Bahan Baku</div>
                                     </div>
-                                    <div className="font-light text-slate-500">{getTertibStatusBadge(pengawasan.tertibPerizinanPenggunaan)}</div>
+                                    <div className="font-light text-slate-500">{getTertibStatusBadge(tertibPencatatanSIMPK)}</div>
                                 </div>
                             </div>
                         </Card.Body>
@@ -298,9 +396,15 @@ const PengawasanUsahaRantaiPasokShow = ({ data }) => {
                 </div>
             </div>
             <FormDokumenNIB
-              isVisible={isModalNIBOpen}
-              onClose={() => setIsModalNIBOpen(false)}
-              usaha={usaha}
+                isVisible={isModalNIBOpen}
+                onClose={() => setIsModalNIBOpen(false)}
+                usaha={usaha}
+            />
+            <FormVerifikasiPengawasan
+                isVisible={isModalVerificationOpen}
+                onClose={() => setIsModalVerificationOpen(false)}
+                lingkupPengawasan={lingkupPengawasan}
+                pengawasan={pengawasan}
             />
         </>
     );

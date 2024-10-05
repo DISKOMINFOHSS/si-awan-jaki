@@ -175,6 +175,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->controller(App\Http\Controllers\Pengawasan\Usaha\UsahaRantaiPasokController::class)
                 ->group(function () {
                     Route::get('/', 'category');
+                    Route::post('/{id}/verification', 'verify');
 
                     Route::get('/{jenis_rantai_pasok}', 'index');
                     Route::post('/{jenis_rantai_pasok}', 'store');

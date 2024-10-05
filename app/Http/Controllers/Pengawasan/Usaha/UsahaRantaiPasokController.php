@@ -101,4 +101,34 @@ class UsahaRantaiPasokController extends Controller
             ],
         ]);
     }
+
+    public function verify(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup1Service->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'tertibPerizinanBerusaha'   => 'required|boolean',
+            'tertibPerizinanPenggunaan' => 'required|boolean',
+            'tertibPencatatanSIMPK'     => 'required|boolean',
+            'tertibPengawasan'          => 'required|boolean',
+            'catatan'                   => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup1Service->verifyPengawasan(
+            $id,
+            [
+                'tertib_perizinan_berusaha'   => $validatedData['tertibPerizinanBerusaha'],
+                'tertib_perizinan_penggunaan' => $validatedData['tertibPerizinanPenggunaan'],
+                'tertib_pencatatan_simpk'     => $validatedData['tertibPencatatanSIMPK'],
+                'tertib_pengawasan'           => $validatedData['tertibPengawasan'],
+                'catatan'                     => $validatedData['catatan'],
+                'verified_by'                 => $userId,
+            ],
+        );
+
+        return back();
+    }
 }

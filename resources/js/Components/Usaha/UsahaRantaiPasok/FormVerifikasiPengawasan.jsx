@@ -1,4 +1,6 @@
 import React from "react";
+import { router } from "@inertiajs/react";
+
 import Modal from "../../Modal";
 import ModalError from "../../ModalError";
 import InputRadio from "../../InputRadio";

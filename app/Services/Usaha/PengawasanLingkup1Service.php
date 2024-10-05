@@ -44,4 +44,20 @@ class PengawasanLingkup1Service
             }
         ])->where('id', $id)->firstOrFail();
     }
+
+    public function verifyPengawasan(string $id, array $data)
+    {
+        $pengawasan = PengawasanUsahaRantaiPasok::find($id);
+
+        $pengawasan->tertib_perizinan_berusaha = $data['tertib_perizinan_berusaha'];
+        $pengawasan->tertib_perizinan_penggunaan = $data['tertib_perizinan_penggunaan'];
+        $pengawasan->tertib_pencatatan_simpk = $data['tertib_pencatatan_simpk'];
+        $pengawasan->tertib_pengawasan = $data['tertib_pengawasan'];
+        $pengawasan->catatan = $data['catatan'];
+
+        $pengawasan->verified_by = $data['verified_by'];
+        $pengawasan->verified_at = now();
+
+        $pengawasan->save();
+    }
 }

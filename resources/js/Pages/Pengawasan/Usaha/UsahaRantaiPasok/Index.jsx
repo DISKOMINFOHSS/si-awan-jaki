@@ -55,7 +55,10 @@ const PengawasanUsahaRantaiPasokIndex = ({ data }) => {
                     />
                 </Tabs.Tab>
                 <Tabs.Tab>
-                    Pengawasan Insidental
+                    <DaftarPengawasan
+                        jenisRantaiPasok={jenisRantaiPasok}
+                        daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Insidental')}
+                    />
                 </Tabs.Tab>
             </Tabs>
             <FormAddPengawasan

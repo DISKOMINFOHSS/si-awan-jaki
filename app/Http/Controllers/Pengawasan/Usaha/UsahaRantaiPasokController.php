@@ -131,4 +131,45 @@ class UsahaRantaiPasokController extends Controller
 
         return back();
     }
+
+    public function recommendation(string $jenis_rantai_pasok, string $id)
+    {
+        $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(1);
+        $jenisRantaiPasok = $this->usahaService->getJenisRantaiPasokBySlug($jenis_rantai_pasok);
+
+        $pengawasan = $this->pengawasanLingkup1Service->getPengawasanById($id);
+        $pengawasan['rekomendasi'] = $this->pengawasanLingkup1Service->getRekomendasiPengawasanByPengawasanId($id);
+
+        return Inertia::render('Pengawasan/Usaha/UsahaRantaiPasok/Rekomendasi', [
+            'data' => [
+                'lingkupPengawasan' => $lingkupPengawasan,
+                'jenisRantaiPasok'  => $jenisRantaiPasok,
+                'pengawasan'        => new PengawasanUsahaRantaiPasokResource($pengawasan),
+            ],
+        ]);
+    }
+
+    public function recommend(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup1Service->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'rekomendasi'   => 'required',
+            'keterangan'    => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup1Service->addRekomendasiPengawasan(
+            $id,
+            [
+                'rekomendasi'    => $validatedData['rekomendasi'],
+                'keterangan'     => $validatedData['keterangan'],
+                'created_by'     => $userId,
+            ],
+        );
+
+        return back();
+    }
 }

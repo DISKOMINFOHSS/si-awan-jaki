@@ -4,6 +4,7 @@ namespace App\Services\Usaha;
 
 use App\Models\Usaha\PengawasanUsahaRantaiPasok;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class PengawasanLingkup1Service
 {
@@ -59,5 +60,27 @@ class PengawasanLingkup1Service
         $pengawasan->verified_at = now();
 
         $pengawasan->save();
+    }
+
+    public function addRekomendasiPengawasan(string $pengawasanId, array $data)
+    {
+        DB::table('rekomendasi_pengawasan_usaha_rantai_pasok')->updateOrInsert(
+            [
+                'pengawasan_id' => $pengawasanId,
+            ],
+            [
+                'rekomendasi' => $data['rekomendasi'],
+                'keterangan'  => $data['keterangan'],
+                'created_by'  => $data['created_by'],
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ]
+        );
+    }
+
+    public function getRekomendasiPengawasanByPengawasanId(string $pengawasanId)
+    {
+        return DB::table('rekomendasi_pengawasan_usaha_rantai_pasok')->where('pengawasan_id', $pengawasanId)
+            ->first();
     }
 }

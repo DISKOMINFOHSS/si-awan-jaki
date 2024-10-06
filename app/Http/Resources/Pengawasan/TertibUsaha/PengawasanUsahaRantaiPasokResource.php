@@ -42,6 +42,7 @@ class PengawasanUsahaRantaiPasokResource extends JsonResource
             'tertibPencatatanSIMPK'          => $this->tertib_pencatatan_simpk,
             'tertibPengawasan'               => $this->tertib_pengawasan,
             'catatan'                        => $this->catatan,
+            'rekomendasi'                    => $this->whenHas('rekomendasi'),
             'createdBy'                      => $this->createdBy->nama,
             'verifiedAt'                     => $this->verified_at ? $this->verified_at : null,
             'verifiedBy'                     => $this->verifiedBy->nama,

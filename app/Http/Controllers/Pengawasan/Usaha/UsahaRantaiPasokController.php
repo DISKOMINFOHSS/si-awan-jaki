@@ -132,6 +132,17 @@ class UsahaRantaiPasokController extends Controller
         return back();
     }
 
+    public function destroy(string $jenis_rantai_pasok, string $id)
+    {
+        if (!$this->pengawasanLingkup1Service->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $this->pengawasanLingkup1Service->deletePengawasan($id);
+
+        return redirect("/admin/pengawasan/usaha/1/$jenis_rantai_pasok");
+    }
+
     public function recommendation(string $jenis_rantai_pasok, string $id)
     {
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(1);

@@ -181,6 +181,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::get('/{jenis_rantai_pasok}', 'index');
                     Route::post('/{jenis_rantai_pasok}', 'store');
                     Route::get('/{jenis_rantai_pasok}/{id}', 'show');
+                    Route::delete('/{jenis_rantai_pasok}/{id}', 'destroy');
+
                     Route::get('/{jenis_rantai_pasok}/{id}/rekomendasi', 'recommendation');
                 });
 

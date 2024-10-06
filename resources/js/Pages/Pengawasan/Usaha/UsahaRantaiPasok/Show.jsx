@@ -23,6 +23,7 @@ import {
 } from "react-icons/lia";
 import useToggleWithClickOutside from "../../../../Hooks/useToggleWithClickOutside";
 import FormVerifikasiPengawasan from "../../../../Components/Usaha/UsahaRantaiPasok/FormVerifikasiPengawasan";
+import ModalDelete from "../../../../Components/ModalDelete";
 
 const PengawasanUsahaRantaiPasokShow = ({ data }) => {
     console.log(data);
@@ -42,6 +43,7 @@ const PengawasanUsahaRantaiPasokShow = ({ data }) => {
 
     const [ isModalNIBOpen, setIsModalNIBOpen ] = React.useState(false);
     const [ isModalVerificationOpen, setIsModalVerificationOpen ] = React.useState(false);
+    const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
 
     const [
         moreDropdownRef,
@@ -406,6 +408,17 @@ const PengawasanUsahaRantaiPasokShow = ({ data }) => {
                 lingkupPengawasan={lingkupPengawasan}
                 pengawasan={pengawasan}
             />
+            <ModalDelete
+                isVisible={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+                url={`/admin/pengawasan/usaha/1/${jenisRantaiPasok.slug}`}
+                id={pengawasan.id}
+            >
+                <div className="font-medium text-sm text-slate-700 mb-1">Apakah Anda yakin ingin menghapus pengawasan ini?</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Data yang telah dihapus tidak dapat dikembalikan.
+                </div>
+            </ModalDelete>
         </>
     );
 }

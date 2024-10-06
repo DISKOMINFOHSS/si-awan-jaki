@@ -62,6 +62,12 @@ class PengawasanLingkup1Service
         $pengawasan->save();
     }
 
+    public function deletePengawasan(string $id)
+    {
+        $pengawasan = PengawasanUsahaRantaiPasok::find($id);
+        $pengawasan->delete();
+    }
+
     public function addRekomendasiPengawasan(string $pengawasanId, array $data)
     {
         DB::table('rekomendasi_pengawasan_usaha_rantai_pasok')->updateOrInsert(

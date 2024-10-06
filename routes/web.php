@@ -175,6 +175,15 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 ->controller(App\Http\Controllers\Pengawasan\Usaha\UsahaRantaiPasokController::class)
                 ->group(function () {
                     Route::get('/', 'category');
+                    Route::post('/{id}/verification', 'verify');
+                    Route::post('/{id}/rekomendasi', 'recommend');
+
+                    Route::get('/{jenis_rantai_pasok}', 'index');
+                    Route::post('/{jenis_rantai_pasok}', 'store');
+                    Route::get('/{jenis_rantai_pasok}/{id}', 'show');
+                    Route::delete('/{jenis_rantai_pasok}/{id}', 'destroy');
+
+                    Route::get('/{jenis_rantai_pasok}/{id}/rekomendasi', 'recommendation');
                 });
 
                 Route::name('2.')->prefix('/2')

@@ -1,9 +1,14 @@
+import classNames from "classnames";
 import React from "react";
 
 export default ({
-    id, isTrue, onInputChange, label
+    id, isTrue, onInputChange, label, style = "row", labelFalse = "Belum"
 }) => {
     const [value, setValue] = React.useState(isTrue);
+    const inputRadioClass = classNames({
+        "grid grid-cols-2 gap-2": style === "row",
+        "space-y-2": style === "col",
+    })
 
     React.useEffect(() => {
         setValue(isTrue);
@@ -15,7 +20,7 @@ export default ({
     }
 
     return (
-        <div className="grid grid-cols-2 gap-2">
+        <div className={inputRadioClass}>
             <div className="flex items-center gap-x-2">
                 <input
                     type="radio" id={`true-${id}`} name={id} value={true}
@@ -30,7 +35,7 @@ export default ({
                     onChange={handleInputChange} checked={value === false}
                     className="w-3.5 h-3.5 text-blue-600 border-slate-200 focus:ring-blue-500 focus:ring-2"
                 />
-                <label htmlFor={`false-${id}`} className="text-slate-700 capitalize">Belum {label}</label>
+                <label htmlFor={`false-${id}`} className="text-slate-700 capitalize">{labelFalse} {label}</label>
             </div>
         </div>
     );

@@ -12,7 +12,7 @@ import {
 } from "react-icons/lia";
 
 export default ({ isVisible, onClose, jenisUsaha }) => {
-    const { data, setData, post, processing } = useForm({
+    const { data, setData, post, processing, reset } = useForm({
         nama: '',
         nib: '',
         dokumenNIB: '',

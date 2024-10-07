@@ -7,7 +7,7 @@ import Tabs from "../../../../../Components/Tabs";
 import FormPengawasanKegiatan from "../../../../../Components/Usaha/BUJK/FormPengawasanKegiatan";
 import DaftarPengawasanKegiatan from "../../../../../Components/Usaha/BUJK/DaftarPengawasanKegiatan";
 
-import { LiaHomeSolid, LiaPlusSolid, LiaAngleDownSolid, LiaSearchSolid } from "react-icons/lia";
+import { LiaHomeSolid, LiaPlusSolid } from "react-icons/lia";
 
 const PengawasanBUJKLingkup2Index = ({ data }) => {
     console.log(data);

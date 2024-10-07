@@ -18,8 +18,9 @@ class PengawasanBUJKLingkup5Resource extends JsonResource
             'id'                      => $this->id,
             'jenisPengawasan'         => $this->jenis_pengawasan,
             'tanggalPengawasan'       => $this->tanggal_pengawasan,
+            'pengawasanRutinId'       => $this->whenHas('pengawasan_rutin_id'),
             'usaha'                   => $this->whenLoaded('usaha'),
-            'daftarPemeriksaan'       => $this->daftar_pemeriksaan->transform(function ($pemeriksaan)
+            'daftarPemeriksaan'       => $this->daftar_pemeriksaan ? $this->daftar_pemeriksaan->transform(function ($pemeriksaan)
             {
                 return [
                     'id'                => $pemeriksaan->id,
@@ -33,10 +34,11 @@ class PengawasanBUJKLingkup5Resource extends JsonResource
                         'catatan' => $pemeriksaan->catatan_pemeriksaan,
                     ],
                 ];
-            }),
+            }) : null,
             'tertibPengembanganUsaha' => $this->tertib_pengembangan_usaha,
             'tertibPengawasan'        => $this->tertib_pengawasan,
             'catatan'                 => $this->catatan,
+            'rekomendasi'             => $this->rekomendasi,
             'createdBy'               => $this->createdBy->nama,
             'verifiedAt'              => $this->verified_at ? $this->verified_at : null,
             'verifiedBy'              => $this->verifiedBy->nama,

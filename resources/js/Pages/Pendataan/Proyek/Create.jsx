@@ -4,23 +4,17 @@ import { usePage, Link } from "@inertiajs/react";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import Layout from "../../../Components/Layout";
 import {
-    FormInformasi,
-    FormPenggunaJasa,
-    FormPenyediaJasa
-} from "../../../Components/Proyek/FormKegiatan";
+    FormInformasi
+} from "../../../Components/Proyek/FormAddKegiatan";
 
-import { LiaHomeSolid, LiaToolsSolid } from "react-icons/lia";
+import { LiaHomeSolid } from "react-icons/lia";
 
 const PendataanProyekCreate = ({ data }) => {
-    console.log(data);
-    const { proyekId } = usePage().props;
-    const { daftarUsaha } = data;
-
     return (
         <>
             <Breadcrumb>
                 <Breadcrumb.Item href="/admin/dashboard"><LiaHomeSolid size={14} /></Breadcrumb.Item>
-                <Breadcrumb.Item href={`/admin/pendataan/proyek/`}>Daftar Proyek Konstruksi</Breadcrumb.Item>
+                <Breadcrumb.Item href={`/admin/pendataan/proyek-konstruksi/`}>Daftar Proyek Konstruksi</Breadcrumb.Item>
                 <Breadcrumb.Item active>Tambah Proyek Konstruksi</Breadcrumb.Item>
             </Breadcrumb>
             <div className="flex justify-between items-center mb-5">
@@ -42,7 +36,7 @@ const PendataanProyekCreate = ({ data }) => {
                     }
                 </div> */}
             </div>
-            <div className="grid grid-cols-4 gap-4 pb-5 border-b border-slate-200">
+            <div className="grid grid-cols-4 gap-4">
                 <div className="mt-1">
                     <h3 className="font-medium text-slate-800">Informasi Umum</h3>
                     <h4 className="font-light text-xs text-slate-500">Silakan lengkapi informasi terkait</h4>
@@ -51,25 +45,6 @@ const PendataanProyekCreate = ({ data }) => {
                     <FormInformasi proyekKonstruksi={{}} />
                 </div>
             </div>
-            <div className="grid grid-cols-4 gap-4 py-5 border-b border-slate-200">
-                <div className="mt-1">
-                    <h3 className="font-medium text-slate-800">Penyedia Jasa</h3>
-                    <h4 className="font-light text-xs text-slate-500">Silakan lengkapi informasi terkait</h4>
-                </div>
-                <div className="col-span-3">
-                    <FormPenyediaJasa proyekId={proyekId} daftarUsaha={daftarUsaha} />
-                </div>
-            </div>
-            <div className="grid grid-cols-4 gap-4 pt-5">
-                <div className="mt-1">
-                    <h3 className="font-medium text-slate-800">Pengguna Jasa</h3>
-                    <h4 className="font-light text-xs text-slate-500">Silakan lengkapi informasi terkait</h4>
-                </div>
-                <div className="col-span-3">
-                    <FormPenggunaJasa proyekId={proyekId} />
-                </div>
-            </div>
-
         </>
     )
 }

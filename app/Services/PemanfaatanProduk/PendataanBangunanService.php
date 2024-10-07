@@ -179,4 +179,49 @@ class PendataanBangunanService
 
         return $pemilikPengelola->id;
     }
+
+    public function addBuktiDukung(string $bangunanId, array $data)
+    {
+        DB::table('bukti_dukung_pengawasan_bangunan')->insertGetId([
+            'tahun'       => $data['tahun'],
+            'label'       => $data['label'],
+            'url'         => $data['url'],
+            'bangunan_id' => $bangunanId,
+            'created_by'  => $data['created_by'],
+            'created_at'  => now(),
+            'updated_at'  => now(),
+        ]);
+    }
+
+    public function checkBuktiDukungExists(string $id): bool
+    {
+        return DB::table('bukti_dukung_pengawasan_bangunan')->where('id', $id)->exists();
+    }
+
+    public function getDaftarBuktiDukungByBangunanId(string $bangunanId): DBCollection
+    {
+        return DB::table('bukti_dukung_pengawasan_bangunan as bukti_dukung')
+            ->where('bukti_dukung.bangunan_id', $bangunanId)
+            ->select('id', 'tahun', 'label', 'url')
+            ->orderBy('bukti_dukung.tahun', 'desc')
+            ->get();
+    }
+
+    public function updateBuktiDukung(string $id, array $data)
+    {
+        DB::table('bukti_dukung_pengawasan_bangunan')->where('id', $id)
+            ->update([
+                'tahun'      => $data['tahun'],
+                'label'      => $data['label'],
+                'url'        => $data['url'],
+                'updated_at' => now(),
+            ]);
+    }
+
+    public function deleteBuktiDukung(string $id, string $bangunanId)
+    {
+        DB::table('bukti_dukung_pengawasan_bangunan')->where('id', $id)
+            ->where('bangunan_id', $bangunanId)
+            ->delete();
+    }
 }

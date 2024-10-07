@@ -93,7 +93,7 @@ export default ({ isOpened }) => {
                     text="Usaha Jasa Konstruksi"
                 />
                 <Sidebar.Item
-                    href="/admin/pendataan/proyek"
+                    href="/admin/pendataan/proyek-konstruksi"
                     icon={<LiaToolsSolid size={20} />}
                     text="Proyek Konstruksi"
                 />
@@ -110,7 +110,7 @@ export default ({ isOpened }) => {
                     text="Tertib Usaha"
                 />
                 <Sidebar.Item
-                    href="/admin/pengawasan/penyelenggaraan"
+                    href="/admin/pengawasan/penyelenggaraan/APBD"
                     icon={<LiaHardHatSolid size={20} />}
                     text="Tertib Penyelenggaraan"
                 />
@@ -122,24 +122,24 @@ export default ({ isOpened }) => {
             </Sidebar.Menu>
             <Sidebar.Menu title="Jenis Pengawasan">
                 <Sidebar.Item
-                    href="#"
+                    href="/admin/jenis-pengawasan/rutin"
                     icon={<LiaCalendarDaySolid size={20} />}
                     text="Pengawasan Rutin"
                 />
                 <Sidebar.Item
-                    href="#"
+                    href="/admin/jenis-pengawasan/insidental"
                     icon={<LiaExclamationTriangleSolid size={20} />}
                     text="Pengawasan Insidental"
                 />
                 <Sidebar.Item
-                    href="#"
+                    href="/admin/jenis-pengawasan/progress"
                     icon={<LiaChartBar size={20} />}
                     text="Pengawasan Progres"
                 />
             </Sidebar.Menu>
             <Sidebar.Menu title="Rekapitulasi">
                 <Sidebar.Item
-                    href="#"
+                    href="/admin/rekapitulasi"
                     icon={<LiaCalendar size={20} />}
                     text="Tahun 2024"
                 />

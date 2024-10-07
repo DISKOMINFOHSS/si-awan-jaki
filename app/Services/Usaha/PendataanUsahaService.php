@@ -47,6 +47,12 @@ class PendataanUsahaService
             ->get();
     }
 
+    public function getJenisRantaiPasokBySlug(string $slug)
+    {
+        return DB::table('master_jenis_usaha_rantai_pasok')->where('slug', $slug)
+        ->select('id', 'kategori_sumber_daya as kategoriSumberDaya', 'pelaku_usaha as pelakuUsaha', 'slug')->first();
+    }
+
     // Usaha
     public function addUsaha(array $data): string
     {
@@ -77,6 +83,19 @@ class PendataanUsahaService
             ->select('usaha.*', 'files.id as fileId', 'files.path as filePath', 'files.name as fileName')
             ->orderBy('usaha.nama')
             ->get();
+    }
+
+    public function getDaftarUsahaRantaiPasokBySlug(string $slug)
+    {
+        return Usaha::join('master_jenis_usaha as jenis_usaha', 'usaha.jenis_usaha_id', 'jenis_usaha.id')
+             ->join('usaha_rantai_pasok', 'usaha.id', 'usaha_rantai_pasok.usaha_id')
+             ->join('master_jenis_usaha_rantai_pasok as rantai_pasok', 'usaha_rantai_pasok.rantai_pasok_id', 'rantai_pasok.id')
+             ->where('jenis_usaha.jenis_usaha', 'Usaha Rantai Pasok')
+             ->where('rantai_pasok.slug', $slug)
+             ->select(
+                'usaha.id', 'usaha.nama', 'usaha.nib', 'usaha.pjbu',
+            )->orderBy('usaha.nama')
+             ->get();
     }
 
     public function getUsahaById(string $id): Usaha

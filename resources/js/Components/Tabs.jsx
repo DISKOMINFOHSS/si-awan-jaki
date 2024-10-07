@@ -3,14 +3,14 @@ import classNames from "classnames";
 
 function TabList({ children }) {
     return (
-        <div className="flex items-center gap-x-5 border-b border-slate-200 text-sm text-slate-500">
+        <div className="flex flex-nowrap overflow-x-auto items-center gap-x-5 border-b border-slate-200 text-sm text-slate-500">
             {children}
         </div>
     );
 }
 
 function TabItem({ badge, isActive, onClick, children }) {
-    const tabClass = classNames("flex items-center gap-x-1 px-1 py-2.5", {
+    const tabClass = classNames("flex items-center gap-x-1 px-1 py-2.5 whitespace-nowrap", {
         "border-b-2 border-blue-600 text-blue-600": isActive
     });
 

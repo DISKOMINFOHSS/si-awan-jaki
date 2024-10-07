@@ -131,8 +131,8 @@ class MasterPengawasanPenyelenggaraanSeeder extends Seeder
                 'lingkup_id'       => 1,
                 'dokumen'          => 'Surat pernyataan Kuasa Pengguna Anggaran atau Pejabat Pembuat Komitmen bahwa proses pemilihan Penyedia Jasa konstruksi sesuai dengan ketentuan peraturan perundang-undangan.',
                 'cara_pemeriksaan' => json_encode([
-                    'Tersedia' => 'Memeriksan ketersediaan surat pernyataan',
-                    'Sesuai'   => 'Memeriksan isi surat penyataan',
+                    'Tersedia' => 'Memeriksa ketersediaan surat pernyataan',
+                    'Sesuai'   => 'Memeriksa isi surat penyataan',
                 ]),
                 'kesimpulan'       => json_encode(array('Tersedia', 'Sesuai')),
             ],
@@ -140,8 +140,8 @@ class MasterPengawasanPenyelenggaraanSeeder extends Seeder
                 'lingkup_id'       => 2,
                 'dokumen'          => 'Surat pernyataan Kuasa Pengguna Anggaran atau Pejabat Pembuat Komitmen bahwa penyusunan dan pelaksanaan Kontrak Kerja Konstruksi telah sesuai dengan ketentuan peraturan perundang-undangan.',
                 'cara_pemeriksaan' => json_encode([
-                    'Tersedia' => 'Memeriksan ketersediaan surat pernyataan',
-                    'Sesuai'   => 'Memeriksan isi surat penyataan',
+                    'Tersedia' => 'Memeriksa ketersediaan surat pernyataan',
+                    'Sesuai'   => 'Memeriksa isi surat penyataan',
                 ]),
                 'kesimpulan'       => json_encode(array('Tersedia', 'Sesuai')),
             ],
@@ -149,8 +149,8 @@ class MasterPengawasanPenyelenggaraanSeeder extends Seeder
                 'lingkup_id'       => 3,
                 'dokumen'          => 'Surat pernyataan dari Kuasa Pengguna Anggaran atau Pejabat Pembuat Komitmen bahwa sudah memenuhi ketentuan dalam Standar K4.',
                 'cara_pemeriksaan' => json_encode([
-                    'Tersedia' => 'Memeriksan ketersediaan surat pernyataan',
-                    'Sesuai'   => 'Memeriksan isi surat penyataan',
+                    'Tersedia' => 'Memeriksa ketersediaan surat pernyataan',
+                    'Sesuai'   => 'Memeriksa isi surat penyataan',
                 ]),
                 'kesimpulan'       => json_encode(array('Tersedia', 'Sesuai')),
             ],
@@ -158,8 +158,8 @@ class MasterPengawasanPenyelenggaraanSeeder extends Seeder
                 'lingkup_id'       => 4,
                 'dokumen'          => 'Surat pernyataan dari Kuasa Pengguna Anggaran atau Pejabat Pembuat Komitmen bahwa sudah memenuhi ketentuan dalam penerapan sistem manajemen mutu.',
                 'cara_pemeriksaan' => json_encode([
-                    'Tersedia' => 'Memeriksan ketersediaan surat pernyataan',
-                    'Sesuai'   => 'Memeriksan isi surat penyataan',
+                    'Tersedia' => 'Memeriksa ketersediaan surat pernyataan',
+                    'Sesuai'   => 'Memeriksa isi surat penyataan',
                 ]),
                 'kesimpulan'       => json_encode(array('Tersedia', 'Sesuai')),
             ],
@@ -167,8 +167,8 @@ class MasterPengawasanPenyelenggaraanSeeder extends Seeder
                 'lingkup_id'       => 5,
                 'dokumen'          => 'Surat pernyataan Kuasa Pengguna Anggaran atau Pejabat Pembuat Komitmen bahwa sudah memenuhi ketentuan dalam pengelolaan dan penggunaan material, peralatan dan teknologi berdasarkan surat pernyataan dari pimpinan Badan Usaha Jasa Konstruksi.',
                 'cara_pemeriksaan' => json_encode([
-                    'Tersedia' => 'Memeriksan ketersediaan surat pernyataan',
-                    'Sesuai'   => 'Memeriksan isi surat penyataan',
+                    'Tersedia' => 'Memeriksa ketersediaan surat pernyataan',
+                    'Sesuai'   => 'Memeriksa isi surat penyataan',
                 ]),
                 'kesimpulan'       => json_encode(array('Tersedia', 'Sesuai')),
             ],
@@ -176,10 +176,241 @@ class MasterPengawasanPenyelenggaraanSeeder extends Seeder
                 'lingkup_id'       => 6,
                 'dokumen'          => 'Surat pernyataan Kuasa Pengguna Anggaran atau Pejabat Pembuat Komitmen bahwa badan usaha sudah memenuhi ketentuan dalam pengelolaan dan pemanfaatan sumber material konstruksi berdasarkan surat pernyataan dari pimpinan Badan Usaha Jasa Konstruksi.',
                 'cara_pemeriksaan' => json_encode([
-                    'Tersedia' => 'Memeriksan ketersediaan surat pernyataan',
-                    'Sesuai'   => 'Memeriksan isi surat penyataan',
+                    'Tersedia' => 'Memeriksa ketersediaan surat pernyataan',
+                    'Sesuai'   => 'Memeriksa isi surat penyataan',
                 ]),
                 'kesimpulan'       => json_encode(array('Tersedia', 'Sesuai')),
+            ],
+        ]);
+
+        // Surat Pernyataan
+        DB::table('master_kategori_surat_pernyataan_pengawasan_penyelenggaraan')->insert([
+            [
+                'lingkup_id' => 1,
+                'kategori'   => 'Surat Pernyataan Kesesuaian Proses Pemilihan Penyedia Jasa Konstruksi',
+            ],
+            [
+                'lingkup_id' => 2,
+                'kategori'   => 'Surat Pernyataan tentang penyusunan dan pelaksanaan Kontrak Kerja Konstruksi',
+            ],
+            [
+                'lingkup_id' => 3,
+                'kategori'   => 'Surat Pernyataan tentang penerapan Standar Keamanan, Keselamatan, Kesehatan, dan Keberlanjutan Konstruksi',
+            ],
+            [
+                'lingkup_id' => 4,
+                'kategori'   => 'Surat Pernyataan tentang Penerapan Manajemen Mutu',
+            ],
+            [
+                'lingkup_id' => 5,
+                'kategori'   => 'Surat Pernyataan tentang Pengelolaan dan Penggunaan Material, Peralatan, dan Teknologi Konstruksi',
+            ],
+            [
+                'lingkup_id' => 5,
+                'kategori'   => 'Surat Pernyataan Pimpinan BUJK tentang Pengelolaan dan Penggunaan Material, Peralatan, dan Teknologi Konstruksi',
+            ],
+            [
+                'lingkup_id' => 6,
+                'kategori'   => 'Surat Pernyataan tentang Pengelolaan dan Pemanfaatan Sumber Material Konstruksi',
+            ],
+            [
+                'lingkup_id' => 6,
+                'kategori'   => 'Surat Pernyataan Pimpinan BUJK tentang Pengelolaan dan Pemanfaatan Sumber Material Konstruksi',
+            ],
+        ]);
+
+        // Pemeriksaan Pengawasan Insidental Sumber Dana APBD
+        DB::table('master_pemeriksaan_pengawasan_insidental_penyelenggaraan_apbd')->insert([
+            [
+                'indikator_id'     => '1',
+                'cara_pemeriksaan' => json_encode([
+                    'Memeriksa kelengkapan dokumen pengadaan/pemilihan dengan ketentuan peraturan perundang-undangan tentang pengadaan Barang/Jasa',
+                    'Dokumen pengadaan/pemilihan untuk memastikan metode pemilihan barang/jasa yang digunakan sesuai peraturan perundangan'
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Ada / Tidak', 'Sesuai dengan ketentuan peraturan perundang-undangan / Tidak Sesuai dengan ketentuan peraturan perundang-undangan'],
+                    ['Sesuai / Tidak']
+                ]),
+            ],
+            [
+                'indikator_id'     => '2a',
+                'cara_pemeriksaan' => json_encode([
+                    'Membandingkan Kontrak Kerja Konstruksi dengan ketentuan penggunaan kontrak standar'
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Sesuai / Tidak Sesuai']
+                ]),
+            ],
+            [
+                'indikator_id'     => '2b',
+                'cara_pemeriksaan' => json_encode([
+                    'Mengecek kepemilikan SKK, tenaga kerja konstruksi yang terdaftar dalam Kontrak Kerja Konstruksi',
+                    'Mengecek remunerasi tenaga kerja pada kualifikasi jenjang jabatan ahli dibandingkan standar remunerasi',
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Jumlah TKK memiliki SKK yang sesuai (Orang)', 'Jumlah TKK yang tidak memiliki SKK (Orang)', 'Jumlah TKK yang memiliki SKK tidak sesuai (Orang)'],
+                    ['Jumlah TKK yang gajinya sesuai (Orang)', 'Jumlah tkk yang gajinya tidak sesuai (Orang)'],
+                ]),
+            ],
+            [
+                'indikator_id'     => '2c',
+                'cara_pemeriksaan' => json_encode([
+                    'Mengecek apakah sub penyedia jasa yang ditunjuk sesuai peraturan (penyedia jasa spesialis)'
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Jumlah penyedia jasa yang ditunjuk sesuai peraturan (BUJK)', 'Jumlah penyedia jasa yang ditunjuk tidak sesuai peraturan (BUJK)']
+                ]),
+            ],
+            [
+                'indikator_id'     => '2d',
+                'cara_pemeriksaan' => json_encode([
+                    'Memeriksa apakah klausul hak kekayaan intelektual sudah dicantumkan dalam Kontrak Kerja Konstruksi'
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Ada / Tidak']
+                ]),
+            ],
+            [
+                'indikator_id'     => '2e',
+                'cara_pemeriksaan' => json_encode([
+                    'Memeriksa apakah klausul kewajiban alih teknologi sudah dicantumkan dalam Kontrak Kerja Konstruksi'
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Ada / Tidak']
+                ]),
+            ],
+            [
+                'indikator_id'     => '2f',
+                'cara_pemeriksaan' => json_encode([
+                    'Memeriksa apakah klausul kewajiban penggunaan produk dalam negeri dengan TKDN minimal sesuai dengan ketentuan peraturan perundang-undangan sudah dicantumkan dalam Kontrak Kerja Konstruksi'
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Ada / Tidak']
+                ]),
+            ],
+            [
+                'indikator_id'     => '2g',
+                'cara_pemeriksaan' => json_encode([
+                    'Memeriksa apakah klausul kewajiban membayar asuransi tenaga kerja konstruksi (BPJS Ketenagakerjaan dan BPJS Kesehatan) sudah dicantumkan dalam Kontrak Kerja Konstruksi'
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Ada / Tidak']
+                ]),
+            ],
+            [
+                'indikator_id'     => '3a',
+                'cara_pemeriksaan' => json_encode([
+                    'Memeriksa ketersediaan pengaturan aspek standar mutu bahan dan mutu peralatan pada dokumen RMPK dan Program Mutu',
+                    'Memeriksa ketersediaan pengaturan aspek standar keselamatan kesehatan kerja, standar prosedur pelaksanaan Jasa Konstruksi, standar prosedur pelaksanaan Jasa Konstruksi, standar mutu hasil pelaksanaan Jasa Konstruksi serta standar operasi dan pemeliharaan pada dokumen: a. RKK pelaksanaan; b. RKK pengawasan; c. RMPK; d. RMLLP (jika ada); dan e. program mutu',
+                    'Memeriksa ketersediaan dokumen pedoman perlindungan sosial tenaga kerja sesuai ketentuan peraturan perundang-undangan',
+                    'Memeriksa ketersediaan dokumen rencana penerapan keselamatan konstruksi yang meliputi dokumen lingkungan atau RKPPL (Jika ada)',
+                    'Memeriksa dokumen rancangan konseptual SMKK pengkajian, perencanaan, dan/atau perancangan yang sudah disahkan',
+                    'Memeriksa ketersediaan dokumen rencana teknis proses pembangunan, pemeliharaan, pembongkaran, datan/atau pembangunan kembali yang sudah disahkan',
+                    'Ketersediaan dokumen laporan penerapan keselamatan konstruksi yang sudah disahkan meliputi pemutakhiran: a. RKK pelaksanaan; b. RKK pengawasan; c. RMPK; d. RKPPL dan RMLLP (jika ada); e.program mutu; dan f. progress pelaksanaan dan pengawasan'
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                ]),
+            ],
+            [
+                'indikator_id'     => '3b',
+                'cara_pemeriksaan' => json_encode([
+                    'Memeriksa ketersediaan dokumen rancangan konseptual SMKK',
+                    'Memeriksa ketersediaan dokumen RKK',
+                    'Memeriksa ketersediaan dokumen RMPK',
+                    'Memeriksa ketersediaan dokumen Program mutu',
+                    'Memeriksa ketersediaan dokumen RKPPL',
+                    'Memeriksa ketersediaan dokumen RMLLP',
+
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                ]),
+            ],
+            [
+                'indikator_id'     => '3c',
+                'cara_pemeriksaan' => json_encode([
+                    'Memeriksa ketersediaan Dokumen rencana program sosialisasi SMKK di Proyek konstruksi',
+                    'Memeriksa ketersediaan Laporan penerapan RKK',
+                    'Memeriksa ketersediaan bukti Pembayaran BPJS Ketenagakerjaan',
+                    'Memeriksa ketersediaan bukti Pembayaran BPJS Kesehatan atau bukti pembayaran asuransi kesehatan',
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                ]),
+            ],
+            [
+                'indikator_id'     => '4',
+                'cara_pemeriksaan' => json_encode([
+                    'Membandingkan rencana mutu dengan laporan pelaksanaannya',
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Sesuai / Tidak Sesuai'],
+                ]),
+            ],
+            [
+                'indikator_id'     => '5a',
+                'cara_pemeriksaan' => json_encode([
+                    'Memeriksa dokumen rencana kebutuhan material, peralatan dan teknologi',
+                    'Memeriksa dokumen laporan pelaksanaan material peralatan konstruksi'
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Ada / Tidak'],
+                    ['Ada / Tidak'],
+                ]),
+            ],
+            [
+                'indikator_id'     => '5b',
+                'cara_pemeriksaan' => json_encode([
+                    'Mengecek dokumen penggunaan material dasar utama dan material olahan utama yang memiliki SNI/standar lain atau tidak',
+                    'Mengecek dokumen peralatan konstruksi utama yang memiliki surat keterangan memnuhi syarat K3 dari dinas yang membidangi ketenagakerjaan',
+                    'Mengecek dokumen tenaga operator yang memiliki surat izin operator (SIO) dari dinas yang membidangi ketenagakerjaan',
+                    'Mengecek dokumen kesesuaian teknologi konstruksi yang digunakan dengan spesifikasi teknis yang dipersyaratkan'
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Memiliki / Tidak', 'Jumlah material dasar utama dan olahan utama yang memiliki SNI atau standar lain yang berlaku sebanyak'],
+                    ['Jumlah peralatan konstruksi utama yang memiliki Surat keterangan memenuhi syarat K3 sebanyak (unit)'],
+                    ['Jumlah tenaga operator yang memiliki SIO sebanyak (Orang)'],
+                    ['Sesuai / Tidak'],
+                ]),
+            ],
+            [
+                'indikator_id'     => '5c',
+                'cara_pemeriksaan' => json_encode([
+                    'Mengecek ketersediaan dokumen TKDN dari proyek konstruksi dan mengecek pemenuhan komitmen TKDN terhadap batasan minimum capaian TKDN sesuai persyaratan tender',
+                    'Mengecek ketersediaan sertifikat TKDN material konstruksi yang masih berlaku dan sertifikat BMP produsen material konstruksi (apabila ada), terutama material konstruksi yang termasuk kategori wajib',
+                    'Mengecek dokumen persetujuan penggunaan produk impor yang ditandatangani Pejabat berwenang (apabila ada penggunaan produk impor)',
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Tersedia / Tidak', 'Sesuai / Tidak'],
+                    ['Tersedia / Tidak'],
+                    ['Tersedia / Tidak'],
+                ]),
+            ],
+            [
+                'indikator_id'     => '6',
+                'cara_pemeriksaan' => json_encode([
+                    'Memeriksa ketersediaan surat persetujuan pencantuman logo Ekolabel Indonesia atau sertifikat yang diterbitkan oleh instansi terkait yang berwenang',
+                    'Memeriksa ketersediaan Surat Izin Penambangan'
+                ]),
+                'kesimpulan' => json_encode([
+                    ['Tersedia / Tidak'],
+                    ['Tersedia / Tidak'],
+                ]),
             ],
         ]);
     }

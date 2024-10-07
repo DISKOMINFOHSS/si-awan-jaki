@@ -26,7 +26,14 @@ class PengawasanUsahaService
             ->where('id', $id)->first();
     }
 
-    public function getDaftarObjekPengawasan(string $lingkupId): DBCollection
+    public function getDaftarObjekPengawasan(): DBCollection
+    {
+        return DB::table('master_jenis_usaha as jenis_usaha')
+            ->select('jenis_usaha.id', 'jenis_usaha.jenis_usaha as jenisUsaha', 'jenis_usaha.slug')
+            ->get();
+    }
+
+    public function getDaftarObjekPengawasanByLingkupId(string $lingkupId): DBCollection
     {
         return DB::table('master_objek_pengawasan_usaha as objek_pengawasan')
             ->join('master_jenis_usaha as jenis_usaha', 'jenis_usaha.id', 'objek_pengawasan.objek_id')

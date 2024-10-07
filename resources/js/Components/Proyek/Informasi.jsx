@@ -114,8 +114,40 @@ const InformasiPenyediaJasa = ({ penyediaJasa }) => {
     )
 }
 
+const InformasiKonsultanPengawas = ({ konsultanPengawas, namaPaket }) => {
+    return (
+        <Card className="w-full h-fit">
+            <Card.Body className="p-4 text-xs text-slate-800">
+                <div className="pb-3 border-b border-slate-200">
+                    <div className="font-medium capitalize">Konsultan Pengawas</div>
+                    <div className="font-light text-slate-500 uppercase">{konsultanPengawas.nama}</div>
+                </div>
+                <div className="py-3 border-b border-slate-200">
+                    <div className="font-medium capitalize">Nama Paket Pengawasan</div>
+                    <div className="font-light text-slate-500">{namaPaket}</div>
+                </div>
+                <div className="grid grid-cols-3 gap-x-4 border-b border-slate-200 py-3">
+                    <div>
+                        <div className="font-medium">NIB</div>
+                        <div className="font-light text-slate-500">{konsultanPengawas.nib ? konsultanPengawas.nib : "-"}</div>
+                    </div>
+                    <div className="col-span-2">
+                        <div className="font-medium">Penanggung Jawab Badan Usaha (PJBU)</div>
+                        <div className="font-light text-slate-500">{konsultanPengawas.pjbu}</div>
+                    </div>
+                </div>
+                <div className="pt-3">
+                    <div className="font-medium">Alamat</div>
+                    <div className="font-light text-slate-500">{konsultanPengawas.alamat}</div>
+                </div>
+            </Card.Body>
+        </Card>
+    )
+}
+
 export {
     Informasi,
     InformasiPenggunaJasa,
     InformasiPenyediaJasa,
+    InformasiKonsultanPengawas,
 };

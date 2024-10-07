@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({ isVisible, daftarUsaha, onSelect }) => {
+export default ({ isVisible, daftarUsaha, onSelect, jenisUsaha = "Badan Usaha Jasa Konstruksi" }) => {
     if (!isVisible) return null;
 
     const [keyword, setKeyword] = React.useState('');
@@ -31,10 +31,13 @@ export default ({ isVisible, daftarUsaha, onSelect }) => {
                                 <span className="">NIB : </span>
                                 <span className="group-hover:text-blue-600 text-slate-500">{usaha.nib}</span>
                             </div>
-                            <div>
-                                <span className="">PJBU : </span>
-                                <span className="group-hover:text-blue-600 text-slate-500">{usaha.pjbu}</span>
-                            </div>
+                            {
+                                jenisUsaha !== "Usaha Orang Perseorangan" &&
+                                <div className="col-span-2">
+                                    <span className="">PJBU : </span>
+                                    <span className="group-hover:text-blue-600 text-slate-500">{usaha.pjbu}</span>
+                                </div>
+                            }
                         </div>
                     </div>
                 ))

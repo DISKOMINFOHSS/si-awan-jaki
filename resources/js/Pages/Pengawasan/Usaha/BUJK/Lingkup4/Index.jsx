@@ -49,7 +49,7 @@ const PengawasanBUJKLingkup4Index = ({ data }) => {
                     <DaftarPengawasanRutinLingkup4 daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Rutin')} />
                 </Tabs.Tab>
                 <Tabs.Tab>
-                    Pengawasan Insidental
+                    <DaftarPengawasanRutinLingkup4 daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Insidental')} />
                 </Tabs.Tab>
             </Tabs>
             <FormPengawasan

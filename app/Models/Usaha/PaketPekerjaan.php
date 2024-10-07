@@ -27,6 +27,15 @@ class PaketPekerjaan extends Model
         'created_by',
     ];
 
+    protected $attributes = [
+        'jenis_usaha'          => '-',
+        'sifat_usaha'          => '-',
+        'subklasifikasi_usaha' => '-',
+        'layanan_usaha'        => '-',
+        'bentuk_usaha'         => '-',
+        'kualifikasi_usaha'    => '-',
+    ];
+
     public function usaha(): BelongsTo
     {
         return $this->belongsTo(Usaha::class, 'usaha_id');

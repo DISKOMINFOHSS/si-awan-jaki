@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "@inertiajs/react";
 
 import Layout from "../../../Components/Layout";
+import Card from "../../../Components/Card";
+
+import formatCurrencyToIDR from "../../../Utils/formatCurrencyToIDR";
 
 import {
     LiaPlusSolid,
@@ -10,12 +13,17 @@ import {
     LiaAngleDownSolid,
     LiaAngleRightSolid,
 } from "react-icons/lia";
-import Card from "../../../Components/Card";
-import formatCurrencyToIDR from "../../../Utils/formatCurrencyToIDR";
 
 const PendataanProyekIndex = ({ data }) => {
     console.log(data);
     const { daftarProyek } = data;
+
+    const [keyword, setKeyword] = React.useState('');
+    const handleKeywordChange = (event) => setKeyword(event.target.value);
+
+    const filteredDaftarProyekKonstruksi = keyword ? daftarProyek.filter(({ namaPaket }) => {
+        return namaPaket.toLowerCase().includes(keyword.toLowerCase());
+    }) : daftarProyek;
 
     return (
         <>
@@ -34,13 +42,13 @@ const PendataanProyekIndex = ({ data }) => {
                         <LiaSearchSolid size={18} className="text-slate-500 -scale-x-100" />
                     </div>
                     <input
-                        name="search" placeholder="Cari..."
+                        name="search" placeholder="Cari..." value={keyword} onChange={handleKeywordChange}
                         className="border border-slate-200 rounded-md py-2.5 pl-9 block w-full text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs"
                     />
                 </div>
                 <div className="flex items-center gap-x-3">
                     <Link
-                        href="/admin/pendataan/proyek/create"
+                        href="/admin/pendataan/proyek-konstruksi/create"
                         className="w-full flex justify-center items-center space-x-1 text-white bg-blue-600 hover:bg-blue-800 rounded text-xs tracking-wide p-2.5 shadow-sm"
                     >
                         <LiaPlusSolid className="stroke-2" />
@@ -61,13 +69,13 @@ const PendataanProyekIndex = ({ data }) => {
                 <Card.Body>
                     <div className="relative overflow-x-auto">
                         <table className="w-full text-xs">
-                            <tbody className="text-slate-800">
+                            <tbody>
                                 {
-                                    daftarProyek.map((proyek) => (
+                                    filteredDaftarProyekKonstruksi.map((proyek) => (
                                         <tr key={proyek.id} className="border-b border-slate-100 hover:bg-slate-50">
                                             <td className="p-4">
                                                 <div>
-                                                    <Link href={`/admin/pendataan/proyek/${proyek.id}`} className="line-clamp-1 hover:text-blue-600 hover:underline">{proyek.namaPaket}</Link>
+                                                    <Link href={`/admin/pendataan/proyek-konstruksi/${proyek.id}`} className="hover:text-blue-600 hover:underline">{proyek.namaPaket}</Link>
                                                     <div className="font-light text-slate-500 flex items-center gap-x-2">
                                                         <span>Tahun Anggaran {proyek.tahunAnggaran}</span>
                                                         <span>-</span>
@@ -78,11 +86,11 @@ const PendataanProyekIndex = ({ data }) => {
                                             <td className="p-4 min-w-56 hidden md:table-cell">
                                                 <div>
                                                     <div>Penyedia Jasa</div>
-                                                    <div className="font-light text-slate-500 line-clamp-1">{proyek.penyediaJasa.nama}</div>
+                                                    <div className="font-light text-slate-500 line-clamp-1">{proyek.penyediaJasa ? proyek.penyediaJasa.nama : '-'}</div>
                                                 </div>
                                             </td>
-                                            <td className="p-4 max-w-16 flex items-center justify-end">
-                                                <Link href={`/admin/pendataan/usaha/${proyek.id}`} className="w-fit p-2 flex items-center gap-x-1.5 text-slate-600 hover:text-blue-600">
+                                            <td className="p-4 max-w-16">
+                                                <Link href={`/admin/pendataan/proyek-konstruksi/${proyek.id}`} className="w-fit p-2 flex items-center gap-x-1.5 text-slate-600 hover:text-blue-600">
                                                     <LiaAngleRightSolid size={16} />
                                                 </Link>
                                             </td>

@@ -4,9 +4,11 @@ import { router } from "@inertiajs/react";
 import Layout from "../../../Components/Layout";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import Dropdown from "../../../Components/Dropdown";
+import Card from "../../../Components/Card";
+import ModalDelete from "../../../Components/ModalDelete";
+import ModalError from "../../../Components/ModalError";
 
 import FormPemeriksaan from "../../../Components/Bangunan/FormPemeriksaan";
-import ModalError from "../../../Components/ModalError";
 import FormVerifikasiPengawasan from "../../../Components/Bangunan/FormVerifikasiPengawasan";
 import {
     InformasiBangunan,
@@ -20,7 +22,11 @@ import {
     LiaHomeSolid,
     LiaListAltSolid,
     LiaEllipsisHSolid,
-    LiaFileAltSolid
+    LiaFolderSolid,
+    LiaCheckCircleSolid,
+    LiaInfoCircleSolid,
+    LiaTrashAltSolid,
+    LiaPrintSolid,
 } from "react-icons/lia";
 
 function DaftarLingkupPengawasan({ pengawasanId, daftarLingkupPengawasan }) {
@@ -62,7 +68,6 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
         tertibPemeliharaanBangunan,
         tertibProgramPemeliharaan,
         tertibPengawasan,
-        rekomendasiPengawasan,
     } = pengawasan;
 
     const [
@@ -80,6 +85,8 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
     const [isModalErrorOpened, setIsModalErrorOpened] = React.useState(false);
     const [isModalVerificationOpened, setIsModalVerificationOpened] = React.useState(false);
 
+    const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
+
     function handleRekomendasiClick() {
         const flag = daftarPemeriksaan.find(({ hasilPemeriksaan }) => {
             return hasilPemeriksaan.find(({ kesimpulan }) => kesimpulan === null);
@@ -90,15 +97,15 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
         }
 
         if (
-            tertibKesesuaianFungsi &&
-            tertibKesesuaianLokasi &&
-            tertibRencanaUmurKonstruksi &&
-            tertibKapasitasBeban &&
-            tertibPemeliharaanBangunan &&
-            tertibProgramPemeliharaan &&
-            tertibPengawasan
+            tertibKesesuaianFungsi !== null &&
+            tertibKesesuaianLokasi !== null &&
+            tertibRencanaUmurKonstruksi !== null &&
+            tertibKapasitasBeban !== null &&
+            tertibPemeliharaanBangunan !== null &&
+            tertibProgramPemeliharaan !== null &&
+            tertibPengawasan !== null
         ) {
-            return router.get(`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/rekomendasi/create`);
+            return router.get(`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/rekomendasi`);
         }
 
         return setIsModalVerificationOpened(true);
@@ -118,23 +125,24 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                 </div>
                 <div className="flex items-center gap-x-2">
                     {
-                        rekomendasiPengawasan.length === 0 ?
-                        <button
-                            className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
-                            onClick={() => handleRekomendasiClick()}
-                        >
-                            <LiaListAltSolid size={18} />
-                            <span>Buat Rekomendasi</span>
-                        </button> :
-                        <a
-                            href={`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/laporan`}
-                            target="_blank"
-                            className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
-
-                        >
-                            <LiaFileAltSolid size={18} />
-                            <span>Lihat Laporan</span>
-                        </a>
+                        pengawasan.rekomendasi ? (
+                            <a
+                                href={`/admin/pengawasan/pemanfaatan-produk/${pengawasan.id}/simak`}
+                                target="_blank"
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                            >
+                                <LiaPrintSolid size={16} />
+                                <span>Cetak PDF</span>
+                            </a>
+                        ) : (
+                            <button
+                                className="w-fit flex justify-center items-center gap-x-1 text-blue-600 border border-blue-600 rounded text-xs tracking-wide p-2.5 shadow-sm hover:bg-blue-600 hover:text-white"
+                                onClick={() => handleRekomendasiClick()}
+                            >
+                                <LiaListAltSolid size={18} />
+                                <span>Buat Rekomendasi</span>
+                            </button>
+                        )
                     }
                     <Dropdown ref={moreDropdownRef}>
                         <Dropdown.Toggle
@@ -150,43 +158,70 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                             <a
                                 href={`/admin/pendataan/bangunan/${bangunan.id}`}
                                 target="_blank"
-                                className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
                             >
-                                Informasi Bangunan
+                                <LiaInfoCircleSolid size={16} />
+                                <span>Informasi Bangunan</span>
                             </a>
                             <button
                                 type="button"
-                                className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
-                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpened(true)}}
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => handleRekomendasiClick()}
                             >
-                                Verifikasi Pengawasan
+                                <LiaListAltSolid size={16} />
+                                <span>Rekomendasi</span>
                             </button>
                             <button
                                 type="button"
-                                className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
-                                onClick={() => handleRekomendasiClick()}
+                                className="flex items-center gap-x-2 px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalVerificationOpened(true)}}
                             >
-                                {rekomendasiPengawasan.length === 0 ? 'Buat' : 'Lihat'} Rekomendasi
+                                <LiaCheckCircleSolid size={16} />
+                                <span>Verifikasi Pengawasan</span>
                             </button>
-                            {/* <button
+                            <button
                                 type="button"
-                                className="px-4 py-2 text-left hover:bg-slate-100 hover:text-blue-600 whitespace-nowrap"
-
+                                className="flex items-center gap-x-2 px-4 py-2 text-left text-red-500 hover:bg-slate-100 hover:text-red-600 whitespace-nowrap"
+                                onClick={() => {toggleMoreDropdown(), setIsModalDeleteOpen(true)}}
                             >
-                                Cetak Laporan
-                            </button> */}
+                                <LiaTrashAltSolid size={16} />
+                                <span>Hapus Pengawasan</span>
+                            </button>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-4 w-full mt-4">
-                {/* <InformasiBangunan bangunan={bangunan} />
-                <InformasiUmumPengawasan pengawasan={pengawasan} /> */}
                 <div className="space-y-4">
                     <InformasiBangunan bangunan={bangunan} />
-                    <InformasiUmumPengawasan pengawasan={pengawasan} />
+                    <Card>
+                        <Card.Header className="flex justify-between items-center">
+                            <div>
+                                <h3 className="font-medium text-slate-700 leading-tight">Bukti Dukung</h3>
+                                <h4 className="font-light text-slate-500 text-[11px]">Pengawasan Tertib Pemanfaatan Produk Jasa Konstruksi</h4>
+                            </div>
+                        </Card.Header>
+                        <Card.Body className="p-4">
+                            {
+                                bangunan.daftarBuktiDukung.map((bukti) => (
+                                    <div key={bukti.id} className="flex items-start justify-between gap-x-1 text-xs">
+                                        <div className="flex gap-x-2.5 items-start group">
+                                            <div className="bg-blue-100 text-blue-600 rounded p-2">
+                                                <LiaFolderSolid size={18} />
+                                            </div>
+                                            <a href={bukti.url} target="_blank" className="group-hover:text-blue-600 group-hover:underline">
+                                                <div className="font-medium line-clamp-1">{bukti.label} ({bukti.tahun})</div>
+                                                <div className="font-light text-slate-500 line-clamp-1">{bukti.url}</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </Card.Body>
+                    </Card>
                 </div>
                 <div className="space-y-4">
+                    <InformasiUmumPengawasan pengawasan={pengawasan} />
                     <InformasiTertibPengawasan pengawasan={pengawasan} />
                 </div>
             </div>
@@ -208,6 +243,17 @@ const PengawasanPemanfaatanProdukShow = ({ data }) => {
                     Terdapat pemeriksaan yang masih belum diisi. Silakan periksa kembali.
                 </div>
             </ModalError>
+            <ModalDelete
+                isVisible={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+                url={`/admin/pengawasan/pemanfaatan-produk`}
+                id={pengawasan.id}
+            >
+                <div className="font-medium text-sm text-slate-700 mb-1">Apakah Anda yakin ingin menghapus pengawasan ini?</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Data yang telah dihapus tidak dapat dikembalikan.
+                </div>
+            </ModalDelete>
         </>
     );
 }

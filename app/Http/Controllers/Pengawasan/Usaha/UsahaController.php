@@ -18,10 +18,12 @@ class UsahaController extends Controller
 
     public function scope()
     {
+        $daftarObjekPengawasan = $this->pengawasanService->getDaftarObjekPengawasan();
         $daftarLingkup = $this->pengawasanService->getDaftarLingkupPengawasan();
 
         return Inertia::render('Pengawasan/Usaha/Scope', [
             'data' => [
+                'daftarObjekPengawasan'   => $daftarObjekPengawasan,
                 'daftarLingkupPengawasan' => $daftarLingkup,
             ],
         ]);
@@ -33,7 +35,7 @@ class UsahaController extends Controller
             abort(404);
         }
 
-        $daftarObjek = $this->pengawasanService->getDaftarObjekPengawasan($lingkup_id);
+        $daftarObjek = $this->pengawasanService->getDaftarObjekPengawasanByLingkupId($lingkup_id);
 
         if (count($daftarObjek) == 1) {
             return redirect("/admin/pengawasan/usaha/$lingkup_id");

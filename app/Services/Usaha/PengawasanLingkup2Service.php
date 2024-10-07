@@ -4,6 +4,7 @@ namespace App\Services\Usaha;
 
 use App\Models\Usaha\KesesuaianKegiatanLingkup2;
 use App\Models\Usaha\PengawasanBUJKLingkup2;
+use App\Models\Usaha\RekomendasiPengawasanInsidentalBUJK;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
@@ -28,6 +29,12 @@ class PengawasanLingkup2Service
         return PengawasanBUJKLingkup2::where('id', $id)->exists();
     }
 
+    public function deletePengawasanBUJK(string $id)
+    {
+        $pengawasan = PengawasanBUJKLingkup2::find($id);
+        $pengawasan->delete();
+    }
+
     public function getDaftarPengawasanBUJK(): EloquentCollection
     {
         return PengawasanBUJKLingkup2::with([
@@ -35,7 +42,7 @@ class PengawasanLingkup2Service
             {
                 $query->select('id', 'nama', 'nib');
             }
-        ])->orderBy('created_by', 'desc')
+        ])->orderBy('tanggal_pengawasan', 'desc')
           ->get();
     }
 
@@ -66,6 +73,24 @@ class PengawasanLingkup2Service
                       );
             }
         ])->where('id', $id)->firstOrFail();
+    }
+
+    public function getPengawasanBUJK(string $id): PengawasanBUJKLingkup2
+    {
+        return PengawasanBUJKLingkup2::find($id);
+    }
+
+    public function updatePengawasanBUJK(string $id, array $data): PengawasanBUJKLingkup2
+    {
+        $pengawasan = PengawasanBUJKLingkup2::find($id);
+
+        $pengawasan->tanggal_pengawasan = $data['tanggal_pengawasan'];
+        $pengawasan->status_izin_usaha = $data['status_izin_usaha'];
+        $pengawasan->status_verifikasi_nib = $data['status_verifikasi_nib'];
+
+        $pengawasan->save();
+
+        return $pengawasan;
     }
 
     public function verifyPengawasanBUJK(string $id, array $data)
@@ -132,5 +157,18 @@ class PengawasanLingkup2Service
     {
         $kesesuaianKegiatan = KesesuaianKegiatanLingkup2::find($id);
         $kesesuaianKegiatan->delete();
+    }
+
+    public function addRekomendasiPengawasanInsidental(string $id, array $data)
+    {
+        $pengawasan = PengawasanBUJKLingkup2::find($id);
+
+        $rekomendasi = RekomendasiPengawasanInsidentalBUJK::firstOrNew(['pengawasan_id' => $pengawasan->id]);
+
+        $rekomendasi->rekomendasi = $data['rekomendasi'];
+        $rekomendasi->keterangan = $data['keterangan'];
+        $rekomendasi->created_by = $data['created_by'];
+
+        $pengawasan->rekomendasi()->save($rekomendasi);
     }
 }

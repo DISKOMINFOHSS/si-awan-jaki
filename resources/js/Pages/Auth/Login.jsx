@@ -23,6 +23,7 @@ export default function LoginPage() {
     return (
         <>
             <section className="flex flex-col items-center justify-center bg-slate-50 px-6 py-8 space-y-5 mx-auto h-screen">
+                <img src={`/storage/assets/logo-pemkab-hss.png`} alt="logo-pemkab-hss" className="h-32"/>
                 <div className="text-center">
                     <h2 className="uppercase font-medium text-xs text-slate-500">Pemerintah Kabupaten Hulu Sungai Selatan</h2>
                     <h1 className="font-semibold text-2xl text-slate-700">Sistem Pengawasan Jasa Konstruksi</h1>

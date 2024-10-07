@@ -51,7 +51,9 @@ const PengawasanBUJKLingkup3Index = ({ data }) => {
                     />
                 </Tabs.Tab>
                 <Tabs.Tab>
-                    Pengawasan Insidental
+                    <DaftarPengawasanKegiatanLingkup3
+                        daftarPengawasan={daftarPengawasan.filter(({jenisPengawasan}) => jenisPengawasan === 'Insidental')}
+                    />
                 </Tabs.Tab>
             </Tabs>
             <FormPengawasanKegiatan

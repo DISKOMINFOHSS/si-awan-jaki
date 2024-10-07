@@ -64,12 +64,25 @@ class PemanfaatanProdukController extends Controller
         $pengawasan = $this->pengawasanService->getPengawasanById($id);
 
         $pengawasan['daftarPemeriksaan'] = $daftarLingkupPengawasan;
+        $pengawasan['rekomendasi'] = $this->pengawasanService->getRekomendasiPengawasanByPengawasanId($pengawasan->id);
+        $pengawasan['bangunan']['daftar_bukti_dukung'] = $this->bangunanService->getDaftarBuktiDukungByBangunanId($pengawasan->bangunan->id);
 
         return Inertia::render('Pengawasan/PemanfaatanProduk/Show', [
             'data' => [
                 'pengawasan' => new PengawasanPemanfaatanProdukResource($pengawasan),
             ],
         ]);
+    }
+
+    public function destroy(string $id)
+    {
+        if (!$this->pengawasanService->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $this->pengawasanService->deletePengawasan($id);
+
+        return redirect("/admin/pengawasan/pemanfaatan-produk");
     }
 
     public function storePemeriksaan(string $id, string $lingkup_id, Request $request)
@@ -95,7 +108,7 @@ class PemanfaatanProdukController extends Controller
         return redirect("/admin/pengawasan/pemanfaatan-produk/$id");
     }
 
-    public function storeVerification(string $id, Request $request)
+    public function verify(string $id, Request $request)
     {
         if (!$this->pengawasanService->checkPengawasanExists($id)) {
             return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
@@ -127,14 +140,16 @@ class PemanfaatanProdukController extends Controller
             'verified_by'                    => $userId,
         ]);
 
-        return redirect("/admin/pengawasan/pemanfaatan-produk/$id/rekomendasi/create");
+        return redirect("/admin/pengawasan/pemanfaatan-produk/$id/rekomendasi");
     }
 
-    public function createRekomendasi(string $id)
+    public function showRekomendasi(string $id)
     {
         $pengawasan = $this->pengawasanService->getPengawasanById($id);
+        $pengawasan['rekomendasi'] = $this->pengawasanService->getRekomendasiPengawasanByPengawasanId($pengawasan->id);
+        $pengawasan['bangunan']['daftar_bukti_dukung'] = $this->bangunanService->getDaftarBuktiDukungByBangunanId($pengawasan->bangunan->id);
 
-        return Inertia::render('Pengawasan/PemanfaatanProduk/Rekomendasi/Create', [
+        return Inertia::render('Pengawasan/PemanfaatanProduk/Rekomendasi', [
             'data' => [
                 'pengawasan' => new PengawasanPemanfaatanProdukResource($pengawasan),
             ],
@@ -150,7 +165,6 @@ class PemanfaatanProdukController extends Controller
         $validatedData = $request->validate([
             'rekomendasi'   => 'required',
             'keterangan'    => 'nullable',
-            'tanggalTemuan' => 'nullable|date'
         ]);
         $userId = auth()->user()->id;
 
@@ -158,21 +172,21 @@ class PemanfaatanProdukController extends Controller
             'pengawasan_id'  => $id,
             'rekomendasi'    => $validatedData['rekomendasi'],
             'keterangan'     => $validatedData['keterangan'],
-            'tanggal_temuan' => $validatedData['tanggalTemuan'],
             'created_by'     => $userId,
         ]);
 
-        return redirect("/admin/pengawasan/pemanfaatan-produk/$id");
+        return back();
     }
 
-    public function showLaporan(string $id)
+    public function print(string $id)
     {
         $daftarLingkupPengawasan = $this->pengawasanService->getDaftarLingkupPengawasan($id);
         $pengawasan = $this->pengawasanService->getPengawasanById($id);
 
         $pengawasan['daftarPemeriksaan'] = $daftarLingkupPengawasan;
+        $pengawasan['rekomendasi'] = $this->pengawasanService->getRekomendasiPengawasanByPengawasanId($pengawasan->id);
 
-        return Inertia::render('Pengawasan/PemanfaatanProduk/Laporan', [
+        return Inertia::render('Pengawasan/PemanfaatanProduk/Simak', [
             'data' => [
                 'pengawasan' => new PengawasanPemanfaatanProdukResource($pengawasan),
             ],

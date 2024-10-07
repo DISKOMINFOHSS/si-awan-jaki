@@ -9,6 +9,7 @@ function Badge({ bg, size, children }) {
             "bg-yellow-100 text-yellow-500": bg === "yellow",
             "bg-slate-100 text-slate-500": bg === "slate",
             "bg-red-100 text-red-500": bg === "red",
+            "bg-blue-100 text-blue-500": bg === "blue",
         },
         {
             "px-3 text-[9px]": size === "2xs",

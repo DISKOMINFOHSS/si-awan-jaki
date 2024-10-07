@@ -38,6 +38,7 @@ class PengawasanUsahaRantaiPasokResource extends JsonResource
             'kepemilikanPerizinanPenggunaan' => $this->kepemilikan_perizinan_penggunaan,
             'keabsahanPerizinanPenggunaan'   => $this->keabsahan_perizinan_penggunaan,
             'daftarMaterialKonstruksi'       => $this->whenNotNull($this->material_konstruksi),
+            'daftarPeralatanKonstruksi'      => $this->whenNotNull($this->peralatan_konstruksi),
             'tertibPerizinanBerusaha'        => $this->tertib_perizinan_berusaha,
             'tertibPerizinanPenggunaan'      => $this->tertib_perizinan_penggunaan,
             'tertibPencatatanSIMPK'          => $this->tertib_pencatatan_simpk,

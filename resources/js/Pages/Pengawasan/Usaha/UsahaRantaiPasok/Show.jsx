@@ -26,6 +26,7 @@ import {
     LiaTrashAltSolid
 } from "react-icons/lia";
 import DaftarPemeriksaanMaterialKonstruksi from "../../../../Components/Usaha/UsahaRantaiPasok/DaftarPemeriksaanMaterialKonstruksi";
+import DaftarPemeriksaanPeralatanKonstruksi from "../../../../Components/Usaha/UsahaRantaiPasok/DaftarPemeriksaanPeralatanKonstruksi";
 
 function getDaftarPemeriksaan(jenisRantaiPasok, pengawasan) {
     switch (jenisRantaiPasok.kategoriSumberDaya) {
@@ -37,6 +38,14 @@ function getDaftarPemeriksaan(jenisRantaiPasok, pengawasan) {
                     daftarMaterialKonstruksi={pengawasan.daftarMaterialKonstruksi}
                 />
             );
+        case "Peralatan":
+            return (
+                <DaftarPemeriksaanPeralatanKonstruksi
+                    jenisRantaiPasok={jenisRantaiPasok}
+                    pengawasanId={pengawasan.id}
+                    daftarPeralatanKonstruksi={pengawasan.daftarPeralatanKonstruksi}
+                />
+            )
     }
 }
 

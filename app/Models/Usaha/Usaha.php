@@ -50,6 +50,11 @@ class Usaha extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function pengawasanUsahaPerseorangan(): HasMany
+    {
+        return $this->hasMany(PengawasanUsahaPerseorangan::class, 'usaha_id');
+    }
+
     public function pengawasanLingkup2(): HasMany
     {
         return $this->hasMany(PengawasanBUJKLingkup2::class, 'usaha_id');

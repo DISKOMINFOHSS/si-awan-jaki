@@ -8,6 +8,7 @@ use App\Models\Usaha\PengawasanBUJKLingkup3;
 use App\Models\Usaha\PengawasanBUJKLingkup4;
 use App\Models\Usaha\PengawasanBUJKLingkup5;
 use App\Models\Usaha\Usaha;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
 
@@ -175,6 +176,32 @@ class TertibUsahaService
             ->groupBy('tertib_pengawasan')
             ->where('tahun', $tahun)
             ->get();
+    }
+
+    public function getDaftarTertibUsahaPerseoranganTahunan(string $tahun)
+    {
+        return Usaha::withWhereHas('pengawasanUsahaPerseorangan', function ($query) use ($tahun)
+        {
+            $query->whereYear('tanggal_pengawasan', $tahun)
+                  ->orderBy('jenis_pengawasan', 'desc');
+        })->with(['skk' => function (Builder $query)
+        {
+            $query->where('status', true);
+        }])->leftJoin('pengawasan_tahunan_tertib_usaha_perseorangan as pengawasan_tahunan', function (JoinClause $join) use ($tahun)
+        {
+            $join->on('usaha.id', '=', 'pengawasan_tahunan.usaha_id')
+                 ->where('tahun', $tahun);
+        })->select(
+            'usaha.id',
+            'usaha.nama',
+            'usaha.nib',
+            'usaha.alamat',
+            'pengawasan_tahunan.id as pengawasan_id',
+            'pengawasan_tahunan.tahun',
+            'pengawasan_tahunan.tertib_pengawasan',
+            'pengawasan_tahunan.catatan',
+        )->orderBy('usaha.nama')
+         ->get();
     }
 
     // Lingkup 2

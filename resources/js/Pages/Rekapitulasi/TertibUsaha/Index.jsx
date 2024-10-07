@@ -14,13 +14,15 @@ import {
     LiaCheckCircleSolid
 } from "react-icons/lia";
 import { getTertibStatusBadge } from "../../../Utils/getStatusBadge";
+import Tabs from "../../../Components/Tabs";
+import DaftarUsahaPerseorangan from "../../../Components/Rekapitulasi/DaftarUsahaPerseorangan";
 
 const RekapitulasiTertibUsahaIndex = ({ data }) => {
     const { url } = usePage();
     const tahun = url.split('/')[3];
 
     console.log(data);
-    const { daftarTertibUsahaBUJK } = data;
+    const { daftarTertibUsahaBUJK, daftarTertibUsahaPerseorangan } = data;
 
     const [keyword, setKeyword] = React.useState('');
     const handleKeywordChange = (event) => setKeyword(event.target.value);
@@ -37,6 +39,11 @@ const RekapitulasiTertibUsahaIndex = ({ data }) => {
         setIsModalBUJKVerificationOpen(true);
     }
 
+    const tabList = [
+        { label: 'Badan Usaha' },
+        { label: 'Usaha Orang Perseorangan' },
+    ];
+
     return (
         <>
             <Breadcrumb>
@@ -50,7 +57,8 @@ const RekapitulasiTertibUsahaIndex = ({ data }) => {
                     <h2 className="font-light text-xs text-slate-500">Rekapitulasi Laporan Pengawasan Penyelenggaraan Jasa Konstruksi Tahun {url.split('/')[3]}</h2>
                 </div>
             </div>
-            <div>
+            <Tabs tabList={tabList}>
+                <Tabs.Tab>
                 <Card>
                     <Card.Header className="space-y-4">
                         <div className="flex justify-between items-center">
@@ -155,7 +163,11 @@ const RekapitulasiTertibUsahaIndex = ({ data }) => {
                         </div>
                     </Card.Body>
                 </Card>
-            </div>
+                </Tabs.Tab>
+                <Tabs.Tab>
+                    <DaftarUsahaPerseorangan daftarTertibUsaha={daftarTertibUsahaPerseorangan} />
+                </Tabs.Tab>
+            </Tabs>
             <FormVerifikasiBUJK
                 isVisible={isModalBUJKVerificationOpen}
                 onClose={() => setIsModalBUJKVerificationOpen(false)}

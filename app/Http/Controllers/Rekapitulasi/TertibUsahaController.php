@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Rekapitulasi;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Rekapitulasi\PengawasanTertibUsahaBUJKResource;
+use App\Http\Resources\Rekapitulasi\PengawasanTertibUsahaPerseoranganResource;
 use App\Services\Rekapitulasi\TertibUsahaService;
 use Illuminate\Http\Request;
 
@@ -21,10 +22,12 @@ class TertibUsahaController extends Controller
     public function index(string $tahun)
     {
         $daftarTertibUsahaBUJK = $this->rekapPengawasanService->getDaftarTertibUsahaBUJKTahunanWithPengawasanRutin($tahun);
+        $daftarTertibUsahaPerseorangan = $this->rekapPengawasanService->getDaftarTertibUsahaPerseoranganTahunan($tahun);
 
         return Inertia::render('Rekapitulasi/TertibUsaha/Index', [
             'data' => [
                 'daftarTertibUsahaBUJK' => PengawasanTertibUsahaBUJKResource::collection($daftarTertibUsahaBUJK),
+                'daftarTertibUsahaPerseorangan' => PengawasanTertibUsahaPerseoranganResource::collection($daftarTertibUsahaPerseorangan),
             ],
         ]);
     }

@@ -4,17 +4,25 @@ import {
     LiaAngleDownSolid,
     LiaFilterSolid,
     LiaPlusCircleSolid,
-    LiaSearchSolid
+    LiaSearchSolid,
+    LiaTrashAltSolid
 } from "react-icons/lia";
 import FormPemeriksaanMaterialKonstruksi from "./FormPemeriksaanMaterialKonstruksi";
+import Badge from "../../Badge";
 
 export default ({
     jenisRantaiPasok,
     pengawasanId,
     daftarMaterialKonstruksi,
 }) => {
-
     const [ isModalPemeriksaanOpen, setIsModalPemeriksaanOpen ] = React.useState(false);
+
+    const [keyword, setKeyword] = React.useState('');
+    const handleKeywordChange = (event) => setKeyword(event.target.value);
+
+    const filteredDaftarMaterialKonstruksi = keyword ? daftarMaterialKonstruksi.filter(({ varian, subvarian }) => {
+        return varian.toLowerCase().includes(keyword.toLowerCase()) || subvarian.toLowerCase().includes(keyword.toLowerCase());
+    }) : daftarMaterialKonstruksi;
 
     return (
         <>
@@ -56,23 +64,75 @@ export default ({
                             <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase">
                                 <tr className="border-b border-slate-200">
                                     <th scope="col" className="p-4 font-medium border-r border-slate-200">#</th>
-                                    <th scope="col" className="p-4 font-medium min-w-64 border-r border-slate-200">Nama Varian dan Sub Varian Produk</th>
-                                    <th scope="col" className="p-4 font-medium border-r border-slate-200">Merk Produk</th>
+                                    <th scope="col" className="p-4 font-medium min-w-48 border-r border-slate-200">Nama Varian dan Sub Varian Produk</th>
+                                    <th scope="col" className="p-4 font-medium min-w-32 border-r border-slate-200">Merk Produk</th>
                                     <th scope="col" className="p-4 font-medium border-r border-slate-200">Sertifikat TKDN</th>
                                     <th scope="col" className="p-4 font-medium border-r border-slate-200">Sertifikat SNI / Sertifikat Standar yang Berlaku</th>
                                     {
                                         jenisRantaiPasok.pelakuUsaha === "Produsen" ? (
                                             <>
-                                                <th scope="col" className="p-4 font-medium border-r border-slate-200">Pencatatan dalam SIMPK</th>
-                                                <th scope="col" className="p-4 font-medium border-r border-slate-200">No. Registrasi Pencatatan dalam SIMPK</th>
+                                                <th scope="col" className="p-4 font-medium min-w-32 border-r border-slate-200">Pencatatan dalam SIMPK</th>
+                                                <th scope="col" className="p-4 font-medium min-w-36 border-r border-slate-200">No. Registrasi Pencatatan dalam SIMPK</th>
                                             </>
                                         ) : (
-                                            <th scope="col" className="p-4 font-medium border-r border-slate-200">Tercantum dalam SIMPK</th>
+                                            <th scope="col" className="p-4 font-medium min-w-32 border-r border-slate-200">Tercantum dalam SIMPK</th>
                                         )
                                     }
                                     <th></th>
                                 </tr>
                             </thead>
+                            <tbody className="text-slate-700">
+                                {
+                                    filteredDaftarMaterialKonstruksi.map((material, i) => (
+                                        <tr key={material.id} className="border-b border-slate-100 hover:bg-slate-50">
+                                            <td className="px-4 py-5 text-center">{i + 1}</td>
+                                            <td className="px-4 py-5">
+                                                <div>
+                                                    <div className="hover:text-blue-600 hover:underline">{material.varian}</div>
+                                                    <div className="font-light text-slate-500">{material.subvarian}</div>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-5 text-center">{material.merkProduk}</td>
+                                            <td className="px-4 py-5 text-center">
+                                            {
+                                                material.sertifikatTKDN ?
+                                                <Badge bg="green">Bersertifikat TKDN</Badge> :
+                                                <Badge bg="red">Tidak Bersertifikat TKDN</Badge>
+                                            }
+                                            </td>
+                                            <td className="px-4 py-5 text-center">
+                                            {
+                                                material.sertifikatStandar.includes("Tidak Bersertifikat") ?
+                                                <Badge bg="red">Tidak Bersertifikat SNI</Badge> :
+                                                <Badge bg="green">Bersertifikat {material.sertifikatStandar.includes("SNI") ? "SNI" : "Standar Lain"}</Badge>
+                                            }
+                                            </td>
+                                            <td className="px-4 py-5 text-center">
+                                            {
+                                                material.simpk ?
+                                                <Badge bg="green">Sudah</Badge> :
+                                                <Badge bg="red">Belum {jenisRantaiPasok.pelakuUsaha === "Produsen" ? "Dicatatkan" : "Tercantum"}</Badge>
+                                            }
+                                            </td>
+                                            {
+                                                jenisRantaiPasok.pelakuUsaha === "Produsen" &&
+                                                <td className="px-4 py-5 text-center">{material.nomorRegistrasi}</td>
+                                            }
+                                            <td className="px-4 py-5 text-center">
+                                                <div className="flex gap-x-2">
+                                                    <button
+                                                        type="button"
+                                                        className="rounded border border-slate-200 text-red-500 p-2 hover:bg-slate-200"
+                                                        onClick={() => handleDeleteButtonClick(material.id)}
+                                                    >
+                                                        <LiaTrashAltSolid size={18} />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
                         </table>
                     </div>
                 </Card.Body>

@@ -90,6 +90,26 @@ class PengawasanLingkup1Service
             ->first();
     }
 
+    public function addPemeriksaanMaterialKonstruksi(array $data)
+    {
+        DB::table('pemeriksaan_material_konstruksi_usaha_rantai_pasok')->insert([
+            'pengawasan_id'           => $data['pengawasan_id'],
+            'varian'                  => $data['varian'],
+            'subvarian'               => $data['subvarian'],
+            'merk_produk'             => $data['merk_produk'],
+            'sertifikat_tkdn'         => $data['sertifikat_tkdn'],
+            'sertifikat_standar'      => $data['sertifikat_standar'],
+            'simpk'                   => $data['simpk'],
+            'nomor_registrasi_simpk'  => $data['nomor_registrasi_simpk'],
+            'created_by'              => $data['created_by'],
+        ]);
+    }
+
+    public function checkPemeriksaanMaterialKonstruksiExists(string $id)
+    {
+        return DB::table('pemeriksaan_material_konstruksi_usaha_rantai_pasok')->where('id', $id)->exists();
+    }
+
     public function getPemeriksaanMaterialKonstruksiByPengawasanId(string $pengawasanId)
     {
         return DB::table('pemeriksaan_material_konstruksi_usaha_rantai_pasok')
@@ -107,18 +127,9 @@ class PengawasanLingkup1Service
             )->get();
     }
 
-    public function addPemeriksaanMaterialKonstruksi(array $data)
+    public function deletePemeriksaanMaterialKonstruksi(string $id)
     {
-        DB::table('pemeriksaan_material_konstruksi_usaha_rantai_pasok')->insert([
-            'pengawasan_id'           => $data['pengawasan_id'],
-            'varian'                  => $data['varian'],
-            'subvarian'               => $data['subvarian'],
-            'merk_produk'             => $data['merk_produk'],
-            'sertifikat_tkdn'         => $data['sertifikat_tkdn'],
-            'sertifikat_standar'      => $data['sertifikat_standar'],
-            'simpk'                   => $data['simpk'],
-            'nomor_registrasi_simpk'  => $data['nomor_registrasi_simpk'],
-            'created_by'              => $data['created_by'],
-        ]);
+        DB::table('pemeriksaan_material_konstruksi_usaha_rantai_pasok')->where('id', $id)
+            ->update(['deleted_at' => now()]);
     }
 }

@@ -180,6 +180,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
                     Route::post('/produsen-material/{id}/pemeriksaan', 'storeMaterial');
                     Route::post('/distributor-material/{id}/pemeriksaan', 'storeMaterial');
+                    Route::delete('/produsen-material/{pengawasan_id}/pemeriksaan/{id}', 'destroyMaterial');
+                    Route::delete('/distributor-material/{pengawasan_id}/pemeriksaan/{id}', 'destroyMaterial');
 
                     Route::get('/{jenis_rantai_pasok}', 'index');
                     Route::post('/{jenis_rantai_pasok}', 'store');

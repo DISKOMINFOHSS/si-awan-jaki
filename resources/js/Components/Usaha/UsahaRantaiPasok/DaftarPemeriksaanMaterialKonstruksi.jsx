@@ -9,6 +9,7 @@ import {
 } from "react-icons/lia";
 import FormPemeriksaanMaterialKonstruksi from "./FormPemeriksaanMaterialKonstruksi";
 import Badge from "../../Badge";
+import ModalDelete from "../../ModalDelete";
 
 export default ({
     jenisRantaiPasok,
@@ -17,7 +18,15 @@ export default ({
 }) => {
     const [ isModalPemeriksaanOpen, setIsModalPemeriksaanOpen ] = React.useState(false);
 
-    const [keyword, setKeyword] = React.useState('');
+    const [ isModalDeleteOpen, setIsModalDeleteOpen ] = React.useState(false);
+    const [ selectedIdMaterialKonstruksi, setSelectedIdMaterialKonstruksi ] = React.useState('');
+
+    function handleDeleteButtonClick(id) {
+        setSelectedIdMaterialKonstruksi(id);
+        setIsModalDeleteOpen(true);
+    }
+
+    const [ keyword, setKeyword ] = React.useState('');
     const handleKeywordChange = (event) => setKeyword(event.target.value);
 
     const filteredDaftarMaterialKonstruksi = keyword ? daftarMaterialKonstruksi.filter(({ varian, subvarian }) => {
@@ -43,7 +52,7 @@ export default ({
                                 <div className="pointer-events-none absolute inset-y-0 left-2 flex items-center">
                                     <LiaSearchSolid size={18} className="text-slate-500 -scale-x-100" />
                                 </div>
-                                <input type="search" name="search" placeholder="Cari..."
+                                <input type="search" name="search" placeholder="Cari..." value={keyword} onChange={handleKeywordChange}
                                 className="border border-slate-200 rounded py-2 pl-8 block w-56 text-slate-700 placeholder:text-slate-400 focus:ring-blue-400 focus:border-blue-400 text-xs" />
                             </div>
                         </div>
@@ -143,6 +152,17 @@ export default ({
                 pengawasanId={pengawasanId}
                 jenisRantaiPasok={jenisRantaiPasok}
             />
+            <ModalDelete
+                isVisible={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+                url={`/admin/pengawasan/usaha/1/${jenisRantaiPasok.slug}/${pengawasanId}/pemeriksaan`}
+                id={selectedIdMaterialKonstruksi}
+            >
+                <div className="font-medium text-slate-700 mb-1">Apakah Anda yakin ingin menghapus material konstruksi ini?</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Data yang telah dihapus tidak dapat dikembalikan.
+                </div>
+            </ModalDelete>
         </>
     )
 }

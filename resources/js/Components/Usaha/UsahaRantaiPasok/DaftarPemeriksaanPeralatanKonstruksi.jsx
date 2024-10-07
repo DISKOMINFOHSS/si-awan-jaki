@@ -1,11 +1,14 @@
 import React from "react";
 import Card from "../../Card";
+import Badge from "../../Badge";
+import ModalDelete from "../../ModalDelete";
 
 import {
     LiaAngleDownSolid,
     LiaFilterSolid,
     LiaPlusCircleSolid,
-    LiaSearchSolid
+    LiaSearchSolid,
+    LiaTrashAltSolid
 } from "react-icons/lia";
 
 export default ({
@@ -88,11 +91,62 @@ export default ({
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody className="text-slate-700"></tbody>
+                            <tbody className="text-slate-700">
+                            {
+                                filteredDaftarPeralatanKonstruksi.map((peralatan, i) => (
+                                    <tr key={peralatan.id} className="border-b border-slate-100 hover:bg-slate-50">
+                                        <td className="px-4 py-5 text-center">{i + 1}</td>
+                                        <td className="px-4 py-5">
+                                            <div>
+                                                <div className="hover:text-blue-600 hover:underline">{peralatan.varian}</div>
+                                                <div className="font-light text-slate-500">{peralatan.subvarian}</div>
+                                            </div>
+                                        </td>
+                                        <td className="px-4 py-5 text-center">{peralatan.merkPeralatan}</td>
+                                        <td className="px-4 py-5 text-center">{peralatan.jumlahUnit}</td>
+                                        <td className="px-4 py-5 text-center">{peralatan.suratK3}</td>
+                                        <td className="px-4 py-5 text-center">{peralatan.buktiKepemilikan}</td>
+                                        <td className="px-4 py-5 text-center">
+                                        {
+                                            peralatan.simpk ?
+                                            <Badge bg="green">Sudah</Badge> :
+                                            <Badge bg="red">Belum {jenisRantaiPasok.pelakuUsaha !== "Distributor/Agen Tunggal" ? "Dicatatkan" : "Tercantum"}</Badge>
+                                        }
+                                        </td>
+                                        {
+                                            jenisRantaiPasok.pelakuUsaha !== "Distributor/Agen Tunggal" &&
+                                            <td className="px-4 py-5 text-center">{peralatan.nomorRegistrasi}</td>
+                                        }
+                                        <td className="px-4 py-5 text-center">
+                                            <div className="flex gap-x-2">
+                                                <button
+                                                    type="button"
+                                                    className="rounded border border-slate-200 text-red-500 p-2 hover:bg-slate-200"
+                                                    onClick={() => handleDeleteButtonClick(peralatan.id)}
+                                                >
+                                                    <LiaTrashAltSolid size={18} />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                            </tbody>
                         </table>
                     </div>
                 </Card.Body>
             </Card>
+            <ModalDelete
+                isVisible={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+                url={`/admin/pengawasan/usaha/1/${jenisRantaiPasok.slug}/${pengawasanId}/pemeriksaan`}
+                id={selectedIdPeralatanKonstruksi}
+            >
+                <div className="font-medium text-slate-700 mb-1">Apakah Anda yakin ingin menghapus peralatan konstruksi ini?</div>
+                <div className="font-light text-xs text-slate-500 mb-2">
+                    Data yang telah dihapus tidak dapat dikembalikan.
+                </div>
+            </ModalDelete>
         </>
     )
 }

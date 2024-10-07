@@ -190,6 +190,9 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::delete('/pemilik-peralatan/{pengawasan_id}/pemeriksaan/{id}', 'destroyPeralatan');
                     Route::delete('/distributor-peralatan/{pengawasan_id}/pemeriksaan/{id}', 'destroyPeralatan');
 
+                    Route::post('/badan-usaha-teknologi/{id}/pemeriksaan', 'storeTeknologi');
+                    Route::delete('/badan-usaha-teknologi/{pengawasan_id}/pemeriksaan/{id}', 'destroyTeknologi');
+
                     Route::get('/{jenis_rantai_pasok}', 'index');
                     Route::post('/{jenis_rantai_pasok}', 'store');
                     Route::get('/{jenis_rantai_pasok}/{id}', 'show');

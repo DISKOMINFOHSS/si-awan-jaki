@@ -315,4 +315,19 @@ class UsahaRantaiPasokController extends Controller
 
         return back();
     }
+
+    public function destroyTeknologi(string $pengawasan_id, string $id)
+    {
+        if (!$this->pengawasanLingkup1Service->checkPengawasanExists($pengawasan_id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        if (!$this->pengawasanLingkup1Service->checkPemeriksaanTeknologiKonstruksiExists($id)) {
+            return back()->withErrors(['message' => 'Pemeriksaan Teknologi Konstruksi tidak ditemukan.']);
+        }
+
+        $this->pengawasanLingkup1Service->deletePemeriksaanTeknologiKonstruksi($id);
+
+        return back();
+    }
 }

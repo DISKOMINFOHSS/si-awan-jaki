@@ -208,4 +208,10 @@ class PengawasanLingkup1Service
                 'nomor_haki as nomorHaki',
             )->get();
     }
+
+    public function deletePemeriksaanTeknologiKonstruksi(string $id)
+    {
+        DB::table('pemeriksaan_teknologi_konstruksi_usaha_rantai_pasok')->where('id', $id)
+            ->update(['deleted_at' => now()]);
+    }
 }

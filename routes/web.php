@@ -414,6 +414,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                 Route::get('/', 'index');
 
                 Route::post('/bujk', 'storePengawasanBUJK');
+                Route::post('/usaha-perseorangan', 'storePengawasanUsahaPerseorangan');
                 Route::get('/{fileName}', 'show');
             });
 

@@ -71,6 +71,29 @@ class TertibUsahaController extends Controller
         );
     }
 
+    public function storePengawasanUsahaPerseorangan(string $tahun, Request $request)
+    {
+        $validatedData = $request->validate([
+            'usahaId'           => 'required|exists:usaha,id',
+            'tertibPengawasan'  => 'required|boolean',
+            'catatan'           => 'nullable',
+        ]);
+
+        $userId = auth()->user()->id;
+
+        $this->rekapPengawasanService->storeVerifikasiPengawasanUsahaPerseoranganTahunan(
+            $tahun,
+            $validatedData['usahaId'],
+            [
+                'tertib_pengawasan'         => $validatedData['tertibPengawasan'],
+                'catatan'                   => $validatedData['catatan'],
+                'created_by'                => $userId,
+            ],
+        );
+
+        return back();
+    }
+
     public function show(string $tahun, string $fileName)
     {
         // $daftarTertibUsahaBUJK = $this->rekapPengawasanService->getDaftarTertibUsahaBUJKTahunanWithPengawasanRutin($tahun);

@@ -204,6 +204,21 @@ class TertibUsahaService
          ->get();
     }
 
+    public function storeVerifikasiPengawasanUsahaPerseoranganTahunan(string $tahun, string $usahaId, array $data)
+    {
+        DB::table('pengawasan_tahunan_tertib_usaha_perseorangan')->updateOrInsert(
+            [
+                'tahun'   => $tahun,
+                'usaha_id' => $usahaId,
+            ],
+            [
+                'tertib_pengawasan' => $data['tertib_pengawasan'],
+                'catatan'           => $data['catatan'],
+                'created_by'        => $data['created_by'],
+            ],
+        );
+    }
+
     // Lingkup 2
     public function getDaftarPengawasanBUJKLingkup2ByJenisPengawasan(string $tahun, string $jenisPengawasan)
     {

@@ -93,6 +93,13 @@ class UsahaRantaiPasokController extends Controller
 
         $pengawasan = $this->pengawasanLingkup1Service->getPengawasanById($id);
 
+        switch ($jenisRantaiPasok->kategoriSumberDaya)
+        {
+            case "Material":
+                $pengawasan['material_konstruksi'] = $this->pengawasanLingkup1Service->getPemeriksaanMaterialKonstruksiByPengawasanId($id);
+                break;
+        }
+
         return Inertia::render('Pengawasan/Usaha/UsahaRantaiPasok/Show', [
             'data' => [
                 'lingkupPengawasan' => $lingkupPengawasan,

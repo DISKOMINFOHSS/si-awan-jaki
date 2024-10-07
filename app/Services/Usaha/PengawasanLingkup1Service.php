@@ -89,4 +89,19 @@ class PengawasanLingkup1Service
         return DB::table('rekomendasi_pengawasan_usaha_rantai_pasok')->where('pengawasan_id', $pengawasanId)
             ->first();
     }
+
+    public function getPemeriksaanMaterialKonstruksiByPengawasanId(string $pengawasanId)
+    {
+        return DB::table('pemeriksaan_material_konstruksi_usaha_rantai_pasok')->where('pengawasan_id', $pengawasanId)
+            ->select(
+                'id',
+                'varian',
+                'subvarian',
+                'merk_produk as merkProduk',
+                'sertifikat_tkdn as sertifikatTKDN',
+                'sertifikat_standar as sertifikatStandar',
+                'simpk',
+                'nomor_registrasi_simpk as nomorRegistrasi',
+            )->get();
+    }
 }

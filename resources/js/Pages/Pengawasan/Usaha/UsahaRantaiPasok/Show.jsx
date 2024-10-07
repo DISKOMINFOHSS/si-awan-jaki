@@ -5,10 +5,14 @@ import Layout from "../../../../Components/Layout";
 import Breadcrumb from "../../../../Components/Breadcrumb";
 import Card from "../../../../Components/Card";
 import Dropdown from "../../../../Components/Dropdown";
+import ModalDelete from "../../../../Components/ModalDelete";
+
 import FormDokumenNIB from "../../../../Components/Usaha/FormDokumenNIB";
+import FormVerifikasiPengawasan from "../../../../Components/Usaha/UsahaRantaiPasok/FormVerifikasiPengawasan";
 
 import { getTertibStatusBadge } from "../../../../Utils/getStatusBadge";
 import { formatDateToIndonesia } from "../../../../Utils/formatDate";
+import useToggleWithClickOutside from "../../../../Hooks/useToggleWithClickOutside";
 
 import {
     LiaCheckCircleSolid,
@@ -21,9 +25,20 @@ import {
     LiaListAltSolid,
     LiaTrashAltSolid
 } from "react-icons/lia";
-import useToggleWithClickOutside from "../../../../Hooks/useToggleWithClickOutside";
-import FormVerifikasiPengawasan from "../../../../Components/Usaha/UsahaRantaiPasok/FormVerifikasiPengawasan";
-import ModalDelete from "../../../../Components/ModalDelete";
+import DaftarPemeriksaanMaterialKonstruksi from "../../../../Components/Usaha/UsahaRantaiPasok/DaftarPemeriksaanMaterialKonstruksi";
+
+function getDaftarPemeriksaan(jenisRantaiPasok, pengawasan) {
+    switch (jenisRantaiPasok.kategoriSumberDaya) {
+        case "Material":
+            return (
+                <DaftarPemeriksaanMaterialKonstruksi
+                    jenisRantaiPasok={jenisRantaiPasok}
+                    pengawasanId={pengawasan.id}
+                    daftarMaterialKonstruksi={pengawasan.daftarMaterialKonstruksi}
+                />
+            );
+    }
+}
 
 const PengawasanUsahaRantaiPasokShow = ({ data }) => {
     console.log(data);
@@ -397,6 +412,7 @@ const PengawasanUsahaRantaiPasokShow = ({ data }) => {
                     </Card>
                 </div>
             </div>
+            { getDaftarPemeriksaan(jenisRantaiPasok, pengawasan) }
             <FormDokumenNIB
                 isVisible={isModalNIBOpen}
                 onClose={() => setIsModalNIBOpen(false)}

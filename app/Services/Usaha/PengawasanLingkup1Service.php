@@ -149,6 +149,11 @@ class PengawasanLingkup1Service
         ]);
     }
 
+    public function checkPemeriksaanPeralatanKonstruksiExists(string $id)
+    {
+        return DB::table('pemeriksaan_peralatan_konstruksi_usaha_rantai_pasok')->where('id', $id)->exists();
+    }
+
     public function getPemeriksaanPeralatanKonstruksiByPengawasanId(string $pengawasanId)
     {
         return DB::table('pemeriksaan_peralatan_konstruksi_usaha_rantai_pasok')
@@ -165,5 +170,11 @@ class PengawasanLingkup1Service
                 'simpk',
                 'nomor_registrasi_simpk as nomorRegistrasi',
             )->get();
+    }
+
+    public function deletePemeriksaanPeralatanKonstruksi(string $id)
+    {
+        DB::table('pemeriksaan_peralatan_konstruksi_usaha_rantai_pasok')->where('id', $id)
+            ->update(['deleted_at' => now()]);
     }
 }

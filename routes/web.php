@@ -186,6 +186,9 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::post('/penyewaan-peralatan/{id}/pemeriksaan', 'storePeralatan');
                     Route::post('/pemilik-peralatan/{id}/pemeriksaan', 'storePeralatan');
                     Route::post('/distributor-peralatan/{id}/pemeriksaan', 'storePeralatan');
+                    Route::delete('/penyewaan-peralatan/{pengawasan_id}/pemeriksaan/{id}', 'destroyPeralatan');
+                    Route::delete('/pemilik-peralatan/{pengawasan_id}/pemeriksaan/{id}', 'destroyPeralatan');
+                    Route::delete('/distributor-peralatan/{pengawasan_id}/pemeriksaan/{id}', 'destroyPeralatan');
 
                     Route::get('/{jenis_rantai_pasok}', 'index');
                     Route::post('/{jenis_rantai_pasok}', 'store');

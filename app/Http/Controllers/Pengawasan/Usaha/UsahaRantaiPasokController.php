@@ -268,4 +268,19 @@ class UsahaRantaiPasokController extends Controller
             'created_by'             => $userId,
         ]);
     }
+
+    public function destroyPeralatan(string $pengawasan_id, string $id)
+    {
+        if (!$this->pengawasanLingkup1Service->checkPengawasanExists($pengawasan_id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        if (!$this->pengawasanLingkup1Service->checkPemeriksaanPeralatanKonstruksiExists($id)) {
+            return back()->withErrors(['message' => 'Pemeriksaan Peralatan Konstruksi tidak ditemukan.']);
+        }
+
+        $this->pengawasanLingkup1Service->deletePemeriksaanPeralatanKonstruksi($id);
+
+        return back();
+    }
 }

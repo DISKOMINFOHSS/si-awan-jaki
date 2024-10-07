@@ -10,6 +10,7 @@ import {
     LiaSearchSolid,
     LiaTrashAltSolid
 } from "react-icons/lia";
+import FormPemeriksaanPeralatanKonstruksi from "./FormPemeriksaanPeralatanKonstruksi";
 
 export default ({
     jenisRantaiPasok,
@@ -73,7 +74,7 @@ export default ({
                             <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase">
                                 <tr className="border-b border-slate-200">
                                     <th scope="col" className="p-4 font-medium border-r border-slate-200">#</th>
-                                    <th scope="col" className="p-4 font-medium min-w-48 border-r border-slate-200">Nama Varian dan Sub Varian Produk</th>
+                                    <th scope="col" className="p-4 font-medium min-w-48 border-r border-slate-200">Nama Varian dan Sub Varian Peralatan</th>
                                     <th scope="col" className="p-4 font-medium min-w-32 border-r border-slate-200">Merk Peralatan</th>
                                     <th scope="col" className="p-4 font-medium min-w-24 border-r border-slate-200">Jumlat Unit</th>
                                     <th scope="col" className="p-4 font-medium min-w-48 border-r border-slate-200">Surat Keterangan Memenuhi Syarat K3</th>
@@ -136,6 +137,12 @@ export default ({
                     </div>
                 </Card.Body>
             </Card>
+            <FormPemeriksaanPeralatanKonstruksi
+                isVisible={isModalPemeriksaanOpen}
+                onClose={() => setIsModalPemeriksaanOpen(false)}
+                pengawasanId={pengawasanId}
+                jenisRantaiPasok={jenisRantaiPasok}
+            />
             <ModalDelete
                 isVisible={isModalDeleteOpen}
                 onClose={() => setIsModalDeleteOpen(false)}

@@ -46,7 +46,7 @@ export default ({
                 <Modal.Header onClose={onClose}>
                     <div className="text-center mb-7">
                         <h1 className="font-medium text-slate-800">Tambah Material</h1>
-                        <h2 className="text-xs text-slate-500 font-light">{`${jenisRantaiPasok.pelakuUsaha} Rantai Pasok Materil Konstruksi`}</h2>
+                        <h2 className="text-xs text-slate-500 font-light">{`${jenisRantaiPasok.pelakuUsaha} Rantai Pasok Material Konstruksi`}</h2>
                     </div>
                 </Modal.Header>
                 <Modal.Body>
@@ -68,7 +68,7 @@ export default ({
                             />
                         </div>
                         <div className="col-span-2">
-                            <label htmlFor="merk" className="block mb-2 text-xs font-medium text-slate-800">Nama Sub Varian Produk <span className="text-red-400">*</span></label>
+                            <label htmlFor="merk" className="block mb-2 text-xs font-medium text-slate-800">Merk Produk <span className="text-red-400">*</span></label>
                             <input
                                 type="text" name="merk" id="merk" placeholder="cth. Semen Gresik"
                                 value={data.merk} onChange={e => setData('merk', e.target.value)} required
@@ -77,7 +77,7 @@ export default ({
                         </div>
                         <div className="col-span-2 space-y-2 text-xs">
                             <div>
-                                <div className="font-medium text-slate-800">Sertifikat TKDN</div>
+                                <div className="font-medium text-slate-800">Sertifikat TKDN <span className="text-red-400">*</span></div>
                                 <div className="font-light text-[11px] text-slate-500">Informasi melalui website tkdn.kemenperin.go.id</div>
                             </div>
                             <div className="grid grid-cols-2 gap-x-5">
@@ -101,7 +101,7 @@ export default ({
                         </div>
                         <div className="col-span-2 space-y-2 text-xs">
                             <div>
-                                <div className="font-medium text-slate-800">Sertifikat SNI / Sertifikat Standar yang Berlaku</div>
+                                <div className="font-medium text-slate-800">Sertifikat SNI / Sertifikat Standar yang Berlaku <span className="text-red-400">*</span></div>
                             </div>
                             <div className="grid grid-cols-2 gap-x-5 gap-y-2">
                                 <div className="flex items-center gap-x-2">
@@ -132,7 +132,7 @@ export default ({
                         </div>
                         <div className="space-y-2 text-xs">
                             <div>
-                                <div className="font-medium text-slate-800">{jenisRantaiPasok.pelakuUsaha === "Produsen" ? "Pencatatan" : "Tercantum"} dalam SIMPK</div>
+                                <div className="font-medium text-slate-800">{jenisRantaiPasok.pelakuUsaha === "Produsen" ? "Pencatatan" : "Tercantum"} dalam SIMPK <span className="text-red-400">*</span></div>
                             </div>
                             <div className="space-y-2">
                                 <div className="flex items-center gap-x-2">

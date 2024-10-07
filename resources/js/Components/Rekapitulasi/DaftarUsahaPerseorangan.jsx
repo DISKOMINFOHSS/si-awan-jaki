@@ -4,6 +4,7 @@ import Card from "../Card";
 import { LiaCheckCircleSolid, LiaFileExportSolid, LiaSearchSolid } from "react-icons/lia";
 import getDefaultData from "../../Utils/getDefaultData";
 import { getTertibStatusBadge } from "../../Utils/getStatusBadge";
+import FormVerifikasiUsahaPerseorangan from "./FormVerifikasiUsahaPerseorangan";
 
 export default ({ daftarTertibUsaha }) => {
     const [keyword, setKeyword] = React.useState('');
@@ -115,6 +116,11 @@ export default ({ daftarTertibUsaha }) => {
                     </div>
                 </Card.Body>
             </Card>
+            <FormVerifikasiUsahaPerseorangan
+                isVisible={isModalVerificationOpen}
+                onClose={() => setIsModalVerificationOpen(false)}
+                usaha={selectedUsaha}
+            />
         </>
     )
 }

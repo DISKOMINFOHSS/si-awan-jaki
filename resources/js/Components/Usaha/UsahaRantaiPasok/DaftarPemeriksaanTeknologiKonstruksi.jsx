@@ -9,6 +9,7 @@ import {
     LiaTrashAltSolid
 } from "react-icons/lia";
 import ModalDelete from "../../ModalDelete";
+import FormPemeriksaanTeknologiKonstruksi from "./FormPemeriksaanTeknologiKonstruksi";
 
 export default ({
     jenisRantaiPasok,
@@ -112,6 +113,12 @@ export default ({
                     </div>
                 </Card.Body>
             </Card>
+            <FormPemeriksaanTeknologiKonstruksi
+                isVisible={isModalPemeriksaanOpen}
+                onClose={() => setIsModalPemeriksaanOpen(false)}
+                pengawasanId={pengawasanId}
+                jenisRantaiPasok={jenisRantaiPasok}
+            />
             <ModalDelete
                 isVisible={isModalDeleteOpen}
                 onClose={() => setIsModalDeleteOpen(false)}

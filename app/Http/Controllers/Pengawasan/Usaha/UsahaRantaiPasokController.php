@@ -224,6 +224,8 @@ class UsahaRantaiPasokController extends Controller
             'nomor_registrasi_simpk' => $request->input('nomorRegistrasi'),
             'created_by'             => $userId,
         ]);
+
+        return back();
     }
 
     public function destroyMaterial(string $pengawasan_id, string $id)
@@ -270,6 +272,8 @@ class UsahaRantaiPasokController extends Controller
             'nomor_registrasi_simpk' => $request->input('nomorRegistrasi'),
             'created_by'             => $userId,
         ]);
+
+        return back();
     }
 
     public function destroyPeralatan(string $pengawasan_id, string $id)
@@ -283,6 +287,31 @@ class UsahaRantaiPasokController extends Controller
         }
 
         $this->pengawasanLingkup1Service->deletePemeriksaanPeralatanKonstruksi($id);
+
+        return back();
+    }
+
+    public function storeTeknologi(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup1Service->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'nama'        => 'required',
+            'bidangUsaha' => 'required',
+            'haki'        => 'required|boolean',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup1Service->addPemeriksaanTeknologiKonstruksi([
+            'pengawasan_id'  => $id,
+            'nama_teknologi' => $validatedData['nama'],
+            'bidang_usaha'   => $validatedData['bidangUsaha'],
+            'haki'           => $validatedData['haki'],
+            'nomor_haki'     => $request->input('nomorHaki'),
+            'created_by'     => $userId,
+        ]);
 
         return back();
     }

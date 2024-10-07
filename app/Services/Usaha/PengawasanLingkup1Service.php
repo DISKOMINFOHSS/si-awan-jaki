@@ -178,6 +178,23 @@ class PengawasanLingkup1Service
             ->update(['deleted_at' => now()]);
     }
 
+    public function addPemeriksaanTeknologiKonstruksi(array $data)
+    {
+        DB::table('pemeriksaan_teknologi_konstruksi_usaha_rantai_pasok')->insert([
+            'pengawasan_id'  => $data['pengawasan_id'],
+            'nama_teknologi' => $data['nama_teknologi'],
+            'bidang_usaha'   => $data['bidang_usaha'],
+            'haki'           => $data['haki'],
+            'nomor_haki'     => $data['nomor_haki'],
+            'created_by'     => $data['created_by'],
+        ]);
+    }
+
+    public function checkPemeriksaanTeknologiKonstruksiExists(string $id)
+    {
+        return DB::table('pemeriksaan_teknologi_konstruksi_usaha_rantai_pasok')->where('id', $id)->exists();
+    }
+
     public function getPemeriksaanTeknologiKonstruksiByPengawasanId(string $pengawasanId)
     {
         return DB::table('pemeriksaan_teknologi_konstruksi_usaha_rantai_pasok')

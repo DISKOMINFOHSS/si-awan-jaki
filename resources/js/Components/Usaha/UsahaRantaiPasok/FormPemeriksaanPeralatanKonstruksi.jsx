@@ -2,10 +2,9 @@ import React from "react";
 import { useForm } from "@inertiajs/react";
 
 import Modal from "../../Modal";
-import ModalDelete from "../../ModalDelete";
+import ModalError from "../../ModalError";
 
 import { LiaSpinnerSolid } from "react-icons/lia";
-import ModalError from "../../ModalError";
 
 export default ({
     isVisible,
@@ -206,13 +205,13 @@ export default ({
                                         type="text" name="nomorRegistrasi" id="nomorRegistrasi"
                                         value={data.nomorRegistrasi} onChange={e => setData('nomorRegistrasi', e.target.value)}
                                         className="px-3 py-2 block w-full rounded-md border-slate-200 text-slate-600 placeholder:text-slate-500 focus:ring-blue-400 focus:border-blue-400 text-xs"
-                                        />
+                                    />
                                 </div>
                             )
                         }
                         <div className="col-span-4 flex justify-end items-center gap-x-2">
                             <button type="button" className="bg-slate-200 text-slate-700 font-medium text-xs rounded py-2 px-2.5" onClick={onClose}>Batal</button>
-                            <button type="submit" className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-2.5">
+                            <button type="submit" disabled={processing} className="flex justify-center items-center space-x-1 bg-blue-600 font-medium text-xs text-white rounded py-2 px-2.5">
                                 { processing && <LiaSpinnerSolid className="animate-spin" /> }
                                 Tambah
                             </button>

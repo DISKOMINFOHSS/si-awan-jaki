@@ -119,6 +119,7 @@ class UsahaPerseoranganController extends Controller
     {
         $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(4);
         $pengawasan = $this->pengawasanLingkup4Service->getPengawasanUsahaPerseoranganById($id);
+        $pengawasan['rekomendasi'] = $this->pengawasanLingkup4Service->getRekomendasiPengawasanByPengawasanId($id);
 
         return Inertia::render('Pengawasan/Usaha/UsahaPerseorangan/Rekomendasi', [
             'data' => [
@@ -126,5 +127,29 @@ class UsahaPerseoranganController extends Controller
                 'pengawasan'        => new PengawasanUsahaPerseoranganResource($pengawasan),
             ],
         ]);
+    }
+
+    public function recommend(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup4Service->checkPengawasanUsahaPerseoranganExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'rekomendasi'   => 'required',
+            'keterangan'    => 'nullable',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup4Service->addRekomendasiPengawasanUsahaPerseorangan(
+            $id,
+            [
+                'rekomendasi'    => $validatedData['rekomendasi'],
+                'keterangan'     => $validatedData['keterangan'],
+                'created_by'     => $userId,
+            ],
+        );
+
+        return back();
     }
 }

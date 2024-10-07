@@ -7,6 +7,7 @@ use App\Models\Usaha\PengawasanUsahaPerseorangan;
 use App\Models\Usaha\RekomendasiPengawasanInsidentalBUJK;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Facades\DB;
 
 class PengawasanLingkup4Service
 {
@@ -171,5 +172,26 @@ class PengawasanLingkup4Service
         $pengawasan->verified_at = now();
 
         $pengawasan->save();
+    }
+
+    public function addRekomendasiPengawasanUsahaPerseorangan(string $pengawasanId, array $data)
+    {
+        DB::table('rekomendasi_pengawasan_usaha_perseorangan')->updateOrInsert(
+            [
+                'pengawasan_id' => $pengawasanId,
+            ],
+            [
+                'rekomendasi' => $data['rekomendasi'],
+                'keterangan'  => $data['keterangan'],
+                'created_by'  => $data['created_by'],
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ]
+        );
+    }
+
+    public function getRekomendasiPengawasanByPengawasanId(string $pengawasanId)
+    {
+        return DB::table('rekomendasi_pengawasan_usaha_perseorangan')->where('pengawasan_id', $pengawasanId)->first();
     }
 }

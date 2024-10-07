@@ -106,14 +106,16 @@ class UsahaPerseoranganController extends Controller
         return back();
     }
 
-    // public function destroy(string $id)
-    // {
-    //     if (!$this->pengawasanLingkup4Service->checkPengawasanUsahaPerseoranganExists($id)) {
-    //         return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
-    //     }
+    public function destroy(string $id)
+    {
+        if (!$this->pengawasanLingkup4Service->checkPengawasanUsahaPerseoranganExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
 
-    //     $this->pengawasan
-    // }
+        $this->pengawasanLingkup4Service->deletePengawasanUsahaPerseorangan($id);
+
+        return redirect("/admin/pengawasan/usaha/4/usaha-perseorangan");
+    }
 
     public function recommendation(string $id)
     {

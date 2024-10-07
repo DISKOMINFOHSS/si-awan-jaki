@@ -174,6 +174,12 @@ class PengawasanLingkup4Service
         $pengawasan->save();
     }
 
+    public function deletePengawasanUsahaPerseorangan(string $id)
+    {
+        $pengawasan = PengawasanUsahaPerseorangan::find($id);
+        $pengawasan->delete();
+    }
+
     public function addRekomendasiPengawasanUsahaPerseorangan(string $pengawasanId, array $data)
     {
         DB::table('rekomendasi_pengawasan_usaha_perseorangan')->updateOrInsert(

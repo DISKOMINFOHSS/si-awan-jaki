@@ -412,7 +412,9 @@ const PengawasanUsahaRantaiPasokShow = ({ data }) => {
                     </Card>
                 </div>
             </div>
-            { getDaftarPemeriksaan(jenisRantaiPasok, pengawasan) }
+            <div className="my-5">
+                { getDaftarPemeriksaan(jenisRantaiPasok, pengawasan) }
+            </div>
             <FormDokumenNIB
                 isVisible={isModalNIBOpen}
                 onClose={() => setIsModalNIBOpen(false)}

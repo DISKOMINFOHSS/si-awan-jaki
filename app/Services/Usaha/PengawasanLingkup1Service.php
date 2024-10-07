@@ -92,7 +92,9 @@ class PengawasanLingkup1Service
 
     public function getPemeriksaanMaterialKonstruksiByPengawasanId(string $pengawasanId)
     {
-        return DB::table('pemeriksaan_material_konstruksi_usaha_rantai_pasok')->where('pengawasan_id', $pengawasanId)
+        return DB::table('pemeriksaan_material_konstruksi_usaha_rantai_pasok')
+            ->where('pengawasan_id', $pengawasanId)
+            ->whereNull('deleted_at')
             ->select(
                 'id',
                 'varian',
@@ -103,5 +105,20 @@ class PengawasanLingkup1Service
                 'simpk',
                 'nomor_registrasi_simpk as nomorRegistrasi',
             )->get();
+    }
+
+    public function addPemeriksaanMaterialKonstruksi(array $data)
+    {
+        DB::table('pemeriksaan_material_konstruksi_usaha_rantai_pasok')->insert([
+            'pengawasan_id'           => $data['pengawasan_id'],
+            'varian'                  => $data['varian'],
+            'subvarian'               => $data['subvarian'],
+            'merk_produk'             => $data['merk_produk'],
+            'sertifikat_tkdn'         => $data['sertifikat_tkdn'],
+            'sertifikat_standar'      => $data['sertifikat_standar'],
+            'simpk'                   => $data['simpk'],
+            'nomor_registrasi_simpk'  => $data['nomor_registrasi_simpk'],
+            'created_by'              => $data['created_by'],
+        ]);
     }
 }

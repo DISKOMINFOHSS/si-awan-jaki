@@ -190,4 +190,33 @@ class UsahaRantaiPasokController extends Controller
 
         return back();
     }
+
+    public function storeMaterial(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup1Service->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'varian'            => 'required',
+            'subvarian'         => 'required',
+            'merk'              => 'required',
+            'sertifikatTKDN'    => 'required|boolean',
+            'sertifikatStandar' => 'required',
+            'simpk'             => 'required|boolean',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup1Service->addPemeriksaanMaterialKonstruksi([
+            'pengawasan_id'          => $id,
+            'varian'                 => $validatedData['varian'],
+            'subvarian'              => $validatedData['subvarian'],
+            'merk_produk'            => $validatedData['merk'],
+            'sertifikat_tkdn'        => $validatedData['sertifikatTKDN'],
+            'sertifikat_standar'     => $validatedData['sertifikatStandar'],
+            'simpk'                  => $validatedData['simpk'],
+            'nomor_registrasi_simpk' => $request->input('nomorRegistrasi'),
+            'created_by'             => $userId,
+        ]);
+    }
 }

@@ -6,12 +6,16 @@ import {
     LiaPlusCircleSolid,
     LiaSearchSolid
 } from "react-icons/lia";
+import FormPemeriksaanMaterialKonstruksi from "./FormPemeriksaanMaterialKonstruksi";
 
 export default ({
     jenisRantaiPasok,
     pengawasanId,
     daftarMaterialKonstruksi,
 }) => {
+
+    const [ isModalPemeriksaanOpen, setIsModalPemeriksaanOpen ] = React.useState(false);
+
     return (
         <>
             <Card className="w-full">
@@ -38,7 +42,7 @@ export default ({
                         <div>
                             <button
                                 className="w-full flex justify-center items-center space-x-1 text-white bg-blue-600 hover:bg-blue-800 rounded text-[11px] tracking-wide px-2.5 py-2 shadow-sm"
-                                // onClick={() => {setSelectedPaketPekerjaan({}), setIsModalKesesuaianKegiatanOpen(true)}}
+                                onClick={() => setIsModalPemeriksaanOpen(true)}
                             >
                                 <LiaPlusCircleSolid size={16}/>
                                 <span>Tambah</span>
@@ -73,6 +77,12 @@ export default ({
                     </div>
                 </Card.Body>
             </Card>
+            <FormPemeriksaanMaterialKonstruksi
+                isVisible={isModalPemeriksaanOpen}
+                onClose={() => setIsModalPemeriksaanOpen(false)}
+                pengawasanId={pengawasanId}
+                jenisRantaiPasok={jenisRantaiPasok}
+            />
         </>
     )
 }

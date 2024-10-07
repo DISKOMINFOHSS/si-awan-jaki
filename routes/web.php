@@ -178,6 +178,9 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::post('/{id}/verification', 'verify');
                     Route::post('/{id}/rekomendasi', 'recommend');
 
+                    Route::post('/produsen-material/{id}/pemeriksaan', 'storeMaterial');
+                    Route::post('/distributor-material/{id}/pemeriksaan', 'storeMaterial');
+
                     Route::get('/{jenis_rantai_pasok}', 'index');
                     Route::post('/{jenis_rantai_pasok}', 'store');
                     Route::get('/{jenis_rantai_pasok}/{id}', 'show');

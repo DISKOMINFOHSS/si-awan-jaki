@@ -177,4 +177,18 @@ class PengawasanLingkup1Service
         DB::table('pemeriksaan_peralatan_konstruksi_usaha_rantai_pasok')->where('id', $id)
             ->update(['deleted_at' => now()]);
     }
+
+    public function getPemeriksaanTeknologiKonstruksiByPengawasanId(string $pengawasanId)
+    {
+        return DB::table('pemeriksaan_teknologi_konstruksi_usaha_rantai_pasok')
+            ->where('pengawasan_id', $pengawasanId)
+            ->whereNull('deleted_at')
+            ->select(
+                'id',
+                'nama_teknologi as namaTeknologi',
+                'bidang_usaha as bidangUsaha',
+                'haki',
+                'nomor_haki as nomorHaki',
+            )->get();
+    }
 }

@@ -101,6 +101,9 @@ class UsahaRantaiPasokController extends Controller
             case "Peralatan":
                 $pengawasan['peralatan_konstruksi'] = $this->pengawasanLingkup1Service->getPemeriksaanPeralatanKonstruksiByPengawasanId($id);
                 break;
+            case "Teknologi":
+                $pengawasan['teknologi_konstruksi'] = $this->pengawasanLingkup1Service->getPemeriksaanTeknologiKonstruksiByPengawasanId($id);
+                break;
         }
 
         return Inertia::render('Pengawasan/Usaha/UsahaRantaiPasok/Show', [

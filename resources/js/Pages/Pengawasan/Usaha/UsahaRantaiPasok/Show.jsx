@@ -27,6 +27,7 @@ import {
 } from "react-icons/lia";
 import DaftarPemeriksaanMaterialKonstruksi from "../../../../Components/Usaha/UsahaRantaiPasok/DaftarPemeriksaanMaterialKonstruksi";
 import DaftarPemeriksaanPeralatanKonstruksi from "../../../../Components/Usaha/UsahaRantaiPasok/DaftarPemeriksaanPeralatanKonstruksi";
+import DaftarPemeriksaanTeknologiKonstruksi from "../../../../Components/Usaha/UsahaRantaiPasok/DaftarPemeriksaanTeknologiKonstruksi";
 
 function getDaftarPemeriksaan(jenisRantaiPasok, pengawasan) {
     switch (jenisRantaiPasok.kategoriSumberDaya) {
@@ -44,6 +45,14 @@ function getDaftarPemeriksaan(jenisRantaiPasok, pengawasan) {
                     jenisRantaiPasok={jenisRantaiPasok}
                     pengawasanId={pengawasan.id}
                     daftarPeralatanKonstruksi={pengawasan.daftarPeralatanKonstruksi}
+                />
+            );
+        case "Teknologi":
+            return (
+                <DaftarPemeriksaanTeknologiKonstruksi
+                    jenisRantaiPasok={jenisRantaiPasok}
+                    pengawasanId={pengawasan.id}
+                    daftarTeknologiKonstruksi={pengawasan.daftarTeknologiKonstruksi}
                 />
             )
     }

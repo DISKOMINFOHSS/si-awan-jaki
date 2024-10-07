@@ -133,6 +133,22 @@ class PengawasanLingkup1Service
             ->update(['deleted_at' => now()]);
     }
 
+    public function addPemeriksaanPeralatanKonstruksi(array $data)
+    {
+        DB::table('pemeriksaan_peralatan_konstruksi_usaha_rantai_pasok')->insert([
+            'pengawasan_id'           => $data['pengawasan_id'],
+            'varian'                  => $data['varian'],
+            'subvarian'               => $data['subvarian'],
+            'merk_peralatan'          => $data['merk_peralatan'],
+            'jumlah_unit'             => $data['jumlah_unit'],
+            'surat_k3'                => $data['surat_k3'],
+            'bukti_kepemilikan'       => $data['bukti_kepemilikan'],
+            'simpk'                   => $data['simpk'],
+            'nomor_registrasi_simpk'  => $data['nomor_registrasi_simpk'],
+            'created_by'              => $data['created_by'],
+        ]);
+    }
+
     public function getPemeriksaanPeralatanKonstruksiByPengawasanId(string $pengawasanId)
     {
         return DB::table('pemeriksaan_peralatan_konstruksi_usaha_rantai_pasok')

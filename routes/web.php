@@ -183,6 +183,10 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                     Route::delete('/produsen-material/{pengawasan_id}/pemeriksaan/{id}', 'destroyMaterial');
                     Route::delete('/distributor-material/{pengawasan_id}/pemeriksaan/{id}', 'destroyMaterial');
 
+                    Route::post('/penyewaan-peralatan/{id}/pemeriksaan', 'storePeralatan');
+                    Route::post('/pemilik-peralatan/{id}/pemeriksaan', 'storePeralatan');
+                    Route::post('/distributor-peralatan/{id}/pemeriksaan', 'storePeralatan');
+
                     Route::get('/{jenis_rantai_pasok}', 'index');
                     Route::post('/{jenis_rantai_pasok}', 'store');
                     Route::get('/{jenis_rantai_pasok}/{id}', 'show');

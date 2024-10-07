@@ -237,4 +237,35 @@ class UsahaRantaiPasokController extends Controller
 
         return back();
     }
+
+    public function storePeralatan(string $id, Request $request)
+    {
+        if (!$this->pengawasanLingkup1Service->checkPengawasanExists($id)) {
+            return back()->withErrors(['message' => 'Pengawasan tidak ditemukan.']);
+        }
+
+        $validatedData = $request->validate([
+            'varian'           => 'required',
+            'subvarian'        => 'required',
+            'merk'             => 'required',
+            'jumlahUnit'       => 'required|integer',
+            'suratK3'          => 'required',
+            'buktiKepemilikan' => 'required',
+            'simpk'            => 'required|boolean',
+        ]);
+        $userId = auth()->user()->id;
+
+        $this->pengawasanLingkup1Service->addPemeriksaanPeralatanKonstruksi([
+            'pengawasan_id'          => $id,
+            'varian'                 => $validatedData['varian'],
+            'subvarian'              => $validatedData['subvarian'],
+            'merk_peralatan'         => $validatedData['merk'],
+            'jumlah_unit'            => $validatedData['jumlahUnit'],
+            'surat_k3'               => $validatedData['suratK3'],
+            'bukti_kepemilikan'      => $validatedData['buktiKepemilikan'],
+            'simpk'                  => $validatedData['simpk'],
+            'nomor_registrasi_simpk' => $request->input('nomorRegistrasi'),
+            'created_by'             => $userId,
+        ]);
+    }
 }

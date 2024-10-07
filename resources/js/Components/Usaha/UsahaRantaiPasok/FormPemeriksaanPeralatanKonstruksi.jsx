@@ -21,6 +21,7 @@ export default ({
         suratK3: '',
         buktiKepemilikan: '',
         simpk: '',
+        nomorRegistrasi: '',
     });
 
     const [ isModalErrorOpen, setIsModalErrorOpen ] = React.useState(false);
@@ -28,18 +29,18 @@ export default ({
     function handleSubmit(e) {
         e.preventDefault();
         console.log(data);
-        // post(`/admin/pengawasan/usaha/1/${jenisRantaiPasok.slug}/${pengawasanId}/pemeriksaan`, {
-        //     preserveScroll: true,
-        //     onSuccess: () => {
-        //         reset();
-        //         onClose();
-        //     },
-        //     onError: (errors) => {
-        //         console.log(errors);
-        //         onClose();
-        //         setIsModalErrorOpen(true);
-        //     },
-        // });
+        post(`/admin/pengawasan/usaha/1/${jenisRantaiPasok.slug}/${pengawasanId}/pemeriksaan`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+                onClose();
+            },
+            onError: (errors) => {
+                console.log(errors);
+                onClose();
+                setIsModalErrorOpen(true);
+            },
+        });
     }
 
     return (

@@ -170,6 +170,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
 
             Route::name('usaha.')->prefix('/usaha')->group(function() {
                 Route::redirect('/rantai-pasok', '/admin/pengawasan/usaha/1');
+                Route::redirect('/usaha-perseorangan', '/admin/pengawasan/usaha/4/usaha-perseorangan');
 
                 Route::name('1.')->prefix('/1')
                 ->controller(App\Http\Controllers\Pengawasan\Usaha\UsahaRantaiPasokController::class)
@@ -265,7 +266,7 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')
                         Route::post('/', 'store');
                         Route::get('/{id}', 'show');
                         Route::post('/{id}/verification', 'verify');
-                        // Route::get('/{id}/rekomendasi', 'recommendation');
+                        Route::get('/{id}/rekomendasi', 'recommendation');
                         // Route::post('/{id}/rekomendasi', 'recommend');
                     });
 

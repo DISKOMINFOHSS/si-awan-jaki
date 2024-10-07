@@ -114,4 +114,17 @@ class UsahaPerseoranganController extends Controller
 
     //     $this->pengawasan
     // }
+
+    public function recommendation(string $id)
+    {
+        $lingkupPengawasan = $this->pengawasanService->getLingkupPengawasan(4);
+        $pengawasan = $this->pengawasanLingkup4Service->getPengawasanUsahaPerseoranganById($id);
+
+        return Inertia::render('Pengawasan/Usaha/UsahaPerseorangan/Rekomendasi', [
+            'data' => [
+                'lingkupPengawasan' => $lingkupPengawasan,
+                'pengawasan'        => new PengawasanUsahaPerseoranganResource($pengawasan),
+            ],
+        ]);
+    }
 }

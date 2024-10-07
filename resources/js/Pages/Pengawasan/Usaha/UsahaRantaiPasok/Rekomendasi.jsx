@@ -57,7 +57,7 @@ const RekomendasiPengawasanUsahaRantaiPasok = ({ data }) => {
                     <Card className="h-fit">
                         <Card.Body className="p-4 text-xs">
                             <div className="pb-3 border-b border-slate-200">
-                                <div className="font-medium">Nama Usaha Orang Perseorangan</div>
+                                <div className="font-medium">Nama Usaha Rantai Pasok</div>
                                 <div className="font-light text-slate-500 uppercase">{usaha.nama}</div>
                             </div>
                             <div className="grid grid-cols-3 gap-x-4 border-b border-slate-200 py-3">

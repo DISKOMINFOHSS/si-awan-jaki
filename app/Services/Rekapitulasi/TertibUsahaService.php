@@ -204,6 +204,15 @@ class TertibUsahaService
          ->get();
     }
 
+    public function getTertibUsahaPerseoranganCount(string $tahun)
+    {
+        return DB::table('pengawasan_tahunan_tertib_usaha_perseorangan')
+            ->selectRaw('count(id) as total_tertib_pengawasan, tertib_pengawasan')
+            ->groupBy('tertib_pengawasan')
+            ->where('tahun', $tahun)
+            ->get();
+    }
+
     public function storeVerifikasiPengawasanUsahaPerseoranganTahunan(string $tahun, string $usahaId, array $data)
     {
         DB::table('pengawasan_tahunan_tertib_usaha_perseorangan')->updateOrInsert(

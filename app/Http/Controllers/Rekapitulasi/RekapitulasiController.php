@@ -33,6 +33,7 @@ class RekapitulasiController extends Controller
     public function index(string $tahun)
     {
         $tertibUsahaBUJK = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getTertibUsahaBUJKCount($tahun));
+        $tertibUsahaPerseorangan = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibUsahaService->getTertibUsahaPerseoranganCount($tahun));
         $tertibPenyelenggaraan = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPenyelenggaraanService->getTertibPenyelenggaraanCount($tahun));
         $tertibPemanfaatanProduk = RekapitulasiHelper::getTotalTertibPengawasan($this->rekapTertibPemanfaatanProdukService->getTertibPemanfaatanProdukCount($tahun));
 
@@ -82,7 +83,10 @@ class RekapitulasiController extends Controller
                 ],
                 'totalPengawasanInsidental' => $totalPengawasanInsidental,
                 'totalPengawasanProgress'   => $pengawasanProgress,
-                'tertibUsaha'               => $tertibUsahaBUJK,
+                'tertibUsaha'               => [
+                    'tertibUsahaBUJK'         => $tertibUsahaBUJK,
+                    'tertibUsahaPerseorangan' => $tertibUsahaPerseorangan,
+                ],
                 'tertibPenyelenggaraan'     => $tertibPenyelenggaraan,
                 'tertibPemanfaatanProduk'   => $tertibPemanfaatanProduk,
             ],
